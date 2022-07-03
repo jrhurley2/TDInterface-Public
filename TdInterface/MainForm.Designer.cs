@@ -66,6 +66,7 @@ namespace TdInterface
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -120,7 +121,7 @@ namespace TdInterface
             this.txtRisk.Size = new System.Drawing.Size(100, 27);
             this.txtRisk.TabIndex = 7;
             this.txtRisk.TabStop = false;
-            this.txtRisk.Text = "25";
+            this.txtRisk.Text = "1";
             // 
             // btnSellMrkTriggerOco
             // 
@@ -421,20 +422,32 @@ namespace TdInterface
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(229, 45);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(136, 24);
+            this.checkBox1.TabIndex = 28;
+            this.checkBox1.Text = "Training Wheels";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1001, 566);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtLimit);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -464,6 +477,7 @@ namespace TdInterface
             this.Name = "MainForm";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -512,6 +526,7 @@ namespace TdInterface
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCredentialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveCredentialsToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
