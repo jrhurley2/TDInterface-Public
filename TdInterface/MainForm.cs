@@ -20,11 +20,14 @@ namespace TdInterface
         private Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
+        private bool _trainingWheels = false;
+        private Settings settings = new Settings() { TrainingWheels = true, MaxRisk = "20", MaxShares = "4" };
 
         public MainForm(ILogger<MainForm> logger)
         {
             try
             {
+
                 _logger = logger;
                 _logger.LogInformation("Start Main From");
                 Debug.WriteLine("Start Main Form");
@@ -88,7 +91,16 @@ namespace TdInterface
                 var riskPerShare = stop - stockQuote.lastPrice;
                 var limit = stockQuote.lastPrice - riskPerShare;
 
-                double calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                double calcShares;
+                if (checkBox1.Checked)
+                {
+                    calcShares = double.Parse(txtRisk.Text);
+                }
+                else
+                {
+                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                }
+
                 var shares = Convert.ToInt32(calcShares);
                 var limitShares = Convert.ToInt32(shares * .25);
 
@@ -124,7 +136,16 @@ namespace TdInterface
                 //var riskPerShare = stop - stockQuote.lastPrice;
                 //var limit = stockQuote.lastPrice - riskPerShare;
 
-                double calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                double calcShares;
+                if (checkBox1.Checked)
+                {
+                    calcShares = double.Parse(txtRisk.Text);
+                }
+                else
+                {
+                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                }
+                
                 var shares = Convert.ToInt32(calcShares);
                 var limitShares = Convert.ToInt32(shares * .25);
 
@@ -157,7 +178,16 @@ namespace TdInterface
                 var riskPerShare = stockQuote.lastPrice - stop;
                 var limit = stockQuote.lastPrice + riskPerShare;
 
-                double calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                double calcShares;
+                if (checkBox1.Checked)
+                {
+                    calcShares = double.Parse(txtRisk.Text);
+                }
+                else
+                {
+                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                }
+
                 var shares = Convert.ToInt32(calcShares);
                 var limitShares = Convert.ToInt32(shares * .25);
 
@@ -191,7 +221,16 @@ namespace TdInterface
                 //var limit = stockQuote.lastPrice + riskPerShare;
                 var limit = triggerLimit + riskPerShare;
 
-                double calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                double calcShares;
+                if (checkBox1.Checked)
+                {
+                    calcShares = double.Parse(txtRisk.Text);
+                }
+                else
+                {
+                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
+                }
+
                 var shares = Convert.ToInt32(calcShares);
                 var limitShares = Convert.ToInt32(shares * .25);
 
@@ -517,6 +556,24 @@ namespace TdInterface
         {
             var accessTokenContainer = await TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
             Utility.SaveAccessTokenContainer(accessTokenContainer);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            _trainingWheels = checkBox1.Checked;
+            if(_trainingWheels)
+            {
+                txtRisk.Text = "4";
+            }
+            else 
+            {
+                txtRisk.Text = "10";
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            checkBox1.Checked = settings.TrainingWheels;
         }
     }
 }

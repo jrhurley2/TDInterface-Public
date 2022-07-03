@@ -54,7 +54,7 @@ namespace TDAmeritradeAPI.Client
         public  TDStreamer(UserPrincipal userPrincipals)
         {
 
-            //_replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
+            _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
             _credentials = new StreamerSettings.Credentials
             {
