@@ -193,9 +193,9 @@ namespace TdInterface.Model
 
         private ushort branchField;
 
-        private uint clientKeyField;
+        private string clientKeyField;
 
-        private uint accountKeyField;
+        private string accountKeyField;
 
         private string segmentField;
 
@@ -230,7 +230,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public uint ClientKey
+        public string ClientKey
         {
             get
             {
@@ -243,7 +243,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public uint AccountKey
+        public string AccountKey
         {
             get
             {
@@ -710,7 +710,7 @@ namespace TdInterface.Model
     public partial class OrderFillMessageContraInformationContra
     {
 
-        private uint accountKeyField;
+        private string accountKeyField;
 
         private string subAccountTypeField;
 
@@ -723,7 +723,7 @@ namespace TdInterface.Model
         private System.DateTime reportTimeField;
 
         /// <remarks/>
-        public uint AccountKey
+        public string AccountKey
         {
             get
             {

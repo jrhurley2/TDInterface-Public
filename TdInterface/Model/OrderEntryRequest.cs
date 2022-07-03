@@ -102,7 +102,7 @@ namespace TdInterface.Model
 
         private ushort branchField;
 
-        private uint clientKeyField;
+        private string clientKeyField;
 
         private string accountKeyField;
 
@@ -139,7 +139,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public uint ClientKey
+        public string ClientKey
         {
             get
             {
@@ -152,17 +152,17 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        //public string AccountKey
-        //{
-        //    get
-        //    {
-        //        return this.accountKeyField;
-        //    }
-        //    set
-        //    {
-        //        this.accountKeyField = value;
-        //    }
-        //}
+        public string AccountKey
+        {
+            get
+            {
+                return this.accountKeyField;
+            }
+            set
+            {
+                this.accountKeyField = value;
+            }
+        }
 
         /// <remarks/>
         public string Segment

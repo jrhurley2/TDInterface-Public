@@ -17,7 +17,7 @@ namespace TdInterface.Model.Tests
             var actual = Securitiesaccount.ParseJson(json);
 
 
-            Assert.Fail();
+            Assert.IsNotNull(actual);
         }
     }
 }
