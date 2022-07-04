@@ -16,12 +16,12 @@ namespace TdInterface
         private ILogger<MainForm> _logger;
         private TDStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
-        private Dictionary<string, OrderEntryRequestMessageOrder> _orders = new Dictionary<string, OrderEntryRequestMessageOrder>();
         private Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
         private bool _trainingWheels = false;
         private Settings settings = new Settings() { TrainingWheels = true, MaxRisk = "20", MaxShares = "4" };
+        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public MainForm(ILogger<MainForm> logger)
         {
@@ -111,8 +111,7 @@ namespace TdInterface
                 var limtPrice = limit;
 
                 var triggerOrder = OrderHelper.CreateTriggerOcoOrder("MARKET", symbol, quantity, 0.0, limitShares, instruction, stopPrice, limtPrice);
-                var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
-
+                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
             }
             catch (Exception ex)
             {
@@ -156,7 +155,7 @@ namespace TdInterface
                 var limtPrice = limit;
 
                 var triggerOrder = OrderHelper.CreateTriggerOcoOrder("LIMIT", symbol, quantity, triggerLimit, limitShares, instruction, stopPrice, limtPrice);
-                var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
             }
             catch (Exception ex)
             {
@@ -198,7 +197,7 @@ namespace TdInterface
                 var limtPrice = limit;
 
                 var triggerOrder = OrderHelper.CreateTriggerOcoOrder("MARKET", symbol, quantity, 0.0, limitShares, instruction, stopPrice, limtPrice);
-                var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
             }
             catch (Exception ex)
             {
@@ -241,7 +240,7 @@ namespace TdInterface
                 var limtPrice = limit;
 
                 var triggerOrder = OrderHelper.CreateTriggerOcoOrder("LIMIT", symbol, quantity, triggerLimit, limitShares, instruction, stopPrice, limtPrice);
-                var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
             }
             catch (Exception ex)
             {
@@ -368,17 +367,17 @@ namespace TdInterface
             return exitInstruction;
         }
 
-        private static async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
+        private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = OrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder, _placedOrders);
         }
 
 
-        private static async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
+        private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
             var stopOrder = OrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var x = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder, _placedOrders);
         }
         #endregion
 
