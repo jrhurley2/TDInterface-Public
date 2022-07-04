@@ -29,7 +29,7 @@ namespace TdInterface
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
             postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
             postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
-            postData.Add(new KeyValuePair<string, string>("client_id", "DONTESTAPP@AMER.OAUTHTD"));
+            postData.Add(new KeyValuePair<string, string>("client_id", $"{Utility.GetConsumerKey()}@AMER.OAUTHTD"));
             postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
@@ -55,7 +55,7 @@ namespace TdInterface
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
                 //postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", accessTokenContainer.RefreshToken));
-                postData.Add(new KeyValuePair<string, string>("client_id", "DONTESTAPP@AMER.OAUTHTD"));
+                postData.Add(new KeyValuePair<string, string>("client_id", $"{Utility.GetConsumerKey()}@AMER.OAUTHTD"));
                 //postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
@@ -93,7 +93,6 @@ namespace TdInterface
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
             var securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
-            //var account = DeserializeJsonFromStream<Account>(await response.Content.ReadAsStreamAsync());
 
             return securitiesaccount;
         }
@@ -127,7 +126,7 @@ namespace TdInterface
             return stockQuote[symbol.ToUpper()];
         }
 
-        public static async Task<bool> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public static async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order, Dictionary<ulong, Order> orders)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, userPrincipal.accounts[0].accountId)))
             {
@@ -143,8 +142,11 @@ namespace TdInterface
                 throw new Exception($"Error Creating Order { await response.Content.ReadAsStringAsync()} ");
             };
 
-            return true;
+            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
+            var orderNumber = ulong.Parse(orderNumberString);
+            orders.Add(orderNumber, order);
 
+            return orderNumber;
         }
 
         public static async Task<UserPrincipal> GetUserPrincipals(AccessTokenContainer accessTokenContainer)
