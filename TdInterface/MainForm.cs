@@ -20,7 +20,7 @@ namespace TdInterface
         private Position _activePosition;
         private Position _initialPosition;
         private bool _trainingWheels = false;
-        private Settings settings = new Settings() { TrainingWheels = true, MaxRisk = "20", MaxShares = "4" };
+        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "10", MaxShares = "4" };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public MainForm(ILogger<MainForm> logger)
@@ -102,7 +102,7 @@ namespace TdInterface
                 }
 
                 var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(shares * .25);
+                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
 
                 var symbol = txtSymbol.Text;
                 var quantity = shares;
@@ -146,7 +146,7 @@ namespace TdInterface
                 }
                 
                 var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(shares * .25);
+                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
 
                 var symbol = txtSymbol.Text;
                 var quantity = shares;
@@ -188,7 +188,7 @@ namespace TdInterface
                 }
 
                 var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(shares * .25);
+                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
 
                 var symbol = txtSymbol.Text;
                 var quantity = shares;
@@ -231,7 +231,7 @@ namespace TdInterface
                 }
 
                 var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(shares * .25);
+                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
 
                 var symbol = txtSymbol.Text;
                 var quantity = shares;
@@ -562,11 +562,11 @@ namespace TdInterface
             _trainingWheels = checkBox1.Checked;
             if(_trainingWheels)
             {
-                txtRisk.Text = "4";
+                txtRisk.Text = settings.MaxShares;
             }
             else 
             {
-                txtRisk.Text = "10";
+                txtRisk.Text = settings.MaxRisk;
             }
         }
 
