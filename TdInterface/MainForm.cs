@@ -84,34 +84,14 @@ namespace TdInterface
         {
             try
             {
-                ResetInitialOrder();
                 var stockQuote = _stockQuote;
 
-                var stop = double.Parse(txtStop.Text);
-                var riskPerShare = stop - stockQuote.lastPrice;
-                var limit = stockQuote.lastPrice - riskPerShare;
-
-                double calcShares;
-                if (checkBox1.Checked)
-                {
-                    calcShares = double.Parse(txtRisk.Text);
-                }
-                else
-                {
-                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
-                }
-
-                var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
-
+                var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var quantity = shares;
                 var instruction = "SELL";
-                var stopPrice = stop;
-                var limtPrice = limit;
+                var triggerLimit = double.Parse("0.0");
 
-                var triggerOrder = OrderHelper.CreateTriggerOcoOrder("MARKET", symbol, quantity, 0.0, limitShares, instruction, stopPrice, limtPrice);
-                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+                await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }
             catch (Exception ex)
             {
@@ -119,43 +99,54 @@ namespace TdInterface
             }
         }
 
+        private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        {
+            var stopPrice = double.Parse(txtStop.Text);
+            var trainingWheels = checkBox1.Checked;
+            var maxRisk = txtRisk.Text;
+
+            var bidOrAskPrice = instruction.Equals("SELL") ? stockQuote.bidPrice : stockQuote.askPrice;
+            var riskPerShare = instruction.Equals("SELL") ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
+            var firstTargetlimtPrice = instruction.Equals("SELL") ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
+
+            int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
+
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * .25));
+
+            ResetInitialOrder();
+            var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+        }
+
+        private static int CalcShares(double riskPerShare, string maxRisk, bool trainingWheels = false)
+        {
+            double calcShares;
+
+            if (trainingWheels)
+            {
+                calcShares = double.Parse(maxRisk);
+            }
+            else
+            {
+                calcShares = double.Parse(maxRisk) / riskPerShare;
+            }
+
+            var quantity = Convert.ToInt32(calcShares);
+            
+            return quantity;
+        }
+
         private async void btnSellLmtTriggerOco_Click(object sender, EventArgs e)
         {
             try
             {
-                ResetInitialOrder();
-
                 var stockQuote = _stockQuote;
+                var orderType = "LIMIT";
+                var symbol = txtSymbol.Text;
+                var instruction = "SELL";
                 var triggerLimit = double.Parse(txtLimit.Text);
 
-                var stop = double.Parse(txtStop.Text);
-                var riskPerShare = stop - triggerLimit;
-                //var limit = stockQuote.lastPrice + riskPerShare;
-                var limit = triggerLimit - riskPerShare;
-                //var riskPerShare = stop - stockQuote.lastPrice;
-                //var limit = stockQuote.lastPrice - riskPerShare;
-
-                double calcShares;
-                if (checkBox1.Checked)
-                {
-                    calcShares = double.Parse(txtRisk.Text);
-                }
-                else
-                {
-                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
-                }
-                
-                var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
-
-                var symbol = txtSymbol.Text;
-                var quantity = shares;
-                var instruction = "SELL";
-                var stopPrice = stop;
-                var limtPrice = limit;
-
-                var triggerOrder = OrderHelper.CreateTriggerOcoOrder("LIMIT", symbol, quantity, triggerLimit, limitShares, instruction, stopPrice, limtPrice);
-                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+                await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }
             catch (Exception ex)
             {
@@ -169,35 +160,13 @@ namespace TdInterface
         {
             try
             {
-                ResetInitialOrder();
-
                 var stockQuote = _stockQuote;
-
-                var stop = double.Parse(txtStop.Text);
-                var riskPerShare = stockQuote.lastPrice - stop;
-                var limit = stockQuote.lastPrice + riskPerShare;
-
-                double calcShares;
-                if (checkBox1.Checked)
-                {
-                    calcShares = double.Parse(txtRisk.Text);
-                }
-                else
-                {
-                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
-                }
-
-                var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
-
+                var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var quantity = shares;
                 var instruction = "BUY";
-                var stopPrice = stop;
-                var limtPrice = limit;
+                var triggerLimit = double.Parse("0.0");
 
-                var triggerOrder = OrderHelper.CreateTriggerOcoOrder("MARKET", symbol, quantity, 0.0, limitShares, instruction, stopPrice, limtPrice);
-                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+                await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }
             catch (Exception ex)
             {
@@ -209,38 +178,13 @@ namespace TdInterface
         {
             try
             {
-                ResetInitialOrder();
-
                 var stockQuote = _stockQuote;
-
+                var orderType = "LIMIT";
+                var symbol = txtSymbol.Text;
+                var instruction = "BUY";
                 var triggerLimit = double.Parse(txtLimit.Text);
 
-                var stop = double.Parse(txtStop.Text);
-                var riskPerShare = triggerLimit - stop;
-                //var limit = stockQuote.lastPrice + riskPerShare;
-                var limit = triggerLimit + riskPerShare;
-
-                double calcShares;
-                if (checkBox1.Checked)
-                {
-                    calcShares = double.Parse(txtRisk.Text);
-                }
-                else
-                {
-                    calcShares = double.Parse(txtRisk.Text) / riskPerShare;
-                }
-
-                var shares = Convert.ToInt32(calcShares);
-                var limitShares = Convert.ToInt32(Math.Ceiling(shares * .25));
-
-                var symbol = txtSymbol.Text;
-                var quantity = shares;
-                var instruction = "BUY";
-                var stopPrice = stop;
-                var limtPrice = limit;
-
-                var triggerOrder = OrderHelper.CreateTriggerOcoOrder("LIMIT", symbol, quantity, triggerLimit, limitShares, instruction, stopPrice, limtPrice);
-                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+                await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ namespace TdInterface
 {
     public class OrderHelper
     {
-        public static Order CreateTriggerOcoOrder(string triggerOrderType, string symbol, int quantity, double triggerLimit, int limitQuantity, string instruction, double stopPrice, double limitPrice)
+        public static Order CreateTriggerOcoOrder(string triggerOrderType, string symbol, string instruction, int quantity, double triggerLimit, int firstTargetLimitQuantity, double firstTargetLimitPrice, double stopPrice)
         {
             var exitInstruction = instruction == "BUY" ? "SELL" : "BUY";
 
@@ -28,30 +28,6 @@ namespace TdInterface
 
             triggerOrder.orderStrategyType = "TRIGGER";
 
-            //var triggerOrder = new Order()
-            //{
-            //    orderStrategyType = "TRIGGER",
-            //    orderType = triggerOrderType,
-            //    session = "NORMAL",
-            //    duration = "DAY",
-            //    price = triggerOrderType == "LIMIT" ? triggerLimit.ToString("0.00") : String.Empty,
-            //    orderLegCollection = new List<OrderLeg>() {
-            //        {
-            //            new OrderLeg
-            //            {
-            //                instruction = instruction,
-            //                quantity = quantity,
-            //                instrument = new Instrument()
-            //                {
-            //                    assetType = "EQUITY",
-            //                    symbol = symbol
-            //                }
-            //            }
-            //        }
-            //    },
-            //    childOrderStrategies = new List<Order>()
-            //};
-
             var ocoOrder = new Order()
             {
                 orderStrategyType = "OCO",
@@ -64,7 +40,7 @@ namespace TdInterface
 
             ocoOrder.childOrderStrategies.Add(stopOrder);
 
-            var limitOrder = CreateLimitOrder(exitInstruction, symbol, limitQuantity, limitPrice);
+            var limitOrder = CreateLimitOrder(exitInstruction, symbol, firstTargetLimitQuantity, firstTargetLimitPrice);
 
             ocoOrder.childOrderStrategies.Add(limitOrder);
 
