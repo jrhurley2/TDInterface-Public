@@ -115,7 +115,20 @@ namespace TdInterface
 
             ResetInitialOrder();
             var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder, _placedOrders);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+            AddInitialOrder(symbol, orderKey, triggerOrder);
+
+        }
+        private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
+
+        private void AddInitialOrder(string symbol, ulong orderKey, Order order)
+        {
+            if(!_initialOrders.ContainsKey(symbol))
+            {
+                _initialOrders.Add(symbol, new Dictionary<ulong, Order>());
+            }
+
+            _initialOrders[symbol].Add(orderKey, order);
         }
 
         private static int CalcShares(double riskPerShare, string maxRisk, bool trainingWheels = false)
@@ -314,14 +327,14 @@ namespace TdInterface
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = OrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder, _placedOrders);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
 
 
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
             var stopOrder = OrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder, _placedOrders);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
         #endregion
 
