@@ -139,6 +139,7 @@ namespace TdInterface
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
             if(response.StatusCode != System.Net.HttpStatusCode.Created)
             {
+                Debug.Write(order);
                 throw new Exception($"Error Creating Order { await response.Content.ReadAsStringAsync()} ");
             };
 

@@ -36,6 +36,9 @@ namespace TDAmeritradeAPI.Client
         private readonly Subject<OrderFillMessage> _orderFillMessage = new Subject<OrderFillMessage>();
         public IObservable<OrderFillMessage> OrderFilled => _orderFillMessage.AsObservable();
 
+        private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
+        public IObservable<SocketNotify>  HeartBeat => _socketNotify.AsObservable();
+
         private StreamWriter _replayFile;
 
         public WebsocketClient WebsocketClient
@@ -192,6 +195,14 @@ namespace TDAmeritradeAPI.Client
                         Console.WriteLine(msg);
                     }
                 }
+                else if (v.ContainsKey("notify"))
+                {
+                    var notifyList = JsonConvert.DeserializeObject<List<SocketNotify>>(v["notify"].ToString());
+                    foreach(var notify in notifyList)
+                    {
+                        _socketNotify.OnNext(notify);
+                    }
+                }
                 else if (v.ContainsKey("data"))
                 {
                     var r = v["data"];
@@ -278,7 +289,7 @@ namespace TDAmeritradeAPI.Client
             _ws.Send(req);
         }
 
-        private static double ConvertToUnixTimestamp(DateTime date)
+        public static double ConvertToUnixTimestamp(DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             TimeSpan diff = date.ToUniversalTime() - origin;

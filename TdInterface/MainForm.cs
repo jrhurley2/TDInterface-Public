@@ -20,7 +20,7 @@ namespace TdInterface
         private Position _activePosition;
         private Position _initialPosition;
         private bool _trainingWheels = false;
-        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "10", MaxShares = "4" };
+        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "5", MaxShares = "4" };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public MainForm(ILogger<MainForm> logger)
@@ -62,6 +62,7 @@ namespace TdInterface
                 _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
                 _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
                 _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
+                _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
 
                 //_securitiesaccount = TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal).Result;
 
@@ -434,6 +435,13 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
             }
         }
+
+        private async void HandleHeartBeat(SocketNotify notify)
+        {
+            SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
+        }
+
+        
 
         private async Task SetPosition()
         {
