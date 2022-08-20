@@ -20,7 +20,7 @@ namespace TdInterface
         private Position _activePosition;
         private Position _initialPosition;
         private bool _trainingWheels = false;
-        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "10", MaxShares = "4" };
+        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "5", MaxShares = "4" };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public MainForm(ILogger<MainForm> logger)
@@ -105,7 +105,12 @@ namespace TdInterface
             var trainingWheels = checkBox1.Checked;
             var maxRisk = txtRisk.Text;
 
+            /*
             var bidOrAskPrice = instruction.Equals("SELL") ? stockQuote.bidPrice : stockQuote.askPrice;
+            var riskPerShare = instruction.Equals("SELL") ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
+            var firstTargetlimtPrice = instruction.Equals("SELL") ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
+            */
+            var bidOrAskPrice = stockQuote.lastPrice;
             var riskPerShare = instruction.Equals("SELL") ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
             var firstTargetlimtPrice = instruction.Equals("SELL") ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
 
