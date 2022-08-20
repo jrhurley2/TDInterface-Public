@@ -126,7 +126,7 @@ namespace TdInterface
             return stockQuote[symbol.ToUpper()];
         }
 
-        public static async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order, Dictionary<ulong, Order> orders)
+        public static async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, userPrincipal.accounts[0].accountId)))
             {
@@ -145,7 +145,6 @@ namespace TdInterface
 
             var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
             var orderNumber = ulong.Parse(orderNumberString);
-            orders.Add(orderNumber, order);
 
             return orderNumber;
         }

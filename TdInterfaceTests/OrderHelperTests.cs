@@ -27,7 +27,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedInstruction, expectedStopPrice, expectedLimitPrice);
+            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -72,7 +72,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedInstruction, expectedStopPrice, expectedLimitPrice);
+            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -115,7 +115,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedInstruction, expectedStopPrice, expectedLimitPrice);
+            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -158,7 +158,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedInstruction, expectedStopPrice, expectedLimitPrice);
+            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
