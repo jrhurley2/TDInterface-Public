@@ -19,6 +19,7 @@ namespace TdInterface
         private Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
+        private CandleList _candleList;
         private bool _trainingWheels = false;
         private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "5", MaxShares = "4" };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
@@ -63,11 +64,6 @@ namespace TdInterface
                 _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
                 _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
                 _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
-
-                //_securitiesaccount = TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal).Result;
-
-                //dataGridView1.DataSource = _securitiesaccount.positions;
-                //dataGridView1.DataSource = _securitiesaccount.
 
 
                 timer1.Start();
@@ -351,10 +347,72 @@ namespace TdInterface
                 if (txtSymbol.Text != String.Empty)
                 {
                     _streamer.SubscribeQuote(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
+                    //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
+                    //await UpdatePriceHistory();
+
                     await SetPosition();
                 }
             }
             catch (Exception) { }
+        }
+
+
+        private async Task UpdatePriceHistory()
+        {
+            _candleList = await TdHelper.GetPriceHistoryAsync(Utility.AccessTokenContainer, txtSymbol.Text.ToUpper());
+            var currentDate = _candleList.candles.Max(c => c.DateTime).ToString("MM/dd/yyyy");
+            var swings = CalculateSwingHighs(_candleList.candles.Where(c => c.DateTime >= DateTimeOffset.Parse($"{currentDate} 09:30") &&
+                                                                       c.DateTime <= DateTimeOffset.Parse($"{currentDate} 16:00")).ToArray());
+            var pmStats = CalculatePMHighsAndLows(_candleList.candles.Where(c => c.DateTime >= DateTimeOffset.Parse($"{currentDate} 04:00") &&
+                                                                       c.DateTime < DateTimeOffset.Parse($"{currentDate} 09:30")).ToArray());
+
+            //SafeUpdateButton(btnLastSwingLow, swings.Item1[swings.Item1.Count - 1].ToString("#.##"));
+            //SafeUpdateButton(btnLastSwingHigh, swings.Item2[swings.Item2.Count - 1].ToString("#.##"));
+        }
+
+        private Tuple<List<double>, List<double>> CalculateSwingHighs(Candle[] candles)
+        {
+            var swingHighs = new List<double>();
+            var swingLows = new List<double>();
+            double tempHigh = 0;
+
+
+            for (int i = 0; i < candles.Length - 1; i++)
+            {
+                if (i == 0) continue;
+                if (candles[i - 1].high < candles[i].high &&
+                    candles[i + 1].high < candles[i].high)
+                {
+                    swingHighs.Add(candles[i].high);
+                }
+
+                if (candles[i - 1].low > candles[i].low &&
+                    candles[i + 1].low > candles[i].low)
+                {
+                    swingLows.Add(candles[i].low);
+                }
+
+            }
+
+            return new Tuple<List<double>, List<double>>(swingLows, swingHighs);
+        }
+
+        private Tuple<double, double> CalculatePMHighsAndLows(Candle[] candles)
+        {
+            var swingHighs = new List<double>();
+            var swingLows = new List<double>();
+            double high = 0;
+            double low = double.MaxValue;
+
+            for (int i = 0; i < candles.Length; i++)
+            {
+                if (candles[i].DateTime.LocalDateTime.TimeOfDay.Hours == 8 &&
+                    candles[i].DateTime.LocalDateTime.TimeOfDay.Minutes == 0) continue;
+                if (candles[i].high > high) high = candles[i].high;
+                if (candles[i].low < low) low = candles[i].low;
+            }
+
+            return new Tuple<double, double>(low, high);
         }
 
         private delegate void SafeCallDelegate(TextBox textBox, string text);
@@ -372,6 +430,20 @@ namespace TdInterface
             }
 
         }
+        private void SafeUpdateButton(Button button, string text)
+        {
+            if (button.InvokeRequired)
+            {
+                var d = new SafeCallDelegate(SafeUpdateTextBox);
+                button.Invoke(d, new object[] { button, text });
+            }
+            else
+            {
+                button.Text = text;
+            }
+
+        }
+
         private void HandleStockQuote(StockQuote stockQuote)
         {
 
@@ -543,6 +615,26 @@ namespace TdInterface
         private void MainForm_Load(object sender, EventArgs e)
         {
             checkBox1.Checked = settings.TrainingWheels;
+        }
+
+        private void btnLastSwingLow_Click(object sender, EventArgs e)
+        {
+            txtStop.Text = (double.Parse(((Button)sender).Text) -.05).ToString("#.##");
+        }
+
+        private void btnLastSwingHigh_Click(object sender, EventArgs e)
+        {
+            txtStop.Text = (double.Parse(((Button)sender).Text) + .05).ToString("#.##");
+        }
+
+        private void txtStop_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //await UpdatePriceHistory();
         }
     }
 }
