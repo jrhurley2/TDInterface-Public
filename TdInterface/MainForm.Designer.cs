@@ -165,6 +165,7 @@ namespace TdInterface
             this.txtStop.Name = "txtStop";
             this.txtStop.Size = new System.Drawing.Size(100, 31);
             this.txtStop.TabIndex = 3;
+            this.txtStop.TextChanged += new System.EventHandler(this.txtStop_TextChanged);
             // 
             // timer1
             // 
@@ -187,7 +188,7 @@ namespace TdInterface
             this.groupBox1.Controls.Add(this.btnBuyLmtTriggerOco);
             this.groupBox1.Controls.Add(this.btnSellMrkTriggerOco);
             this.groupBox1.Controls.Add(this.btnBuyMrkTriggerOco);
-            this.groupBox1.Location = new System.Drawing.Point(643, 30);
+            this.groupBox1.Location = new System.Drawing.Point(850, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(318, 172);
             this.groupBox1.TabIndex = 13;
@@ -230,7 +231,7 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnExitMark25);
             this.groupBox2.Controls.Add(this.btnExitMark10);
             this.groupBox2.Controls.Add(this.btnBreakEven);
-            this.groupBox2.Location = new System.Drawing.Point(643, 235);
+            this.groupBox2.Location = new System.Drawing.Point(850, 255);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(297, 169);
             this.groupBox2.TabIndex = 14;
@@ -409,7 +410,7 @@ namespace TdInterface
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1001, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1230, 33);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -467,7 +468,7 @@ namespace TdInterface
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1001, 684);
+            this.ClientSize = new System.Drawing.Size(1230, 684);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtHeartBeat);
             this.Controls.Add(this.checkBox1);

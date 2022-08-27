@@ -21,7 +21,6 @@ namespace TDAmeritradeAPI.Client
         private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
         private StreamerSettings.Request _loginRequest;
-        private StreamerSettings.Request _quoteRequest;
 
         private WebsocketClient _ws;
         private StockQuote _stockQuote;
@@ -57,7 +56,7 @@ namespace TDAmeritradeAPI.Client
         public  TDStreamer(UserPrincipal userPrincipals)
         {
 
-            _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
+            //_replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
             _credentials = new StreamerSettings.Credentials
             {
@@ -251,6 +250,11 @@ namespace TDAmeritradeAPI.Client
                                 }
                             }
                         }
+                        else if (service == "CHART_EQUITY")
+                        {
+                            var stockChartBar = new StockChartBar(socketData.content[0]);
+                            Debug.WriteLine(msg.Text);
+                        }
                         else
                         {
                             Debug.WriteLine(msg.Text);
@@ -265,7 +269,7 @@ namespace TDAmeritradeAPI.Client
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
             var _reqs = new List<StreamerSettings.Request>();
-            _quoteRequest = new StreamerSettings.Request
+            var quoteRequest = new StreamerSettings.Request
             {
                 service = "QUOTE",
                 command = "SUBS",
@@ -278,7 +282,7 @@ namespace TDAmeritradeAPI.Client
                     fields = "0,1,2,3,4"
                 }
             };
-            _reqs.Add(_quoteRequest);
+            _reqs.Add(quoteRequest);
 
             var request = new StreamerSettings.Requests()
             {
@@ -289,6 +293,32 @@ namespace TDAmeritradeAPI.Client
             _ws.Send(req);
         }
 
+        public void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol)
+        {
+            var _reqs = new List<StreamerSettings.Request>();
+            var chartRequest= new StreamerSettings.Request
+            {
+                service = "CHART_EQUITY",
+                command = "SUBS",
+                requestid = "1",
+                account = userPrincipals.accounts[0].accountId,
+                source = userPrincipals.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    keys = tickerSymbol,
+                    fields = "0,1,2,3,4,5,6,7,8"
+                }
+            };
+            _reqs.Add(chartRequest);
+
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
         public static double ConvertToUnixTimestamp(DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);

@@ -21,6 +21,7 @@ namespace TdInterface
         public const string routeGetAccounts = "v1/accounts";
         public const string routePlaceOrder = "v1/accounts/{0}/orders";
         public const string routeGetQuote = "v1/marketdata/{0}/quotes";
+        public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=5&needExtendedHoursData=true";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
         public static async Task<AccessTokenContainer> GetAccessToken(string authToken)
@@ -111,6 +112,7 @@ namespace TdInterface
 
             return account;
         }
+
         public static async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetQuote, symbol)))
@@ -124,6 +126,26 @@ namespace TdInterface
             var stockQuote = DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
 
             return stockQuote[symbol.ToUpper()];
+        }
+
+        public static async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetPriceHistory, symbol)))
+            {
+                Method = HttpMethod.Get,
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            var response = await _httpClient.SendAsync(request);
+            var candleList = DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
+
+            foreach(var candle in candleList.candles)
+            {
+                Debug.WriteLine($"{candle.DateTime},{candle.open},{candle.close},{candle.high},{candle.low},{candle.volume}");
+            }
+
+            return candleList;
         }
 
         public static async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
