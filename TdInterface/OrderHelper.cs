@@ -7,9 +7,14 @@ namespace TdInterface
 {
     public class OrderHelper
     {
+        public const string BUY = "BUY";
+        public const string BUY_TO_COVER = "BUY_TO_COVER";
+        public const string SELL = "SELL";
+        public const string SELL_SHORT = "SELL_SHORT";
+
         public static Order CreateTriggerOcoOrder(string triggerOrderType, string symbol, string instruction, int quantity, double triggerLimit, int firstTargetLimitQuantity, double firstTargetLimitPrice, double stopPrice)
         {
-            var exitInstruction = instruction == "BUY" ? "SELL" : "BUY";
+            var exitInstruction = instruction == BUY ? SELL : BUY_TO_COVER;
 
             Order triggerOrder = null;
 

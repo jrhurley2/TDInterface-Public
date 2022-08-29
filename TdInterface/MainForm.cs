@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TDAmeritradeAPI.Client;
 using TdInterface.Model;
+using Websocket.Client;
+using Websocket.Client.Models;
 
 namespace TdInterface
 {
@@ -64,7 +67,8 @@ namespace TdInterface
                 _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
                 _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
                 _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
-
+                _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
+                _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
                 timer1.Start();
             }
@@ -85,7 +89,7 @@ namespace TdInterface
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = "SELL";
+                var instruction = OrderHelper.SELL_SHORT;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -102,14 +106,9 @@ namespace TdInterface
             var trainingWheels = checkBox1.Checked;
             var maxRisk = txtRisk.Text;
 
-            /*
-            var bidOrAskPrice = instruction.Equals("SELL") ? stockQuote.bidPrice : stockQuote.askPrice;
-            var riskPerShare = instruction.Equals("SELL") ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
-            var firstTargetlimtPrice = instruction.Equals("SELL") ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
-            */
-            var bidOrAskPrice = stockQuote.lastPrice;
-            var riskPerShare = instruction.Equals("SELL") ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
-            var firstTargetlimtPrice = instruction.Equals("SELL") ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
+            var bidOrAskPrice = orderType == "MARKET" ? stockQuote.lastPrice : triggerLimit;
+            var riskPerShare = instruction.Equals(OrderHelper.SELL_SHORT) ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
+            var firstTargetlimtPrice = instruction.Equals(OrderHelper.SELL_SHORT) ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
 
             int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
 
@@ -118,6 +117,7 @@ namespace TdInterface
             ResetInitialOrder();
             var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
             var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+            txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
             AddInitialOrder(symbol, orderKey, triggerOrder);
 
         }
@@ -158,7 +158,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = "SELL";
+                var instruction = OrderHelper.SELL_SHORT;
                 var triggerLimit = double.Parse(txtLimit.Text);
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -178,7 +178,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = "BUY";
+                var instruction = OrderHelper.BUY;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -196,7 +196,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = "BUY";
+                var instruction = OrderHelper.BUY;
                 var triggerLimit = double.Parse(txtLimit.Text);
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -228,12 +228,12 @@ namespace TdInterface
                 int quantity = 0;
                 if (_activePosition.longQuantity > 0)
                 {
-                    stopInstruction = "SELL";
+                    stopInstruction = OrderHelper.SELL;
                     quantity = (int)_activePosition.longQuantity;
                 }
                 else if (_activePosition.shortQuantity > 0)
                 {
-                    stopInstruction = "BUY";
+                    stopInstruction = OrderHelper.BUY_TO_COVER;
                     quantity = (int)_activePosition.shortQuantity;
                 }
                 else
@@ -312,11 +312,11 @@ namespace TdInterface
             var exitInstruction = "";
             if (position.longQuantity > 0)
             {
-                exitInstruction = "SELL";
+                exitInstruction = OrderHelper.SELL;
             }
             else if (position.shortQuantity > 0)
             {
-                exitInstruction = "BUY";
+                exitInstruction = OrderHelper.BUY_TO_COVER;
             }
             else
             {
@@ -475,7 +475,27 @@ namespace TdInterface
             SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
         }
 
-        
+        private async void HandleDisconnect(DisconnectionInfo disconnectionInfo)
+        {
+            try
+            {
+                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - Attemptinng to Reconnect");
+                await _streamer.WebsocketClient.ReconnectOrFail();
+            }
+            catch (Exception ex)
+            {
+                SafeUpdateTextBox(txtLastError, ex.Message);
+                Debug.WriteLine(ex.Message);
+                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
+
+            }
+        }
+
+        private async void HandleReconnection(ReconnectionInfo reconnectionInfo)
+        {
+            SafeUpdateTextBox(txtConnectionStatus, reconnectionInfo.Type.ToString());
+        }
+
 
         private async Task SetPosition()
         {

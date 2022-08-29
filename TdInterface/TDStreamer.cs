@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
@@ -13,6 +14,7 @@ using System.Threading;
 using System.Xml.Serialization;
 using TdInterface.Model;
 using Websocket.Client;
+using Websocket.Client.Models;
 
 namespace TDAmeritradeAPI.Client
 {
@@ -37,6 +39,12 @@ namespace TDAmeritradeAPI.Client
 
         private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
         public IObservable<SocketNotify>  HeartBeat => _socketNotify.AsObservable();
+
+        private readonly Subject<DisconnectionInfo> _disconnectionInfo = new Subject<DisconnectionInfo>();
+        public IObservable<DisconnectionInfo> Disconnection => _disconnectionInfo.AsObservable();
+
+        private readonly Subject<ReconnectionInfo> _reconnectionInfo = new Subject<ReconnectionInfo>();
+        public IObservable<ReconnectionInfo> Reconnection => _reconnectionInfo.AsObservable();
 
         private StreamWriter _replayFile;
 
@@ -132,14 +140,22 @@ namespace TDAmeritradeAPI.Client
 
         private void SubscribeWebSocketMessages(UserPrincipal userPrincipals, WebsocketClient client)
         {
-            client.DisconnectionHappened.Subscribe(dis =>
-                Debug.WriteLine($"DisconnectionHappened {dis.Type}"));
+            client.DisconnectionHappened.Subscribe(dis =>   
+            {
+                Debug.WriteLine($"DisconnectionHappened {dis.Type}");
+                _disconnectionInfo.OnNext(dis);
+            });
 
             client.ReconnectionHappened.Subscribe(info =>
-                Debug.WriteLine($"Reconnection happened, type: {info.Type}"));
+            {
+                Debug.WriteLine($"Reconnection happened, type: {info.Type}");
+                _reconnectionInfo.OnNext(info);
+            });
 
             client.MessageReceived.Subscribe(msg =>
             {
+                _socketNotify.OnNext(new SocketNotify());
+
                 try
                 {
                     if(_replayFile != null)
