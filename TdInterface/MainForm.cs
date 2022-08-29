@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TDAmeritradeAPI.Client;
 using TdInterface.Model;
+using Websocket.Client;
+using Websocket.Client.Models;
 
 namespace TdInterface
 {
@@ -65,7 +67,8 @@ namespace TdInterface
                 _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
                 _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
                 _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
-
+                _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
+                _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
                 timer1.Start();
             }
@@ -103,7 +106,7 @@ namespace TdInterface
             var trainingWheels = checkBox1.Checked;
             var maxRisk = txtRisk.Text;
 
-            var bidOrAskPrice = stockQuote.lastPrice;
+            var bidOrAskPrice = orderType == "MARKET" ? stockQuote.lastPrice : triggerLimit;
             var riskPerShare = instruction.Equals(OrderHelper.SELL_SHORT) ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
             var firstTargetlimtPrice = instruction.Equals(OrderHelper.SELL_SHORT) ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
 
@@ -472,7 +475,27 @@ namespace TdInterface
             SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
         }
 
-        
+        private async void HandleDisconnect(DisconnectionInfo disconnectionInfo)
+        {
+            try
+            {
+                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - Attemptinng to Reconnect");
+                await _streamer.WebsocketClient.ReconnectOrFail();
+            }
+            catch (Exception ex)
+            {
+                SafeUpdateTextBox(txtLastError, ex.Message);
+                Debug.WriteLine(ex.Message);
+                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
+
+            }
+        }
+
+        private async void HandleReconnection(ReconnectionInfo reconnectionInfo)
+        {
+            SafeUpdateTextBox(txtConnectionStatus, reconnectionInfo.Type.ToString());
+        }
+
 
         private async Task SetPosition()
         {
