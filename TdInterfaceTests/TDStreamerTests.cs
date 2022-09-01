@@ -18,7 +18,7 @@ namespace TDAmeritradeAPI.Client.Tests
             var client = new TDStreamer(websocketClient);
 
 
-            using (var replayFile = new StreamReader($"20220603-100637replay.txt"))
+            using (var replayFile = new StreamReader($"20220831-102516replay.txt"))
             {
                 string message;
                 while ((message = replayFile.ReadLine()) != null) 
