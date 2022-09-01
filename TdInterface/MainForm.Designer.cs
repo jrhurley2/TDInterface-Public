@@ -45,6 +45,8 @@ namespace TdInterface
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
             this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnCancelAll = new System.Windows.Forms.Button();
+            this.txtStopToClose = new System.Windows.Forms.TextBox();
             this.btnExitMark100 = new System.Windows.Forms.Button();
             this.btnExitMark50 = new System.Windows.Forms.Button();
             this.btnExitMark33 = new System.Windows.Forms.Button();
@@ -227,6 +229,8 @@ namespace TdInterface
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnCancelAll);
+            this.groupBox2.Controls.Add(this.txtStopToClose);
             this.groupBox2.Controls.Add(this.btnExitMark100);
             this.groupBox2.Controls.Add(this.btnExitMark50);
             this.groupBox2.Controls.Add(this.btnExitMark33);
@@ -235,10 +239,29 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnBreakEven);
             this.groupBox2.Location = new System.Drawing.Point(850, 255);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(297, 169);
+            this.groupBox2.Size = new System.Drawing.Size(478, 280);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "To Close";
+            // 
+            // btnCancelAll
+            // 
+            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.btnCancelAll.Location = new System.Drawing.Point(80, 201);
+            this.btnCancelAll.Name = "btnCancelAll";
+            this.btnCancelAll.Size = new System.Drawing.Size(238, 63);
+            this.btnCancelAll.TabIndex = 7;
+            this.btnCancelAll.Text = "Cancel All";
+            this.btnCancelAll.UseVisualStyleBackColor = false;
+            this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
+            // 
+            // txtStopToClose
+            // 
+            this.txtStopToClose.Enabled = false;
+            this.txtStopToClose.Location = new System.Drawing.Point(285, 44);
+            this.txtStopToClose.Name = "txtStopToClose";
+            this.txtStopToClose.Size = new System.Drawing.Size(125, 27);
+            this.txtStopToClose.TabIndex = 6;
             // 
             // btnExitMark100
             // 
@@ -412,7 +435,7 @@ namespace TdInterface
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1230, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1607, 28);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -488,7 +511,7 @@ namespace TdInterface
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1230, 684);
+            this.ClientSize = new System.Drawing.Size(1607, 684);
             this.Controls.Add(this.lblConnectionStatus);
             this.Controls.Add(this.txtConnectionStatus);
             this.Controls.Add(this.label8);
@@ -528,6 +551,7 @@ namespace TdInterface
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -577,6 +601,8 @@ namespace TdInterface
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtConnectionStatus;
         private System.Windows.Forms.Label lblConnectionStatus;
+        private System.Windows.Forms.TextBox txtStopToClose;
+        private System.Windows.Forms.Button btnCancelAll;
     }
 }
 

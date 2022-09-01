@@ -19,6 +19,7 @@ namespace TdInterface
         public const string routeGetToken = "v1/oauth2/token";
         public const string routeGetAccount = "v1/accounts/{0}?fields=positions,orders";
         public const string routeGetAccounts = "v1/accounts";
+        public const string routeCancelOrder = "v1/accounts/{0}/orders/{1}";
         public const string routePlaceOrder = "v1/accounts/{0}/orders";
         public const string routeGetQuote = "v1/marketdata/{0}/quotes";
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=5&needExtendedHoursData=true";
@@ -169,6 +170,23 @@ namespace TdInterface
             var orderNumber = ulong.Parse(orderNumberString);
 
             return orderNumber;
+        }
+
+        public static async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, userPrincipal.accounts[0].accountId, order.orderId)))
+            {
+                Method = HttpMethod.Delete,
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                Debug.Write(order);
+                throw new Exception($"Error deleting Order {await response.Content.ReadAsStringAsync()} ");
+            };
         }
 
         public static async Task<UserPrincipal> GetUserPrincipals(AccessTokenContainer accessTokenContainer)
