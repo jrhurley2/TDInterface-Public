@@ -554,7 +554,12 @@ namespace TdInterface
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.B)
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                btnCancelAll.PerformClick();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.B)
             {
                 btnBuyMrkTriggerOco.PerformClick();
                 e.SuppressKeyPress = true;
@@ -662,6 +667,20 @@ namespace TdInterface
         private void button1_Click(object sender, EventArgs e)
         {
             //await UpdatePriceHistory();
+        }
+
+        private async void btnCancelAll_Click(object sender, EventArgs e)
+        {
+            var openOrders = _securitiesaccount.orderStrategies.Where(o => o.status == "QUEUED" && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+
+            var tasks = new List<Task>();
+            foreach(var order in openOrders)
+            {
+                var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(true);
         }
     }
 }
