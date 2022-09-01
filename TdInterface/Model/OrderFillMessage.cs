@@ -49,7 +49,13 @@ namespace TdInterface.Model
 
         private byte markdownAmountField;
 
-        private byte tradeCreditAmountField;
+        private decimal tradeCreditAmountField;
+
+        private object[] confirmTextsField;
+
+        private byte trueCommCostField;
+
+        private System.DateTime tradeDateField;
 
         /// <remarks/>
         public OrderFillMessageOrderGroupID OrderGroupID
@@ -169,7 +175,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte TradeCreditAmount
+        public decimal TradeCreditAmount
         {
             get
             {
@@ -178,6 +184,47 @@ namespace TdInterface.Model
             set
             {
                 this.tradeCreditAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("ConfirmText", IsNullable = false)]
+        public object[] ConfirmTexts
+        {
+            get
+            {
+                return this.confirmTextsField;
+            }
+            set
+            {
+                this.confirmTextsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public byte TrueCommCost
+        {
+            get
+            {
+                return this.trueCommCostField;
+            }
+            set
+            {
+                this.trueCommCostField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date")]
+        public System.DateTime TradeDate
+        {
+            get
+            {
+                return this.tradeDateField;
+            }
+            set
+            {
+                this.tradeDateField = value;
             }
         }
     }
@@ -861,7 +908,7 @@ namespace TdInterface.Model
 
         private ulong idField;
 
-        private byte exchangeField;
+        private string exchangeField;
 
         private string brokerIdField;
 
@@ -957,7 +1004,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte Exchange
+        public string Exchange
         {
             get
             {

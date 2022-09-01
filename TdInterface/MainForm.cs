@@ -26,11 +26,14 @@ namespace TdInterface
         private bool _trainingWheels = false;
         private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "5", MaxShares = "4" };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
+        private TextWriterTraceListener _textWriterTraceListener = null;
 
         public MainForm(ILogger<MainForm> logger)
         {
             try
             {
+                _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+                Trace.Listeners.Add(_textWriterTraceListener);
 
                 _logger = logger;
                 _logger.LogInformation("Start Main From");
@@ -605,7 +608,11 @@ namespace TdInterface
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _textWriterTraceListener.Flush();
+            _textWriterTraceListener.Close();
             _streamer.Dispose();
+            _textWriterTraceListener.Dispose();
+
         }
 
         private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)

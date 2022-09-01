@@ -64,7 +64,7 @@ namespace TDAmeritradeAPI.Client
         public  TDStreamer(UserPrincipal userPrincipals)
         {
 
-            //_replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
+            _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
             _credentials = new StreamerSettings.Credentials
             {
@@ -240,7 +240,9 @@ namespace TDAmeritradeAPI.Client
                                 {
                                     try
                                     {
-                                        var orderEntryRequestMessage = OrderEntryRequestMessage.ParseXml(content["3"]);
+                                        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
+                                        //var orderEntryRequestMessage = OrderEntryRequestMessage.ParseXml(content["3"]);
+                                        var orderEntryRequestMessage = new OrderEntryRequestMessage();
                                         _orderEntryRequestMessage.OnNext(orderEntryRequestMessage);
                                     }
                                     catch (Exception ex)
@@ -254,9 +256,11 @@ namespace TDAmeritradeAPI.Client
                                     try
                                     {
                                         Debug.WriteLine(content["3"]);
-                                        var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
+                                        //var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
+                                        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
+                                        var orderFillMessage = new OrderFillMessage();
                                         _orderFillMessage.OnNext(orderFillMessage);
-                                        Debug.WriteLine(orderFillMessage.ExecutionInformation.ExecutionPrice);
+                                        //Debug.WriteLine(orderFillMessage.ExecutionInformation.ExecutionPrice);
                                     }
                                     catch (Exception ex)
                                     {
