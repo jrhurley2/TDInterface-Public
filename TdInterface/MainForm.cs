@@ -671,11 +671,12 @@ namespace TdInterface
 
         private async void btnCancelAll_Click(object sender, EventArgs e)
         {
-            var openOrders = _securitiesaccount.orderStrategies.Where(o => o.status == "QUEUED" && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+            var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
             var tasks = new List<Task>();
             foreach(var order in openOrders)
             {
+                Debug.WriteLine(order);
                 var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
                 tasks.Add(task);
             }
