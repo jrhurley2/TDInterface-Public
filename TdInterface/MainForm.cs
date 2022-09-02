@@ -666,7 +666,7 @@ namespace TdInterface
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //await UpdatePriceHistory();
+             //await UpdatePriceHistory();
         }
 
         private async void btnCancelAll_Click(object sender, EventArgs e)
