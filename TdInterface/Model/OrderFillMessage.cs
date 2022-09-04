@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 
@@ -20,13 +22,30 @@ namespace TdInterface.Model
     {
         public static OrderFillMessage ParseXml(string xmlContent)
         {
+            var xmlDel = new XmlDeserializationEvents();
+            xmlDel.OnUnknownAttribute += (o, e) => { };
+            xmlDel.OnUnknownNode+= (o, e) => { };
+            xmlDel.OnUnreferencedObject += (o, e) => { };
+            xmlDel.OnUnknownElement += (o, e) => { };
+
             OrderFillMessage orderFillMessage = null;
 
             var xmlSerializer = new XmlSerializer(typeof(OrderFillMessage));
+
             using (TextReader reader = new StringReader(xmlContent))
             {
-                orderFillMessage = xmlSerializer.Deserialize(reader) as OrderFillMessage;
+                try
+                {
+                    var xmlReader = XmlReader.Create(reader);
+                    orderFillMessage = xmlSerializer.Deserialize(xmlReader, xmlDel) as OrderFillMessage;
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.StackTrace);
+                }
             }
+
             return orderFillMessage;
 
         }
@@ -363,7 +382,7 @@ namespace TdInterface.Model
 
         private string orderInstructionsField;
 
-        private byte originalQuantityField;
+        private int originalQuantityField;
 
         private string amountIndicatorField;
 
@@ -381,7 +400,7 @@ namespace TdInterface.Model
 
         private OrderFillMessageOrderCharge[] chargesField;
 
-        private byte netShortQtyField;
+        private int netShortQtyField;
 
         private string taxlotField;
 
@@ -479,7 +498,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte OriginalQuantity
+        public int OriginalQuantity
         {
             get
             {
@@ -597,7 +616,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte NetShortQty
+        public int NetShortQty
         {
             get
             {
@@ -763,7 +782,7 @@ namespace TdInterface.Model
 
         private string brokerField;
 
-        private byte quantityField;
+        private int quantityField;
 
         private object badgeNumberField;
 
@@ -809,7 +828,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte Quantity
+        public int Quantity
         {
             get
             {
@@ -898,7 +917,7 @@ namespace TdInterface.Model
 
         private System.DateTime timestampField;
 
-        private byte quantityField;
+        private int quantityField;
 
         private decimal executionPriceField;
 
@@ -906,7 +925,7 @@ namespace TdInterface.Model
 
         private byte leavesQuantityField;
 
-        private ulong idField;
+        private string idField;
 
         private string exchangeField;
 
@@ -939,7 +958,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public byte Quantity
+        public int Quantity
         {
             get
             {
@@ -991,7 +1010,7 @@ namespace TdInterface.Model
         }
 
         /// <remarks/>
-        public ulong ID
+        public string ID
         {
             get
             {

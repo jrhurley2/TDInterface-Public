@@ -67,11 +67,13 @@ namespace TdInterface
 
                 _streamer = new TDStreamer(Utility.UserPrincipal);
                 _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
+                _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
                 _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
                 _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
                 _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
                 _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
                 _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
+
 
                 timer1.Start();
             }
@@ -82,6 +84,7 @@ namespace TdInterface
             }
 
         }
+
 
         #region Order Open 
         private async void btnSellMrkTriggerOco_Click(object sender, EventArgs e)
@@ -455,6 +458,11 @@ namespace TdInterface
             SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
         }
+        private async void HandleAcctActivity(AcctActivity a)
+        {
+            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+        }
+
         private async void HandleOrderRecieved(OrderEntryRequestMessage orderEntryRequestMessage)
         {
             _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
@@ -671,17 +679,26 @@ namespace TdInterface
 
         private async void btnCancelAll_Click(object sender, EventArgs e)
         {
-            var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
-
-            var tasks = new List<Task>();
-            foreach(var order in openOrders)
+            try
             {
-                Debug.WriteLine(order);
-                var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
-                tasks.Add(task);
-            }
+                var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
-            await Task.WhenAll(tasks).ConfigureAwait(true);
+                var tasks = new List<Task>();
+                foreach (var order in openOrders)
+                {
+                    Debug.WriteLine(order);
+                    var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
+                    tasks.Add(task);
+                }
+
+                await Task.WhenAll(tasks).ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                txtLastError.Text = ex.Message;
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
     }
 }

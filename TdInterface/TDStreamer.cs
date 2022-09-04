@@ -31,6 +31,9 @@ namespace TDAmeritradeAPI.Client
         private readonly Subject<StockQuote> _stockQuoteRecievedSubject = new Subject<StockQuote>();
         public IObservable<StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
+        private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
+        public IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
+        
         private readonly Subject<OrderEntryRequestMessage> _orderEntryRequestMessage = new Subject<OrderEntryRequestMessage>();
         public IObservable<OrderEntryRequestMessage> OrderRecieved => _orderEntryRequestMessage.AsObservable();
 
@@ -39,6 +42,8 @@ namespace TDAmeritradeAPI.Client
 
         private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
         public IObservable<SocketNotify>  HeartBeat => _socketNotify.AsObservable();
+
+
 
         private readonly Subject<DisconnectionInfo> _disconnectionInfo = new Subject<DisconnectionInfo>();
         public IObservable<DisconnectionInfo> Disconnection => _disconnectionInfo.AsObservable();
@@ -236,29 +241,30 @@ namespace TDAmeritradeAPI.Client
                         {
                             foreach (var content in socketData.content)
                             {
-                                if (content["2"] == "OrderEntryRequest")
-                                {
-                                    try
-                                    {
-                                        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
-                                        //var orderEntryRequestMessage = OrderEntryRequestMessage.ParseXml(content["3"]);
-                                        var orderEntryRequestMessage = new OrderEntryRequestMessage();
-                                        _orderEntryRequestMessage.OnNext(orderEntryRequestMessage);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Debug.WriteLine(ex.Message);
-                                        Debug.WriteLine(ex.StackTrace);
-                                    }
-                                }
+                                
+                                //if (content["2"] == "OrderEntryRequest")
+                                //{
+                                //    try
+                                //    {
+                                //        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
+                                //        //var orderEntryRequestMessage = OrderEntryRequestMessage.ParseXml(content["3"]);
+                                //        var orderEntryRequestMessage = new OrderEntryRequestMessage();
+                                //        _orderEntryRequestMessage.OnNext(orderEntryRequestMessage);
+                                //    }
+                                //    catch (Exception ex)
+                                //    {
+                                //        Debug.WriteLine(ex.Message);
+                                //        Debug.WriteLine(ex.StackTrace);
+                                //    }
+                                //}
                                 if (content["2"] == "OrderFill")
                                 {
                                     try
                                     {
                                         Debug.WriteLine(content["3"]);
-                                        //var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
+                                        var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
                                         //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
-                                        var orderFillMessage = new OrderFillMessage();
+                                        //var orderFillMessage = new OrderFillMessage();
                                         _orderFillMessage.OnNext(orderFillMessage);
                                         //Debug.WriteLine(orderFillMessage.ExecutionInformation.ExecutionPrice);
                                     }
@@ -269,6 +275,7 @@ namespace TDAmeritradeAPI.Client
                                     }
                                 }
                             }
+                            _acctActivity.OnNext(new AcctActivity());
                         }
                         else if (service == "CHART_EQUITY")
                         {
