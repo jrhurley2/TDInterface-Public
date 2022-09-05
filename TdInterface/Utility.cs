@@ -13,12 +13,14 @@ namespace TdInterface
     public class Utility
     {
         private static string TokenFile = "AccessToken.json";
+        private static string SettingsFile = "Settings.json";
+
         public static string AuthToken { get; set; }
         private static string _consumerKey = null;
 
-        public static AccessTokenContainer AccessTokenContainer{ get; set; }
+        public static AccessTokenContainer AccessTokenContainer { get; set; }
 
-        public static UserPrincipal UserPrincipal{ get; set; }
+        public static UserPrincipal UserPrincipal { get; set; }
 
         public static AccessTokenContainer GetAccessTokenContainer()
         {
@@ -43,6 +45,26 @@ namespace TdInterface
             var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accessTokenAsString);
             var encrypted = ProtectedData.Protect(bytesToEncrypt, GetEntropy(), DataProtectionScope.CurrentUser);
             File.WriteAllBytes(TokenFile, encrypted);
+        }
+
+        public static void SaveSettings(Settings settings)
+        {
+            var settingsAsString = JsonConvert.SerializeObject(settings);
+
+            File.WriteAllText(SettingsFile, settingsAsString);
+        }
+
+        public static Settings GetSettings()
+        {
+            try
+            {
+                var settinngsAsString = File.ReadAllText(SettingsFile);
+                return JsonConvert.DeserializeObject<Settings>(settinngsAsString);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static byte[] GetEntropy()
