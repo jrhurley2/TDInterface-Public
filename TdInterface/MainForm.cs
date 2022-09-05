@@ -24,7 +24,7 @@ namespace TdInterface
         private Position _initialPosition;
         private CandleList _candleList;
         private bool _trainingWheels = false;
-        private Settings settings = new Settings() { TrainingWheels = false, MaxRisk = "5", MaxShares = "4" };
+        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
@@ -642,19 +642,27 @@ namespace TdInterface
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             _trainingWheels = checkBox1.Checked;
-            if(_trainingWheels)
-            {
-                txtRisk.Text = settings.MaxShares;
-            }
-            else 
-            {
-                txtRisk.Text = settings.MaxRisk;
-            }
+            _settings.TradeShares = _trainingWheels;
+            ApplySettings();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            checkBox1.Checked = settings.TrainingWheels;
+            _settings = Utility.GetSettings();
+            ApplySettings();
+        }
+
+        private void ApplySettings()
+        {
+            checkBox1.Checked = _settings.TradeShares;
+            if (_settings.TradeShares)
+            {
+                txtRisk.Text = _settings.MaxShares.ToString("#");
+            }
+            else
+            {
+                txtRisk.Text = _settings.MaxRisk.ToString("#.##");
+            }
         }
 
         private void btnLastSwingLow_Click(object sender, EventArgs e)
@@ -681,6 +689,8 @@ namespace TdInterface
         {
             try
             {
+
+                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                 var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
                 var tasks = new List<Task>();
@@ -699,6 +709,15 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new UserOptionsForm();
+            frm.ShowDialog();
+            _settings = Utility.GetSettings();
+            ApplySettings();
+
         }
     }
 }
