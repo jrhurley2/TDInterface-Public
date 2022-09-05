@@ -726,12 +726,13 @@ namespace TdInterface
             {
 
                 _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-                var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+                Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
+                var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)
                 {
-                    Debug.WriteLine(order);
+                    Debug.WriteLine(JsonConvert.SerializeObject( order));
                     var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
                     tasks.Add(task);
                 }
