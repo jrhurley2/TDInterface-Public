@@ -305,7 +305,36 @@ namespace TdInterface
             }
         }
 
+        private async Task ExitLimitPercentage(double percenntage)
+        {
+            try
+            {
+                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
+                await ExitBidOrAsk(quantity);
+            }
+            catch (Exception ex)
+            {
+                txtLastError.Text = ex.Message;
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
 
+
+        private async Task ExitBidOrAsk(int quantity)
+        {
+            string exitInstruction = GetExitInstruction(_activePosition);
+            var limitPrice = 0.0;
+            if (exitInstruction == OrderHelper.SELL) {
+                limitPrice = _stockQuote.askPrice;
+            }
+            else
+            {
+                limitPrice = _stockQuote.bidPrice;
+            }
+
+            await PlaceLimitOrder(_activePosition.instrument.symbol, quantity, exitInstruction, limitPrice);
+        }
 
         private async Task ExitMarket(int quantity)
         {
@@ -335,6 +364,12 @@ namespace TdInterface
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = OrderHelper.CreateMarketOrder(instruction, symbol, quantity);
+            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+        }
+
+        private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
+        {
+            var stopOrder = OrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
             var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
 
@@ -718,6 +753,31 @@ namespace TdInterface
             _settings = Utility.GetSettings();
             ApplySettings();
 
+        }
+
+        private async void btnExitAsk10_Click(object sender, EventArgs e)
+        {
+            await ExitLimitPercentage(.10D);
+        }
+
+        private async void btnExitAsk25_Click(object sender, EventArgs e)
+        {
+            await ExitLimitPercentage(.25D);
+        }
+
+        private async void btnExitAsk33_Click(object sender, EventArgs e)
+        {
+            await ExitLimitPercentage(.33D);
+        }
+
+        private async void btnExitAsk50_Click(object sender, EventArgs e)
+        {
+            await ExitLimitPercentage(.50D);
+        }
+
+        private async void btnExitAsk100_Click(object sender, EventArgs e)
+        {
+            await ExitLimitPercentage(1.0D);
         }
     }
 }
