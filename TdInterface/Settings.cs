@@ -6,8 +6,8 @@ namespace TdInterface
 {
     public class Settings
     {
-        public bool TrainingWheels { get; set; }
-        public string MaxShares { get; set; }
-        public string MaxRisk { get; set; }
+        public bool TradeShares { get; set; }
+        public int MaxShares { get; set; }
+        public decimal MaxRisk { get; set; }
     }
 }

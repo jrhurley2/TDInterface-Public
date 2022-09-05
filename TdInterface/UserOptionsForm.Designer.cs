@@ -35,6 +35,8 @@ namespace TdInterface
             this.txtMaxShares = new System.Windows.Forms.TextBox();
             this.lblMaxRisk = new System.Windows.Forms.Label();
             this.txtMaxRisk = new System.Windows.Forms.TextBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -42,9 +44,9 @@ namespace TdInterface
             this.lblTrainingWheels.AutoSize = true;
             this.lblTrainingWheels.Location = new System.Drawing.Point(53, 54);
             this.lblTrainingWheels.Name = "lblTrainingWheels";
-            this.lblTrainingWheels.Size = new System.Drawing.Size(114, 20);
+            this.lblTrainingWheels.Size = new System.Drawing.Size(93, 20);
             this.lblTrainingWheels.TabIndex = 1;
-            this.lblTrainingWheels.Text = "Training Wheels";
+            this.lblTrainingWheels.Text = "Trade Shares";
             // 
             // chkTrainingWheels
             // 
@@ -61,9 +63,9 @@ namespace TdInterface
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(53, 78);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(199, 20);
+            this.label1.Size = new System.Drawing.Size(182, 20);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Max Shares (TrainingWheels)";
+            this.label1.Text = "Max Shares (Trade Shares)";
             // 
             // txtMaxShares
             // 
@@ -88,11 +90,33 @@ namespace TdInterface
             this.txtMaxRisk.Size = new System.Drawing.Size(125, 27);
             this.txtMaxRisk.TabIndex = 6;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(124, 364);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(94, 29);
+            this.btnSave.TabIndex = 7;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(233, 364);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(94, 29);
+            this.btnCancel.TabIndex = 8;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtMaxRisk);
             this.Controls.Add(this.lblMaxRisk);
             this.Controls.Add(this.txtMaxShares);
@@ -101,6 +125,7 @@ namespace TdInterface
             this.Controls.Add(this.lblTrainingWheels);
             this.Name = "UserOptionsForm";
             this.Text = "UserOptionsForm";
+            this.Load += new System.EventHandler(this.UserOptionsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,5 +139,7 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtMaxShares;
         private System.Windows.Forms.Label lblMaxRisk;
         private System.Windows.Forms.TextBox txtMaxRisk;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
