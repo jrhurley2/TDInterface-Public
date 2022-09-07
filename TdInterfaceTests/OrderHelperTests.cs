@@ -129,7 +129,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual("BUY", stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(OrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -137,7 +137,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual("BUY", limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(OrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 
@@ -172,7 +172,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual("BUY", stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(OrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -180,7 +180,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual("BUY", limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(OrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 
