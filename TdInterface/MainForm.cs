@@ -248,7 +248,13 @@ namespace TdInterface
                     return;
                 }
 
-                await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, _activePosition.averagePrice);
+                var stopPrice = _activePosition.averagePrice;
+                if(!string.IsNullOrEmpty(txtStopToClose.Text))
+                {
+                    stopPrice = float.Parse(txtStopToClose.Text);
+                }
+
+                await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
             }
             catch (Exception ex)
             {
