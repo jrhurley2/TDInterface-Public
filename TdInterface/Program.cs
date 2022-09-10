@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +32,7 @@ namespace TdInterface
 
         private static void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<MainForm>()
-                    .AddLogging(configure => configure.AddConsole());
+            services.AddSingleton<MainForm>();
         }
     }
 }
