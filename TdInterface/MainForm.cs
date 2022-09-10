@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +15,6 @@ namespace TdInterface
 {
     public partial class MainForm : Form
     {
-        private ILogger<MainForm> _logger;
         private TDStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
         private Securitiesaccount _securitiesaccount;
@@ -28,15 +26,13 @@ namespace TdInterface
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
-        public MainForm(ILogger<MainForm> logger)
+        public MainForm()
         {
             try
             {
                 _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
                 Trace.Listeners.Add(_textWriterTraceListener);
 
-                _logger = logger;
-                _logger.LogInformation("Start Main From");
                 Debug.WriteLine("Start Main Form");
                 InitializeComponent();
 
