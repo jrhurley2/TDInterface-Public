@@ -112,9 +112,12 @@ namespace TdInterface
             var trainingWheels = checkBox1.Checked;
             var maxRisk = txtRisk.Text;
 
-            var bidOrAskPrice = orderType == "MARKET" ? stockQuote.lastPrice : triggerLimit;
-            var riskPerShare = instruction.Equals(OrderHelper.SELL_SHORT) ? stopPrice - bidOrAskPrice : bidOrAskPrice - stopPrice;
-            var firstTargetlimtPrice = instruction.Equals(OrderHelper.SELL_SHORT) ? bidOrAskPrice - riskPerShare : bidOrAskPrice + riskPerShare;
+            var isShort = instruction.Equals(OrderHelper.SELL_SHORT);
+
+            var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
+            var ocoCalcPrice = orderType == "MARKET" ? _settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
+            var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
             int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
 
