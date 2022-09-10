@@ -37,6 +37,8 @@ namespace TdInterface
             this.txtMaxRisk = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.chkUseBidAskOcoCalc = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -110,11 +112,33 @@ namespace TdInterface
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(60, 153);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(151, 20);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Use Bid/Ask Oco Calc";
+            // 
+            // chkUseBidAskOcoCalc
+            // 
+            this.chkUseBidAskOcoCalc.AccessibleName = "chkUseBidAskOcoCalc";
+            this.chkUseBidAskOcoCalc.AutoSize = true;
+            this.chkUseBidAskOcoCalc.Location = new System.Drawing.Point(276, 155);
+            this.chkUseBidAskOcoCalc.Name = "chkUseBidAskOcoCalc";
+            this.chkUseBidAskOcoCalc.Size = new System.Drawing.Size(18, 17);
+            this.chkUseBidAskOcoCalc.TabIndex = 10;
+            this.chkUseBidAskOcoCalc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkUseBidAskOcoCalc.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chkUseBidAskOcoCalc);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtMaxRisk);
@@ -141,5 +165,7 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtMaxRisk;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox chkUseBidAskOcoCalc;
     }
 }

@@ -9,5 +9,6 @@ namespace TdInterface
         public bool TradeShares { get; set; }
         public int MaxShares { get; set; }
         public decimal MaxRisk { get; set; }
+        public bool UseBidAskOcoCalc { get; set; }
     }
 }

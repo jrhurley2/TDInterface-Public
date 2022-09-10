@@ -26,6 +26,7 @@ namespace TdInterface
             _settings.TradeShares = chkTrainingWheels.Checked;
             _settings.MaxRisk = Decimal.Parse(txtMaxRisk.Text);
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
+            _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
             Utility.SaveSettings(_settings);
             this.Close();
         }
@@ -38,6 +39,7 @@ namespace TdInterface
             chkTrainingWheels.Checked = _settings.TradeShares;
             txtMaxRisk.Text = _settings.MaxRisk.ToString("#.##");
             txtMaxShares.Text = _settings.MaxShares.ToString();
+            chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
