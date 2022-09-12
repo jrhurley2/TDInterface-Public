@@ -691,7 +691,8 @@ namespace TdInterface
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _settings = Utility.GetSettings();
+            var settings = Utility.GetSettings();
+            if (settings != null) _settings = settings;
             ApplySettings();
         }
 
