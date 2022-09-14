@@ -164,7 +164,17 @@ namespace TdInterface
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = OrderHelper.SELL_SHORT;
-                var triggerLimit = double.Parse(txtLimit.Text);
+                
+                double triggerLimit = double.MinValue;
+
+                if (string.IsNullOrEmpty(txtLimit.Text))
+                {
+                    triggerLimit = stockQuote.bidPrice - double.Parse(txtLimitOffset.Text);
+                }
+                else
+                {
+                    triggerLimit = double.Parse(txtLimit.Text);
+                }
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }
@@ -202,7 +212,15 @@ namespace TdInterface
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = OrderHelper.BUY;
-                var triggerLimit = double.Parse(txtLimit.Text);
+                double triggerLimit = double.MinValue;
+                if (string.IsNullOrEmpty(txtLimit.Text))
+                {
+                    triggerLimit = stockQuote.askPrice + double.Parse(txtLimitOffset.Text);
+                }
+                else
+                {
+                    triggerLimit = double.Parse(txtLimit.Text);
+                }
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
             }

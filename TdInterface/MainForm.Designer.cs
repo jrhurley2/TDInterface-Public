@@ -81,6 +81,7 @@ namespace TdInterface
             this.label8 = new System.Windows.Forms.Label();
             this.txtConnectionStatus = new System.Windows.Forms.TextBox();
             this.lblConnectionStatus = new System.Windows.Forms.Label();
+            this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -178,7 +179,7 @@ namespace TdInterface
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
             this.txtStop.Size = new System.Drawing.Size(100, 27);
-            this.txtStop.TabIndex = 3;
+            this.txtStop.TabIndex = 2;
             this.txtStop.TextChanged += new System.EventHandler(this.txtStop_TextChanged);
             // 
             // timer1
@@ -402,7 +403,7 @@ namespace TdInterface
             this.txtStopToClose.Location = new System.Drawing.Point(628, 265);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.Size = new System.Drawing.Size(125, 27);
-            this.txtStopToClose.TabIndex = 6;
+            this.txtStopToClose.TabIndex = 5;
             // 
             // btnBreakEven
             // 
@@ -411,6 +412,7 @@ namespace TdInterface
             this.btnBreakEven.Name = "btnBreakEven";
             this.btnBreakEven.Size = new System.Drawing.Size(137, 58);
             this.btnBreakEven.TabIndex = 0;
+            this.btnBreakEven.TabStop = false;
             this.btnBreakEven.Text = "Stop/BE";
             this.btnBreakEven.UseVisualStyleBackColor = false;
             this.btnBreakEven.Click += new System.EventHandler(this.btnBreakEven_Click);
@@ -512,7 +514,7 @@ namespace TdInterface
             this.txtLimit.Location = new System.Drawing.Point(86, 159);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(104, 27);
-            this.txtLimit.TabIndex = 2;
+            this.txtLimit.TabIndex = 3;
             // 
             // menuStrip1
             // 
@@ -603,9 +605,17 @@ namespace TdInterface
             this.lblConnectionStatus.TabIndex = 32;
             this.lblConnectionStatus.Text = "Connection Status";
             // 
+            // txtLimitOffset
+            // 
+            this.txtLimitOffset.Location = new System.Drawing.Point(238, 161);
+            this.txtLimitOffset.Name = "txtLimitOffset";
+            this.txtLimitOffset.Size = new System.Drawing.Size(125, 27);
+            this.txtLimitOffset.TabIndex = 4;
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 566);
+            this.Controls.Add(this.txtLimitOffset);
             this.Controls.Add(this.txtStopToClose);
             this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.lblConnectionStatus);
@@ -709,6 +719,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExitAsk100;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtLimitOffset;
     }
 }
 
