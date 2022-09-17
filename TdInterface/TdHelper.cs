@@ -201,8 +201,11 @@ namespace TdInterface
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
+                Debug.WriteLine($"GetUserPrincipals: StatusCode: {response.StatusCode}");
+                Debug.WriteLine($"GetUserPrincipals: {await response.Content.ReadAsStringAsync()}");
                 throw new Exception("Error retreiving UserPrincipals");
-            };
+            }
+
             var userPrincipal = DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
 
             return userPrincipal;
