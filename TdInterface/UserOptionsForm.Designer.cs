@@ -39,6 +39,8 @@ namespace TdInterface
             this.btnCancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.chkUseBidAskOcoCalc = new System.Windows.Forms.CheckBox();
+            this.txtOneRSharePct = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -132,11 +134,29 @@ namespace TdInterface
             this.chkUseBidAskOcoCalc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkUseBidAskOcoCalc.UseVisualStyleBackColor = true;
             // 
+            // txtOneRSharePct
+            // 
+            this.txtOneRSharePct.Location = new System.Drawing.Point(275, 183);
+            this.txtOneRSharePct.Name = "txtOneRSharePct";
+            this.txtOneRSharePct.Size = new System.Drawing.Size(125, 27);
+            this.txtOneRSharePct.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(60, 190);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(191, 20);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "1st Target Share Percentage";
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtOneRSharePct);
             this.Controls.Add(this.chkUseBidAskOcoCalc);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCancel);
@@ -167,5 +187,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkUseBidAskOcoCalc;
+        private System.Windows.Forms.TextBox txtOneRSharePct;
+        private System.Windows.Forms.Label label3;
     }
 }
