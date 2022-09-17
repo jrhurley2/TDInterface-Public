@@ -22,7 +22,7 @@ namespace TdInterface
         private Position _initialPosition;
         private CandleList _candleList;
         private bool _trainingWheels = false;
-        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4 };
+        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25};
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
@@ -117,7 +117,7 @@ namespace TdInterface
 
             int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
 
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * .25));
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage,100)));
 
             ResetInitialOrder();
             var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
