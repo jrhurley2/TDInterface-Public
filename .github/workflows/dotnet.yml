@@ -26,16 +26,24 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish
+      
+    - name: Get next version
+      uses: reecetech/version-increment@2022.5.1
+      id: version
+      with:
+        scheme: semver
+        increment: patch      
+
     - name: Archive Release
       uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
-        filename: 'TDInterface.zip'
+        filename: "TDInterface${{ steps.version.outputs.version }}.zip"
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\'
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\TDInterface.zip'
+        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\TDInterface${{ steps.version.outputs.version }}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: 'newtag'
+        tag: "${{ steps.version.outputs.version }}"
 
