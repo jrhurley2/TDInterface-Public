@@ -27,23 +27,24 @@ jobs:
     - name: Publish
       run: dotnet publish
       
-    - name: Get next version
-      uses: reecetech/version-increment@2022.5.1
-      id: version
-      with:
-        scheme: semver
-        increment: patch      
+#    - name: Get next version
+#      uses: reecetech/version-increment@2022.5.1
+#      id: version
+#      with:
+#        scheme: semver
+#        increment: patch      
 
     - name: Archive Release
       uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
-        filename: "TDInterface${{ steps.version.outputs.version }}.zip"
+        filename: "TDInterface.zip"
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\'
+        
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\TDInterface${{ steps.version.outputs.version }}.zip'
+        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\TDInterface.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: "${{ steps.version.outputs.version }}"
+        tag: "newver"
 
