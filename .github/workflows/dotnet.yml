@@ -31,7 +31,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'TDInterface.zip'
-        directory: '${{ github.GITHUB_WORKSPACE }}\TdInterface\bin\Debug\netcoreapp3.1\publish\'
+        directory: '$github.GITHUB_WORKSPACE\TdInterface\bin\Debug\netcoreapp3.1\publish\'
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
