@@ -37,4 +37,5 @@ jobs:
       with:
         artifacts: "TDInterface.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
+        tag: 'newtag'
 
