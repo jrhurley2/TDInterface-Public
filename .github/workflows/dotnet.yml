@@ -32,6 +32,9 @@ jobs:
         type: 'zip'
         filename: 'TDInterface.zip'
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\'
-
-
+    - name: Upload Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "TDInterface.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
