@@ -710,7 +710,11 @@ namespace TdInterface
         private void MainForm_Load(object sender, EventArgs e)
         {
             var settings = Utility.GetSettings();
-            if (settings != null) _settings = settings;
+            if (settings != null)
+            {
+                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
+                _settings = settings;
+            }
             ApplySettings();
         }
 
