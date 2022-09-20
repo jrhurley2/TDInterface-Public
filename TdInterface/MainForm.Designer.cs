@@ -82,6 +82,8 @@ namespace TdInterface
             this.txtConnectionStatus = new System.Windows.Forms.TextBox();
             this.lblConnectionStatus = new System.Windows.Forms.Label();
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtRValue = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -108,7 +110,7 @@ namespace TdInterface
             this.txtSymbol.Location = new System.Drawing.Point(42, 117);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(100, 23);
+            this.txtSymbol.Size = new System.Drawing.Size(60, 27);
             this.txtSymbol.TabIndex = 1;
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
             // 
@@ -117,7 +119,7 @@ namespace TdInterface
             this.lblSymbol.AutoSize = true;
             this.lblSymbol.Location = new System.Drawing.Point(42, 93);
             this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new System.Drawing.Size(47, 15);
+            this.lblSymbol.Size = new System.Drawing.Size(59, 20);
             this.lblSymbol.TabIndex = 4;
             this.lblSymbol.Text = "Symbol";
             // 
@@ -126,7 +128,7 @@ namespace TdInterface
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(42, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 15);
+            this.label1.Size = new System.Drawing.Size(35, 20);
             this.label1.TabIndex = 6;
             this.label1.Text = "Risk";
             // 
@@ -135,7 +137,7 @@ namespace TdInterface
             this.txtRisk.Location = new System.Drawing.Point(104, 43);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(100, 23);
+            this.txtRisk.Size = new System.Drawing.Size(100, 27);
             this.txtRisk.TabIndex = 7;
             this.txtRisk.TabStop = false;
             this.txtRisk.Text = "5";
@@ -156,11 +158,11 @@ namespace TdInterface
             // 
             // txtLastPrice
             // 
-            this.txtLastPrice.Location = new System.Drawing.Point(181, 117);
+            this.txtLastPrice.Location = new System.Drawing.Point(107, 117);
             this.txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastPrice.Name = "txtLastPrice";
             this.txtLastPrice.ReadOnly = true;
-            this.txtLastPrice.Size = new System.Drawing.Size(100, 23);
+            this.txtLastPrice.Size = new System.Drawing.Size(51, 27);
             this.txtLastPrice.TabIndex = 9;
             this.txtLastPrice.TabStop = false;
             // 
@@ -169,7 +171,7 @@ namespace TdInterface
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 200);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(40, 20);
             this.label2.TabIndex = 10;
             this.label2.Text = "Stop";
             // 
@@ -178,7 +180,7 @@ namespace TdInterface
             this.txtStop.Location = new System.Drawing.Point(88, 193);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
-            this.txtStop.Size = new System.Drawing.Size(100, 23);
+            this.txtStop.Size = new System.Drawing.Size(100, 27);
             this.txtStop.TabIndex = 2;
             this.txtStop.TextChanged += new System.EventHandler(this.txtStop_TextChanged);
             // 
@@ -402,7 +404,7 @@ namespace TdInterface
             // 
             this.txtStopToClose.Location = new System.Drawing.Point(628, 265);
             this.txtStopToClose.Name = "txtStopToClose";
-            this.txtStopToClose.Size = new System.Drawing.Size(125, 23);
+            this.txtStopToClose.Size = new System.Drawing.Size(125, 27);
             this.txtStopToClose.TabIndex = 5;
             // 
             // btnBreakEven
@@ -422,7 +424,7 @@ namespace TdInterface
             this.txtAveragePrice.Location = new System.Drawing.Point(125, 243);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.ReadOnly = true;
-            this.txtAveragePrice.Size = new System.Drawing.Size(125, 23);
+            this.txtAveragePrice.Size = new System.Drawing.Size(125, 27);
             this.txtAveragePrice.TabIndex = 15;
             this.txtAveragePrice.TabStop = false;
             // 
@@ -431,7 +433,7 @@ namespace TdInterface
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(14, 250);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 15);
+            this.label3.Size = new System.Drawing.Size(71, 20);
             this.label3.TabIndex = 16;
             this.label3.Text = "Avg Price";
             // 
@@ -440,7 +442,7 @@ namespace TdInterface
             this.txtShares.Location = new System.Drawing.Point(125, 285);
             this.txtShares.Name = "txtShares";
             this.txtShares.ReadOnly = true;
-            this.txtShares.Size = new System.Drawing.Size(125, 23);
+            this.txtShares.Size = new System.Drawing.Size(125, 27);
             this.txtShares.TabIndex = 17;
             this.txtShares.TabStop = false;
             // 
@@ -449,54 +451,55 @@ namespace TdInterface
             this.lblShares.AutoSize = true;
             this.lblShares.Location = new System.Drawing.Point(12, 292);
             this.lblShares.Name = "lblShares";
-            this.lblShares.Size = new System.Drawing.Size(41, 15);
+            this.lblShares.Size = new System.Drawing.Size(52, 20);
             this.lblShares.TabIndex = 18;
             this.lblShares.Text = "Shares";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(181, 93);
+            this.label4.Location = new System.Drawing.Point(107, 93);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 15);
+            this.label4.Size = new System.Drawing.Size(35, 20);
             this.label4.TabIndex = 21;
             this.label4.Text = "Last";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(317, 93);
+            this.label5.Location = new System.Drawing.Point(176, 93);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(24, 15);
+            this.label5.Size = new System.Drawing.Size(31, 20);
             this.label5.TabIndex = 23;
             this.label5.Text = "Bid";
             // 
             // txtBid
             // 
-            this.txtBid.Location = new System.Drawing.Point(317, 118);
+            this.txtBid.Location = new System.Drawing.Point(174, 117);
             this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBid.Name = "txtBid";
             this.txtBid.ReadOnly = true;
-            this.txtBid.Size = new System.Drawing.Size(100, 23);
+            this.txtBid.Size = new System.Drawing.Size(51, 27);
             this.txtBid.TabIndex = 22;
             this.txtBid.TabStop = false;
+            this.txtBid.TextChanged += new System.EventHandler(this.txtBid_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(461, 93);
+            this.label6.Location = new System.Drawing.Point(238, 93);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 15);
+            this.label6.Size = new System.Drawing.Size(32, 20);
             this.label6.TabIndex = 25;
             this.label6.Text = "Ask";
             // 
             // txtAsk
             // 
-            this.txtAsk.Location = new System.Drawing.Point(461, 117);
+            this.txtAsk.Location = new System.Drawing.Point(238, 117);
             this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAsk.Name = "txtAsk";
             this.txtAsk.ReadOnly = true;
-            this.txtAsk.Size = new System.Drawing.Size(100, 23);
+            this.txtAsk.Size = new System.Drawing.Size(51, 27);
             this.txtAsk.TabIndex = 24;
             this.txtAsk.TabStop = false;
             // 
@@ -505,7 +508,7 @@ namespace TdInterface
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 166);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 15);
+            this.label7.Size = new System.Drawing.Size(42, 20);
             this.label7.TabIndex = 26;
             this.label7.Text = "Limit";
             // 
@@ -513,7 +516,7 @@ namespace TdInterface
             // 
             this.txtLimit.Location = new System.Drawing.Point(86, 159);
             this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(104, 23);
+            this.txtLimit.Size = new System.Drawing.Size(104, 27);
             this.txtLimit.TabIndex = 3;
             // 
             // menuStrip1
@@ -523,7 +526,7 @@ namespace TdInterface
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(986, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(986, 28);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -534,27 +537,27 @@ namespace TdInterface
             this.saveCredentialsToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -563,7 +566,7 @@ namespace TdInterface
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(229, 45);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(91, 19);
+            this.checkBox1.Size = new System.Drawing.Size(115, 24);
             this.checkBox1.TabIndex = 28;
             this.checkBox1.Text = "Trade Shares";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -574,7 +577,7 @@ namespace TdInterface
             this.txtHeartBeat.Location = new System.Drawing.Point(176, 351);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(270, 23);
+            this.txtHeartBeat.Size = new System.Drawing.Size(270, 27);
             this.txtHeartBeat.TabIndex = 29;
             this.txtHeartBeat.TabStop = false;
             // 
@@ -583,7 +586,7 @@ namespace TdInterface
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(66, 353);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 15);
+            this.label8.Size = new System.Drawing.Size(76, 20);
             this.label8.TabIndex = 30;
             this.label8.Text = "HeartBeat";
             // 
@@ -592,7 +595,7 @@ namespace TdInterface
             this.txtConnectionStatus.Location = new System.Drawing.Point(174, 384);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(278, 23);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(278, 27);
             this.txtConnectionStatus.TabIndex = 31;
             this.txtConnectionStatus.TabStop = false;
             // 
@@ -601,7 +604,7 @@ namespace TdInterface
             this.lblConnectionStatus.AutoSize = true;
             this.lblConnectionStatus.Location = new System.Drawing.Point(14, 391);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(104, 15);
+            this.lblConnectionStatus.Size = new System.Drawing.Size(128, 20);
             this.lblConnectionStatus.TabIndex = 32;
             this.lblConnectionStatus.Text = "Connection Status";
             // 
@@ -609,12 +612,30 @@ namespace TdInterface
             // 
             this.txtLimitOffset.Location = new System.Drawing.Point(238, 161);
             this.txtLimitOffset.Name = "txtLimitOffset";
-            this.txtLimitOffset.Size = new System.Drawing.Size(125, 23);
+            this.txtLimitOffset.Size = new System.Drawing.Size(125, 27);
             this.txtLimitOffset.TabIndex = 4;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(450, 119);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(18, 20);
+            this.label9.TabIndex = 33;
+            this.label9.Text = "R";
+            // 
+            // txtRValue
+            // 
+            this.txtRValue.Location = new System.Drawing.Point(474, 112);
+            this.txtRValue.Name = "txtRValue";
+            this.txtRValue.Size = new System.Drawing.Size(43, 27);
+            this.txtRValue.TabIndex = 34;
             // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
+            this.Controls.Add(this.txtRValue);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.txtLimitOffset);
             this.Controls.Add(this.txtStopToClose);
             this.Controls.Add(this.btnCancelAll);
@@ -720,6 +741,8 @@ namespace TdInterface
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txtLimitOffset;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtRValue;
     }
 }
 
