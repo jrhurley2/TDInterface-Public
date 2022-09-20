@@ -518,6 +518,27 @@ namespace TdInterface
             SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
             SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
+
+            try
+            {
+                if (_activePosition != null)
+                {
+                    var avgPrice = _activePosition.averagePrice;
+                    var initialStop = float.Parse(txtStop.Text);
+
+                    float risk = Math.Abs(avgPrice - initialStop);
+                    float reward = Math.Abs((float)_stockQuote.lastPrice - avgPrice);
+
+                    var rValue = reward / risk;
+                    SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
         }
         private async void HandleAcctActivity(AcctActivity a)
         {
@@ -810,6 +831,11 @@ namespace TdInterface
         private async void btnExitAsk100_Click(object sender, EventArgs e)
         {
             await ExitLimitPercentage(1.0D);
+        }
+
+        private void txtBid_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
