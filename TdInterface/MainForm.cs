@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +42,7 @@ namespace TdInterface
                 if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
                 {
                     var consumerKey = Utility.GetConsumerKey();
-                    if(consumerKey == null)
+                    if (consumerKey == null)
                     {
                         var frm = new frmConsmerKey();
                         frm.ShowDialog();
@@ -60,16 +61,7 @@ namespace TdInterface
                 Utility.AccessTokenContainer = TdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
                 Utility.UserPrincipal = TdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
 
-
-                _streamer = new TDStreamer(Utility.UserPrincipal);
-                _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
-                _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
-                _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
-                _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
-                _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
-                _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
-                _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
-
+                CreateStreamer();
 
                 timer1.Start();
             }
@@ -79,6 +71,18 @@ namespace TdInterface
                 Debug.WriteLine(ex.StackTrace);
             }
 
+        }
+
+        private void CreateStreamer()
+        {
+            _streamer = new TDStreamer(Utility.UserPrincipal);
+            _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
+            _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
+            _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
+            _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
+            _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
+            _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
+            _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
         }
 
 
@@ -427,6 +431,7 @@ namespace TdInterface
         private async Task UpdatePriceHistory()
         {
             _candleList = await TdHelper.GetPriceHistoryAsync(Utility.AccessTokenContainer, txtSymbol.Text.ToUpper());
+            //var fMin = _candleList.candles.GroupBy(c => c.datetime / TimeSpan.TicksPerMinute / 5).ToList<>;
             var currentDate = _candleList.candles.Max(c => c.DateTime).ToString("MM/dd/yyyy");
             var swings = CalculateSwingHighs(_candleList.candles.Where(c => c.DateTime >= DateTimeOffset.Parse($"{currentDate} 09:30") &&
                                                                        c.DateTime <= DateTimeOffset.Parse($"{currentDate} 16:00")).ToArray());
@@ -531,6 +536,10 @@ namespace TdInterface
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
+                }
+                else
+                {
+                    SafeUpdateTextBox(txtRValue, "0");
                 }
             }
             catch (Exception ex)
@@ -836,6 +845,14 @@ namespace TdInterface
         private void txtBid_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private async void btnReconnect_Click(object sender, EventArgs e)
+        {
+            await _streamer.WebsocketClient.NativeClient.CloseAsync(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "Create New Client", new System.Threading.CancellationToken());
+            _streamer.Dispose();
+            CreateStreamer();
+            txtSymbol_Leave(sender, e);
         }
     }
 }

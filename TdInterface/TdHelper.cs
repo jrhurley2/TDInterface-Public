@@ -22,7 +22,8 @@ namespace TdInterface
         public const string routeCancelOrder = "v1/accounts/{0}/orders/{1}";
         public const string routePlaceOrder = "v1/accounts/{0}/orders";
         public const string routeGetQuote = "v1/marketdata/{0}/quotes";
-        public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=5&needExtendedHoursData=true";
+        //public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
+        public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
         public static async Task<AccessTokenContainer> GetAccessToken(string authToken)
@@ -131,7 +132,10 @@ namespace TdInterface
 
         public static async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetPriceHistory, symbol)))
+            var today = DateTimeOffset.Now;
+            var startDate = new DateTimeOffset(today.Year, today.Month, today.Day, 4, 00, 00, new TimeSpan(-4, 0, 0));
+            var endDate = new DateTimeOffset(today.Year, today.Month, today.Day, 19, 00, 00, new TimeSpan(-4, 0, 0));
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetPriceHistory, symbol, startDate.ToUnixTimeMilliseconds(), endDate.ToUnixTimeMilliseconds())))
             {
                 Method = HttpMethod.Get,
             };
