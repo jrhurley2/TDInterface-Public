@@ -26,6 +26,7 @@ namespace TDAmeritradeAPI.Client
 
         private WebsocketClient _ws;
         private StockQuote _stockQuote;
+        private List<string> _quoteSymbols = new List<string>();
 
 
         private readonly Subject<StockQuote> _stockQuoteRecievedSubject = new Subject<StockQuote>();
@@ -236,6 +237,7 @@ namespace TDAmeritradeAPI.Client
                         {
                             var stockQuote = new StockQuote(socketData.content[0]);
                             _stockQuoteRecievedSubject.OnNext(stockQuote);
+                            Debug.WriteLine(JsonConvert.SerializeObject(stockQuote));
                         }
                         else if (service == "ACCT_ACTIVITY")
                         {
@@ -295,6 +297,13 @@ namespace TDAmeritradeAPI.Client
 
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
+            if(!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
+            {
+                _quoteSymbols.Add(tickerSymbol.ToUpper());
+            }
+
+            var symbols = string.Join(",", _quoteSymbols);
+
             var _reqs = new List<StreamerSettings.Request>();
             var quoteRequest = new StreamerSettings.Request
             {
@@ -305,7 +314,7 @@ namespace TDAmeritradeAPI.Client
                 source = userPrincipals.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
-                    keys = tickerSymbol,
+                    keys = symbols,
                     fields = "0,1,2,3,4"
                 }
             };

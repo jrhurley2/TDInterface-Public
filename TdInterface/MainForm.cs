@@ -26,6 +26,23 @@ namespace TdInterface
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
+        public MainForm(TDStreamer tdStreamer, Settings settings)
+        {
+            InitializeComponent();
+
+            _settings = settings;
+
+            _streamer = tdStreamer;
+            _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
+            _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
+            _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
+            _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
+            _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
+            _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
+            _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
+
+
+        }
         public MainForm()
         {
             try
@@ -513,7 +530,7 @@ namespace TdInterface
 
         private void HandleStockQuote(StockQuote stockQuote)
         {
-
+            if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             _stockQuote = _stockQuote.Update(stockQuote);
             SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
             SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
@@ -703,10 +720,17 @@ namespace TdInterface
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _textWriterTraceListener.Flush();
-            _textWriterTraceListener.Close();
-            _streamer.Dispose();
-            _textWriterTraceListener.Dispose();
+            try
+            {
+                _textWriterTraceListener.Flush();
+                _textWriterTraceListener.Close();
+                //_streamer.Dispose();
+                _textWriterTraceListener.Dispose();
+            }
+            catch(Exception ex)
+            {
+
+            }
 
         }
 
@@ -805,7 +829,6 @@ namespace TdInterface
             frm.ShowDialog();
             _settings = Utility.GetSettings();
             ApplySettings();
-
         }
 
         private async void btnExitAsk10_Click(object sender, EventArgs e)
