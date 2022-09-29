@@ -68,21 +68,21 @@
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -106,6 +106,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MasterForm";
             this.Text = "MasterForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MasterForm_FormClosing);
             this.Load += new System.EventHandler(this.MasterForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

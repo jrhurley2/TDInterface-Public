@@ -123,10 +123,29 @@ namespace TdInterface
 
         }
 
+        private static List<Form> _mainForms = new  List<Form>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
             var f = new MainForm(_streamer, _settings);
             f.Show();
+            _mainForms.Add(f);
+
+        }
+
+        private void MasterForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                _textWriterTraceListener.Flush();
+                _textWriterTraceListener.Close();
+                _streamer.Dispose();
+                _textWriterTraceListener.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
     }
 }
