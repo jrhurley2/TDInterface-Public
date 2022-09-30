@@ -305,21 +305,26 @@ namespace TDAmeritradeAPI.Client
             var symbols = string.Join(",", _quoteSymbols);
 
             var _reqs = new List<StreamerSettings.Request>();
-            var quoteRequest = new StreamerSettings.Request
-            {
-                service = "QUOTE",
-                command = "SUBS",
-                requestid = "1",
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
-                parameters = new StreamerSettings.Parameters
-                {
-                    keys = symbols,
-                    fields = "0,1,2,3,4"
-                }
-            };
-            _reqs.Add(quoteRequest);
 
+            int requestId = 0;
+            foreach (var symbol in _quoteSymbols)
+            {
+                requestId++;
+                var quoteRequest = new StreamerSettings.Request
+                {
+                    service = "QUOTE",
+                    command = "SUBS",
+                    requestid = requestId.ToString(),
+                    account = userPrincipals.accounts[0].accountId,
+                    source = userPrincipals.streamerInfo.appId,
+                    parameters = new StreamerSettings.Parameters
+                    {
+                        keys = symbol,
+                        fields = "0,1,2,3,4"
+                    }
+                };
+                _reqs.Add(quoteRequest);
+            }
             var request = new StreamerSettings.Requests()
             {
                 requests = _reqs.ToArray()

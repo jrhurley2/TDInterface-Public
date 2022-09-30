@@ -26,9 +26,11 @@ namespace TdInterface
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
-        public MainForm(TDStreamer tdStreamer, Settings settings)
+        public MainForm(TDStreamer tdStreamer, Settings settings, string name)
         {
             InitializeComponent();
+
+            this.Text = name;
 
             _settings = settings;
 

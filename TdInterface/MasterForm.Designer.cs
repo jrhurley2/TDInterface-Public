@@ -36,6 +36,7 @@
             this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNewTrade = new System.Windows.Forms.Button();
+            this.txtSymbol = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,19 +89,27 @@
             // 
             // btnNewTrade
             // 
-            this.btnNewTrade.Location = new System.Drawing.Point(292, 270);
+            this.btnNewTrade.Location = new System.Drawing.Point(246, 227);
             this.btnNewTrade.Name = "btnNewTrade";
             this.btnNewTrade.Size = new System.Drawing.Size(94, 29);
             this.btnNewTrade.TabIndex = 1;
-            this.btnNewTrade.Text = "New Trade";
+            this.btnNewTrade.Text = "Trade";
             this.btnNewTrade.UseVisualStyleBackColor = true;
             this.btnNewTrade.Click += new System.EventHandler(this.btnNewTrade_Click);
+            // 
+            // txtSymbol
+            // 
+            this.txtSymbol.Location = new System.Drawing.Point(257, 196);
+            this.txtSymbol.Name = "txtSymbol";
+            this.txtSymbol.Size = new System.Drawing.Size(125, 27);
+            this.txtSymbol.TabIndex = 2;
             // 
             // MasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtSymbol);
             this.Controls.Add(this.btnNewTrade);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -124,5 +133,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveCredentialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btnNewTrade;
+        private System.Windows.Forms.TextBox txtSymbol;
     }
 }

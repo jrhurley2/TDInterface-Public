@@ -123,12 +123,26 @@ namespace TdInterface
 
         }
 
-        private static List<Form> _mainForms = new  List<Form>();
+        private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
-            var f = new MainForm(_streamer, _settings);
-            f.Show();
-            _mainForms.Add(f);
+            var name = $"TdInterface Form {_mainForms.Count}";
+
+            MainForm frm = null;
+
+            //if(_mainForms.ContainsKey(txtSymbol.Text.ToUpper()))
+            //{
+            //    frm = _mainForms[txtSymbol.Text.ToUpper()];
+            //}
+            //else
+            //{
+                frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper());
+                _mainForms.Add(name, frm);
+                frm.Show();
+            //}
+
+            frm.Focus();
+
 
         }
 
