@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Printing;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
@@ -235,9 +236,13 @@ namespace TDAmeritradeAPI.Client
                         var service = socketData.service;
                         if (service == "QUOTE")
                         {
-                            var stockQuote = new StockQuote(socketData.content[0]);
-                            _stockQuoteRecievedSubject.OnNext(stockQuote);
-                            Debug.WriteLine(JsonConvert.SerializeObject(stockQuote));
+                            foreach (var quoteJson in socketData.content)
+                            {
+
+                                var stockQuote = new StockQuote(quoteJson);
+                                _stockQuoteRecievedSubject.OnNext(stockQuote);
+                                Debug.WriteLine(JsonConvert.SerializeObject(stockQuote));
+                            }
                         }
                         else if (service == "ACCT_ACTIVITY")
                         {
@@ -295,6 +300,8 @@ namespace TDAmeritradeAPI.Client
             });
         }
 
+        public int _quoteRequestId = 0;
+
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
             if(!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
@@ -307,24 +314,25 @@ namespace TDAmeritradeAPI.Client
             var _reqs = new List<StreamerSettings.Request>();
 
             int requestId = 0;
-            foreach (var symbol in _quoteSymbols)
-            {
-                requestId++;
+            //foreach (var symbol in _quoteSymbols)
+            //{
+            //requestId++;
+            _quoteRequestId++;
                 var quoteRequest = new StreamerSettings.Request
                 {
                     service = "QUOTE",
                     command = "SUBS",
-                    requestid = requestId.ToString(),
+                    requestid = "1", //_quoteRequestId.ToString(),
                     account = userPrincipals.accounts[0].accountId,
                     source = userPrincipals.streamerInfo.appId,
                     parameters = new StreamerSettings.Parameters
                     {
-                        keys = symbol,
+                        keys = symbols,
                         fields = "0,1,2,3,4"
                     }
                 };
                 _reqs.Add(quoteRequest);
-            }
+            //}
             var request = new StreamerSettings.Requests()
             {
                 requests = _reqs.ToArray()
