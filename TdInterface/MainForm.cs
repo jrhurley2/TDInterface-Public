@@ -724,10 +724,10 @@ namespace TdInterface
         {
             try
             {
-                _textWriterTraceListener.Flush();
-                _textWriterTraceListener.Close();
-                //_streamer.Dispose();
-                _textWriterTraceListener.Dispose();
+                //_textWriterTraceListener.Flush();
+                //_textWriterTraceListener.Close();
+                ////_streamer.Dispose();
+                //_textWriterTraceListener.Dispose();
             }
             catch(Exception ex)
             {

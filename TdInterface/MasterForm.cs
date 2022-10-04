@@ -154,6 +154,12 @@ namespace TdInterface
                 _textWriterTraceListener.Close();
                 _streamer.Dispose();
                 _textWriterTraceListener.Dispose();
+
+                foreach(var frm in _mainForms)
+                {
+                    frm.Value.Close();
+                    frm.Value.Dispose();
+                }
             }
             catch (Exception ex)
             {
