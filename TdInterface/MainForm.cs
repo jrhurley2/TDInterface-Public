@@ -123,6 +123,7 @@ namespace TdInterface
 
         private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
+            if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
             var stopPrice = double.Parse(txtStop.Text);
             var trainingWheels = checkBox1.Checked;
             var maxRisk = txtRisk.Text;
@@ -432,7 +433,7 @@ namespace TdInterface
                     _streamer.SubscribeQuote(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //await UpdatePriceHistory();
-
+                    this.Text = txtSymbol.Text.ToUpper();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
@@ -859,6 +860,11 @@ namespace TdInterface
         }
 
         private void txtBid_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
 
         }

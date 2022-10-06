@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.WebSockets;
 using System.Printing;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -121,6 +122,15 @@ namespace TDAmeritradeAPI.Client
             var exitEvent = new ManualResetEvent(false);
 
             var url = new Uri($"wss://{userPrincipals.streamerInfo.streamerSocketUrl}/ws");
+
+            //var factory = new Func<ClientWebSocket>(() => new ClientWebSocket
+            //{
+            //    Options =
+            //    {
+            //        KeepAliveInterval = TimeSpan.FromSeconds(5)
+            //    }
+            //});
+
             _ws = new WebsocketClient(url);
             _ws.ReconnectTimeout = TimeSpan.FromSeconds(30);
 

@@ -79,6 +79,7 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
+                throw;
             }
 
 
