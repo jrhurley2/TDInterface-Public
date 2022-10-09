@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TDAmeritradeAPI.Client;
@@ -594,7 +595,15 @@ namespace TdInterface
 
                             if (lmitOrder != null)
                             {
-                                lmitOrder.price = _activePosition.averagePrice.ToString("0.00");
+                                var stop = float.Parse(txtStop.Text);
+                                var avgPrice = _activePosition.averagePrice;
+                                var risk = Math.Abs(avgPrice - stop);
+
+                                string exitInstruction = GetExitInstruction(_activePosition);
+                                
+                                var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk: avgPrice - risk;
+
+                                lmitOrder.price = firstTargetlimtPrice.ToString("0.00");
                                 await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder);
                             }
                         }
