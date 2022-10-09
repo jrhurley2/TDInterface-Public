@@ -178,6 +178,7 @@ namespace TdInterface
             this.txtStop.Size = new System.Drawing.Size(100, 27);
             this.txtStop.TabIndex = 2;
             this.txtStop.TextChanged += new System.EventHandler(this.txtStop_TextChanged);
+            this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
             // 
             // timer1
             // 
@@ -513,6 +514,7 @@ namespace TdInterface
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(104, 27);
             this.txtLimit.TabIndex = 3;
+            this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
             // 
             // checkBox1
             // 
@@ -567,6 +569,7 @@ namespace TdInterface
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(125, 27);
             this.txtLimitOffset.TabIndex = 4;
+            this.txtLimitOffset.Leave += new System.EventHandler(this.txtLimitOffset_Leave);
             // 
             // label9
             // 

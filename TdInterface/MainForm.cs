@@ -44,6 +44,11 @@ namespace TdInterface
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
 
+            btnBuyLmtTriggerOco.Enabled = false;
+            btnBuyMrkTriggerOco.Enabled = false;
+            btnSellLmtTriggerOco.Enabled = false;
+            btnSellMrkTriggerOco.Enabled = false;
+
         }
         public MainForm()
         {
@@ -575,6 +580,28 @@ namespace TdInterface
             try
             {
                 await SetPosition();
+
+                if (_settings.MoveLimitPriceOnFill)
+                {
+                    var symbol = orderFillMessage.Order.Security.Symbol;
+                    if (_initialOrders.ContainsKey(symbol))
+                    {
+                        //Initial Trigger Order filled, adjust limit
+                        if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                        {
+                            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                            var lmitOrder = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+
+                            if (lmitOrder != null)
+                            {
+                                lmitOrder.price = _activePosition.averagePrice.ToString("0.00");
+                                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder);
+                            }
+                        }
+                    }
+                }
+                
+                Debug.WriteLine(orderFillMessage.Order.OrderKey);
             }
             catch (Exception ex)
             {
@@ -867,6 +894,96 @@ namespace TdInterface
         private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtStop_Leave(object sender, EventArgs e)
+        {
+            Decimal d;
+            TextBox txtBox = (TextBox)sender;
+
+            d = ValidateOcoStopAndLimit(txtBox);
+        }
+
+        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        {
+            decimal d = decimal.MinValue;
+            if (string.IsNullOrEmpty(txtBox.Text.Trim()))
+            {
+
+            }
+            else
+            {
+                var canParse = Decimal.TryParse(txtBox.Text, out d);
+                if (!canParse)
+                {
+                    txtBox.SelectAll();
+                    txtBox.Focus();
+                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
+                }
+                else
+                {
+                    txtBox.Text = d.ToString("0.00");
+                }
+            }
+            SetToOpenButtons();
+            return d;
+        }
+
+        private void SetToOpenButtons()
+        {
+            decimal d;
+            if (!string.IsNullOrEmpty(txtStop.Text.Trim()) && decimal.TryParse(txtStop.Text.Trim(), out d))
+            {
+                btnBuyMrkTriggerOco.Enabled = true;
+                btnSellMrkTriggerOco.Enabled = true;
+            }
+            else
+            {
+                btnBuyMrkTriggerOco.Enabled = false;
+                btnSellMrkTriggerOco.Enabled = false;
+                btnBuyLmtTriggerOco.Enabled= false;
+                btnSellLmtTriggerOco.Enabled = false;
+                return;
+            }
+
+            btnBuyLmtTriggerOco.Enabled = false;
+            btnSellLmtTriggerOco.Enabled = false;
+
+            if (!string.IsNullOrEmpty(txtLimit.Text.Trim()))
+            {
+                if (decimal.TryParse(txtLimit.Text.Trim(), out d))
+                {
+                    btnBuyLmtTriggerOco.Enabled = true;
+                    btnSellLmtTriggerOco.Enabled = true;
+                }
+            }
+            else if (!string.IsNullOrEmpty(txtLimitOffset.Text.Trim()))
+            {
+                if (decimal.TryParse(txtLimitOffset.Text.Trim(), out d))
+                {
+                    btnBuyLmtTriggerOco.Enabled = true;
+                    btnSellLmtTriggerOco.Enabled = true;
+                }
+            }
+
+
+        }
+
+        private void txtLimit_Leave(object sender, EventArgs e)
+        {
+            Decimal d;
+            TextBox txtBox = (TextBox)sender;
+
+            d = ValidateOcoStopAndLimit(txtBox);
+
+        }
+
+        private void txtLimitOffset_Leave(object sender, EventArgs e)
+        {
+            Decimal d;
+            TextBox txtBox = (TextBox)sender;
+
+            d = ValidateOcoStopAndLimit(txtBox);
         }
     }
 }

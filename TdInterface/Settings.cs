@@ -11,5 +11,6 @@ namespace TdInterface
         public decimal MaxRisk { get; set; }
         public bool UseBidAskOcoCalc { get; set; }
         public int OneRProfitPercenatage { get; set; }
+        public bool MoveLimitPriceOnFill { get; set; }
     }
 }

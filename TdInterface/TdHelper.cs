@@ -21,6 +21,7 @@ namespace TdInterface
         public const string routeGetAccounts = "v1/accounts";
         public const string routeCancelOrder = "v1/accounts/{0}/orders/{1}";
         public const string routePlaceOrder = "v1/accounts/{0}/orders";
+        public const string routeReplaceOrder = "v1/accounts/{0}/orders/{1}";
         public const string routeGetQuote = "v1/marketdata/{0}/quotes";
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=5&needExtendedHoursData=true";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
@@ -170,6 +171,26 @@ namespace TdInterface
             var orderNumber = ulong.Parse(orderNumberString);
 
             return orderNumber;
+        }
+
+        public static async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Put, new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, order.orderId)))
+            {
+                Method = HttpMethod.Put,
+                Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.Created)
+            {
+                Debug.Write(order);
+                throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
+            };
+
+
         }
 
         public static async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)

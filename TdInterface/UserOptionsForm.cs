@@ -28,6 +28,7 @@ namespace TdInterface
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
             _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
             _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
+            _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
             Utility.SaveSettings(_settings);
             this.Close();
         }
@@ -42,6 +43,7 @@ namespace TdInterface
             txtMaxShares.Text = _settings.MaxShares.ToString();
             chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
             txtOneRSharePct.Text = _settings.OneRProfitPercenatage.ToString();
+            chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
