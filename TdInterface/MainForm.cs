@@ -582,26 +582,36 @@ namespace TdInterface
             {
                 await SetPosition();
 
+                Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
                 if (_settings.MoveLimitPriceOnFill)
                 {
+                    
+                    Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
                     var symbol = orderFillMessage.Order.Security.Symbol;
                     if (_initialOrders.ContainsKey(symbol))
                     {
+                        Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
                         //Initial Trigger Order filled, adjust limit
                         if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
                         {
+                            Debug.WriteLine("Found OrderKey");
                             _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                             var lmitOrder = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
 
                             if (lmitOrder != null)
                             {
+                                Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
                                 var stop = float.Parse(txtStop.Text);
                                 var avgPrice = _activePosition.averagePrice;
                                 var risk = Math.Abs(avgPrice - stop);
 
+                                
                                 string exitInstruction = GetExitInstruction(_activePosition);
                                 
                                 var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk: avgPrice - risk;
+
+                                Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
+
 
                                 lmitOrder.price = firstTargetlimtPrice.ToString("0.00");
                                 await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder);
