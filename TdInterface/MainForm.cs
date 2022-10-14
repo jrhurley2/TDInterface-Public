@@ -156,12 +156,12 @@ namespace TdInterface
 
         private void AddInitialOrder(string symbol, ulong orderKey, Order order)
         {
-            if(!_initialOrders.ContainsKey(symbol))
+            if(!_initialOrders.ContainsKey(symbol.ToUpper()))
             {
-                _initialOrders.Add(symbol, new Dictionary<ulong, Order>());
+                _initialOrders.Add(symbol.ToUpper(), new Dictionary<ulong, Order>());
             }
 
-            _initialOrders[symbol].Add(orderKey, order);
+            _initialOrders[symbol.ToUpper()].Add(orderKey, order);
         }
 
         private static int CalcShares(double riskPerShare, string maxRisk, bool trainingWheels = false)
@@ -588,7 +588,7 @@ namespace TdInterface
                     
                     Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
                     var symbol = orderFillMessage.Order.Security.Symbol;
-                    if (_initialOrders.ContainsKey(symbol))
+                    if (_initialOrders.ContainsKey(symbol.ToUpper()))
                     {
                         Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
                         //Initial Trigger Order filled, adjust limit
@@ -596,7 +596,9 @@ namespace TdInterface
                         {
                             Debug.WriteLine("Found OrderKey");
                             _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-                            var lmitOrder = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                            var triggerOrder = _securitiesaccount.orderStrategies.Where(o =>  ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                            //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                            var lmitOrder = triggerOrder.childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
 
                             if (lmitOrder != null)
                             {
@@ -611,7 +613,6 @@ namespace TdInterface
                                 var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk: avgPrice - risk;
 
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
-
 
                                 lmitOrder.price = firstTargetlimtPrice.ToString("0.00");
                                 await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder);
