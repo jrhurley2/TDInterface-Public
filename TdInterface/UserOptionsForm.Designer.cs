@@ -43,6 +43,8 @@ namespace TdInterface
             this.label3 = new System.Windows.Forms.Label();
             this.chkMoveLimitOnFill = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chkReduceStopOnClose = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -171,11 +173,31 @@ namespace TdInterface
             this.label4.TabIndex = 14;
             this.label4.Text = "Move Limit On Fill";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(59, 275);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(156, 20);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Reduce Stop On Close";
+            // 
+            // chkReduceStopOnClose
+            // 
+            this.chkReduceStopOnClose.AutoSize = true;
+            this.chkReduceStopOnClose.Location = new System.Drawing.Point(277, 274);
+            this.chkReduceStopOnClose.Name = "chkReduceStopOnClose";
+            this.chkReduceStopOnClose.Size = new System.Drawing.Size(18, 17);
+            this.chkReduceStopOnClose.TabIndex = 15;
+            this.chkReduceStopOnClose.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 451);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.chkReduceStopOnClose);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.chkMoveLimitOnFill);
             this.Controls.Add(this.label3);
@@ -214,5 +236,7 @@ namespace TdInterface
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkMoveLimitOnFill;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkReduceStopOnClose;
     }
 }

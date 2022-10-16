@@ -12,5 +12,6 @@ namespace TdInterface
         public bool UseBidAskOcoCalc { get; set; }
         public int OneRProfitPercenatage { get; set; }
         public bool MoveLimitPriceOnFill { get; set; }
+        public bool ReduceStopOnClose { get; set; }
     }
 }

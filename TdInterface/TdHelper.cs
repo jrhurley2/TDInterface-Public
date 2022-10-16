@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Model;
@@ -173,20 +174,23 @@ namespace TdInterface
             return orderNumber;
         }
 
-        public static async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public static async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
         {
-            var request = new HttpRequestMessage(HttpMethod.Put, new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, order.orderId)))
+            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, orderId));
+
+            var request = new HttpRequestMessage(HttpMethod.Put, uri)
             {
                 Method = HttpMethod.Put,
-                Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonConvert.SerializeObject(newOrder), Encoding.UTF8, "application/json")
             };
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
-
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+            
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
             if (response.StatusCode != System.Net.HttpStatusCode.Created)
             {
-                Debug.Write(order);
+                Debug.Write(newOrder);
                 throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
             };
 

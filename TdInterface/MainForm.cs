@@ -23,7 +23,7 @@ namespace TdInterface
         private Position _initialPosition;
         private CandleList _candleList;
         private bool _trainingWheels = false;
-        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25};
+        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
 
@@ -66,7 +66,7 @@ namespace TdInterface
                 if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
                 {
                     var consumerKey = Utility.GetConsumerKey();
-                    if(consumerKey == null)
+                    if (consumerKey == null)
                     {
                         var frm = new frmConsmerKey();
                         frm.ShowDialog();
@@ -143,7 +143,7 @@ namespace TdInterface
 
             int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
 
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage,100)));
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage, 100)));
 
             ResetInitialOrder();
             var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
@@ -156,7 +156,7 @@ namespace TdInterface
 
         private void AddInitialOrder(string symbol, ulong orderKey, Order order)
         {
-            if(!_initialOrders.ContainsKey(symbol.ToUpper()))
+            if (!_initialOrders.ContainsKey(symbol.ToUpper()))
             {
                 _initialOrders.Add(symbol.ToUpper(), new Dictionary<ulong, Order>());
             }
@@ -178,7 +178,7 @@ namespace TdInterface
             }
 
             var quantity = Convert.ToInt32(calcShares);
-            
+
             return quantity;
         }
 
@@ -190,7 +190,7 @@ namespace TdInterface
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = OrderHelper.SELL_SHORT;
-                
+
                 double triggerLimit = double.MinValue;
 
                 if (string.IsNullOrEmpty(txtLimit.Text))
@@ -263,6 +263,7 @@ namespace TdInterface
             _initialPosition = null;
             txtAveragePrice.Text = string.Empty;
             txtShares.Text = string.Empty;
+            txtStopToClose.Text = string.Empty;
         }
 
         #endregion
@@ -292,7 +293,7 @@ namespace TdInterface
                 }
 
                 var stopPrice = _activePosition.averagePrice;
-                if(!string.IsNullOrEmpty(txtStopToClose.Text))
+                if (!string.IsNullOrEmpty(txtStopToClose.Text))
                 {
                     stopPrice = float.Parse(txtStopToClose.Text);
                 }
@@ -374,7 +375,8 @@ namespace TdInterface
         {
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
-            if (exitInstruction == OrderHelper.SELL) {
+            if (exitInstruction == OrderHelper.SELL)
+            {
                 limitPrice = _stockQuote.askPrice;
             }
             else
@@ -382,13 +384,39 @@ namespace TdInterface
                 limitPrice = _stockQuote.bidPrice;
             }
 
-            await PlaceLimitOrder(_activePosition.instrument.symbol, quantity, exitInstruction, limitPrice);
+            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
+
+            if (stopOrder != null  && _settings.ReduceStopOnClose)
+            {
+                //Change the stop order to a Limit order to take profit and repladce
+                var newOrder = OrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
+                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+            }
+            else
+            {
+                await PlaceLimitOrder(_activePosition.instrument.symbol, quantity, exitInstruction, limitPrice);
+            }
         }
 
         private async Task ExitMarket(int quantity)
         {
             string exitInstruction = GetExitInstruction(_activePosition);
-            await PlaceMarketOrder(_activePosition.instrument.symbol, quantity, exitInstruction);
+            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
+
+            if (stopOrder != null && _settings.ReduceStopOnClose)
+            {
+                //Change the stop order to a Limit order to take profit and repladce
+                var newOrder = OrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
+                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+            }
+            else
+            {
+                await PlaceMarketOrder(_activePosition.instrument.symbol, quantity, exitInstruction);
+            }
         }
 
         private static string GetExitInstruction(Position position)
@@ -585,7 +613,7 @@ namespace TdInterface
                 Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
                 if (_settings.MoveLimitPriceOnFill)
                 {
-                    
+
                     Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
                     var symbol = orderFillMessage.Order.Security.Symbol;
                     if (_initialOrders.ContainsKey(symbol.ToUpper()))
@@ -596,9 +624,10 @@ namespace TdInterface
                         {
                             Debug.WriteLine("Found OrderKey");
                             _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-                            var triggerOrder = _securitiesaccount.orderStrategies.Where(o =>  ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                            var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                            var lmitOrder = triggerOrder.childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                            //So the Trigger has an OCO that has the limit and stop.  
+                            var lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
 
                             if (lmitOrder != null)
                             {
@@ -607,20 +636,20 @@ namespace TdInterface
                                 var avgPrice = _activePosition.averagePrice;
                                 var risk = Math.Abs(avgPrice - stop);
 
-                                
+
                                 string exitInstruction = GetExitInstruction(_activePosition);
-                                
-                                var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk: avgPrice - risk;
+
+                                var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
 
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                lmitOrder.price = firstTargetlimtPrice.ToString("0.00");
-                                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder);
+                                var newLimitOrder = OrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
                             }
                         }
                     }
                 }
-                
+
                 Debug.WriteLine(orderFillMessage.Order.OrderKey);
             }
             catch (Exception ex)
@@ -777,7 +806,7 @@ namespace TdInterface
                 ////_streamer.Dispose();
                 //_textWriterTraceListener.Dispose();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -828,7 +857,7 @@ namespace TdInterface
 
         private void btnLastSwingLow_Click(object sender, EventArgs e)
         {
-            txtStop.Text = (double.Parse(((Button)sender).Text) -.05).ToString("#.##");
+            txtStop.Text = (double.Parse(((Button)sender).Text) - .05).ToString("#.##");
         }
 
         private void btnLastSwingHigh_Click(object sender, EventArgs e)
@@ -838,12 +867,12 @@ namespace TdInterface
 
         private void txtStop_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-             //await UpdatePriceHistory();
+            //await UpdatePriceHistory();
         }
 
         private async void btnCancelAll_Click(object sender, EventArgs e)
@@ -858,7 +887,7 @@ namespace TdInterface
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)
                 {
-                    Debug.WriteLine(JsonConvert.SerializeObject( order));
+                    Debug.WriteLine(JsonConvert.SerializeObject(order));
                     var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
                     tasks.Add(task);
                 }
@@ -961,7 +990,7 @@ namespace TdInterface
             {
                 btnBuyMrkTriggerOco.Enabled = false;
                 btnSellMrkTriggerOco.Enabled = false;
-                btnBuyLmtTriggerOco.Enabled= false;
+                btnBuyLmtTriggerOco.Enabled = false;
                 btnSellLmtTriggerOco.Enabled = false;
                 return;
             }
@@ -1004,6 +1033,25 @@ namespace TdInterface
             TextBox txtBox = (TextBox)sender;
 
             d = ValidateOcoStopAndLimit(txtBox);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var trigger = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderStrategyType == "TRIGGER").FirstOrDefault();
+            var orderFill = new OrderFillMessage()
+            {
+                Order = new OrderFillMessageOrder
+                {
+                    OrderKey = ulong.Parse(trigger.orderId),
+                    Security = new OrderFillMessageOrderSecurity
+                    {
+                        Symbol = txtSymbol.Text.ToUpper()
+                    }
+                }
+            };
+            AddInitialOrder(trigger.orderLegCollection[0].instrument.symbol, ulong.Parse(trigger.orderId), trigger);
+            HandleOrderFilled(orderFill);
+
         }
     }
 }
