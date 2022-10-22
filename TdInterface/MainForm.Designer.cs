@@ -79,7 +79,6 @@ namespace TdInterface
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtRValue = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -588,20 +587,9 @@ namespace TdInterface
             this.txtRValue.Size = new System.Drawing.Size(43, 27);
             this.txtRValue.TabIndex = 34;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(374, 229);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 29);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "TestButton";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.txtRValue);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtLimitOffset);
@@ -702,7 +690,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
-        private System.Windows.Forms.Button button1;
     }
 }
 
