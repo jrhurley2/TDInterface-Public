@@ -25,14 +25,17 @@ namespace TdInterface
 
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
-                var mainForm = serviceProvider.GetRequiredService<MainForm>();
-                Application.Run(mainForm);
+                //var mainForm = serviceProvider.GetRequiredService<MainForm>();
+                //Application.Run(mainForm);
+                var masterForm = serviceProvider.GetRequiredService<MasterForm>();
+                Application.Run(masterForm);
+
             }
         }
 
         private static void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<MainForm>();
+            services.AddSingleton<MasterForm>();
         }
     }
 }

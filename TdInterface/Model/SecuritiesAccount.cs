@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TdInterface.Model
@@ -28,6 +29,35 @@ namespace TdInterface.Model
         public Currentbalances currentBalances { get; set; }
         public Projectedbalances projectedBalances { get; set; }
         public Order[] orderStrategies { get; set; }
+
+        public List<Order> FlatOrders
+        {
+            get
+            {
+                return FlattenOrders(this.orderStrategies.ToList<Order>());
+            }
+        }
+
+        private static List<Order> FlattenOrders(List<Order> orders)
+        {
+            List<Order> result = new List<Order>();
+
+            foreach (var order in orders)
+            {
+                result.Add(order);
+                if (order.childOrderStrategies != null && order.childOrderStrategies.Count > 0)
+                {
+                    var childOrders = FlattenOrders(order.childOrderStrategies);
+                    foreach (var childOrderStrategy in childOrders)
+                    {
+                        result.Add((Order)childOrderStrategy);
+                    }
+                }
+
+            }
+            return result;
+        }
+
 
     }
 

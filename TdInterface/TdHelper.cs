@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Model;
@@ -21,6 +22,7 @@ namespace TdInterface
         public const string routeGetAccounts = "v1/accounts";
         public const string routeCancelOrder = "v1/accounts/{0}/orders/{1}";
         public const string routePlaceOrder = "v1/accounts/{0}/orders";
+        public const string routeReplaceOrder = "v1/accounts/{0}/orders/{1}";
         public const string routeGetQuote = "v1/marketdata/{0}/quotes";
         //public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
@@ -174,6 +176,29 @@ namespace TdInterface
             var orderNumber = ulong.Parse(orderNumberString);
 
             return orderNumber;
+        }
+
+        public static async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
+        {
+            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, orderId));
+
+            var request = new HttpRequestMessage(HttpMethod.Put, uri)
+            {
+                Method = HttpMethod.Put,
+                Content = new StringContent(JsonConvert.SerializeObject(newOrder), Encoding.UTF8, "application/json")
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+            
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.Created)
+            {
+                Debug.Write(newOrder);
+                throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
+            };
+
+
         }
 
         public static async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)

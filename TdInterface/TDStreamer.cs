@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.WebSockets;
+using System.Printing;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
@@ -26,6 +28,7 @@ namespace TDAmeritradeAPI.Client
 
         private WebsocketClient _ws;
         private StockQuote _stockQuote;
+        private List<string> _quoteSymbols = new List<string>();
 
 
         private readonly Subject<StockQuote> _stockQuoteRecievedSubject = new Subject<StockQuote>();
@@ -119,6 +122,15 @@ namespace TDAmeritradeAPI.Client
             var exitEvent = new ManualResetEvent(false);
 
             var url = new Uri($"wss://{userPrincipals.streamerInfo.streamerSocketUrl}/ws");
+
+            //var factory = new Func<ClientWebSocket>(() => new ClientWebSocket
+            //{
+            //    Options =
+            //    {
+            //        KeepAliveInterval = TimeSpan.FromSeconds(5)
+            //    }
+            //});
+
             _ws = new WebsocketClient(url);
             _ws.ReconnectTimeout = TimeSpan.FromSeconds(30);
 
@@ -234,8 +246,13 @@ namespace TDAmeritradeAPI.Client
                         var service = socketData.service;
                         if (service == "QUOTE")
                         {
-                            var stockQuote = new StockQuote(socketData.content[0]);
-                            _stockQuoteRecievedSubject.OnNext(stockQuote);
+                            foreach (var quoteJson in socketData.content)
+                            {
+
+                                var stockQuote = new StockQuote(quoteJson);
+                                _stockQuoteRecievedSubject.OnNext(stockQuote);
+                                Debug.WriteLine(JsonConvert.SerializeObject(stockQuote));
+                            }
                         }
                         else if (service == "ACCT_ACTIVITY")
                         {
@@ -293,24 +310,39 @@ namespace TDAmeritradeAPI.Client
             });
         }
 
+        public int _quoteRequestId = 0;
+
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
-            var _reqs = new List<StreamerSettings.Request>();
-            var quoteRequest = new StreamerSettings.Request
+            if(!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
             {
-                service = "QUOTE",
-                command = "SUBS",
-                requestid = "1",
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
-                parameters = new StreamerSettings.Parameters
-                {
-                    keys = tickerSymbol,
-                    fields = "0,1,2,3,4"
-                }
-            };
-            _reqs.Add(quoteRequest);
+                _quoteSymbols.Add(tickerSymbol.ToUpper());
+            }
 
+            var symbols = string.Join(",", _quoteSymbols);
+
+            var _reqs = new List<StreamerSettings.Request>();
+
+            int requestId = 0;
+            //foreach (var symbol in _quoteSymbols)
+            //{
+            //requestId++;
+            _quoteRequestId++;
+                var quoteRequest = new StreamerSettings.Request
+                {
+                    service = "QUOTE",
+                    command = "SUBS",
+                    requestid = "1", //_quoteRequestId.ToString(),
+                    account = userPrincipals.accounts[0].accountId,
+                    source = userPrincipals.streamerInfo.appId,
+                    parameters = new StreamerSettings.Parameters
+                    {
+                        keys = symbols,
+                        fields = "0,1,2,3,4"
+                    }
+                };
+                _reqs.Add(quoteRequest);
+            //}
             var request = new StreamerSettings.Requests()
             {
                 requests = _reqs.ToArray()

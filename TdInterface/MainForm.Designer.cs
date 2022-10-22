@@ -71,11 +71,6 @@ namespace TdInterface
             this.txtAsk = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtLimit = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtHeartBeat = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -89,7 +84,6 @@ namespace TdInterface
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBuyMrkTriggerOco
@@ -113,6 +107,7 @@ namespace TdInterface
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(60, 27);
             this.txtSymbol.TabIndex = 1;
+            this.txtSymbol.TextChanged += new System.EventHandler(this.txtSymbol_TextChanged);
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
             // 
             // lblSymbol
@@ -184,6 +179,7 @@ namespace TdInterface
             this.txtStop.Size = new System.Drawing.Size(100, 27);
             this.txtStop.TabIndex = 2;
             this.txtStop.TextChanged += new System.EventHandler(this.txtStop_TextChanged);
+            this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
             // 
             // timer1
             // 
@@ -519,48 +515,7 @@ namespace TdInterface
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(104, 27);
             this.txtLimit.TabIndex = 3;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(986, 28);
-            this.menuStrip1.TabIndex = 27;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearCredentialsToolStripMenuItem,
-            this.saveCredentialsToolStripMenuItem,
-            this.settingsToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
-            this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // clearCredentialsToolStripMenuItem
-            // 
-            this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
-            this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
-            this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
-            // 
-            // saveCredentialsToolStripMenuItem
-            // 
-            this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
-            this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
-            this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
             // 
             // checkBox1
             // 
@@ -615,6 +570,7 @@ namespace TdInterface
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(125, 27);
             this.txtLimitOffset.TabIndex = 4;
+            this.txtLimitOffset.Leave += new System.EventHandler(this.txtLimitOffset_Leave);
             // 
             // label9
             // 
@@ -680,9 +636,7 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.txtSymbol);
-            this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(818, 613);
             this.Name = "MainForm";
@@ -695,8 +649,6 @@ namespace TdInterface
             this.groupBox2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -735,10 +687,6 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExitMark33;
         private System.Windows.Forms.Button btnExitMark25;
         private System.Windows.Forms.Button btnExitMark100;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearCredentialsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveCredentialsToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtHeartBeat;
         private System.Windows.Forms.Label label8;
@@ -746,7 +694,6 @@ namespace TdInterface
         private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
         private System.Windows.Forms.Button btnCancelAll;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btnExitAsk10;
         private System.Windows.Forms.Button btnExitAsk25;
         private System.Windows.Forms.Button btnExitAsk33;
