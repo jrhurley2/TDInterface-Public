@@ -79,6 +79,7 @@ namespace TdInterface
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtRValue = new System.Windows.Forms.TextBox();
+            this.btnReconnect = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -584,12 +585,25 @@ namespace TdInterface
             // 
             this.txtRValue.Location = new System.Drawing.Point(474, 112);
             this.txtRValue.Name = "txtRValue";
+            this.txtRValue.ReadOnly = true;
             this.txtRValue.Size = new System.Drawing.Size(43, 27);
             this.txtRValue.TabIndex = 34;
+            this.txtRValue.TabStop = false;
+            // 
+            // btnReconnect
+            // 
+            this.btnReconnect.Location = new System.Drawing.Point(365, 533);
+            this.btnReconnect.Name = "btnReconnect";
+            this.btnReconnect.Size = new System.Drawing.Size(94, 29);
+            this.btnReconnect.TabIndex = 35;
+            this.btnReconnect.Text = "Reconnect";
+            this.btnReconnect.UseVisualStyleBackColor = true;
+            this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
             // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
+            this.Controls.Add(this.btnReconnect);
             this.Controls.Add(this.txtRValue);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtLimitOffset);
@@ -690,6 +704,7 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
+        private System.Windows.Forms.Button btnReconnect;
     }
 }
 
