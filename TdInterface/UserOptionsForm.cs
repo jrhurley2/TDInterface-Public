@@ -30,6 +30,8 @@ namespace TdInterface
             _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
             _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
             _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
+            _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : Decimal.Parse(txtDefaultLimitOffset.Text);
+
             Utility.SaveSettings(_settings);
             this.Close();
         }
@@ -46,6 +48,8 @@ namespace TdInterface
             txtOneRSharePct.Text = _settings.OneRProfitPercenatage.ToString();
             chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
             chkReduceStopOnClose.Checked = _settings.ReduceStopOnClose;
+            txtDefaultLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

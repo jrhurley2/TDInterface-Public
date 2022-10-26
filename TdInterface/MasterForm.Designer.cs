@@ -99,8 +99,7 @@
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Enabled = false;
-            this.txtSymbol.Location = new System.Drawing.Point(257, 196);
+            this.txtSymbol.Location = new System.Drawing.Point(246, 184);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(125, 27);
             this.txtSymbol.TabIndex = 2;
