@@ -45,6 +45,8 @@ namespace TdInterface
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.chkReduceStopOnClose = new System.Windows.Forms.CheckBox();
+            this.txtDefaultLimitOffset = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -191,11 +193,29 @@ namespace TdInterface
             this.chkReduceStopOnClose.TabIndex = 15;
             this.chkReduceStopOnClose.UseVisualStyleBackColor = true;
             // 
+            // txtDefaultLimitOffset
+            // 
+            this.txtDefaultLimitOffset.Location = new System.Drawing.Point(275, 312);
+            this.txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
+            this.txtDefaultLimitOffset.Size = new System.Drawing.Size(125, 27);
+            this.txtDefaultLimitOffset.TabIndex = 17;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(53, 319);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(139, 20);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Default Limit Offset";
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 451);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtDefaultLimitOffset);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.chkReduceStopOnClose);
             this.Controls.Add(this.label4);
@@ -238,5 +258,7 @@ namespace TdInterface
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkReduceStopOnClose;
+        private System.Windows.Forms.TextBox txtDefaultLimitOffset;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -642,6 +642,7 @@ namespace TdInterface
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.groupBox1.ResumeLayout(false);

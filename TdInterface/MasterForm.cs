@@ -83,7 +83,7 @@ namespace TdInterface
             }
 
 
-            InitializeComponent();
+            //InitializeComponent();
         }
 
         private async void timer1_Tick(object sender, EventArgs e)
@@ -131,21 +131,45 @@ namespace TdInterface
 
             MainForm frm = null;
 
-            //if(_mainForms.ContainsKey(txtSymbol.Text.ToUpper()))
-            //{
-            //    frm = _mainForms[txtSymbol.Text.ToUpper()];
-            //}
-            //else
-            //{
-                frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper());
-                _mainForms.Add(name, frm);
+            if (_mainForms.ContainsKey(txtSymbol.Text.ToUpper()))
+            {
+                frm = _mainForms[txtSymbol.Text.ToUpper()];
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(txtSymbol.Text))
+                {
+                    frm = new MainForm(_streamer, _settings, this, txtSymbol.Text.ToUpper());
+                    _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
+                }
+                else
+                {
+                    frm = new MainForm(_streamer, _settings, this, name);
+                    _mainForms.Add(name, frm);
+
+                }
+                frm.FormClosing += MainForm_FormClosing;
                 frm.Show();
-            //}
+            }
 
             frm.Focus();
 
-
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                var frm = sender as MainForm;
+                _mainForms.Remove(frm.MainFormName);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+
 
         private void MasterForm_FormClosing(object sender, FormClosingEventArgs e)
         {

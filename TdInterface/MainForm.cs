@@ -27,11 +27,15 @@ namespace TdInterface
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
+        public string MainFormName{ get; private set; }
+        public MasterForm _parent { get; private set; }
 
-        public MainForm(TDStreamer tdStreamer, Settings settings, string name)
+        public MainForm(TDStreamer tdStreamer, Settings settings, MasterForm parent, string name)
         {
             InitializeComponent();
 
+            _parent = parent;
+            MainFormName = name;
             this.Text = name;
 
             _settings = settings;
@@ -545,14 +549,21 @@ namespace TdInterface
 
         private void SafeUpdateTextBox(TextBox textBox, string text)
         {
-            if (textBox.InvokeRequired)
+            try
             {
-                var d = new SafeCallDelegate(SafeUpdateTextBox);
-                textBox.Invoke(d, new object[] { textBox, text });
+                if (textBox.InvokeRequired)
+                {
+                    var d = new SafeCallDelegate(SafeUpdateTextBox);
+                    textBox.Invoke(d, new object[] { textBox, text });
+                }
+                else
+                {
+                    textBox.Text = text;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                textBox.Text = text;
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -749,7 +760,12 @@ namespace TdInterface
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.A)
+            if (e.Control && e.KeyCode == Keys.Oemtilde)
+            {
+                _parent.Focus();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.A)
             {
                 btnCancelAll.PerformClick();
                 e.SuppressKeyPress = true;
@@ -861,6 +877,10 @@ namespace TdInterface
             else
             {
                 txtRisk.Text = _settings.MaxRisk.ToString("#.##");
+            }
+            if (_settings.DefaultLimitOffset != 0)
+            {
+                txtLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
             }
         }
 
@@ -1069,6 +1089,11 @@ namespace TdInterface
             _streamer.Dispose();
             CreateStreamer();
             txtSymbol_Leave(sender, e);
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
         }
     }
 }

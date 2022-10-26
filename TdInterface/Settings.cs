@@ -13,5 +13,6 @@ namespace TdInterface
         public int OneRProfitPercenatage { get; set; }
         public bool MoveLimitPriceOnFill { get; set; }
         public bool ReduceStopOnClose { get; set; }
+        public decimal DefaultLimitOffset { get; set; }
     }
 }
