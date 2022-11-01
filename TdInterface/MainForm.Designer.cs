@@ -80,6 +80,8 @@ namespace TdInterface
             this.label9 = new System.Windows.Forms.Label();
             this.txtRValue = new System.Windows.Forms.TextBox();
             this.btnReconnect = new System.Windows.Forms.Button();
+            this.txtPnL = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -600,9 +602,28 @@ namespace TdInterface
             this.btnReconnect.UseVisualStyleBackColor = true;
             this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
             // 
+            // txtPnL
+            // 
+            this.txtPnL.Enabled = false;
+            this.txtPnL.Location = new System.Drawing.Point(474, 161);
+            this.txtPnL.Name = "txtPnL";
+            this.txtPnL.Size = new System.Drawing.Size(101, 27);
+            this.txtPnL.TabIndex = 36;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(432, 165);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 20);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "PnL";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtPnL);
             this.Controls.Add(this.btnReconnect);
             this.Controls.Add(this.txtRValue);
             this.Controls.Add(this.label9);
@@ -706,6 +727,8 @@ namespace TdInterface
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
         private System.Windows.Forms.Button btnReconnect;
+        private System.Windows.Forms.TextBox txtPnL;
+        private System.Windows.Forms.Label label10;
     }
 }
 

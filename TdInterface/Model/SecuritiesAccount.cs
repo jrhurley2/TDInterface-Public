@@ -34,7 +34,16 @@ namespace TdInterface.Model
         {
             get
             {
-                return FlattenOrders(this.orderStrategies.ToList<Order>());
+                return this.orderStrategies != null ? FlattenOrders(this.orderStrategies.ToList<Order>()) : new List<Order>();
+            }
+        }
+
+        public float DailyPnL
+        {
+            get
+            {
+                return this.currentBalances.liquidationValue - this.initialBalances.liquidationValue;
+                    //return this.positions != null ? this.positions.Where(p => p.instrument.assetType == "EQUITY").Sum(p => p.currentDayProfitLoss) : 0;
             }
         }
 
