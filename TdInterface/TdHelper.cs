@@ -98,6 +98,7 @@ namespace TdInterface
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
             var securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+            Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
 
             return securitiesaccount;
         }
@@ -174,6 +175,7 @@ namespace TdInterface
 
             var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
             var orderNumber = ulong.Parse(orderNumberString);
+            Debug.WriteLine(JsonConvert.SerializeObject(order));
 
             return orderNumber;
         }

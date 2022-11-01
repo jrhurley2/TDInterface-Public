@@ -31,6 +31,9 @@ namespace TdInterface
             _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
             _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
             _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : Decimal.Parse(txtDefaultLimitOffset.Text);
+            _settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
+            _settings.MaxLossLimitInR = _settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
+            _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -49,7 +52,9 @@ namespace TdInterface
             chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
             chkReduceStopOnClose.Checked = _settings.ReduceStopOnClose;
             txtDefaultLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
-
+            chkMaxLossLimit.Checked = _settings.EnableMaxLossLimit;
+            txtMaxLossLimit.Text = _settings.MaxLossLimitInR.ToString("#.##");
+            txtMinRisk.Text = _settings.MinimumRisk.ToString("#.##");
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -47,6 +47,10 @@ namespace TdInterface
             this.chkReduceStopOnClose = new System.Windows.Forms.CheckBox();
             this.txtDefaultLimitOffset = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.chkMaxLossLimit = new System.Windows.Forms.CheckBox();
+            this.txtMaxLossLimit = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtMinRisk = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -209,11 +213,48 @@ namespace TdInterface
             this.label6.TabIndex = 18;
             this.label6.Text = "Default Limit Offset";
             // 
+            // chkMaxLossLimit
+            // 
+            this.chkMaxLossLimit.AutoSize = true;
+            this.chkMaxLossLimit.Location = new System.Drawing.Point(574, 53);
+            this.chkMaxLossLimit.Name = "chkMaxLossLimit";
+            this.chkMaxLossLimit.Size = new System.Drawing.Size(177, 24);
+            this.chkMaxLossLimit.TabIndex = 19;
+            this.chkMaxLossLimit.Text = "Enable Max Loss Limit";
+            this.chkMaxLossLimit.UseVisualStyleBackColor = true;
+            // 
+            // txtMaxLossLimit
+            // 
+            this.txtMaxLossLimit.Location = new System.Drawing.Point(780, 55);
+            this.txtMaxLossLimit.Name = "txtMaxLossLimit";
+            this.txtMaxLossLimit.Size = new System.Drawing.Size(125, 27);
+            this.txtMaxLossLimit.TabIndex = 20;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(577, 102);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(123, 20);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Min Risk (ex:  .15)";
+            // 
+            // txtMinRisk
+            // 
+            this.txtMinRisk.Location = new System.Drawing.Point(785, 100);
+            this.txtMinRisk.Name = "txtMinRisk";
+            this.txtMinRisk.Size = new System.Drawing.Size(125, 27);
+            this.txtMinRisk.TabIndex = 22;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 451);
+            this.ClientSize = new System.Drawing.Size(1092, 552);
+            this.Controls.Add(this.txtMinRisk);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtMaxLossLimit);
+            this.Controls.Add(this.chkMaxLossLimit);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtDefaultLimitOffset);
             this.Controls.Add(this.label5);
@@ -260,5 +301,9 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox chkReduceStopOnClose;
         private System.Windows.Forms.TextBox txtDefaultLimitOffset;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkMaxLossLimit;
+        private System.Windows.Forms.TextBox txtMaxLossLimit;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtMinRisk;
     }
 }

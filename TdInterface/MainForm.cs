@@ -149,7 +149,7 @@ namespace TdInterface
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
-            int quantity = CalcShares(riskPerShare, maxRisk, trainingWheels);
+            int quantity = CalcShares(riskPerShare, maxRisk, _settings, trainingWheels);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage, 100)));
 
@@ -172,7 +172,7 @@ namespace TdInterface
             _initialOrders[symbol.ToUpper()].Add(orderKey, order);
         }
 
-        private static int CalcShares(double riskPerShare, string maxRisk, bool trainingWheels = false)
+        private static int CalcShares(double riskPerShare, string maxRisk, Settings settings, bool trainingWheels = false)
         {
             double calcShares;
 
@@ -182,7 +182,8 @@ namespace TdInterface
             }
             else
             {
-                calcShares = double.Parse(maxRisk) / riskPerShare;
+                var rps = riskPerShare > settings.MinimumRisk ? riskPerShare : settings.MinimumRisk;
+                calcShares = double.Parse(maxRisk) / rps;
             }
 
             var quantity = Convert.ToInt32(calcShares);
@@ -616,13 +617,46 @@ namespace TdInterface
         }
         private async void HandleAcctActivity(AcctActivity a)
         {
-            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+            try
+            {
+                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                //txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         private async void HandleOrderRecieved(OrderEntryRequestMessage orderEntryRequestMessage)
         {
-            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+            try
+            {
+                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+
+                var symbol = orderEntryRequestMessage.Order.Security.Symbol;
+                if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                {
+                    //We have an initial order lets find the limit and save it off
+                    if (_initialOrders[symbol].ContainsKey(orderEntryRequestMessage.Order.OrderKey))
+                    {
+                        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
+                        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                        //So the Trigger has an OCO that has the limit and stop.  
+                        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
+
+        private Order _initialLimitOrder;
 
         private async void HandleOrderFilled(OrderFillMessage orderFillMessage)
         {
@@ -631,6 +665,16 @@ namespace TdInterface
                 await SetPosition();
 
                 Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
+                
+                //check to see if this is the initial Limit order, if it is, set the stop to BE.
+                if(_initialLimitOrder != null)
+                {
+                    if(_initialLimitOrder.orderId.Equals(orderFillMessage.Order.OrderKey)) 
+                    {
+                        btnBreakEven.PerformClick();
+                    }
+                }
+
                 if (_settings.MoveLimitPriceOnFill)
                 {
 
@@ -737,6 +781,18 @@ namespace TdInterface
             try
             {
                 _securitiesaccount = await TdHelper.GetAccount(accessTokenContainer, userPrincipal);
+
+                try
+                {
+                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Can't Update PnL");
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.StackTrace);
+                }
+
                 if (_securitiesaccount.positions != null)
                 {
                     position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
