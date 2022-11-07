@@ -27,5 +27,6 @@ namespace TdInterface
         public bool EnableMaxLossLimit { get; set; }
         public decimal MaxLossLimitInR { get; set; }
         public double MinimumRisk { get; set; }
+        public bool SendAltPrtScrOnOpen { get; set; }
     }
 }

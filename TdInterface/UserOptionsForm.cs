@@ -34,6 +34,7 @@ namespace TdInterface
             _settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
             _settings.MaxLossLimitInR = _settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
             _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
+            _settings.SendAltPrtScrOnOpen = chkSendPrtScrOnOpen.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -55,6 +56,7 @@ namespace TdInterface
             chkMaxLossLimit.Checked = _settings.EnableMaxLossLimit;
             txtMaxLossLimit.Text = _settings.MaxLossLimitInR.ToString("#.##");
             txtMinRisk.Text = _settings.MinimumRisk.ToString("#.##");
+            chkSendPrtScrOnOpen.Checked = _settings.SendAltPrtScrOnOpen;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
