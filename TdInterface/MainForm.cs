@@ -158,6 +158,7 @@ namespace TdInterface
             var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
             txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
             AddInitialOrder(symbol, orderKey, triggerOrder);
+            InputSender.PrintScreen();
 
         }
         private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
@@ -636,17 +637,22 @@ namespace TdInterface
                 _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
+                Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
+                Debug.WriteLine($"HandleOrderReceived: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
+
                 if (_initialOrders.ContainsKey(symbol.ToUpper()))
                 {
+                    Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
                     if (_initialOrders[symbol].ContainsKey(orderEntryRequestMessage.Order.OrderKey))
                     {
+                        Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
                         var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
                         //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                         //So the Trigger has an OCO that has the limit and stop.  
                         _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                        Debug.WriteLine($"HandleOrderReceived: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
                     }
-
                 }
             }
             catch (Exception ex)
@@ -665,12 +671,19 @@ namespace TdInterface
                 await SetPosition();
 
                 Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
-                
+
+                var symbol = orderFillMessage.Order.Security.Symbol;
+                Debug.WriteLine($"HandleOrderFilled: symbol {symbol}");
+                Debug.WriteLine($"HandleOrderFilled: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
+
+
                 //check to see if this is the initial Limit order, if it is, set the stop to BE.
-                if(_initialLimitOrder != null)
+                if (_initialLimitOrder != null)
                 {
+                    Debug.WriteLine($"HandleOrderFilled equals Order Key {orderFillMessage.Order.OrderKey} {JsonConvert.SerializeObject(_initialLimitOrder)}");
                     if(_initialLimitOrder.orderId.Equals(orderFillMessage.Order.OrderKey)) 
                     {
+                        Debug.WriteLine($"HandleOrderFilled equals Order Key {JsonConvert.SerializeObject(_initialLimitOrder)}");
                         btnBreakEven.PerformClick();
                     }
                 }
@@ -679,7 +692,7 @@ namespace TdInterface
                 {
 
                     Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
-                    var symbol = orderFillMessage.Order.Security.Symbol;
+                    //var symbol = orderFillMessage.Order.Security.Symbol;
                     if (_initialOrders.ContainsKey(symbol.ToUpper()))
                     {
                         Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
@@ -711,6 +724,22 @@ namespace TdInterface
                                 await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
                             }
                         }
+                    }
+                }
+
+                //TODO:  IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
+                if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                {
+                    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
+                    //We have an initial order lets find the limit and save it off
+                    if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                    {
+                        Debug.WriteLine("HandleOrderFilled: Found Initial Order by OrderKey");
+                        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                        //So the Trigger has an OCO that has the limit and stop.  
+                        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                        Debug.WriteLine($"HandleOrderFilled: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
                     }
                 }
 
@@ -1150,6 +1179,11 @@ namespace TdInterface
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
 
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

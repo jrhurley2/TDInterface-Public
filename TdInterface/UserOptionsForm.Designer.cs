@@ -51,6 +51,7 @@ namespace TdInterface
             this.txtMaxLossLimit = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtMinRisk = new System.Windows.Forms.TextBox();
+            this.chkSendPrtScrOnOpen = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -246,11 +247,22 @@ namespace TdInterface
             this.txtMinRisk.Size = new System.Drawing.Size(125, 27);
             this.txtMinRisk.TabIndex = 22;
             // 
+            // chkSendPrtScrOnOpen
+            // 
+            this.chkSendPrtScrOnOpen.AutoSize = true;
+            this.chkSendPrtScrOnOpen.Location = new System.Drawing.Point(574, 148);
+            this.chkSendPrtScrOnOpen.Name = "chkSendPrtScrOnOpen";
+            this.chkSendPrtScrOnOpen.Size = new System.Drawing.Size(184, 24);
+            this.chkSendPrtScrOnOpen.TabIndex = 23;
+            this.chkSendPrtScrOnOpen.Text = "Send Al-PrtSc On Open";
+            this.chkSendPrtScrOnOpen.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 552);
+            this.Controls.Add(this.chkSendPrtScrOnOpen);
             this.Controls.Add(this.txtMinRisk);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtMaxLossLimit);
@@ -305,5 +317,7 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtMaxLossLimit;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtMinRisk;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkSendPrtScrOnOpen;
     }
 }
