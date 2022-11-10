@@ -82,6 +82,7 @@ namespace TdInterface
             this.btnReconnect = new System.Windows.Forms.Button();
             this.txtPnL = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.timerGetSecuritiesAccount = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -619,6 +620,12 @@ namespace TdInterface
             this.label10.TabIndex = 37;
             this.label10.Text = "PnL";
             // 
+            // timerGetSecuritiesAccount
+            // 
+            this.timerGetSecuritiesAccount.Enabled = true;
+            this.timerGetSecuritiesAccount.Interval = 10000;
+            this.timerGetSecuritiesAccount.Tick += new System.EventHandler(this.timerGetSecuritiesAccount_Tick);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
@@ -729,6 +736,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnReconnect;
         private System.Windows.Forms.TextBox txtPnL;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Timer timerGetSecuritiesAccount;
     }
 }
 

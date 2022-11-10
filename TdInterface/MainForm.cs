@@ -93,6 +93,7 @@ namespace TdInterface
                 CreateStreamer();
 
                 timer1.Start();
+                timerGetSecuritiesAccount.Start();
             }
             catch (Exception ex)
             {
@@ -137,6 +138,12 @@ namespace TdInterface
 
         private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
+            if (Convert.ToDecimal(_securitiesaccount.DailyPnL) < (_settings.MaxLossLimitInR * _settings.MaxRisk) * -1)
+            {
+                var msgBox = MessageBox.Show("You have exceeded your daily loss limit");
+                return;
+            }
+
             if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
             var stopPrice = double.Parse(txtStop.Text);
             var trainingWheels = checkBox1.Checked;
@@ -1184,6 +1191,24 @@ namespace TdInterface
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
+        {
+            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+
+            try
+            {
+                SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Can't Update PnL");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+
         }
     }
 }
