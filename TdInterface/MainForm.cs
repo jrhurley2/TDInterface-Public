@@ -156,6 +156,11 @@ namespace TdInterface
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
+            if(riskPerShare < 0)
+            {
+                throw new Exception("Risk Per Share was negative.");
+            }
+            
             int quantity = CalcShares(riskPerShare, maxRisk, _settings, trainingWheels);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage, 100)));
