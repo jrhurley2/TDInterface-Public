@@ -39,7 +39,8 @@ namespace TdInterface
             this.Text = name;
 
             _settings = settings;
-
+            txtPnL.Visible = _settings.ShowPnL;
+            lblPnL.Visible = _settings.ShowPnL;
             _streamer = tdStreamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
@@ -138,7 +139,7 @@ namespace TdInterface
 
         private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
-            if (Convert.ToDecimal(_securitiesaccount.DailyPnL) < (_settings.MaxLossLimitInR * _settings.MaxRisk) * -1)
+            if (_settings.EnableMaxLossLimit && Convert.ToDecimal(_securitiesaccount.DailyPnL) < (_settings.MaxLossLimitInR * _settings.MaxRisk) * -1)
             {
                 var msgBox = MessageBox.Show("You have exceeded your daily loss limit");
                 return;

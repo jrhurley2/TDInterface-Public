@@ -52,6 +52,7 @@ namespace TdInterface
             this.label7 = new System.Windows.Forms.Label();
             this.txtMinRisk = new System.Windows.Forms.TextBox();
             this.chkSendPrtScrOnOpen = new System.Windows.Forms.CheckBox();
+            this.chkShowPnL = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -257,11 +258,22 @@ namespace TdInterface
             this.chkSendPrtScrOnOpen.Text = "Send Al-PrtSc On Open";
             this.chkSendPrtScrOnOpen.UseVisualStyleBackColor = true;
             // 
+            // chkShowPnL
+            // 
+            this.chkShowPnL.AutoSize = true;
+            this.chkShowPnL.Location = new System.Drawing.Point(573, 187);
+            this.chkShowPnL.Name = "chkShowPnL";
+            this.chkShowPnL.Size = new System.Drawing.Size(94, 24);
+            this.chkShowPnL.TabIndex = 24;
+            this.chkShowPnL.Text = "Show PnL";
+            this.chkShowPnL.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 552);
+            this.Controls.Add(this.chkShowPnL);
             this.Controls.Add(this.chkSendPrtScrOnOpen);
             this.Controls.Add(this.txtMinRisk);
             this.Controls.Add(this.label7);
@@ -319,5 +331,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtMinRisk;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkSendPrtScrOnOpen;
+        private System.Windows.Forms.CheckBox chkShowPnL;
     }
 }
