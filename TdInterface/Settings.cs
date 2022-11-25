@@ -26,6 +26,8 @@ namespace TdInterface
         public decimal DefaultLimitOffset { get; set; }
         public bool EnableMaxLossLimit { get; set; }
         public decimal MaxLossLimitInR { get; set; }
+        public bool PreventRiskExceedMaxLoss { get; set; }
+        public bool AdjustRiskNotExceedMaxLoss { get; set; }
         public double MinimumRisk { get; set; }
         public bool SendAltPrtScrOnOpen { get; set; }
         public bool ShowPnL { get;set; }

@@ -139,16 +139,39 @@ namespace TdInterface
 
         private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
-            if (!_settings.TradeShares && _settings.EnableMaxLossLimit && Convert.ToDecimal(_securitiesaccount.DailyPnL) < (_settings.MaxLossLimitInR * _settings.MaxRisk) * -1)
-            {
-                var msgBox = MessageBox.Show("You have exceeded your daily loss limit");
-                return;
-            }
 
             if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
             var stopPrice = double.Parse(txtStop.Text);
             var trainingWheels = checkBox1.Checked;
-            var maxRisk = txtRisk.Text;
+            var maxRisk = double.Parse(txtRisk.Text);
+
+            if (!_settings.TradeShares && _settings.EnableMaxLossLimit)
+            {
+
+                var maxLoss = Convert.ToDouble(_settings.MaxLossLimitInR * _settings.MaxRisk) * -1;
+
+                if (Convert.ToDouble(_securitiesaccount.DailyPnL) < maxLoss)
+                {
+                    var msgBox = MessageBox.Show("You have exceeded your daily loss limit");
+                    return;
+                }
+
+                if (_settings.PreventRiskExceedMaxLoss)
+                {
+                    if((Convert.ToDouble(_securitiesaccount.DailyPnL) - maxRisk) < maxLoss)
+                    {
+                        if (_settings.AdjustRiskNotExceedMaxLoss)
+                        {
+                            maxRisk = Math.Abs(maxLoss - _securitiesaccount.DailyPnL);
+                        }
+                        else
+                        {
+                            var msgBox = MessageBox.Show("This trade will put you over your daily loss limit");
+                            return;
+                        }
+                    }
+                }
+            }
 
             var isShort = instruction.Equals(OrderHelper.SELL_SHORT);
 
@@ -186,18 +209,18 @@ namespace TdInterface
             _initialOrders[symbol.ToUpper()].Add(orderKey, order);
         }
 
-        private static int CalcShares(double riskPerShare, string maxRisk, Settings settings, bool trainingWheels = false)
+        private static int CalcShares(double riskPerShare, double maxRisk, Settings settings, bool trainingWheels = false)
         {
             double calcShares;
 
             if (trainingWheels)
             {
-                calcShares = double.Parse(maxRisk);
+                calcShares = maxRisk;
             }
             else
             {
                 var rps = riskPerShare > settings.MinimumRisk ? riskPerShare : settings.MinimumRisk;
-                calcShares = double.Parse(maxRisk) / rps;
+                calcShares = maxRisk / rps;
             }
 
             var quantity = Convert.ToInt32(calcShares);
