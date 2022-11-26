@@ -36,6 +36,8 @@ namespace TdInterface
             _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
             _settings.SendAltPrtScrOnOpen = chkSendPrtScrOnOpen.Checked;
             _settings.ShowPnL = chkShowPnL.Checked;
+            _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
+            _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -59,6 +61,9 @@ namespace TdInterface
             txtMinRisk.Text = _settings.MinimumRisk.ToString("#.##");
             chkSendPrtScrOnOpen.Checked = _settings.SendAltPrtScrOnOpen;
             chkShowPnL.Checked = _settings.ShowPnL;
+            chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
+            chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

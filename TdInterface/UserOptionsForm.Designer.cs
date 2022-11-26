@@ -53,6 +53,8 @@ namespace TdInterface
             this.txtMinRisk = new System.Windows.Forms.TextBox();
             this.chkSendPrtScrOnOpen = new System.Windows.Forms.CheckBox();
             this.chkShowPnL = new System.Windows.Forms.CheckBox();
+            this.chkPreventExceedMaxLoss = new System.Windows.Forms.CheckBox();
+            this.chkAdjustRiskForMaxLoss = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -220,14 +222,14 @@ namespace TdInterface
             this.chkMaxLossLimit.AutoSize = true;
             this.chkMaxLossLimit.Location = new System.Drawing.Point(574, 53);
             this.chkMaxLossLimit.Name = "chkMaxLossLimit";
-            this.chkMaxLossLimit.Size = new System.Drawing.Size(177, 24);
+            this.chkMaxLossLimit.Size = new System.Drawing.Size(240, 24);
             this.chkMaxLossLimit.TabIndex = 19;
-            this.chkMaxLossLimit.Text = "Enable Max Loss Limit";
+            this.chkMaxLossLimit.Text = "Enable Max Loss Limit (R) Value";
             this.chkMaxLossLimit.UseVisualStyleBackColor = true;
             // 
             // txtMaxLossLimit
             // 
-            this.txtMaxLossLimit.Location = new System.Drawing.Point(780, 55);
+            this.txtMaxLossLimit.Location = new System.Drawing.Point(831, 50);
             this.txtMaxLossLimit.Name = "txtMaxLossLimit";
             this.txtMaxLossLimit.Size = new System.Drawing.Size(125, 27);
             this.txtMaxLossLimit.TabIndex = 20;
@@ -235,7 +237,7 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(577, 102);
+            this.label7.Location = new System.Drawing.Point(574, 155);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(123, 20);
             this.label7.TabIndex = 21;
@@ -243,7 +245,7 @@ namespace TdInterface
             // 
             // txtMinRisk
             // 
-            this.txtMinRisk.Location = new System.Drawing.Point(785, 100);
+            this.txtMinRisk.Location = new System.Drawing.Point(782, 153);
             this.txtMinRisk.Name = "txtMinRisk";
             this.txtMinRisk.Size = new System.Drawing.Size(125, 27);
             this.txtMinRisk.TabIndex = 22;
@@ -251,7 +253,7 @@ namespace TdInterface
             // chkSendPrtScrOnOpen
             // 
             this.chkSendPrtScrOnOpen.AutoSize = true;
-            this.chkSendPrtScrOnOpen.Location = new System.Drawing.Point(574, 148);
+            this.chkSendPrtScrOnOpen.Location = new System.Drawing.Point(571, 201);
             this.chkSendPrtScrOnOpen.Name = "chkSendPrtScrOnOpen";
             this.chkSendPrtScrOnOpen.Size = new System.Drawing.Size(184, 24);
             this.chkSendPrtScrOnOpen.TabIndex = 23;
@@ -261,18 +263,40 @@ namespace TdInterface
             // chkShowPnL
             // 
             this.chkShowPnL.AutoSize = true;
-            this.chkShowPnL.Location = new System.Drawing.Point(573, 187);
+            this.chkShowPnL.Location = new System.Drawing.Point(570, 240);
             this.chkShowPnL.Name = "chkShowPnL";
             this.chkShowPnL.Size = new System.Drawing.Size(94, 24);
             this.chkShowPnL.TabIndex = 24;
             this.chkShowPnL.Text = "Show PnL";
             this.chkShowPnL.UseVisualStyleBackColor = true;
             // 
+            // chkPreventExceedMaxLoss
+            // 
+            this.chkPreventExceedMaxLoss.AutoSize = true;
+            this.chkPreventExceedMaxLoss.Location = new System.Drawing.Point(574, 83);
+            this.chkPreventExceedMaxLoss.Name = "chkPreventExceedMaxLoss";
+            this.chkPreventExceedMaxLoss.Size = new System.Drawing.Size(246, 24);
+            this.chkPreventExceedMaxLoss.TabIndex = 25;
+            this.chkPreventExceedMaxLoss.Text = "Prevent Risk Exceeding Max Loss";
+            this.chkPreventExceedMaxLoss.UseVisualStyleBackColor = true;
+            // 
+            // chkAdjustRiskForMaxLoss
+            // 
+            this.chkAdjustRiskForMaxLoss.AutoSize = true;
+            this.chkAdjustRiskForMaxLoss.Location = new System.Drawing.Point(574, 113);
+            this.chkAdjustRiskForMaxLoss.Name = "chkAdjustRiskForMaxLoss";
+            this.chkAdjustRiskForMaxLoss.Size = new System.Drawing.Size(265, 24);
+            this.chkAdjustRiskForMaxLoss.TabIndex = 26;
+            this.chkAdjustRiskForMaxLoss.Text = "Adjust Risk to Not Exceed Max Loss";
+            this.chkAdjustRiskForMaxLoss.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 552);
+            this.Controls.Add(this.chkAdjustRiskForMaxLoss);
+            this.Controls.Add(this.chkPreventExceedMaxLoss);
             this.Controls.Add(this.chkShowPnL);
             this.Controls.Add(this.chkSendPrtScrOnOpen);
             this.Controls.Add(this.txtMinRisk);
@@ -332,5 +356,7 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkSendPrtScrOnOpen;
         private System.Windows.Forms.CheckBox chkShowPnL;
+        private System.Windows.Forms.CheckBox chkPreventExceedMaxLoss;
+        private System.Windows.Forms.CheckBox chkAdjustRiskForMaxLoss;
     }
 }
