@@ -139,12 +139,12 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(txtSymbol.Text))
                 {
-                    frm = new MainForm(_streamer, _settings, this, txtSymbol.Text.ToUpper());
+                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper());
                     _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, this, name);
+                    frm = new MainForm(_streamer, _settings, name);
                     _mainForms.Add(name, frm);
 
                 }

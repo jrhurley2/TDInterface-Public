@@ -19,7 +19,10 @@ namespace TdInterface
     {
         private TDStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
-        private Securitiesaccount _securitiesaccount;
+
+      
+        // Made Public for testing.
+        public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
         private CandleList _candleList;
@@ -28,13 +31,13 @@ namespace TdInterface
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
         public string MainFormName{ get; private set; }
-        public MasterForm _parent { get; private set; }
+        //public MasterForm _parent { get; private set; }
 
-        public MainForm(TDStreamer tdStreamer, Settings settings, MasterForm parent, string name)
+        public MainForm(TDStreamer tdStreamer, Settings settings, string name)
         {
             InitializeComponent();
 
-            _parent = parent;
+            //_parent = parent;
             MainFormName = name;
             this.Text = name;
 
@@ -137,37 +140,29 @@ namespace TdInterface
             }
         }
 
-        private async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        public static Order CreateGenericTriggerOcoOrder(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, Securitiesaccount securitiesaccount, Settings settings)
         {
-
-            if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-            var stopPrice = double.Parse(txtStop.Text);
-            var trainingWheels = checkBox1.Checked;
-            var maxRisk = double.Parse(txtRisk.Text);
-
-            if (!_settings.TradeShares && _settings.EnableMaxLossLimit)
+            if (!settings.TradeShares && settings.EnableMaxLossLimit)
             {
 
-                var maxLoss = Convert.ToDouble(_settings.MaxLossLimitInR * _settings.MaxRisk) * -1;
+                var maxLoss = Convert.ToDouble(settings.MaxLossLimitInR * settings.MaxRisk) * -1;
 
-                if (Convert.ToDouble(_securitiesaccount.DailyPnL) < maxLoss)
+                if (Convert.ToDouble(securitiesaccount.DailyPnL) < maxLoss)
                 {
-                    var msgBox = MessageBox.Show("You have exceeded your daily loss limit");
-                    return;
+                    throw new DailyLossExceededException("You have exceeded your daily loss limit");
                 }
 
-                if (_settings.PreventRiskExceedMaxLoss)
+                if (settings.PreventRiskExceedMaxLoss)
                 {
-                    if((Convert.ToDouble(_securitiesaccount.DailyPnL) - maxRisk) < maxLoss)
+                    if ((Convert.ToDouble(securitiesaccount.DailyPnL) - maxRisk) < maxLoss)
                     {
-                        if (_settings.AdjustRiskNotExceedMaxLoss)
+                        if (settings.AdjustRiskNotExceedMaxLoss)
                         {
-                            maxRisk = Math.Abs(maxLoss - _securitiesaccount.DailyPnL);
+                            maxRisk = Math.Abs(maxLoss - securitiesaccount.DailyPnL);
                         }
                         else
                         {
-                            var msgBox = MessageBox.Show("This trade will put you over your daily loss limit");
-                            return;
+                            throw new DailyLossExceededException("This trade will put you over your daily loss limit");
                         }
                     }
                 }
@@ -176,25 +171,46 @@ namespace TdInterface
             var isShort = instruction.Equals(OrderHelper.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
-            var ocoCalcPrice = orderType == "MARKET" ? _settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
-            if(riskPerShare < 0)
+            if (riskPerShare < 0)
             {
                 throw new Exception("Risk Per Share was negative.");
             }
-            
-            int quantity = CalcShares(riskPerShare, maxRisk, _settings, trainingWheels);
 
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(_settings.OneRProfitPercenatage, 100)));
+            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
 
-            ResetInitialOrder();
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
+
             var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
-            txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
-            AddInitialOrder(symbol, orderKey, triggerOrder);
-            InputSender.PrintScreen();
+            return triggerOrder;
+        }
+
+        public async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        {
+
+            try
+            {
+                if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
+                var stopPrice = double.Parse(txtStop.Text);
+                var trainingWheels = checkBox1.Checked;
+                var maxRisk = double.Parse(txtRisk.Text);
+
+                var triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount, _settings);
+
+                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+
+                ResetInitialOrder();
+                txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
+                AddInitialOrder(symbol, orderKey, triggerOrder);
+                InputSender.PrintScreen();
+            }
+            catch (Exception ex)
+            {
+                var msgBox = MessageBox.Show(ex.Message);
+            }
 
         }
         private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
@@ -881,12 +897,13 @@ namespace TdInterface
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.Oemtilde)
-            {
-                _parent.Focus();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.Control && e.KeyCode == Keys.A)
+            //if (e.Control && e.KeyCode == Keys.Oemtilde)
+            //{
+            //    _parent.Focus();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else
+            if (e.Control && e.KeyCode == Keys.A)
             {
                 btnCancelAll.PerformClick();
                 e.SuppressKeyPress = true;
