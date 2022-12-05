@@ -83,6 +83,8 @@ namespace TdInterface
             this.txtPnL = new System.Windows.Forms.TextBox();
             this.lblPnL = new System.Windows.Forms.Label();
             this.timerGetSecuritiesAccount = new System.Windows.Forms.Timer(this.components);
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtOneToOne = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -626,9 +628,30 @@ namespace TdInterface
             this.timerGetSecuritiesAccount.Interval = 10000;
             this.timerGetSecuritiesAccount.Tick += new System.EventHandler(this.timerGetSecuritiesAccount_Tick);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(312, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(28, 20);
+            this.label10.TabIndex = 39;
+            this.label10.Text = "1:1";
+            // 
+            // txtOneToOne
+            // 
+            this.txtOneToOne.Location = new System.Drawing.Point(312, 117);
+            this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtOneToOne.Name = "txtOneToOne";
+            this.txtOneToOne.ReadOnly = true;
+            this.txtOneToOne.Size = new System.Drawing.Size(51, 27);
+            this.txtOneToOne.TabIndex = 38;
+            this.txtOneToOne.TabStop = false;
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtOneToOne);
             this.Controls.Add(this.lblPnL);
             this.Controls.Add(this.txtPnL);
             this.Controls.Add(this.btnReconnect);
@@ -737,6 +760,8 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtPnL;
         private System.Windows.Forms.Label lblPnL;
         private System.Windows.Forms.Timer timerGetSecuritiesAccount;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtOneToOne;
     }
 }
 

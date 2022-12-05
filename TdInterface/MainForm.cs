@@ -644,6 +644,7 @@ namespace TdInterface
             SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
 
+
             try
             {
                 if (_activePosition != null)
@@ -656,10 +657,27 @@ namespace TdInterface
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
+                    var oneToOne = avgPrice + risk;
+                    SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                 }
                 else
                 {
                     SafeUpdateTextBox(txtRValue, "0");
+                    double stop;
+
+                    if(double.TryParse(txtStop.Text, out stop))
+                    {
+                        double oneToOne;
+                        if(stop < _stockQuote.lastPrice)
+                        {
+                            oneToOne = (_stockQuote.lastPrice - stop) + _stockQuote.lastPrice;
+                        }
+                        else
+                        {
+                            oneToOne = stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                        }
+                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                    }
                 }
             }
             catch (Exception ex)
