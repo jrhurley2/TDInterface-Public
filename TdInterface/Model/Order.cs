@@ -29,9 +29,4 @@ namespace TdInterface.Model
         public Instrument instrument { get; set; }
     }
 
-    //public class Instrument
-    //{
-    //    public string assetType { get; set; }
-    //    public string symbol { get; set; }
-    //}
 }
