@@ -202,9 +202,38 @@ namespace TdInterface
                         wVk = 0x12,
                         dwFlags = (uint)(InputSender.KeyEventF.KeyUp)
                     }
-            });  // Volume +
+            });  
 
         }
+
+        public static void CrtlShftR()
+        {
+            InputSender.SendKeyboardInput(new InputSender.KeyboardInput[]
+            {
+                    new InputSender.KeyboardInput
+                    {
+                        wVk = 0x12,
+                        dwFlags = (uint)(InputSender.KeyEventF.KeyDown),
+                    },
+                    new InputSender.KeyboardInput
+                    {
+                        wVk = 0x52,
+                        dwFlags = (uint)(InputSender.KeyEventF.KeyDown),
+                    },
+                    new InputSender.KeyboardInput
+                    {
+                        wVk = 0x52,
+                        dwFlags = (uint)(InputSender.KeyEventF.KeyUp)
+                    },
+                    new InputSender.KeyboardInput
+                    {
+                        wVk = 0x12,
+                        dwFlags = (uint)(InputSender.KeyEventF.KeyUp)
+                    }
+            });
+
+        }
+
         #endregion
     }
 }

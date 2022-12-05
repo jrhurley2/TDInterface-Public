@@ -206,6 +206,7 @@ namespace TdInterface
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey, triggerOrder);
                 InputSender.PrintScreen();
+                //InputSender.CrtlShftR();
             }
             catch (Exception ex)
             {
@@ -643,6 +644,7 @@ namespace TdInterface
             SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
 
+
             try
             {
                 if (_activePosition != null)
@@ -655,10 +657,27 @@ namespace TdInterface
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
+                    var oneToOne = avgPrice + risk;
+                    SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                 }
                 else
                 {
                     SafeUpdateTextBox(txtRValue, "0");
+                    double stop;
+
+                    if(double.TryParse(txtStop.Text, out stop))
+                    {
+                        double oneToOne;
+                        if(stop < _stockQuote.lastPrice)
+                        {
+                            oneToOne = (_stockQuote.lastPrice - stop) + _stockQuote.lastPrice;
+                        }
+                        else
+                        {
+                            oneToOne = stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                        }
+                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                    }
                 }
             }
             catch (Exception ex)
@@ -903,6 +922,12 @@ namespace TdInterface
             //    e.SuppressKeyPress = true;
             //}
             //else
+            if(e.Alt && e.KeyCode == Keys.R) 
+            {
+                e.SuppressKeyPress = false; 
+                e.Handled = false;
+            }
+
             if (e.Control && e.KeyCode == Keys.A)
             {
                 btnCancelAll.PerformClick();
@@ -956,7 +981,6 @@ namespace TdInterface
                 btnExitMark100.PerformClick();
                 e.SuppressKeyPress = true;
             }
-
         }
 
 
@@ -1049,7 +1073,8 @@ namespace TdInterface
 
                 _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                 Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-                var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+                //var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+                var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)
@@ -1236,8 +1261,23 @@ namespace TdInterface
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            if (keyData == (Keys.Alt | Keys.R)) // & Keys.Control) 
+            {
+                Console.WriteLine();
+                
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        //{
+        //    if(keyData == (Keys.Control | Keys.R)) // & Keys.Control) 
+        //    {
+        //        Console.WriteLine();
+        //        return false;
+        //    }
+        //    return base.ProcessCmdKey(ref msg, keyData);
+        //}
 
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
