@@ -24,7 +24,7 @@ namespace TdInterface.Model
 
         public StockQuote() { }
 
-        public StockQuote Update(StockQuote stockQuote) 
+        public virtual StockQuote Update(StockQuote stockQuote) 
         {
             symbol = stockQuote.symbol;
             bidPrice = stockQuote.bidPrice != 0.0 ? stockQuote.bidPrice : bidPrice;

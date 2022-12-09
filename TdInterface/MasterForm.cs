@@ -192,5 +192,11 @@ namespace TdInterface
             }
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var futureCalcFrom = new FurtureCalcForm(_streamer);
+            futureCalcFrom.Show();
+        }
     }
 }
