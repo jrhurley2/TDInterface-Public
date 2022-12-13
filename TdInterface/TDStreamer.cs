@@ -20,7 +20,7 @@ using Websocket.Client.Models;
 
 namespace TDAmeritradeAPI.Client
 {
-    public class TDStreamer : IDisposable
+    public class TDStreamer : IDisposable, IStreamer
     {
         private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
@@ -39,7 +39,7 @@ namespace TDAmeritradeAPI.Client
 
         private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
         public IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
-        
+
         private readonly Subject<OrderEntryRequestMessage> _orderEntryRequestMessage = new Subject<OrderEntryRequestMessage>();
         public IObservable<OrderEntryRequestMessage> OrderRecieved => _orderEntryRequestMessage.AsObservable();
 
@@ -47,7 +47,7 @@ namespace TDAmeritradeAPI.Client
         public IObservable<OrderFillMessage> OrderFilled => _orderFillMessage.AsObservable();
 
         private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
-        public IObservable<SocketNotify>  HeartBeat => _socketNotify.AsObservable();
+        public IObservable<SocketNotify> HeartBeat => _socketNotify.AsObservable();
 
 
 
@@ -72,7 +72,7 @@ namespace TDAmeritradeAPI.Client
             _ws = testSocketClient;
             SubscribeWebSocketMessages(new UserPrincipal(), testSocketClient);
         }
-        public  TDStreamer(UserPrincipal userPrincipals)
+        public TDStreamer(UserPrincipal userPrincipals)
         {
 
             _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
@@ -150,7 +150,7 @@ namespace TDAmeritradeAPI.Client
         {
             int index = 0;
             string newMessage = message;
-            foreach(var account in userPrincipal.accounts)
+            foreach (var account in userPrincipal.accounts)
             {
                 newMessage = newMessage.Replace(account.accountId, $"sanatizedAccountNumber{index}");
             }
@@ -160,7 +160,7 @@ namespace TDAmeritradeAPI.Client
 
         private void SubscribeWebSocketMessages(UserPrincipal userPrincipals, WebsocketClient client)
         {
-            client.DisconnectionHappened.Subscribe(dis =>   
+            client.DisconnectionHappened.Subscribe(dis =>
             {
                 Debug.WriteLine($"DisconnectionHappened {dis.Type}");
                 _disconnectionInfo.OnNext(dis);
@@ -178,7 +178,7 @@ namespace TDAmeritradeAPI.Client
 
                 try
                 {
-                    if(_replayFile != null)
+                    if (_replayFile != null)
                         _replayFile.WriteLine(SanatizeAccountNumbers(userPrincipals, msg.Text));
                 }
                 catch
@@ -233,7 +233,7 @@ namespace TDAmeritradeAPI.Client
                 else if (v.ContainsKey("notify"))
                 {
                     var notifyList = JsonConvert.DeserializeObject<List<SocketNotify>>(v["notify"].ToString());
-                    foreach(var notify in notifyList)
+                    foreach (var notify in notifyList)
                     {
                         _socketNotify.OnNext(notify);
                     }
@@ -272,7 +272,7 @@ namespace TDAmeritradeAPI.Client
                         {
                             foreach (var content in socketData.content)
                             {
-                                
+
                                 //if (content["2"] == "OrderEntryRequest")
                                 //{
                                 //    try
@@ -328,7 +328,7 @@ namespace TDAmeritradeAPI.Client
 
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
-            if(!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
+            if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
             {
                 _quoteSymbols.Add(tickerSymbol.ToUpper());
             }
@@ -342,20 +342,20 @@ namespace TDAmeritradeAPI.Client
             //{
             //requestId++;
             _quoteRequestId++;
-                var quoteRequest = new StreamerSettings.Request
+            var quoteRequest = new StreamerSettings.Request
+            {
+                service = "QUOTE",
+                command = "SUBS",
+                requestid = "1", //_quoteRequestId.ToString(),
+                account = userPrincipals.accounts[0].accountId,
+                source = userPrincipals.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
                 {
-                    service = "QUOTE",
-                    command = "SUBS",
-                    requestid = "1", //_quoteRequestId.ToString(),
-                    account = userPrincipals.accounts[0].accountId,
-                    source = userPrincipals.streamerInfo.appId,
-                    parameters = new StreamerSettings.Parameters
-                    {
-                        keys = symbols,
-                        fields = "0,1,2,3,4"
-                    }
-                };
-                _reqs.Add(quoteRequest);
+                    keys = symbols,
+                    fields = "0,1,2,3,4"
+                }
+            };
+            _reqs.Add(quoteRequest);
             //}
             var request = new StreamerSettings.Requests()
             {
@@ -366,7 +366,7 @@ namespace TDAmeritradeAPI.Client
             _ws.Send(req);
         }
 
-        List<string> _futureSymbols= new List<string>();
+        List<string> _futureSymbols = new List<string>();
 
         public void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol)
         {
@@ -411,7 +411,7 @@ namespace TDAmeritradeAPI.Client
         public void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol)
         {
             var _reqs = new List<StreamerSettings.Request>();
-            var chartRequest= new StreamerSettings.Request
+            var chartRequest = new StreamerSettings.Request
             {
                 service = "CHART_EQUITY",
                 command = "SUBS",

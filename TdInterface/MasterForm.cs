@@ -14,7 +14,7 @@ namespace TdInterface
 {
     public partial class MasterForm : Form
     {
-        private TDStreamer _streamer;
+        private IStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
         private Securitiesaccount _securitiesaccount;
         private Position _activePosition;

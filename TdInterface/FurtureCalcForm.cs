@@ -14,7 +14,7 @@ namespace TdInterface
 {
     public partial class FurtureCalcForm : Form
     {
-        TDStreamer _streamer = null;
+        IStreamer _streamer = null;
 
         private List<FutureInfo> _futureInfos = new List<FutureInfo>() {
             new FutureInfo { Symbol = "/ES", TicksPerPoint = 4, TickValue = 12.50 } ,
@@ -24,7 +24,7 @@ namespace TdInterface
 
         };
 
-        public FurtureCalcForm(TDStreamer streamer)
+        public FurtureCalcForm(IStreamer streamer)
         {
             InitializeComponent();
             _streamer = streamer;

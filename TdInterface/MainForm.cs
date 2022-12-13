@@ -17,7 +17,7 @@ namespace TdInterface
 {
     public partial class MainForm : Form
     {
-        private TDStreamer _streamer;
+        private IStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
 
       
@@ -33,7 +33,7 @@ namespace TdInterface
         public string MainFormName{ get; private set; }
         //public MasterForm _parent { get; private set; }
 
-        public MainForm(TDStreamer tdStreamer, Settings settings, string name)
+        public MainForm(IStreamer streamer, Settings settings, string name)
         {
             InitializeComponent();
 
@@ -44,7 +44,7 @@ namespace TdInterface
             _settings = settings;
             txtPnL.Visible = _settings.ShowPnL;
             lblPnL.Visible = _settings.ShowPnL;
-            _streamer = tdStreamer;
+            _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
             _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
@@ -60,64 +60,64 @@ namespace TdInterface
             btnSellMrkTriggerOco.Enabled = false;
 
         }
-        public MainForm()
-        {
-            try
-            {
-                _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
-                Trace.Listeners.Add(_textWriterTraceListener);
+        //public MainForm()
+        //{
+        //    try
+        //    {
+        //        _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+        //        Trace.Listeners.Add(_textWriterTraceListener);
 
-                Debug.WriteLine("Start Main Form");
-                InitializeComponent();
+        //        Debug.WriteLine("Start Main Form");
+        //        InitializeComponent();
 
-                var accessTokenContainer = Utility.GetAccessTokenContainer();
+        //        var accessTokenContainer = Utility.GetAccessTokenContainer();
 
-                if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
-                {
-                    var consumerKey = Utility.GetConsumerKey();
-                    if (consumerKey == null)
-                    {
-                        var frm = new frmConsmerKey();
-                        frm.ShowDialog();
-                        consumerKey = frm.ConsumerKey;
-                        Utility.SaveConsumerKey(consumerKey);
-                    }
-                    var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
-                    int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                    Utility.AuthToken = oAuthLoginForm.Code;
-                    accessTokenContainer = TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
-                    Utility.SaveAccessTokenContainer(accessTokenContainer);
-                }
+        //        if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
+        //        {
+        //            var consumerKey = Utility.GetConsumerKey();
+        //            if (consumerKey == null)
+        //            {
+        //                var frm = new frmConsmerKey();
+        //                frm.ShowDialog();
+        //                consumerKey = frm.ConsumerKey;
+        //                Utility.SaveConsumerKey(consumerKey);
+        //            }
+        //            var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
+        //            int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+        //            Utility.AuthToken = oAuthLoginForm.Code;
+        //            accessTokenContainer = TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
+        //            Utility.SaveAccessTokenContainer(accessTokenContainer);
+        //        }
 
-                Utility.AccessTokenContainer = accessTokenContainer;
+        //        Utility.AccessTokenContainer = accessTokenContainer;
 
-                Utility.AccessTokenContainer = TdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
-                Utility.UserPrincipal = TdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+        //        Utility.AccessTokenContainer = TdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
+        //        Utility.UserPrincipal = TdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
 
-                CreateStreamer();
+        //        CreateStreamer();
 
-                timer1.Start();
-                timerGetSecuritiesAccount.Start();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
+        //        timer1.Start();
+        //        timerGetSecuritiesAccount.Start();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine(ex.Message);
+        //        Debug.WriteLine(ex.StackTrace);
+        //    }
 
-        }
+        //}
 
-        private void CreateStreamer()
-        {
-            _streamer = new TDStreamer(Utility.UserPrincipal);
-            _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
-            _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
-            _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
-            _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
-            _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
-            _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
-            _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
-        }
+        //private void CreateStreamer()
+        //{
+        //    _streamer = new TDStreamer(Utility.UserPrincipal);
+        //    _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
+        //    _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
+        //    _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
+        //    _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
+        //    _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
+        //    _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
+        //    _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
+        //}
 
 
         #region Order Open 
@@ -1246,13 +1246,13 @@ namespace TdInterface
 
         }
 
-        private async void btnReconnect_Click(object sender, EventArgs e)
-        {
-            await _streamer.WebsocketClient.NativeClient.CloseAsync(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "Create New Client", new System.Threading.CancellationToken());
-            _streamer.Dispose();
-            CreateStreamer();
-            txtSymbol_Leave(sender, e);
-        }
+        //private async void btnReconnect_Click(object sender, EventArgs e)
+        //{
+        //    await _streamer.WebsocketClient.NativeClient.CloseAsync(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "Create New Client", new System.Threading.CancellationToken());
+        //    _streamer.Dispose();
+        //    CreateStreamer();
+        //    txtSymbol_Leave(sender, e);
+        //}
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {

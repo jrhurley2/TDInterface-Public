@@ -79,7 +79,6 @@ namespace TdInterface
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtRValue = new System.Windows.Forms.TextBox();
-            this.btnReconnect = new System.Windows.Forms.Button();
             this.txtPnL = new System.Windows.Forms.TextBox();
             this.lblPnL = new System.Windows.Forms.Label();
             this.timerGetSecuritiesAccount = new System.Windows.Forms.Timer(this.components);
@@ -595,16 +594,6 @@ namespace TdInterface
             this.txtRValue.TabIndex = 34;
             this.txtRValue.TabStop = false;
             // 
-            // btnReconnect
-            // 
-            this.btnReconnect.Location = new System.Drawing.Point(365, 533);
-            this.btnReconnect.Name = "btnReconnect";
-            this.btnReconnect.Size = new System.Drawing.Size(94, 29);
-            this.btnReconnect.TabIndex = 35;
-            this.btnReconnect.Text = "Reconnect";
-            this.btnReconnect.UseVisualStyleBackColor = true;
-            this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
-            // 
             // txtPnL
             // 
             this.txtPnL.Enabled = false;
@@ -654,7 +643,6 @@ namespace TdInterface
             this.Controls.Add(this.txtOneToOne);
             this.Controls.Add(this.lblPnL);
             this.Controls.Add(this.txtPnL);
-            this.Controls.Add(this.btnReconnect);
             this.Controls.Add(this.txtRValue);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtLimitOffset);
@@ -756,7 +744,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
-        private System.Windows.Forms.Button btnReconnect;
         private System.Windows.Forms.TextBox txtPnL;
         private System.Windows.Forms.Label lblPnL;
         private System.Windows.Forms.Timer timerGetSecuritiesAccount;
