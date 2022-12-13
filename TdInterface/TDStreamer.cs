@@ -408,6 +408,48 @@ namespace TDAmeritradeAPI.Client
             _ws.Send(req);
         }
 
+        List<string> _futureSymbols= new List<string>();
+
+        public void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol)
+        {
+            if (!_futureSymbols.Contains(tickerSymbol.ToUpper()))
+            {
+                _futureSymbols.Add(tickerSymbol.ToUpper());
+            }
+
+            var symbols = string.Join(",", _futureSymbols);
+
+            var _reqs = new List<StreamerSettings.Request>();
+
+            int requestId = 0;
+            //foreach (var symbol in _quoteSymbols)
+            //{
+            //requestId++;
+            _quoteRequestId++;
+            var quoteRequest = new StreamerSettings.Request
+            {
+                service = "LEVELONE_FUTURES",
+                command = "SUBS",
+                requestid = "1", //_quoteRequestId.ToString(),
+                account = userPrincipals.accounts[0].accountId,
+                source = userPrincipals.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    keys = symbols,
+                    fields = "0,1,2,3,4"
+                }
+            };
+            _reqs.Add(quoteRequest);
+            //}
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
+
         public void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol)
         {
             var _reqs = new List<StreamerSettings.Request>();

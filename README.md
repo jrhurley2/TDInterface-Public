@@ -1,4 +1,7 @@
 # TDInterface-Public
+
+This app was inspired by Steve over at https://largecapdaytrader.com/   If you are tired of losing money and want to learn to read price action, go check it out.
+
 Windows Form application that uses TD Ameritrade Apis
 
 Register for a developer account at:
