@@ -24,6 +24,7 @@ namespace TdInterface
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
+        private TdHelper _tdHelper = new TdHelper();
 
         public MasterForm()
         {
@@ -50,14 +51,14 @@ namespace TdInterface
                     var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
                     int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                     Utility.AuthToken = oAuthLoginForm.Code;
-                    accessTokenContainer = TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
+                    accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
                     Utility.SaveAccessTokenContainer(accessTokenContainer);
                 }
 
                 Utility.AccessTokenContainer = accessTokenContainer;
 
-                Utility.AccessTokenContainer = TdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
-                Utility.UserPrincipal = TdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
+                Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
 
 
                 _streamer = new TDStreamer(Utility.UserPrincipal);
@@ -90,7 +91,7 @@ namespace TdInterface
         {
             if (Utility.AccessTokenContainer.ExpiresIn < 100)
             {
-                Utility.AccessTokenContainer = await TdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
         }
 
@@ -101,7 +102,7 @@ namespace TdInterface
 
         private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var accessTokenContainer = await TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
+            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
             Utility.SaveAccessTokenContainer(accessTokenContainer);
         }
 

@@ -19,6 +19,7 @@ namespace TdInterface
     {
         private IStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
+        private TdHelper _tdHelper= new TdHelper();
 
       
         // Made Public for testing.
@@ -200,7 +201,7 @@ namespace TdInterface
 
                 var triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount, _settings);
 
-                var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+                var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
 
                 ResetInitialOrder();
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
@@ -453,9 +454,9 @@ namespace TdInterface
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = OrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
-                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
                 var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
             }
             else
             {
@@ -472,9 +473,9 @@ namespace TdInterface
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = OrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
-                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
                 var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
             }
             else
             {
@@ -504,20 +505,20 @@ namespace TdInterface
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = OrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
 
         private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
         {
             var stopOrder = OrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
 
 
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
             var stopOrder = OrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var orderKey = await TdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
         }
         #endregion
 
@@ -543,7 +544,7 @@ namespace TdInterface
 
         private async Task UpdatePriceHistory()
         {
-            _candleList = await TdHelper.GetPriceHistoryAsync(Utility.AccessTokenContainer, txtSymbol.Text.ToUpper());
+            _candleList = await _tdHelper.GetPriceHistoryAsync(Utility.AccessTokenContainer, txtSymbol.Text.ToUpper());
             //var fMin = _candleList.candles.GroupBy(c => c.datetime / TimeSpan.TicksPerMinute / 5).ToList<>;
             var currentDate = _candleList.candles.Max(c => c.DateTime).ToString("MM/dd/yyyy");
             var swings = CalculateSwingHighs(_candleList.candles.Where(c => c.DateTime >= DateTimeOffset.Parse($"{currentDate} 09:30") &&
@@ -657,7 +658,15 @@ namespace TdInterface
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
-                    var oneToOne = avgPrice + risk;
+
+                    double oneToOne;
+                    if (_activePosition.longQuantity > 0)
+                        oneToOne = avgPrice + risk;
+                    else
+                    {
+                        oneToOne = avgPrice = risk;
+                    }
+
                     SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                 }
                 else
@@ -691,7 +700,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                 //txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
             }
             catch (Exception ex)
@@ -705,7 +714,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -771,7 +780,7 @@ namespace TdInterface
                         if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
-                            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                             //So the Trigger has an OCO that has the limit and stop.  
@@ -792,7 +801,7 @@ namespace TdInterface
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
                                 var newLimitOrder = OrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                await TdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
+                                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
                             }
                         }
                     }
@@ -880,7 +889,7 @@ namespace TdInterface
 
             try
             {
-                _securitiesaccount = await TdHelper.GetAccount(accessTokenContainer, userPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(accessTokenContainer, userPrincipal);
 
                 try
                 {
@@ -910,7 +919,7 @@ namespace TdInterface
         {
             if (Utility.AccessTokenContainer.ExpiresIn < 100)
             {
-                Utility.AccessTokenContainer = await TdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
         }
 
@@ -1007,7 +1016,7 @@ namespace TdInterface
 
         private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var accessTokenContainer = await TdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
+            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
             Utility.SaveAccessTokenContainer(accessTokenContainer);
         }
 
@@ -1071,7 +1080,7 @@ namespace TdInterface
             try
             {
 
-                _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
                 Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
                 //var openOrders = _securitiesaccount.orderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
                 var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
@@ -1080,7 +1089,7 @@ namespace TdInterface
                 foreach (var order in openOrders)
                 {
                     Debug.WriteLine(JsonConvert.SerializeObject(order));
-                    var task = TdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
+                    var task = _tdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
                     tasks.Add(task);
                 }
 
@@ -1281,7 +1290,7 @@ namespace TdInterface
 
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
-            _securitiesaccount = await TdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
 
             try
             {
