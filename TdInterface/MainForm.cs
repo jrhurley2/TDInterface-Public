@@ -664,7 +664,7 @@ namespace TdInterface
                         oneToOne = avgPrice + risk;
                     else
                     {
-                        oneToOne = avgPrice = risk;
+                        oneToOne = avgPrice - risk;
                     }
 
                     SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
