@@ -28,7 +28,7 @@ namespace TdInterface
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
-        public static async Task<AccessTokenContainer> GetAccessToken(string authToken)
+        public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
@@ -52,7 +52,7 @@ namespace TdInterface
             return accessTokenContainer;
         }
 
-        public static async Task<AccessTokenContainer> RefreshAccessToken(AccessTokenContainer accessTokenContainer)
+        public async Task<AccessTokenContainer> RefreshAccessToken(AccessTokenContainer accessTokenContainer)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace TdInterface
             }
         }
 
-        public static async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
+        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, userPrincipal.primaryAccountId)))
             {
@@ -103,7 +103,7 @@ namespace TdInterface
             return securitiesaccount;
         }
 
-        public static async Task<List<Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
+        public async Task<List<Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetAccounts))
             {
@@ -118,7 +118,7 @@ namespace TdInterface
             return account;
         }
 
-        public static async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
+        public async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetQuote, symbol)))
             {
@@ -133,7 +133,7 @@ namespace TdInterface
             return stockQuote[symbol.ToUpper()];
         }
 
-        public static async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
+        public async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
         {
             var today = DateTimeOffset.Now;
             var startDate = new DateTimeOffset(today.Year, today.Month, today.Day, 4, 00, 00, new TimeSpan(-4, 0, 0));
@@ -156,7 +156,7 @@ namespace TdInterface
             return candleList;
         }
 
-        public static async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, userPrincipal.accounts[0].accountId)))
             {
@@ -180,7 +180,7 @@ namespace TdInterface
             return orderNumber;
         }
 
-        public static async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
+        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
         {
             var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, orderId));
 
@@ -203,7 +203,7 @@ namespace TdInterface
 
         }
 
-        public static async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, userPrincipal.accounts[0].accountId, order.orderId)))
             {
@@ -220,7 +220,7 @@ namespace TdInterface
             };
         }
 
-        public static async Task<UserPrincipal> GetUserPrincipals(AccessTokenContainer accessTokenContainer)
+        public async Task<UserPrincipal> GetUserPrincipals(AccessTokenContainer accessTokenContainer)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetUserPrincipals))
             {
@@ -242,7 +242,7 @@ namespace TdInterface
             return userPrincipal;
         }
 
-        public static async Task<string> GetStreamerSubscriptionKeys(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
+        public async Task<string> GetStreamerSubscriptionKeys(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
         {
             try
             {
