@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MainForm.cs" />
-    <Compile Update="OAuthLoginForm.cs">
+    <Compile Update="Forms\MainForm.cs" />
+    <Compile Update="Forms\OAuthLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -32,6 +32,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TradeStation\Model\" />
   </ItemGroup>
 
 </Project>

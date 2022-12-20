@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TdInterface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Drawing;
 using Newtonsoft.Json;
-using TdInterface.Model;
+using TdInterface.Tda;
+using TdInterface.Tda.Model;
 
 namespace TdInterface.Tests
 {
