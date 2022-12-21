@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TdInterface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +8,9 @@ using Moq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using TdInterface.Model;
+//using TdInterface.Model;
+using TdInterface.Tda;
+using TdInterface.Tda.Model;
 
 namespace TdInterface.Tests
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TdInterface.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TdInterface.Tda.Model;
 
 namespace TdInterface.Model.Tests
 {

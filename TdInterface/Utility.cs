@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TdInterface.Model;
 using System.Security.Cryptography;
+using TdInterface.Tda.Model;
 
 namespace TdInterface
 {
