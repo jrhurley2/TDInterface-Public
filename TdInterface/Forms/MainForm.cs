@@ -19,7 +19,7 @@ namespace TdInterface
     public partial class MainForm : Form
     {
         private IStreamer _streamer;
-        private StockQuote _stockQuote = new StockQuote();
+        private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
 
       
@@ -62,7 +62,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, Securitiesaccount securitiesaccount, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, Securitiesaccount securitiesaccount, Settings settings)
         {
             if (!settings.TradeShares && settings.EnableMaxLossLimit)
             {
@@ -110,7 +110,7 @@ namespace TdInterface
             return triggerOrder;
         }
 
-        public async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        public async Task GenericTriggerOco(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
 
             try
@@ -520,7 +520,7 @@ namespace TdInterface
         #endregion
 
         #region Handle Streamer Events
-        private void HandleStockQuote(StockQuote stockQuote)
+        private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             _stockQuote = _stockQuote.Update(stockQuote);
@@ -976,7 +976,8 @@ namespace TdInterface
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
-                    await SetPosition();
+                    //TODO: FIX WITH TRADESTATION.  cOMMENTED OUT JUST TO GET WORKING.
+                    //await SetPosition();
                 }
             }
             catch (Exception) { }
@@ -1081,18 +1082,18 @@ namespace TdInterface
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
-            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
 
-            try
-            {
-                SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Can't Update PnL");
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
+            //try
+            //{
+            //    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("Can't Update PnL");
+            //    Debug.WriteLine(ex.Message);
+            //    Debug.WriteLine(ex.StackTrace);
+            //}
 
 
         }

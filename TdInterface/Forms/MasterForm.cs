@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation;
 
 namespace TdInterface
 {
@@ -26,11 +27,14 @@ namespace TdInterface
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
+        private TradeStationHelper _tradeStationHelper = new TradeStationHelper();
 
         public MasterForm()
         {
             try
             {
+                bool loginTDA = false;
+
                 _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
                 Trace.Listeners.Add(_textWriterTraceListener);
 
@@ -49,22 +53,52 @@ namespace TdInterface
                         consumerKey = frm.ConsumerKey;
                         Utility.SaveConsumerKey(consumerKey);
                     }
-                    var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
-                    int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                    Utility.AuthToken = oAuthLoginForm.Code;
-                    accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
-                    Utility.SaveAccessTokenContainer(accessTokenContainer);
+                    string loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
+
+                    if (loginTDA)
+                    {
+                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
+                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
+                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+                        Utility.AuthToken = oAuthLoginForm.Code;
+                        accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
+                        Utility.SaveAccessTokenContainer(accessTokenContainer);
+                    }
+                    else
+                    {
+                        loginUri = "https://signin.tradestation.com/authorize?response_type=code&client_id=40q9syWgafcrVN8RPt1GW3aVlZchFdkD&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
+
+                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
+                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+                        Utility.AuthToken = oAuthLoginForm.Code;
+                        accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken, "40q9syWgafcrVN8RPt1GW3aVlZchFdkD", "kAFk-yoSbvTmELDKtz74TrGr0GexE1v1vk_7MCs1U4gz5jULyuxNfcTqF7vdp083").Result;
+                        Utility.SaveAccessTokenContainer(accessTokenContainer);
+                        Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer, "40q9syWgafcrVN8RPt1GW3aVlZchFdkD", "kAFk-yoSbvTmELDKtz74TrGr0GexE1v1vk_7MCs1U4gz5jULyuxNfcTqF7vdp083").Result;
+
+
+                    }
+                    //var oAuthLoginForm = new OAuthLoginForm(loginUri);
+                    //    int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+                    //    Utility.AuthToken = oAuthLoginForm.Code;
+                    //    accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
+                    //    Utility.SaveAccessTokenContainer(accessTokenContainer);
                 }
 
                 Utility.AccessTokenContainer = accessTokenContainer;
 
-                Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
-                Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                if (loginTDA) {
+                    Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
+                    Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                    _streamer = new TDStreamer(Utility.UserPrincipal);
 
-
-                _streamer = new TDStreamer(Utility.UserPrincipal);
-
-                timer1.Start();
+                    timer1.Start();
+                }
+                else
+                {
+                    _streamer = new TradeStationStreamer();
+                    _streamer.SubscribeQuote(null, "MSFT");
+                }
+                
             }
             catch (Exception ex)
             {

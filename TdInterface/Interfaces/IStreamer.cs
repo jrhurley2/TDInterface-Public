@@ -14,7 +14,7 @@ namespace TdInterface.Interfaces
         IObservable<OrderFillMessage> OrderFilled { get; }
         IObservable<OrderEntryRequestMessage> OrderRecieved { get; }
         IObservable<ReconnectionInfo> Reconnection { get; }
-        IObservable<StockQuote> StockQuoteReceived { get; }
+        IObservable<TdInterface.Model.StockQuote> StockQuoteReceived { get; }
         WebsocketClient WebsocketClient { get; }
 
         void Dispose();

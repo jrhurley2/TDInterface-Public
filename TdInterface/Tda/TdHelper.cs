@@ -47,7 +47,7 @@ namespace TdInterface.Tda
 
             var response = await _httpClient.SendAsync(request);
 
-            var accessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            var accessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
 
             return accessTokenContainer;
         }
@@ -73,7 +73,7 @@ namespace TdInterface.Tda
 
                 var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-                var newAccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
 
@@ -113,7 +113,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var account = DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
+            var account = Utility.DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
 
             return account;
         }
@@ -128,7 +128,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var stockQuote = DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
+            var stockQuote = Utility.DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
 
             return stockQuote[symbol.ToUpper()];
         }
@@ -146,7 +146,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var candleList = DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
+            var candleList = Utility.DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
 
             foreach(var candle in candleList.candles)
             {
@@ -237,7 +237,7 @@ namespace TdInterface.Tda
                 throw new Exception("Error retreiving UserPrincipals");
             }
 
-            var userPrincipal = DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
+            var userPrincipal = Utility.DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
 
             return userPrincipal;
         }
@@ -259,7 +259,7 @@ namespace TdInterface.Tda
                     throw new Exception("Error retreiving Streamer Subscription Keys");
                 };
 
-                var keys = DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
+                var keys = Utility.DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
 
             }
             catch (Exception ex)
@@ -268,21 +268,6 @@ namespace TdInterface.Tda
                 Console.WriteLine(ex.StackTrace);
             }
             return string.Empty;
-        }
-
-        private static T DeserializeJsonFromStream<T>(Stream stream)
-        {
-            if (stream == null || stream.CanRead == false)
-                return default(T);
-
-            using (var sr = new StreamReader(stream))
-            using (var jtr = new JsonTextReader(sr))
-            {
-                var js = new JsonSerializer();
-                var searchResult = js.Deserialize<T>(jtr);
-                return searchResult;
-            }
-
         }
 
     }

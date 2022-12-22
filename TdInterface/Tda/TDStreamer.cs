@@ -32,8 +32,8 @@ namespace TdInterface.Tda
         private List<string> _quoteSymbols = new List<string>();
 
 
-        private readonly Subject<StockQuote> _stockQuoteRecievedSubject = new Subject<StockQuote>();
-        public IObservable<StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
+        public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
         private readonly Subject<StockQuote> _futureQuoteRecievedSubject = new Subject<StockQuote>();
         public IObservable<StockQuote> FutureQuoteReceived => _futureQuoteRecievedSubject.AsObservable();

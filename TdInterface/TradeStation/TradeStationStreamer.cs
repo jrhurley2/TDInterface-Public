@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
@@ -16,23 +22,33 @@ namespace TdInterface.TradeStation
         private HttpClient   _httpClient = new HttpClient();
         private List<string> _quoteSymbols = new List<string>();
 
-        public IObservable<AcctActivity> AcctActivity => throw new NotImplementedException();
 
-        public IObservable<DisconnectionInfo> Disconnection => throw new NotImplementedException();
+        private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
+        public IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
 
-        public IObservable<StockQuote> FutureQuoteReceived => throw new NotImplementedException();
+        private readonly Subject<OrderEntryRequestMessage> _orderEntryRequestMessage = new Subject<OrderEntryRequestMessage>();
+        public IObservable<OrderEntryRequestMessage> OrderRecieved => _orderEntryRequestMessage.AsObservable();
 
-        public IObservable<SocketNotify> HeartBeat => throw new NotImplementedException();
+        private readonly Subject<OrderFillMessage> _orderFillMessage = new Subject<OrderFillMessage>();
+        public IObservable<OrderFillMessage> OrderFilled => _orderFillMessage.AsObservable();
 
-        public IObservable<OrderFillMessage> OrderFilled => throw new NotImplementedException();
+        private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
+        public IObservable<SocketNotify> HeartBeat => _socketNotify.AsObservable();
 
-        public IObservable<OrderEntryRequestMessage> OrderRecieved => throw new NotImplementedException();
 
-        public IObservable<ReconnectionInfo> Reconnection => throw new NotImplementedException();
+        private readonly Subject<DisconnectionInfo> _disconnectionInfo = new Subject<DisconnectionInfo>();
+        public IObservable<DisconnectionInfo> Disconnection => _disconnectionInfo.AsObservable();
 
-        public IObservable<StockQuote> StockQuoteReceived => throw new NotImplementedException();
+        private readonly Subject<ReconnectionInfo> _reconnectionInfo = new Subject<ReconnectionInfo>();
+        public IObservable<ReconnectionInfo> Reconnection => _reconnectionInfo.AsObservable();
+
 
         public WebsocketClient WebsocketClient => throw new NotImplementedException();
+
+        IObservable<Tda.Model.StockQuote> IStreamer.FutureQuoteReceived => throw new NotImplementedException();
+
+        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
+        public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
         public void Dispose()
         {
@@ -56,20 +72,26 @@ namespace TdInterface.TradeStation
                 _quoteSymbols.Add(tickerSymbol.ToUpper());
             }
 
+
+            Thread t = new Thread(new ThreadStart(ProcessStreamQuotes));
+            t.Start();
+            //ProcessStreamQuotes(Utility.AccessTokenContainer);
             //var symbols = string.Join(",", _quoteSymbols);
         }
 
-        private async void ProcessStreamQuotes(CancellationToken cancellationToken)
+        private async void ProcessStreamQuotes() //AccessTokenContainer accessTokenContainer)
         {
+
+            var accessTokenContainer = Utility.AccessTokenContainer;
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://api.tradestation.com/v3/marketdata/stream/quotes/MSFT,BTCUSD"),
-                Headers =   {
-        { "Authorization", "Bearer TOKEN" },
-    },
+                RequestUri = new Uri(string.Format("https://api.tradestation.com/v3/marketdata/stream/quotes/{0}", string.Join(",", _quoteSymbols)))
             };
-            using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
             {
                 response.EnsureSuccessStatusCode();
                 using (var stream = await response.Content.ReadAsStreamAsync())
@@ -80,7 +102,11 @@ namespace TdInterface.TradeStation
                         {
                             var line = await reader.ReadLineAsync();
                             if (line == null) break;
-                            Console.WriteLine(line);
+
+                            if (line.Contains("Heartbeat")) break;
+                            var stockQuote = JsonConvert.DeserializeObject<TradeStation.Model.StockQuote>(line);
+                            Debug.WriteLine(line);
+                            _stockQuoteRecievedSubject.OnNext(stockQuote);
                         }
                     }
                 }
