@@ -66,12 +66,14 @@ namespace TdInterface
                     }
                     else
                     {
-                        loginUri = "https://signin.tradestation.com/authorize?response_type=code&client_id=40q9syWgafcrVN8RPt1GW3aVlZchFdkD&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
+                        var clientid = "";
+                        var clientSecret = "";
+                        loginUri = $"https://signin.tradestation.com/authorize?response_type=code&client_id={clientid}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
 
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;
-                        accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken, "40q9syWgafcrVN8RPt1GW3aVlZchFdkD", "kAFk-yoSbvTmELDKtz74TrGr0GexE1v1vk_7MCs1U4gz5jULyuxNfcTqF7vdp083").Result;
+                        accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken, clientid, clientSecret).Result;
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
                         Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer, "40q9syWgafcrVN8RPt1GW3aVlZchFdkD", "kAFk-yoSbvTmELDKtz74TrGr0GexE1v1vk_7MCs1U4gz5jULyuxNfcTqF7vdp083").Result;
 
