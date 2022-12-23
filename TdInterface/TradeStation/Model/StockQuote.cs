@@ -17,20 +17,20 @@ namespace TdInterface.TradeStation.Model
         {
             get
             {
-                return double.Parse(Bid);
+                return Bid != null ? double.Parse(Bid) : 0.0;
             }
         }
         public override double askPrice
         {
             get
             {
-                return double.Parse(Ask);
+                return Ask != null ? double.Parse(Ask) : 0.0;
             }
         }
         public override double lastPrice {
             get
             {
-                return double.Parse(Last);
+                return Last != null ? double.Parse(Last) : 0.0;
             }
         }
     }

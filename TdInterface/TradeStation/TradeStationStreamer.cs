@@ -65,6 +65,8 @@ namespace TdInterface.TradeStation
             throw new NotImplementedException();
         }
 
+        private static Thread _quoteStreamThread = null;
+
         public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
         {
             if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
@@ -72,11 +74,8 @@ namespace TdInterface.TradeStation
                 _quoteSymbols.Add(tickerSymbol.ToUpper());
             }
 
-
-            Thread t = new Thread(new ThreadStart(ProcessStreamQuotes));
-            t.Start();
-            //ProcessStreamQuotes(Utility.AccessTokenContainer);
-            //var symbols = string.Join(",", _quoteSymbols);
+            _quoteStreamThread = new Thread(new ThreadStart(ProcessStreamQuotes));
+            _quoteStreamThread.Start();
         }
 
         private async void ProcessStreamQuotes() //AccessTokenContainer accessTokenContainer)
@@ -93,25 +92,31 @@ namespace TdInterface.TradeStation
 
             using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
             {
-                response.EnsureSuccessStatusCode();
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                try
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    response.EnsureSuccessStatusCode();
+                    using (var stream = await response.Content.ReadAsStreamAsync())
                     {
-                        while (!reader.EndOfStream)
+                        using (StreamReader reader = new StreamReader(stream))
                         {
-                            var line = await reader.ReadLineAsync();
-                            if (line == null) break;
+                            while (!reader.EndOfStream)
+                            {
+                                var line = await reader.ReadLineAsync();
+                                if (line == null) break;
 
-                            if (line.Contains("Heartbeat")) break;
-                            var stockQuote = JsonConvert.DeserializeObject<TradeStation.Model.StockQuote>(line);
-                            Debug.WriteLine(line);
-                            _stockQuoteRecievedSubject.OnNext(stockQuote);
+                                if (line.Contains("Heartbeat")) continue;
+                                Debug.WriteLine(line);
+                                var stockQuote = JsonConvert.DeserializeObject<TradeStation.Model.StockQuote>(line);
+                                _stockQuoteRecievedSubject.OnNext(stockQuote);
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             }
-
         }
     }
 }
