@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation;
 using Websocket.Client;
 using Websocket.Client.Models;
 
@@ -19,11 +20,15 @@ namespace TdInterface
     public partial class MainForm : Form
     {
         private IStreamer _streamer;
+        private string _accountId;
         private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
-
+        private TradeStationHelper _tradeStationHelper = new TradeStationHelper();
       
         // Made Public for testing.
+        public bool isTda = false;
+        public bool isTradeStation = true;
+
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
@@ -31,10 +36,10 @@ namespace TdInterface
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
-        private TextWriterTraceListener _textWriterTraceListener = null;
+
         public string MainFormName{ get; private set; }
 
-        public MainForm(IStreamer streamer, Settings settings, string name)
+        public MainForm(IStreamer streamer, Settings settings, string name, string accountId)
         {
             InitializeComponent();
 
@@ -42,8 +47,11 @@ namespace TdInterface
             this.Text = name;
 
             _settings = settings;
+            _accountId = accountId;
+
             txtPnL.Visible = _settings.ShowPnL;
             lblPnL.Visible = _settings.ShowPnL;
+
             _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
@@ -58,29 +66,27 @@ namespace TdInterface
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
-
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, Securitiesaccount securitiesaccount, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl /* Securitiesaccount securitiesaccount*/, Settings settings)
         {
             if (!settings.TradeShares && settings.EnableMaxLossLimit)
             {
-
                 var maxLoss = Convert.ToDouble(settings.MaxLossLimitInR * settings.MaxRisk) * -1;
 
-                if (Convert.ToDouble(securitiesaccount.DailyPnL) < maxLoss)
+                if (dailyPnl < maxLoss)
                 {
                     throw new DailyLossExceededException("You have exceeded your daily loss limit");
                 }
 
                 if (settings.PreventRiskExceedMaxLoss)
                 {
-                    if ((Convert.ToDouble(securitiesaccount.DailyPnL) - maxRisk) < maxLoss)
+                    if ((Convert.ToDouble(dailyPnl) - maxRisk) < maxLoss)
                     {
                         if (settings.AdjustRiskNotExceedMaxLoss)
                         {
-                            maxRisk = Math.Abs(maxLoss - securitiesaccount.DailyPnL);
+                            maxRisk = Math.Abs(maxLoss - dailyPnl);
                         }
                         else
                         {
@@ -90,7 +96,7 @@ namespace TdInterface
                 }
             }
 
-            var isShort = instruction.Equals(OrderHelper.SELL_SHORT);
+            var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
             var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
@@ -106,7 +112,7 @@ namespace TdInterface
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
-            var triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
+            var triggerOrder = TDAOrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
             return triggerOrder;
         }
 
@@ -115,18 +121,28 @@ namespace TdInterface
 
             try
             {
-                if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                 var stopPrice = double.Parse(txtStop.Text);
                 var trainingWheels = checkBox1.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
-                var triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount, _settings);
-
-                var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
+                ulong orderKey = 0;
+                Order triggerOrder= null;
+                if (isTda)
+                {
+                    if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, _settings);
+                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, triggerOrder);
+                }
+                else if (isTradeStation)
+                {
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, _settings);
+                    orderKey = await _tradeStationHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
+                }
 
                 ResetInitialOrder();
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey, triggerOrder);
+
                 InputSender.PrintScreen();
             }
             catch (Exception ex)
@@ -176,7 +192,7 @@ namespace TdInterface
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = OrderHelper.SELL_SHORT;
+                var instruction = TDAOrderHelper.SELL_SHORT;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -194,7 +210,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = OrderHelper.SELL_SHORT;
+                var instruction = TDAOrderHelper.SELL_SHORT;
 
                 double triggerLimit = double.MinValue;
 
@@ -223,7 +239,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = OrderHelper.BUY;
+                var instruction = TDAOrderHelper.BUY;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -241,7 +257,7 @@ namespace TdInterface
                 var stockQuote = _stockQuote;
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = OrderHelper.BUY;
+                var instruction = TDAOrderHelper.BUY;
                 double triggerLimit = double.MinValue;
                 if (string.IsNullOrEmpty(txtLimit.Text))
                 {
@@ -282,12 +298,12 @@ namespace TdInterface
                 int quantity = 0;
                 if (_activePosition.longQuantity > 0)
                 {
-                    stopInstruction = OrderHelper.SELL;
+                    stopInstruction = TDAOrderHelper.SELL;
                     quantity = (int)_activePosition.longQuantity;
                 }
                 else if (_activePosition.shortQuantity > 0)
                 {
-                    stopInstruction = OrderHelper.BUY_TO_COVER;
+                    stopInstruction = TDAOrderHelper.BUY_TO_COVER;
                     quantity = (int)_activePosition.shortQuantity;
                 }
                 else
@@ -404,7 +420,7 @@ namespace TdInterface
         {
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
-            if (exitInstruction == OrderHelper.SELL)
+            if (exitInstruction == TDAOrderHelper.SELL)
             {
                 limitPrice = _stockQuote.askPrice;
             }
@@ -418,10 +434,10 @@ namespace TdInterface
             if (stopOrder != null  && _settings.ReduceStopOnClose)
             {
                 //Change the stop order to a Limit order to take profit and repladce
-                var newOrder = OrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
+                var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
                 await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
-                var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+                var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, newStopOrder);
             }
             else
             {
@@ -437,10 +453,10 @@ namespace TdInterface
             if (stopOrder != null && _settings.ReduceStopOnClose)
             {
                 //Change the stop order to a Limit order to take profit and repladce
-                var newOrder = OrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
+                var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                 await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
-                var newStopOrder = OrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, newStopOrder);
+                var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, newStopOrder);
             }
             else
             {
@@ -456,11 +472,11 @@ namespace TdInterface
             var exitInstruction = "";
             if (position.longQuantity > 0)
             {
-                exitInstruction = OrderHelper.SELL;
+                exitInstruction = TDAOrderHelper.SELL;
             }
             else if (position.shortQuantity > 0)
             {
-                exitInstruction = OrderHelper.BUY_TO_COVER;
+                exitInstruction = TDAOrderHelper.BUY_TO_COVER;
             }
             else
             {
@@ -472,21 +488,21 @@ namespace TdInterface
 
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
-            var stopOrder = OrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var stopOrder = TDAOrderHelper.CreateMarketOrder(instruction, symbol, quantity);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
         }
 
         private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
         {
-            var stopOrder = OrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var stopOrder = TDAOrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
         }
 
 
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
-            var stopOrder = OrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder);
+            var stopOrder = TDAOrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
+            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
         }
         #endregion
 
@@ -682,7 +698,7 @@ namespace TdInterface
 
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                var newLimitOrder = OrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
                                 await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
                             }
                         }

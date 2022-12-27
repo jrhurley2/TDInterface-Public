@@ -6,7 +6,7 @@ using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
 {
-    public class OrderHelper
+    public class TDAOrderHelper
     {
         public const string BUY = "BUY";
         public const string BUY_TO_COVER = "BUY_TO_COVER";

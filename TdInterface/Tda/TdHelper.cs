@@ -8,12 +8,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
 using Websocket.Client;
 
 namespace TdInterface.Tda
 {
-    public class TdHelper
+    public class TdHelper : IHelper
     {
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tdameritrade.com");
@@ -156,9 +157,10 @@ namespace TdInterface.Tda
             return candleList;
         }
 
-        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        //public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, userPrincipal.accounts[0].accountId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, accountId)))
             {
                 Method = HttpMethod.Post,
                 Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using TdInterface.Tda.Model;
+using TdInterface.Model;
 
 namespace TdInterface
 {
@@ -14,6 +15,7 @@ namespace TdInterface
     {
         private static string TokenFile = "AccessToken.json";
         private static string SettingsFile = "Settings.json";
+        private static string AccountInfoFile = "AccountInfo.json";
 
         public static string AuthToken { get; set; }
         private static string _consumerKey = null;
@@ -66,6 +68,27 @@ namespace TdInterface
                 return null;
             }
         }
+
+        public static void SaveAccountInfo(AccountInfo accountInfo)
+        {
+            var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
+
+            File.WriteAllText(AccountInfoFile, accountInfoAsString);
+        }
+
+        public static AccountInfo GetAccountInfo()
+        {
+            try
+            {
+                var accountInfoAsString = File.ReadAllText(AccountInfoFile);
+                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoAsString);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         public static byte[] GetEntropy()
         {

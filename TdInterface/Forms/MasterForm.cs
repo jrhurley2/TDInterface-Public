@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
@@ -17,6 +19,8 @@ namespace TdInterface
     public partial class MasterForm : Form
     {
         private IStreamer _streamer;
+        private string _equityAccountId;
+
         private StockQuote _stockQuote = new StockQuote();
         private Securitiesaccount _securitiesaccount;
         private Position _activePosition;
@@ -40,6 +44,16 @@ namespace TdInterface
 
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
+
+
+                var accountInfo = Utility.GetAccountInfo();
+                if(accountInfo == null )
+                {
+                    var frmAccountInfo = new AccountInfoForm();
+                    frmAccountInfo.ShowDialog();
+                    accountInfo = Utility.GetAccountInfo();
+                }
+
 
                 var accessTokenContainer = Utility.GetAccessTokenContainer();
 
@@ -66,8 +80,8 @@ namespace TdInterface
                     }
                     else
                     {
-                        var clientid = "";
-                        var clientSecret = "";
+                        var clientid = accountInfo.TradeStationClientId;
+                        var clientSecret = accountInfo.TradeStationClientSecret;
                         loginUri = $"https://signin.tradestation.com/authorize?response_type=code&client_id={clientid}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
 
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
@@ -75,15 +89,10 @@ namespace TdInterface
                         Utility.AuthToken = oAuthLoginForm.Code;
                         accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken, clientid, clientSecret).Result;
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
-                        Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer, "40q9syWgafcrVN8RPt1GW3aVlZchFdkD", "kAFk-yoSbvTmELDKtz74TrGr0GexE1v1vk_7MCs1U4gz5jULyuxNfcTqF7vdp083").Result;
+                        Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer, clientid, clientSecret).Result;
 
 
                     }
-                    //var oAuthLoginForm = new OAuthLoginForm(loginUri);
-                    //    int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                    //    Utility.AuthToken = oAuthLoginForm.Code;
-                    //    accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
-                    //    Utility.SaveAccessTokenContainer(accessTokenContainer);
                 }
 
                 Utility.AccessTokenContainer = accessTokenContainer;
@@ -91,6 +100,7 @@ namespace TdInterface
                 if (loginTDA) {
                     Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
                     Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                    _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
                     _streamer = new TDStreamer(Utility.UserPrincipal);
 
                     timer1.Start();
@@ -98,7 +108,10 @@ namespace TdInterface
                 else
                 {
                     _streamer = new TradeStationStreamer();
-                    _streamer.SubscribeQuote(null, "MSFT");
+                    var accounts = TradeStationHelper.GetAccounts(Utility.AccessTokenContainer).Result;
+                    //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
+                    var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    _equityAccountId = equitiyAccount.AccountID;
                 }
                 
             }
@@ -166,12 +179,12 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(txtSymbol.Text))
                 {
-                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper());
+                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper(), _equityAccountId);
                     _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, name);
+                    frm = new MainForm(_streamer, _settings, name, _equityAccountId);
                     _mainForms.Add(name, frm);
 
                 }
@@ -224,6 +237,12 @@ namespace TdInterface
         {
             var futureCalcFrom = new FurtureCalcForm(_streamer);
             futureCalcFrom.Show();
+        }
+
+        private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var accountInfoForm = new AccountInfoForm();
+            accountInfoForm.Show();
         }
     }
 }

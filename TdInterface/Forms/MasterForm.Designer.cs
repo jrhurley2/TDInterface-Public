@@ -38,6 +38,7 @@
             this.btnNewTrade = new System.Windows.Forms.Button();
             this.txtSymbol = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +63,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearCredentialsToolStripMenuItem,
             this.saveCredentialsToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.accountSettingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -70,21 +72,21 @@
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -114,6 +116,13 @@
             this.button1.Text = "Futures Calc";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // accountSettingsToolStripMenuItem
+            // 
+            this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.accountSettingsToolStripMenuItem.Text = "Account Settings";
+            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
             // 
             // MasterForm
             // 
@@ -147,5 +156,6 @@
         private System.Windows.Forms.Button btnNewTrade;
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
     }
 }
