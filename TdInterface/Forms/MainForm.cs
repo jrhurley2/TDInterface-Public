@@ -512,7 +512,7 @@ namespace TdInterface
             try
             {
 
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
                 Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
                 var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
 
@@ -600,7 +600,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
                 //txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
             }
             catch (Exception ex)
@@ -614,7 +614,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -678,7 +678,7 @@ namespace TdInterface
                         if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
-                            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
+                            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                             //So the Trigger has an OCO that has the limit and stop.  
@@ -829,7 +829,7 @@ namespace TdInterface
 
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(accessTokenContainer, userPrincipal);
+                _securitiesaccount = await _tdHelper.GetAccount(accessTokenContainer, userPrincipal.accounts[0].accountId);
 
                 try
                 {

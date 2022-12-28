@@ -23,6 +23,13 @@ namespace TdInterface.TradeStation
         public const string routePlaceOrder = "v3/orderexecution/orders";
         public const string routeGetAccounts = "v3/brokerage/accounts";
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
+        public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
+
+        public TradeStationHelper() { }
+        public TradeStationHelper(string baseUri)
+        {
+            BaseUri = new Uri(baseUri);
+        }
 
         public async Task<AccessTokenContainer> GetAccessToken(string authToken, string clientId, string clientSecret)
         {
@@ -185,6 +192,34 @@ namespace TdInterface.TradeStation
             return orderNumber;
         }
 
+        public async Task<ulong> GetPositions(AccessTokenContainer accessTokenContainer, string accountId)
+        {
+
+
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetPositions, accountId)));
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                //Debug.Write(order);
+                throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
+            };
+
+
+
+            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
+            var orderNumber = ulong.Parse(orderNumberString);
+            //Debug.WriteLine(JsonConvert.SerializeObject(order));
+
+            return orderNumber;
+        }
+
+        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId)
+        {
+            return new Securitiesaccount();
+        }
 
         public static async Task<List<Model.Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
         {

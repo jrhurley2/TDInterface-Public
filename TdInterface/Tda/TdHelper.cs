@@ -87,9 +87,9 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
+        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, userPrincipal.primaryAccountId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
             {
                 Method = HttpMethod.Get,
             };

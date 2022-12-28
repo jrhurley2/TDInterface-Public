@@ -9,5 +9,6 @@ namespace TdInterface.Interfaces
     public interface IHelper
     {
         public Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order);
+        public Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId);
     }
 }
