@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkUseSimAccount = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -71,6 +72,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkUseSimAccount);
             this.groupBox2.Controls.Add(this.txtClientSecret);
             this.groupBox2.Controls.Add(this.txtClientId);
             this.groupBox2.Controls.Add(this.label2);
@@ -133,6 +135,16 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // chkUseSimAccount
+            // 
+            this.chkUseSimAccount.AutoSize = true;
+            this.chkUseSimAccount.Location = new System.Drawing.Point(339, 37);
+            this.chkUseSimAccount.Name = "chkUseSimAccount";
+            this.chkUseSimAccount.Size = new System.Drawing.Size(142, 24);
+            this.chkUseSimAccount.TabIndex = 6;
+            this.chkUseSimAccount.Text = "Use Sim Account";
+            this.chkUseSimAccount.UseVisualStyleBackColor = true;
+            // 
             // AccountInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -165,5 +177,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkUseSimAccount;
     }
 }

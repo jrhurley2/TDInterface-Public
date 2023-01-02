@@ -12,5 +12,6 @@ namespace TdInterface.Model
         public bool LoginTradeStation { get; set; }
         public string TradeStationClientId { get; set; }
         public string TradeStationClientSecret { get; set; }
+        public bool TradeStationUseSimAccount { get; set; }
     }
 }

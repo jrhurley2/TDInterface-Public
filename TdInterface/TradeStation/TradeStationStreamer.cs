@@ -67,7 +67,7 @@ namespace TdInterface.TradeStation
 
         private static Thread _quoteStreamThread = null;
 
-        public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeQuote(string tickerSymbol)
         {
             if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
             {

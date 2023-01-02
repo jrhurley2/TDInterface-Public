@@ -32,6 +32,7 @@ namespace TdInterface
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper = new TradeStationHelper();
+        private IHelper _tradeHelper;
 
         public MasterForm()
         {
@@ -88,10 +89,8 @@ namespace TdInterface
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;
                         accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken, clientid, clientSecret).Result;
-                        Utility.SaveAccessTokenContainer(accessTokenContainer);
                         Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer, clientid, clientSecret).Result;
-
-
+                        Utility.SaveAccessTokenContainer(Utility.AccessTokenContainer);
                     }
                 }
 
@@ -102,13 +101,26 @@ namespace TdInterface
                     Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
                     _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
                     _streamer = new TDStreamer(Utility.UserPrincipal);
-
+                    _tradeHelper = new TdHelper();
                     timer1.Start();
                 }
                 else
                 {
+                    TradeStationHelper tradeStationHelper;
+                    if (accountInfo.TradeStationUseSimAccount)
+                    {
+                        //_tradeHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
+                        tradeStationHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
+                    }
+                    else
+                    {
+                        //_tradeHelper = new TradeStationHelper();
+                        tradeStationHelper = new TradeStationHelper();
+                    }
+                    _tradeHelper = tradeStationHelper;
+
                     _streamer = new TradeStationStreamer();
-                    var accounts = TradeStationHelper.GetAccounts(Utility.AccessTokenContainer).Result;
+                    var accounts = tradeStationHelper.GetAccounts(Utility.AccessTokenContainer).Result;
                     //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
                     var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                     _equityAccountId = equitiyAccount.AccountID;
@@ -179,12 +191,12 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(txtSymbol.Text))
                 {
-                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper(), _equityAccountId);
+                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper(), _equityAccountId, _tradeHelper);
                     _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, name, _equityAccountId);
+                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
                     _mainForms.Add(name, frm);
 
                 }

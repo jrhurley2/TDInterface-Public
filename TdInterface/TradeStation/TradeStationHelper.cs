@@ -10,6 +10,7 @@ using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace TdInterface.TradeStation
 {
@@ -21,6 +22,8 @@ namespace TdInterface.TradeStation
 
         public const string routeGetToken = "v1/oauth2/token";
         public const string routePlaceOrder = "v3/orderexecution/orders";
+        public const string routeReplaceOrder = "v3/orderexecution/orders/{0}";
+        public const string routeCancelOrder = "v3/orderexecution/orders/{0}";
         public const string routeGetAccounts = "v3/brokerage/accounts";
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
@@ -81,6 +84,7 @@ namespace TdInterface.TradeStation
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
 
+                newAccessTokenContainer.RefreshTokenExpiresIn = int.MaxValue;
                 return newAccessTokenContainer;
             }
             catch (Exception ex)
@@ -95,7 +99,7 @@ namespace TdInterface.TradeStation
             TradeStation.Model.Order tsOrder = new Model.Order
             {
                 AccountID = accountId,
-                OrderType = ConvertOrderType(tdaOrder.orderType),
+                OrderType = ConvertOrderTypeToTradeStation(tdaOrder.orderType),
                 Symbol = tdaOrder.orderLegCollection[0].instrument.symbol.ToUpper(),
                 Quantity = tdaOrder.orderLegCollection[0].quantity.ToString(),
                 TradeAction = tdaOrder.orderLegCollection[0].instruction,
@@ -127,7 +131,7 @@ namespace TdInterface.TradeStation
             return tsOrder;
         }
 
-        private static string ConvertOrderType(string tdaOrderType)
+        private static string ConvertOrderTypeToTradeStation(string tdaOrderType)
         {
             var orderType = tdaOrderType;
 
@@ -135,6 +139,20 @@ namespace TdInterface.TradeStation
             {
                 case "STOP":
                     orderType = "STOPMARKET";
+                    break;
+            }
+
+            return orderType;
+        }
+
+        private static string ConvertOrderTypeFromTradeStation(string tsOrderType)
+        {
+            var orderType = tsOrderType;
+
+            switch (orderType.ToUpper())
+            {
+                case "STOPMARKET":
+                    orderType = "STOP";
                     break;
             }
 
@@ -170,7 +188,54 @@ namespace TdInterface.TradeStation
         }
 
 
-        public async Task<ulong> GetOrders(AccessTokenContainer accessTokenContainer, string accountId)
+
+        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Tda.Model.Order newOrder)
+        {
+            var tsOrder = ConvertTdaOrder(newOrder, accountId);
+
+            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, orderId));
+
+            var request = new HttpRequestMessage(HttpMethod.Put, uri)
+            {
+                Method = HttpMethod.Put,
+                Content = new StringContent(JsonConvert.SerializeObject(tsOrder), Encoding.UTF8, "application/json")
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                Debug.Write(newOrder);
+                throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
+            };
+
+
+        }
+
+        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Tda.Model.Order order)
+        {
+
+            var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(BaseUri, string.Format(routeCancelOrder, order.orderId)))
+            {
+                Method = HttpMethod.Delete,
+            };
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                Debug.Write(order);
+                throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
+            };
+
+        }
+
+
+
+        public async Task<GetOrderResponse> GetOrders(AccessTokenContainer accessTokenContainer, string accountId)
         {
 
 
@@ -178,60 +243,103 @@ namespace TdInterface.TradeStation
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 //Debug.Write(order);
                 throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
             };
 
-            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
-            var orderNumber = ulong.Parse(orderNumberString);
-            //Debug.WriteLine(JsonConvert.SerializeObject(order));
+            var orderResponse = JsonConvert.DeserializeObject<GetOrderResponse>(await response.Content.ReadAsStringAsync());
 
-            return orderNumber;
+            return orderResponse;
         }
 
-        public async Task<ulong> GetPositions(AccessTokenContainer accessTokenContainer, string accountId)
+        public async Task<PositionResponse> GetPositions(AccessTokenContainer accessTokenContainer, string accountId)
         {
-
 
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetPositions, accountId)));
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 //Debug.Write(order);
                 throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
             };
 
+            var positionResponse = JsonConvert.DeserializeObject<PositionResponse>(await response.Content.ReadAsStringAsync());
 
-
-            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
-            var orderNumber = ulong.Parse(orderNumberString);
-            //Debug.WriteLine(JsonConvert.SerializeObject(order));
-
-            return orderNumber;
+            return positionResponse;
         }
 
         public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId)
         {
-            return new Securitiesaccount();
+            var securitiesaccount = new Securitiesaccount();
+            var orderResponse = await GetOrders(accessTokenContainer, accountId).ConfigureAwait(false);
+            var postionResponse = await GetPositions(accessTokenContainer, accountId).ConfigureAwait(false);
+
+
+            var tdaPostion = new List<Tda.Model.Position>();
+
+            foreach(var postion in postionResponse.Positions)
+            {
+                tdaPostion.Add(new Tda.Model.Position()
+                {
+                    averagePrice = float.Parse(postion.AveragePrice),
+                    longQuantity = postion.LongShort.Equals("LONG", StringComparison.InvariantCultureIgnoreCase) ? float.Parse(postion.Quantity) : 0.0F,
+                    shortQuantity = postion.LongShort.Equals("SHORT", StringComparison.InvariantCultureIgnoreCase) ? Math.Abs(float.Parse(postion.Quantity)) : 0.0F,
+                    instrument = new Instrument { symbol = postion.Symbol}
+                }); ;
+            }
+            securitiesaccount.positions = tdaPostion.ToArray();
+
+            var tdaOrder = new List<Tda.Model.Order>();
+
+            foreach (var order in orderResponse.Orders)
+            {
+                tdaOrder.Add(new Tda.Model.Order()
+                {
+                    status = ConvertOrderStatus(order.Status),
+                    orderId = order.OrderID,
+                    orderType= ConvertOrderTypeFromTradeStation(order.OrderType),
+                    stopPrice = order.StopPrice,
+                    price = order.LimitPrice,
+                    orderLegCollection = new List<OrderLeg> { new OrderLeg { instrument = new Instrument { symbol = order.Legs[0].Symbol } } }
+                }); 
+            }
+            securitiesaccount.orderStrategies = tdaOrder.ToArray();
+
+            return securitiesaccount;
         }
 
-        public static async Task<List<Model.Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
+        private string ConvertOrderStatus(string orderStatus)
+        {
+            string status = string.Empty;
+            switch (orderStatus)
+            {
+                case "DON":
+                    status = "QUEUED";
+                    break;
+                default:
+                    status= orderStatus; 
+                    break;
+            }
+
+            return status;
+        }
+
+        public async Task<List<Model.Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
         {
             //var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetAccounts));
 
             //request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
             var accounts = new List<Model.Account>();
 
-            var request = new HttpRequestMessage
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetAccounts))
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://api.tradestation.com/v3/brokerage/accounts"),
                 Headers =
     {
         { "Authorization", $"Bearer {accessTokenContainer.AccessToken}" },

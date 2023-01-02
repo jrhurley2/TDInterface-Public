@@ -10,5 +10,7 @@ namespace TdInterface.Interfaces
     {
         public Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order);
         public Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId);
+        public Task ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder);
+        public Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order);
     }
 }

@@ -24,6 +24,7 @@ namespace TdInterface
         private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
         private TradeStationHelper _tradeStationHelper = new TradeStationHelper();
+        private IHelper _tradeHelper;
       
         // Made Public for testing.
         public bool isTda = false;
@@ -39,9 +40,11 @@ namespace TdInterface
 
         public string MainFormName{ get; private set; }
 
-        public MainForm(IStreamer streamer, Settings settings, string name, string accountId)
+        public MainForm(IStreamer streamer, Settings settings, string name, string accountId, IHelper helper)
         {
             InitializeComponent();
+
+            _tradeHelper = helper;
 
             MainFormName = name;
             this.Text = name;
@@ -66,6 +69,8 @@ namespace TdInterface
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
+
+            var securitiesaccount = _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId).Result;
         }
 
 
@@ -136,7 +141,7 @@ namespace TdInterface
                 else if (isTradeStation)
                 {
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, _settings);
-                    orderKey = await _tradeStationHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
+                    orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
 
                 ResetInitialOrder();
@@ -435,7 +440,7 @@ namespace TdInterface
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
-                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder.orderId, newOrder);
                 var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
                 await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, newStopOrder);
             }
@@ -448,15 +453,15 @@ namespace TdInterface
         private async Task ExitMarket(int quantity)
         {
             string exitInstruction = GetExitInstruction(_activePosition);
-            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
+            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
             if (stopOrder != null && _settings.ReduceStopOnClose)
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
-                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, stopOrder.orderId, newOrder);
+                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder.orderId, newOrder);
                 var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, newStopOrder);
+                await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, newStopOrder);
             }
             else
             {
@@ -502,7 +507,7 @@ namespace TdInterface
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
             var stopOrder = TDAOrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
+            var orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder);
         }
         #endregion
 
@@ -512,15 +517,15 @@ namespace TdInterface
             try
             {
 
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
+                _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
                 Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-                var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper());
+                var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
 
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)
                 {
                     Debug.WriteLine(JsonConvert.SerializeObject(order));
-                    var task = _tdHelper.CancelOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, order);
+                    var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
                     tasks.Add(task);
                 }
 
@@ -699,7 +704,7 @@ namespace TdInterface
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
                                 var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, lmitOrder.orderId, newLimitOrder);
+                                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, lmitOrder.orderId, newLimitOrder);
                             }
                         }
                     }
@@ -801,7 +806,7 @@ namespace TdInterface
 
         private async Task SetPosition()
         {
-            Position position = await GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, Utility.UserPrincipal);
+            Position position = await GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _accountId);
 
             if (position != null)
             {
@@ -823,13 +828,13 @@ namespace TdInterface
             }
         }
 
-        private async Task<Position> GetPosition(string symbol, AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
+        private async Task<Position> GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
         {
             Position position = null;
 
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(accessTokenContainer, userPrincipal.accounts[0].accountId);
+                _securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
 
                 try
                 {
@@ -985,15 +990,14 @@ namespace TdInterface
             {
                 if (txtSymbol.Text != String.Empty)
                 {
-                    _streamer.SubscribeQuote(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
+                    _streamer.SubscribeQuote(txtSymbol.Text.ToUpper());
                     //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //await UpdatePriceHistory();
                     this.Text = txtSymbol.Text.ToUpper();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
-                    //TODO: FIX WITH TRADESTATION.  cOMMENTED OUT JUST TO GET WORKING.
-                    //await SetPosition();
+                    await SetPosition();
                 }
             }
             catch (Exception) { }

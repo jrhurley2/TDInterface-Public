@@ -182,9 +182,9 @@ namespace TdInterface.Tda
             return orderNumber;
         }
 
-        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
+        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder)
         {
-            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, orderId));
+            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
 
             var request = new HttpRequestMessage(HttpMethod.Put, uri)
             {
@@ -205,9 +205,9 @@ namespace TdInterface.Tda
 
         }
 
-        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, userPrincipal.accounts[0].accountId, order.orderId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, accountId, order.orderId)))
             {
                 Method = HttpMethod.Delete,
             };

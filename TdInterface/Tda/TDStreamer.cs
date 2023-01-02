@@ -23,6 +23,7 @@ namespace TdInterface.Tda
 {
     public class TDStreamer : IDisposable, IStreamer
     {
+        private UserPrincipal _userPrincipal;
         private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
         private StreamerSettings.Request _loginRequest;
@@ -75,7 +76,7 @@ namespace TdInterface.Tda
         }
         public TDStreamer(UserPrincipal userPrincipals)
         {
-
+            _userPrincipal = userPrincipals;
             _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
             _credentials = new StreamerSettings.Credentials
@@ -319,7 +320,7 @@ namespace TdInterface.Tda
 
         public int _quoteRequestId = 0;
 
-        public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeQuote(string tickerSymbol)
         {
             if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
             {
@@ -340,8 +341,8 @@ namespace TdInterface.Tda
                 service = "QUOTE",
                 command = "SUBS",
                 requestid = "1", //_quoteRequestId.ToString(),
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
                     keys = symbols,

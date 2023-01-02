@@ -20,6 +20,6 @@ namespace TdInterface.Interfaces
         void Dispose();
         void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol);
         void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol);
-        void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol);
+        void SubscribeQuote(string tickerSymbol);
     }
 }

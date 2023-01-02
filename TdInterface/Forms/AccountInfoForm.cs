@@ -24,6 +24,7 @@ namespace TdInterface.Forms
             _accountInfo.TdaConsumerKey = txtConsumerKey.Text;
             _accountInfo.TradeStationClientId = txtClientId.Text;
             _accountInfo.TradeStationClientSecret = txtClientSecret.Text;
+            _accountInfo.TradeStationUseSimAccount = chkUseSimAccount.Checked;
             Utility.SaveAccountInfo(_accountInfo);
         }
 
@@ -34,6 +35,7 @@ namespace TdInterface.Forms
             txtConsumerKey.Text = _accountInfo.TdaConsumerKey;
             txtClientId.Text = _accountInfo.TradeStationClientId;
             txtClientSecret.Text = _accountInfo.TradeStationClientSecret;
+            chkUseSimAccount.Checked = _accountInfo.TradeStationUseSimAccount;
         }
     }
 }
