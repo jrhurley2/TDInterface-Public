@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -17,11 +18,12 @@ using Websocket.Client.Models;
 
 namespace TdInterface.TradeStation
 {
-    internal class TradeStationStreamer : IStreamer
+    public class TradeStationStreamer : IStreamer
     {
-        private HttpClient   _httpClient = new HttpClient();
+        private HttpClient _httpClient = new HttpClient();
         private List<string> _quoteSymbols = new List<string>();
-
+        private TradeStationHelper _tradeStationHelper = null;
+        private string _equityAccountId = string.Empty;
 
         private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
         public IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
@@ -49,6 +51,18 @@ namespace TdInterface.TradeStation
 
         private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
         public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+
+        public TradeStationStreamer(TradeStationHelper tradeStationHelper, string equityAccountId)
+        {
+            _tradeStationHelper = tradeStationHelper;
+            _equityAccountId = equityAccountId;
+        }
+
+        public void StartAccountStream()
+        {
+            var t = new Thread(new ThreadStart(ProcessStreamAccount));
+            t.Start();
+        }
 
         public void Dispose()
         {
@@ -78,43 +92,92 @@ namespace TdInterface.TradeStation
             _quoteStreamThread.Start();
         }
 
-        private async void ProcessStreamQuotes() //AccessTokenContainer accessTokenContainer)
+        public static List<Order> FindNewFilledOrder(Securitiesaccount previousAccount, Securitiesaccount currentAccount)
         {
-
-            var accessTokenContainer = Utility.AccessTokenContainer;
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(string.Format("https://api.tradestation.com/v3/marketdata/stream/quotes/{0}", string.Join(",", _quoteSymbols)))
-            };
-
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
-
-            using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+            var x = currentAccount.orderStrategies.Except(currentAccount.orderStrategies.Join(previousAccount.orderStrategies, c => c.orderId, p => p.orderId, (c, p) => c)).ToList<Order>();
+            return x;
+        }
+        private async void ProcessStreamAccount()
+        {
+            Securitiesaccount lastSecuritiesaccount = null;
+            while (true)
             {
                 try
                 {
-                    response.EnsureSuccessStatusCode();
-                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    var securitiesaccount = await _tradeStationHelper.GetAccount(Utility.AccessTokenContainer, _equityAccountId).ConfigureAwait(false);
+                    _tradeStationHelper.Securitiesaccount = securitiesaccount;
+                    if (lastSecuritiesaccount != null)
                     {
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            while (!reader.EndOfStream)
-                            {
-                                var line = await reader.ReadLineAsync();
-                                if (line == null) break;
 
-                                if (line.Contains("Heartbeat")) continue;
-                                Debug.WriteLine(line);
-                                var stockQuote = JsonConvert.DeserializeObject<TradeStation.Model.StockQuote>(line);
-                                _stockQuoteRecievedSubject.OnNext(stockQuote);
+                        ////Order Filled
+                        if (lastSecuritiesaccount.orderStrategies.Where(o => o.status.Equals("FLL")).Count() != securitiesaccount.orderStrategies.Where(o => o.status.Equals("FLL")).Count())
+                        {
+                            var newOrders = FindNewFilledOrder(lastSecuritiesaccount, securitiesaccount);
+                            foreach (var order in newOrders)
+                            {
+                                _orderFillMessage.OnNext(new OrderFillMessage { Order = new OrderFillMessageOrder { OrderKey = ulong.Parse(order.orderId), Security = new OrderFillMessageOrderSecurity { Symbol = order.orderLegCollection[0].instrument.symbol } } });
+                            }
+                        }
+
+
+                    }
+
+                    _acctActivity.OnNext(new Tda.Model.AcctActivity());
+
+                    lastSecuritiesaccount = securitiesaccount;
+                    _tradeStationHelper.Securitiesaccount = securitiesaccount;
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.StackTrace);
+
+                }
+
+                Thread.Sleep(2000);
+            }
+        }
+
+        private async void ProcessStreamQuotes() //AccessTokenContainer accessTokenContainer)
+        {
+
+            while (true)
+            {
+                var accessTokenContainer = Utility.AccessTokenContainer;
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(string.Format("https://api.tradestation.com/v3/marketdata/stream/quotes/{0}", string.Join(",", _quoteSymbols)))
+                };
+
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+
+                using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    try
+                    {
+                        response.EnsureSuccessStatusCode();
+                        using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        {
+                            using (StreamReader reader = new StreamReader(stream))
+                            {
+                                while (!reader.EndOfStream)
+                                {
+                                    var line = await reader.ReadLineAsync().ConfigureAwait(false);
+                                    if (line == null) break;
+
+                                    if (line.Contains("Heartbeat")) continue;
+                                    Debug.WriteLine(line);
+                                    var stockQuote = JsonConvert.DeserializeObject<TradeStation.Model.StockQuote>(line);
+                                    _stockQuoteRecievedSubject.OnNext(stockQuote);
+                                }
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
                 }
             }
         }

@@ -73,15 +73,25 @@ namespace TdInterface
         {
             var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
 
-            File.WriteAllText(AccountInfoFile, accountInfoAsString);
+            var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accountInfoAsString);
+            var encrypted = ProtectedData.Protect(bytesToEncrypt, null, DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(AccountInfoFile, encrypted);
+            //var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
+
+            //File.WriteAllText(AccountInfoFile, accountInfoAsString);
         }
 
         public static AccountInfo GetAccountInfo()
         {
             try
             {
-                var accountInfoAsString = File.ReadAllText(AccountInfoFile);
-                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoAsString);
+                var bytesToDecrypt = File.ReadAllBytes(AccountInfoFile);
+                var decrypted = ProtectedData.Unprotect(bytesToDecrypt, null, DataProtectionScope.CurrentUser);
+
+                var accountInfoString = UnicodeEncoding.ASCII.GetString(decrypted);
+                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoString);
+                //var accountInfoAsString = File.ReadAllText(AccountInfoFile);
+                //return JsonConvert.DeserializeObject<AccountInfo>(accountInfoAsString);
             }
             catch
             {

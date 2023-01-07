@@ -14,11 +14,13 @@ using System.Net.Http.Headers;
 
 namespace TdInterface.TradeStation
 {
-    internal class TradeStationHelper : IHelper
+    public class TradeStationHelper : IHelper
     {
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tradestation.com/");
         public static Uri TokenUri = new Uri("https://signin.tradestation.com/oauth/token");
+        public string _clientId;
+        public string _clientSecret;
 
         public const string routeGetToken = "v1/oauth2/token";
         public const string routePlaceOrder = "v3/orderexecution/orders";
@@ -28,20 +30,38 @@ namespace TdInterface.TradeStation
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
 
-        public TradeStationHelper() { }
-        public TradeStationHelper(string baseUri)
+        private static Securitiesaccount _securitiesaccount;
+        
+        public Securitiesaccount Securitiesaccount
+        {
+            get
+            {
+                return _securitiesaccount;
+            }
+            set
+            {
+                _securitiesaccount = value;
+            }
+        }
+
+        public TradeStationHelper(string clientId, string clientSecret) 
+        { 
+            _clientId = clientId;
+            _clientSecret = clientSecret;
+        }
+        public TradeStationHelper(string baseUri, string clientId, string clientSecret) : this(clientId, clientSecret)
         {
             BaseUri = new Uri(baseUri);
         }
 
-        public async Task<AccessTokenContainer> GetAccessToken(string authToken, string clientId, string clientSecret)
+        public async Task<AccessTokenContainer> GetAccessToken(string authToken) //, string clientId, string clientSecret)
         {
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
             postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
             postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
-            postData.Add(new KeyValuePair<string, string>("client_id", clientId));
-            postData.Add(new KeyValuePair<string, string>("client_secret", clientSecret));
+            postData.Add(new KeyValuePair<string, string>("client_id", _clientId));
+            postData.Add(new KeyValuePair<string, string>("client_secret", _clientSecret));
             postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
@@ -59,20 +79,20 @@ namespace TdInterface.TradeStation
             return accessTokenContainer;
         }
 
-        public async Task<AccessTokenContainer> RefreshAccessToken(AccessTokenContainer accessTokenContainer, string clientId, string clientSecret)
+        public async Task<AccessTokenContainer> RefreshAccessToken(AccessTokenContainer accessTokenContainer) //, string clientId, string clientSecret)
         {
             try
             {
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
-                postData.Add(new KeyValuePair<string, string>("client_id", clientId));
-                postData.Add(new KeyValuePair<string, string>("client_secret", clientSecret));
+                postData.Add(new KeyValuePair<string, string>("client_id", _clientId));
+                postData.Add(new KeyValuePair<string, string>("client_secret", _clientSecret));
                 //postData.Add(new KeyValuePair<string, string>("refresh_token", System.Net.WebUtility.UrlEncode(accessTokenContainer.RefreshToken)));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", accessTokenContainer.RefreshToken));
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
                 var rawSTring = await content.ReadAsStringAsync();
-                var request = new HttpRequestMessage(HttpMethod.Post, new Uri(BaseUri, routeGetToken)) //Uri."https://api.tdameritrade.com/v1/oauth2/token"); // ; 
+                var request = new HttpRequestMessage(HttpMethod.Post, TokenUri) // new Uri(BaseUri, routeGetToken)) //Uri."https://api.tdameritrade.com/v1/oauth2/token"); // ; 
                 {
                     Method = HttpMethod.Post,
                     Content = content
@@ -102,7 +122,7 @@ namespace TdInterface.TradeStation
                 OrderType = ConvertOrderTypeToTradeStation(tdaOrder.orderType),
                 Symbol = tdaOrder.orderLegCollection[0].instrument.symbol.ToUpper(),
                 Quantity = tdaOrder.orderLegCollection[0].quantity.ToString(),
-                TradeAction = tdaOrder.orderLegCollection[0].instruction,
+                TradeAction = ConvertTradeInstructionToTradeStation(tdaOrder.orderLegCollection[0].instruction),
                 StopPrice = tdaOrder.stopPrice,
                 LimitPrice = tdaOrder.price,
                 TimeInForce = new TimeInForceRequest
@@ -129,6 +149,22 @@ namespace TdInterface.TradeStation
             }
 
             return tsOrder;
+        }
+
+        private static string ConvertTradeInstructionToTradeStation(string tdaInstruction)
+        {
+            var instruction = tdaInstruction;
+
+            switch(tdaInstruction.ToUpper())
+            {
+                case "SELL_SHORT":
+                    instruction = "SELLSHORT";
+                    break;
+                case "BUY_TO_COVER":
+                    instruction = "BUYTOCOVER";
+                    break;
+            }
+            return instruction;
         }
 
         private static string ConvertOrderTypeToTradeStation(string tdaOrderType)
@@ -321,6 +357,9 @@ namespace TdInterface.TradeStation
             {
                 case "DON":
                     status = "QUEUED";
+                    break;
+                case "ACK":
+                    status = "PENDING_ACTIVATION";
                     break;
                 default:
                     status= orderStatus; 

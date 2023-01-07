@@ -23,7 +23,7 @@ namespace TdInterface
         private string _accountId;
         private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
-        private TradeStationHelper _tradeStationHelper = new TradeStationHelper();
+        private TradeStationHelper _tradeStationHelper; // = new TradeStationHelper();
         private IHelper _tradeHelper;
       
         // Made Public for testing.
@@ -136,7 +136,7 @@ namespace TdInterface
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, _settings);
-                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, triggerOrder);
+                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
@@ -440,9 +440,9 @@ namespace TdInterface
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
-                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder.orderId, newOrder);
+                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder.orderId, newOrder);
                 var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, newStopOrder);
+                await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, newStopOrder);
             }
             else
             {
@@ -494,13 +494,13 @@ namespace TdInterface
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = TDAOrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
+            var orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder);
         }
 
         private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
         {
             var stopOrder = TDAOrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
-            var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, stopOrder);
+            var orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder);
         }
 
 
@@ -605,7 +605,9 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
+                _securitiesaccount = _tradeHelper.Securitiesaccount;
+                await SetPosition();
+                //_securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
                 //txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
             }
             catch (Exception ex)
@@ -619,8 +621,8 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-
+                //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
+                _securitiesaccount = _tradeHelper.Securitiesaccount;
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
                 Debug.WriteLine($"HandleOrderReceived: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
@@ -683,7 +685,9 @@ namespace TdInterface
                         if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
-                            _securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
+                            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
+                            _securitiesaccount = _tradeHelper.Securitiesaccount;
+
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                             //So the Trigger has an OCO that has the limit and stop.  
@@ -704,27 +708,27 @@ namespace TdInterface
                                 Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
                                 var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                await _tdHelper.ReplaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId, lmitOrder.orderId, newLimitOrder);
+                                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
                             }
                         }
                     }
                 }
 
                 //TODO:  IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
-                if (_initialOrders.ContainsKey(symbol.ToUpper()))
-                {
-                    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
-                    //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
-                    {
-                        Debug.WriteLine("HandleOrderFilled: Found Initial Order by OrderKey");
-                        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                        //So the Trigger has an OCO that has the limit and stop.  
-                        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                        Debug.WriteLine($"HandleOrderFilled: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
-                    }
-                }
+                //if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                //{
+                //    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
+                //    //We have an initial order lets find the limit and save it off
+                //    if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                //    {
+                //        Debug.WriteLine("HandleOrderFilled: Found Initial Order by OrderKey");
+                //        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                //        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                //        //So the Trigger has an OCO that has the limit and stop.  
+                //        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                //        Debug.WriteLine($"HandleOrderFilled: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
+                //    }
+                //}
 
                 Debug.WriteLine(orderFillMessage.Order.OrderKey);
             }
@@ -834,7 +838,8 @@ namespace TdInterface
 
             try
             {
-                _securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
+                _securitiesaccount = _tradeHelper.Securitiesaccount;
+                //_securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
 
                 try
                 {

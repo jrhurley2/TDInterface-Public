@@ -29,6 +29,22 @@ namespace TdInterface.Tda
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
+
+        private static Securitiesaccount _securitiesaccount;
+
+        public Securitiesaccount Securitiesaccount
+        {
+            get
+            {
+                return _securitiesaccount;
+            }
+            set
+            {
+                _securitiesaccount = value;
+            }
+        }
+
+
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
