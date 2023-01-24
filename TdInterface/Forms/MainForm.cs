@@ -23,7 +23,7 @@ namespace TdInterface
         private string _accountId;
         private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
-        private TradeStationHelper _tradeStationHelper; // = new TradeStationHelper();
+        private TradeStationHelper _tradeStationHelper; 
         private IHelper _tradeHelper;
       
         // Made Public for testing.
@@ -471,7 +471,12 @@ namespace TdInterface
 
 
 
-
+        /// <summary>
+        /// Get Exit Instruction, uses TDAHelper as the Tradestaton helper will convert this to what it needs on execution.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static string GetExitInstruction(Position position)
         {
             var exitInstruction = "";

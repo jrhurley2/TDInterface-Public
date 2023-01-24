@@ -576,7 +576,7 @@ namespace TdInterface
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(403, 175);
+            this.label9.Location = new System.Drawing.Point(462, 50);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(18, 20);
             this.label9.TabIndex = 33;
@@ -584,7 +584,7 @@ namespace TdInterface
             // 
             // txtRValue
             // 
-            this.txtRValue.Location = new System.Drawing.Point(427, 168);
+            this.txtRValue.Location = new System.Drawing.Point(486, 43);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
             this.txtRValue.Size = new System.Drawing.Size(43, 27);
@@ -594,7 +594,7 @@ namespace TdInterface
             // txtPnL
             // 
             this.txtPnL.Enabled = false;
-            this.txtPnL.Location = new System.Drawing.Point(427, 217);
+            this.txtPnL.Location = new System.Drawing.Point(486, 92);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.Size = new System.Drawing.Size(101, 27);
             this.txtPnL.TabIndex = 36;
@@ -602,7 +602,7 @@ namespace TdInterface
             // lblPnL
             // 
             this.lblPnL.AutoSize = true;
-            this.lblPnL.Location = new System.Drawing.Point(385, 221);
+            this.lblPnL.Location = new System.Drawing.Point(444, 96);
             this.lblPnL.Name = "lblPnL";
             this.lblPnL.Size = new System.Drawing.Size(32, 20);
             this.lblPnL.TabIndex = 37;
@@ -617,7 +617,7 @@ namespace TdInterface
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(424, 93);
+            this.label10.Location = new System.Drawing.Point(444, 193);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(28, 20);
             this.label10.TabIndex = 39;
@@ -625,11 +625,12 @@ namespace TdInterface
             // 
             // txtOneToOne
             // 
-            this.txtOneToOne.Location = new System.Drawing.Point(401, 117);
+            this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txtOneToOne.Location = new System.Drawing.Point(402, 223);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(81, 27);
+            this.txtOneToOne.Size = new System.Drawing.Size(106, 47);
             this.txtOneToOne.TabIndex = 38;
             this.txtOneToOne.TabStop = false;
             // 

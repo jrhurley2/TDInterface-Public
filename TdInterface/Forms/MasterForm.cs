@@ -70,7 +70,7 @@ namespace TdInterface
                     }
                     string loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
 
-                    if (loginTDA)
+                    if (accountInfo.UseTdaEquity)
                     {
                         loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
@@ -78,8 +78,9 @@ namespace TdInterface
                         Utility.AuthToken = oAuthLoginForm.Code;
                         accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
+                        Utility.AccessTokenContainer = accessTokenContainer;
                     }
-                    else
+                    else if(accountInfo.UseTSEquity) 
                     {
                         _tradeStationHelper = new TradeStationHelper(accountInfo.TradeStationClientId, accountInfo.TradeStationClientSecret);
 
@@ -94,18 +95,25 @@ namespace TdInterface
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
                         Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer).Result;
                     }
+                    else
+                    {
+                        var frmAccountInfo = new AccountInfoForm();
+                        frmAccountInfo.ShowDialog();
+                        accountInfo = Utility.GetAccountInfo();
+                    }
                 }
 
-                //Utility.AccessTokenContainer = accessTokenContainer;
+                accountInfo.UseTdaEquity = false;
+                accountInfo.UseTSEquity = true;
 
-                if (loginTDA) {
+                if (accountInfo.UseTdaEquity) {
                     Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
                     Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
                     _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
                     _streamer = new TDStreamer(Utility.UserPrincipal);
                     _tradeHelper = new TdHelper();
                 }
-                else
+                else if(accountInfo.UseTSEquity) 
                 {
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;

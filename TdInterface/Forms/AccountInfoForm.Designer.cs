@@ -29,22 +29,25 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkTdaEnableEquity = new System.Windows.Forms.CheckBox();
             this.txtConsumerKey = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkTsEnableEquity = new System.Windows.Forms.CheckBox();
+            this.chkUseSimAccount = new System.Windows.Forms.CheckBox();
             this.txtClientSecret = new System.Windows.Forms.TextBox();
             this.txtClientId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkUseSimAccount = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkTdaEnableEquity);
             this.groupBox1.Controls.Add(this.txtConsumerKey);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 41);
@@ -54,9 +57,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TD Ameritrade";
             // 
+            // chkTdaEnableEquity
+            // 
+            this.chkTdaEnableEquity.AutoSize = true;
+            this.chkTdaEnableEquity.Location = new System.Drawing.Point(15, 26);
+            this.chkTdaEnableEquity.Name = "chkTdaEnableEquity";
+            this.chkTdaEnableEquity.Size = new System.Drawing.Size(144, 24);
+            this.chkTdaEnableEquity.TabIndex = 2;
+            this.chkTdaEnableEquity.Text = "Enable for Equity";
+            this.chkTdaEnableEquity.UseVisualStyleBackColor = true;
+            this.chkTdaEnableEquity.CheckedChanged += new System.EventHandler(this.chkTdaEnableEquity_CheckedChanged);
+            // 
             // txtConsumerKey
             // 
-            this.txtConsumerKey.Location = new System.Drawing.Point(134, 49);
+            this.txtConsumerKey.Location = new System.Drawing.Point(134, 66);
             this.txtConsumerKey.Name = "txtConsumerKey";
             this.txtConsumerKey.Size = new System.Drawing.Size(125, 27);
             this.txtConsumerKey.TabIndex = 1;
@@ -64,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 56);
+            this.label1.Location = new System.Drawing.Point(15, 73);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(103, 20);
             this.label1.TabIndex = 0;
@@ -72,6 +86,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkTsEnableEquity);
             this.groupBox2.Controls.Add(this.chkUseSimAccount);
             this.groupBox2.Controls.Add(this.txtClientSecret);
             this.groupBox2.Controls.Add(this.txtClientId);
@@ -84,16 +99,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "TradeStation";
             // 
+            // chkTsEnableEquity
+            // 
+            this.chkTsEnableEquity.AutoSize = true;
+            this.chkTsEnableEquity.Location = new System.Drawing.Point(15, 25);
+            this.chkTsEnableEquity.Name = "chkTsEnableEquity";
+            this.chkTsEnableEquity.Size = new System.Drawing.Size(144, 24);
+            this.chkTsEnableEquity.TabIndex = 7;
+            this.chkTsEnableEquity.Text = "Enable for Equity";
+            this.chkTsEnableEquity.UseVisualStyleBackColor = true;
+            this.chkTsEnableEquity.CheckedChanged += new System.EventHandler(this.chkTsEnableEquity_CheckedChanged);
+            // 
+            // chkUseSimAccount
+            // 
+            this.chkUseSimAccount.AutoSize = true;
+            this.chkUseSimAccount.Location = new System.Drawing.Point(319, 25);
+            this.chkUseSimAccount.Name = "chkUseSimAccount";
+            this.chkUseSimAccount.Size = new System.Drawing.Size(142, 24);
+            this.chkUseSimAccount.TabIndex = 6;
+            this.chkUseSimAccount.Text = "Use Sim Account";
+            this.chkUseSimAccount.UseVisualStyleBackColor = true;
+            // 
             // txtClientSecret
             // 
-            this.txtClientSecret.Location = new System.Drawing.Point(134, 77);
+            this.txtClientSecret.Location = new System.Drawing.Point(134, 100);
             this.txtClientSecret.Name = "txtClientSecret";
             this.txtClientSecret.Size = new System.Drawing.Size(125, 27);
             this.txtClientSecret.TabIndex = 3;
             // 
             // txtClientId
             // 
-            this.txtClientId.Location = new System.Drawing.Point(134, 32);
+            this.txtClientId.Location = new System.Drawing.Point(134, 55);
             this.txtClientId.Name = "txtClientId";
             this.txtClientId.Size = new System.Drawing.Size(125, 27);
             this.txtClientId.TabIndex = 5;
@@ -101,7 +137,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 77);
+            this.label2.Location = new System.Drawing.Point(15, 100);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 20);
             this.label2.TabIndex = 2;
@@ -110,7 +146,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 39);
+            this.label3.Location = new System.Drawing.Point(15, 62);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 20);
             this.label3.TabIndex = 4;
@@ -134,22 +170,13 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // chkUseSimAccount
-            // 
-            this.chkUseSimAccount.AutoSize = true;
-            this.chkUseSimAccount.Location = new System.Drawing.Point(339, 37);
-            this.chkUseSimAccount.Name = "chkUseSimAccount";
-            this.chkUseSimAccount.Size = new System.Drawing.Size(142, 24);
-            this.chkUseSimAccount.TabIndex = 6;
-            this.chkUseSimAccount.Text = "Use Sim Account";
-            this.chkUseSimAccount.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // AccountInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(958, 450);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
@@ -178,5 +205,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox chkUseSimAccount;
+        private System.Windows.Forms.CheckBox chkTdaEnableEquity;
+        private System.Windows.Forms.CheckBox chkTsEnableEquity;
     }
 }
