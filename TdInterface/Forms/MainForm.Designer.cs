@@ -627,11 +627,11 @@ namespace TdInterface
             // txtOneToOne
             // 
             this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.txtOneToOne.Location = new System.Drawing.Point(404, 223);
+            this.txtOneToOne.Location = new System.Drawing.Point(351, 223);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(127, 47);
+            this.txtOneToOne.Size = new System.Drawing.Size(238, 47);
             this.txtOneToOne.TabIndex = 38;
             this.txtOneToOne.TabStop = false;
             // 
