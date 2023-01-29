@@ -35,10 +35,11 @@
             this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNewTrade = new System.Windows.Forms.Button();
             this.txtSymbol = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnLogon = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,27 +73,34 @@
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // accountSettingsToolStripMenuItem
+            // 
+            this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.accountSettingsToolStripMenuItem.Text = "Account Settings";
+            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
+            // 
             // btnNewTrade
             // 
-            this.btnNewTrade.Location = new System.Drawing.Point(246, 227);
+            this.btnNewTrade.Location = new System.Drawing.Point(291, 199);
             this.btnNewTrade.Name = "btnNewTrade";
             this.btnNewTrade.Size = new System.Drawing.Size(94, 29);
             this.btnNewTrade.TabIndex = 1;
@@ -102,14 +110,14 @@
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(246, 184);
+            this.txtSymbol.Location = new System.Drawing.Point(281, 166);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(125, 27);
             this.txtSymbol.TabIndex = 2;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(602, 321);
+            this.button1.Location = new System.Drawing.Point(12, 84);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 29);
             this.button1.TabIndex = 3;
@@ -117,18 +125,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // accountSettingsToolStripMenuItem
+            // btnLogon
             // 
-            this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.accountSettingsToolStripMenuItem.Text = "Account Settings";
-            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
+            this.btnLogon.Location = new System.Drawing.Point(12, 49);
+            this.btnLogon.Name = "btnLogon";
+            this.btnLogon.Size = new System.Drawing.Size(94, 29);
+            this.btnLogon.TabIndex = 4;
+            this.btnLogon.Text = "Logon";
+            this.btnLogon.UseVisualStyleBackColor = true;
+            this.btnLogon.Click += new System.EventHandler(this.btnLogon_Click);
             // 
             // MasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLogon);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtSymbol);
             this.Controls.Add(this.btnNewTrade);
@@ -157,5 +169,6 @@
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
+        private System.Windows.Forms.Button btnLogon;
     }
 }

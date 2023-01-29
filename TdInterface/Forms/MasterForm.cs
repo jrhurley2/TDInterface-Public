@@ -34,27 +34,33 @@ namespace TdInterface
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
 
+
+        private bool _isLoggedIn = false;
+
         public MasterForm()
+        {
+
+            _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+            Trace.Listeners.Add(_textWriterTraceListener);
+
+            Debug.WriteLine("Start Master Form");
+            InitializeComponent();
+
+            Login();
+        }
+
+        private void Login()
         {
             try
             {
-                bool loginTDA = false;
-
-                _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
-                Trace.Listeners.Add(_textWriterTraceListener);
-
-                Debug.WriteLine("Start Master Form");
-                InitializeComponent();
-
 
                 var accountInfo = Utility.GetAccountInfo();
-                if(accountInfo == null )
+                if (accountInfo == null)
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
                     accountInfo = Utility.GetAccountInfo();
                 }
-
 
                 var accessTokenContainer = Utility.GetAccessTokenContainer();
 
@@ -80,7 +86,7 @@ namespace TdInterface
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
                         Utility.AccessTokenContainer = accessTokenContainer;
                     }
-                    else if(accountInfo.UseTSEquity) 
+                    else if (accountInfo.UseTSEquity)
                     {
                         _tradeStationHelper = new TradeStationHelper(accountInfo.TradeStationClientId, accountInfo.TradeStationClientSecret);
 
@@ -103,17 +109,15 @@ namespace TdInterface
                     }
                 }
 
-                accountInfo.UseTdaEquity = false;
-                accountInfo.UseTSEquity = true;
-
-                if (accountInfo.UseTdaEquity) {
+                if (accountInfo.UseTdaEquity)
+                {
                     Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
                     Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
                     _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
                     _streamer = new TDStreamer(Utility.UserPrincipal);
                     _tradeHelper = new TdHelper();
                 }
-                else if(accountInfo.UseTSEquity) 
+                else if (accountInfo.UseTSEquity)
                 {
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;
@@ -141,16 +145,15 @@ namespace TdInterface
                 }
                 timer1.Start();
 
+                _isLoggedIn = true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
-                throw;
+                MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
+                _isLoggedIn = false;
             }
-
-
-            //InitializeComponent();
         }
 
         private async void timer1_Tick(object sender, EventArgs e)
@@ -185,7 +188,7 @@ namespace TdInterface
             var settings = Utility.GetSettings();
             if (settings != null)
             {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
+                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;    
                 _settings = settings;
             }
 
@@ -244,7 +247,7 @@ namespace TdInterface
             {
                 _textWriterTraceListener.Flush();
                 _textWriterTraceListener.Close();
-                _streamer.Dispose();
+                if(_streamer != null) _streamer.Dispose();
                 _textWriterTraceListener.Dispose();
 
                 foreach(var frm in _mainForms)
@@ -270,6 +273,11 @@ namespace TdInterface
         {
             var accountInfoForm = new AccountInfoForm();
             accountInfoForm.Show();
+        }
+
+        private void btnLogon_Click(object sender, EventArgs e)
+        {
+            Login();
         }
     }
 }

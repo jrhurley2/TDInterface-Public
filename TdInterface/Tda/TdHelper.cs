@@ -65,7 +65,7 @@ namespace TdInterface.Tda
             var response = await _httpClient.SendAsync(request);
 
             var accessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
-
+            accessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
             return accessTokenContainer;
         }
 
@@ -93,6 +93,7 @@ namespace TdInterface.Tda
                 var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
+                newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
 
                 return newAccessTokenContainer;
             }
@@ -286,6 +287,12 @@ namespace TdInterface.Tda
                 Console.WriteLine(ex.StackTrace);
             }
             return string.Empty;
+        }
+
+        public Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Order triggerOrder)
+        {
+            var lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol.ToUpper() == triggerOrder.orderLegCollection[0].instrument.symbol.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+            return lmitOrder;
         }
 
     }

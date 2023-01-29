@@ -6,8 +6,12 @@ namespace TdInterface.Tda.Model
 
     public class AccessTokenContainer
     {
+        public enum EnumTokenSystem { TDA, TradeStation}
+
         private DateTime _tokenExpiration;
         private DateTime _refreshExpiration;
+
+        public EnumTokenSystem TokenSystem { get; set; }
 
         [JsonProperty(PropertyName = "access_token")]
         public string AccessToken { get; set; }

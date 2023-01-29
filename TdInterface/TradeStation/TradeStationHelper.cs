@@ -75,6 +75,7 @@ namespace TdInterface.TradeStation
             var response = await _httpClient.SendAsync(request);
 
             var accessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            accessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TradeStation;
 
             return accessTokenContainer;
         }
@@ -105,6 +106,7 @@ namespace TdInterface.TradeStation
                 newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
 
                 newAccessTokenContainer.RefreshTokenExpiresIn = int.MaxValue;
+                newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TradeStation;
                 return newAccessTokenContainer;
             }
             catch (Exception ex)
@@ -403,6 +405,11 @@ namespace TdInterface.TradeStation
             return accounts;
         }
 
+        public Tda.Model.Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Tda.Model.Order triggerOrder)
+        {
+            var lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol.ToUpper() == triggerOrder.orderLegCollection[0].instrument.symbol.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+            return lmitOrder;
+        }
 
 
     }
