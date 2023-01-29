@@ -2,6 +2,14 @@
 
 This app was inspired by Steve over at https://largecapdaytrader.com/   If you are tired of losing money and want to learn to read price action, go check it out.
 
+********* Right now TDA is migrationg with Schwab.   You can't get an API key until the migration is over.   I will update this page and update the app when everything moves over to Schwab 
+
+![image](https://user-images.githubusercontent.com/13562737/212210538-d6736416-90f3-489b-a3ea-5fd055e3c59c.png)
+
+
+*****
+
+
 Windows Form application that uses TD Ameritrade Apis
 
 Register for a developer account at:
