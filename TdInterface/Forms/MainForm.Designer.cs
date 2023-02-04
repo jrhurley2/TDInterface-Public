@@ -84,6 +84,7 @@ namespace TdInterface
             this.timerGetSecuritiesAccount = new System.Windows.Forms.Timer(this.components);
             this.label10 = new System.Windows.Forms.Label();
             this.txtOneToOne = new System.Windows.Forms.TextBox();
+            this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -521,7 +522,7 @@ namespace TdInterface
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(229, 45);
+            this.checkBox1.Location = new System.Drawing.Point(42, 12);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(115, 24);
             this.checkBox1.TabIndex = 28;
@@ -635,9 +636,20 @@ namespace TdInterface
             this.txtOneToOne.TabIndex = 38;
             this.txtOneToOne.TabStop = false;
             // 
+            // chkDisableFirstTarget
+            // 
+            this.chkDisableFirstTarget.AutoSize = true;
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(200, 15);
+            this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(157, 24);
+            this.chkDisableFirstTarget.TabIndex = 40;
+            this.chkDisableFirstTarget.Text = "Disable First Target";
+            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(986, 574);
+            this.Controls.Add(this.chkDisableFirstTarget);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtOneToOne);
             this.Controls.Add(this.lblPnL);
@@ -746,6 +758,7 @@ namespace TdInterface
         private System.Windows.Forms.Timer timerGetSecuritiesAccount;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtOneToOne;
+        private System.Windows.Forms.CheckBox chkDisableFirstTarget;
     }
 }
 
