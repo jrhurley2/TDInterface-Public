@@ -27,6 +27,7 @@ namespace TdInterface
             _settings.MaxRisk = Decimal.Parse(txtMaxRisk.Text);
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
             _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
+            _settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
             _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
             _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
             _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
@@ -52,6 +53,7 @@ namespace TdInterface
             txtMaxRisk.Text = _settings.MaxRisk.ToString("#.##");
             txtMaxShares.Text = _settings.MaxShares.ToString();
             chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
+            chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
             txtOneRSharePct.Text = _settings.OneRProfitPercenatage.ToString();
             chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
             chkReduceStopOnClose.Checked = _settings.ReduceStopOnClose;

@@ -43,15 +43,41 @@ namespace TdInterface.Tda
 
 
             var stopOrder = CreateStopOrder(exitInstruction, symbol, quantity, stopPrice);
-
             ocoOrder.childOrderStrategies.Add(stopOrder);
 
             var limitOrder = CreateLimitOrder(exitInstruction, symbol, firstTargetLimitQuantity, firstTargetLimitPrice);
-
             ocoOrder.childOrderStrategies.Add(limitOrder);
 
             return triggerOrder;
         }
+
+        public static Order CreateTriggerStopOrder(string triggerOrderType, string symbol, string instruction, int quantity, double triggerLimit, double stopPrice)
+        {
+            var exitInstruction = instruction == BUY ? SELL : BUY_TO_COVER;
+
+            Order triggerOrder = null;
+
+            if (triggerOrderType.Equals("MARKET"))
+            {
+                triggerOrder = CreateMarketOrder(instruction, symbol, quantity);
+            }
+            else if (triggerOrderType.Equals("LIMIT"))
+            {
+                triggerOrder = CreateLimitOrder(instruction, symbol, quantity, triggerLimit);
+            }
+            else
+            {
+                throw new Exception("Unknow triggerOrderType");
+            }
+
+            triggerOrder.orderStrategyType = "TRIGGER";
+
+            var stopOrder = CreateStopOrder(exitInstruction, symbol, quantity, stopPrice);
+            triggerOrder.childOrderStrategies.Add(stopOrder);
+
+            return triggerOrder;
+        }
+
 
         public static Order CreateLimitOrder(string instruction, string symbol, int quanity, double limitPrice)
         {
