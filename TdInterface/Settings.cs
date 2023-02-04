@@ -11,6 +11,7 @@ namespace TdInterface
         public int MaxShares { get; set; }
         public decimal MaxRisk { get; set; }
         public bool UseBidAskOcoCalc { get; set; }
+        public bool DisableFirstTargetProfitDefault { get; set; }
         public int OneRProfitPercenatage { 
             get 
             { 

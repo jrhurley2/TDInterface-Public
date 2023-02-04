@@ -55,6 +55,8 @@ namespace TdInterface
             this.chkShowPnL = new System.Windows.Forms.CheckBox();
             this.chkPreventExceedMaxLoss = new System.Windows.Forms.CheckBox();
             this.chkAdjustRiskForMaxLoss = new System.Windows.Forms.CheckBox();
+            this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -110,7 +112,7 @@ namespace TdInterface
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(123, 364);
+            this.btnSave.Location = new System.Drawing.Point(117, 412);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(94, 29);
             this.btnSave.TabIndex = 7;
@@ -120,7 +122,7 @@ namespace TdInterface
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(233, 364);
+            this.btnCancel.Location = new System.Drawing.Point(227, 412);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 29);
             this.btnCancel.TabIndex = 8;
@@ -131,7 +133,7 @@ namespace TdInterface
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(59, 153);
+            this.label2.Location = new System.Drawing.Point(53, 153);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(151, 20);
             this.label2.TabIndex = 9;
@@ -141,7 +143,7 @@ namespace TdInterface
             // 
             this.chkUseBidAskOcoCalc.AccessibleName = "chkUseBidAskOcoCalc";
             this.chkUseBidAskOcoCalc.AutoSize = true;
-            this.chkUseBidAskOcoCalc.Location = new System.Drawing.Point(277, 155);
+            this.chkUseBidAskOcoCalc.Location = new System.Drawing.Point(271, 155);
             this.chkUseBidAskOcoCalc.Name = "chkUseBidAskOcoCalc";
             this.chkUseBidAskOcoCalc.Size = new System.Drawing.Size(18, 17);
             this.chkUseBidAskOcoCalc.TabIndex = 10;
@@ -150,7 +152,7 @@ namespace TdInterface
             // 
             // txtOneRSharePct
             // 
-            this.txtOneRSharePct.Location = new System.Drawing.Point(275, 183);
+            this.txtOneRSharePct.Location = new System.Drawing.Point(269, 231);
             this.txtOneRSharePct.Name = "txtOneRSharePct";
             this.txtOneRSharePct.Size = new System.Drawing.Size(125, 27);
             this.txtOneRSharePct.TabIndex = 11;
@@ -159,7 +161,7 @@ namespace TdInterface
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(59, 189);
+            this.label3.Location = new System.Drawing.Point(53, 237);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(191, 20);
             this.label3.TabIndex = 12;
@@ -168,7 +170,7 @@ namespace TdInterface
             // chkMoveLimitOnFill
             // 
             this.chkMoveLimitOnFill.AutoSize = true;
-            this.chkMoveLimitOnFill.Location = new System.Drawing.Point(277, 232);
+            this.chkMoveLimitOnFill.Location = new System.Drawing.Point(271, 280);
             this.chkMoveLimitOnFill.Name = "chkMoveLimitOnFill";
             this.chkMoveLimitOnFill.Size = new System.Drawing.Size(18, 17);
             this.chkMoveLimitOnFill.TabIndex = 13;
@@ -177,7 +179,7 @@ namespace TdInterface
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(59, 233);
+            this.label4.Location = new System.Drawing.Point(53, 281);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(129, 20);
             this.label4.TabIndex = 14;
@@ -186,7 +188,7 @@ namespace TdInterface
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(59, 275);
+            this.label5.Location = new System.Drawing.Point(53, 323);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(156, 20);
             this.label5.TabIndex = 16;
@@ -195,7 +197,7 @@ namespace TdInterface
             // chkReduceStopOnClose
             // 
             this.chkReduceStopOnClose.AutoSize = true;
-            this.chkReduceStopOnClose.Location = new System.Drawing.Point(277, 274);
+            this.chkReduceStopOnClose.Location = new System.Drawing.Point(271, 322);
             this.chkReduceStopOnClose.Name = "chkReduceStopOnClose";
             this.chkReduceStopOnClose.Size = new System.Drawing.Size(18, 17);
             this.chkReduceStopOnClose.TabIndex = 15;
@@ -203,7 +205,7 @@ namespace TdInterface
             // 
             // txtDefaultLimitOffset
             // 
-            this.txtDefaultLimitOffset.Location = new System.Drawing.Point(275, 312);
+            this.txtDefaultLimitOffset.Location = new System.Drawing.Point(269, 360);
             this.txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
             this.txtDefaultLimitOffset.Size = new System.Drawing.Size(125, 27);
             this.txtDefaultLimitOffset.TabIndex = 17;
@@ -211,7 +213,7 @@ namespace TdInterface
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(53, 319);
+            this.label6.Location = new System.Drawing.Point(47, 367);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(139, 20);
             this.label6.TabIndex = 18;
@@ -290,11 +292,31 @@ namespace TdInterface
             this.chkAdjustRiskForMaxLoss.Text = "Adjust Risk to Not Exceed Max Loss";
             this.chkAdjustRiskForMaxLoss.UseVisualStyleBackColor = true;
             // 
+            // chkDisableFirstTarget
+            // 
+            this.chkDisableFirstTarget.AutoSize = true;
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(269, 201);
+            this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(18, 17);
+            this.chkDisableFirstTarget.TabIndex = 27;
+            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(61, 206);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(167, 20);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Disable 1st Target Profit";
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 552);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.chkDisableFirstTarget);
             this.Controls.Add(this.chkAdjustRiskForMaxLoss);
             this.Controls.Add(this.chkPreventExceedMaxLoss);
             this.Controls.Add(this.chkShowPnL);
@@ -358,5 +380,7 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox chkShowPnL;
         private System.Windows.Forms.CheckBox chkPreventExceedMaxLoss;
         private System.Windows.Forms.CheckBox chkAdjustRiskForMaxLoss;
+        private System.Windows.Forms.CheckBox chkDisableFirstTarget;
+        private System.Windows.Forms.Label label8;
     }
 }
