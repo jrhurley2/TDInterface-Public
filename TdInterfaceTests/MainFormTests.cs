@@ -17,6 +17,16 @@ namespace TdInterface.Tests
     [TestClass()]
     public class MainFormTests
     {
+        private MainForm _mainForm;
+
+        [TestInitialize()]
+        public void Init() 
+        {
+            var mockStreamer = new Mock<Interfaces.IStreamer>();
+            var mockHelper = new Mock<Interfaces.IHelper>();
+
+            _mainForm = new MainForm(mockStreamer.Object, new Settings(), "name", "accountId", mockHelper.Object);
+        }
 
         [TestMethod()]
         [ExpectedException(typeof(DailyLossExceededException))]
@@ -33,7 +43,7 @@ namespace TdInterface.Tests
             var currentBalances = new Currentbalances { liquidationValue = 2484 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances= initialBalances };
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, settings);
+            var actual = _mainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, settings);
         }
 
         [TestMethod()]
@@ -52,7 +62,7 @@ namespace TdInterface.Tests
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, settings);
+            var actual = _mainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, settings);
         }
 
         [TestMethod()]
@@ -78,7 +88,7 @@ namespace TdInterface.Tests
 
             var expectedShares = Convert.ToInt32( ((settings.MaxLossLimitInR * settings.MaxRisk) + Convert.ToDecimal(securitiesAccount.DailyPnL)) / Convert.ToDecimal(expectedRiskPerShare));
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, stop, false, 5, securitiesAccount.DailyPnL, settings);
+            var actual = _mainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, stop, false, 5, securitiesAccount.DailyPnL, settings);
             
             Assert.AreEqual(expectedShares, actual.orderLegCollection[0].quantity);
         }

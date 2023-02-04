@@ -74,7 +74,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl /* Securitiesaccount securitiesaccount*/, Settings settings)
+        public Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl /* Securitiesaccount securitiesaccount*/, Settings settings)
         {
             if (!settings.TradeShares && settings.EnableMaxLossLimit)
             {
@@ -121,11 +121,11 @@ namespace TdInterface
             
             if (chkDisableFirstTarget.Checked)
             {
-                triggerOrder = OrderHelper.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
+                triggerOrder = TDAOrderHelper.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
             }
             else
             {
-                triggerOrder = OrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
+                triggerOrder = TDAOrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
             }
 
             return triggerOrder;
