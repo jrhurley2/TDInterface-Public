@@ -93,7 +93,7 @@ namespace TdInterface.TradeStation
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
                 var rawSTring = await content.ReadAsStringAsync();
-                var request = new HttpRequestMessage(HttpMethod.Post, TokenUri) // new Uri(BaseUri, routeGetToken)) //Uri."https://api.tdameritrade.com/v1/oauth2/token"); // ; 
+                var request = new HttpRequestMessage(HttpMethod.Post, TokenUri) 
                 {
                     Method = HttpMethod.Post,
                     Content = content

@@ -72,6 +72,7 @@
             // 
             this.txtConsumerKey.Location = new System.Drawing.Point(134, 66);
             this.txtConsumerKey.Name = "txtConsumerKey";
+            this.txtConsumerKey.PasswordChar = '*';
             this.txtConsumerKey.Size = new System.Drawing.Size(125, 27);
             this.txtConsumerKey.TabIndex = 1;
             // 
@@ -124,6 +125,7 @@
             // 
             this.txtClientSecret.Location = new System.Drawing.Point(134, 100);
             this.txtClientSecret.Name = "txtClientSecret";
+            this.txtClientSecret.PasswordChar = '*';
             this.txtClientSecret.Size = new System.Drawing.Size(125, 27);
             this.txtClientSecret.TabIndex = 3;
             // 
@@ -131,6 +133,7 @@
             // 
             this.txtClientId.Location = new System.Drawing.Point(134, 55);
             this.txtClientId.Name = "txtClientId";
+            this.txtClientId.PasswordChar = '*';
             this.txtClientId.Size = new System.Drawing.Size(125, 27);
             this.txtClientId.TabIndex = 5;
             // 
