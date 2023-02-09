@@ -134,20 +134,36 @@ namespace TdInterface.TradeStation
 
             };
 
-            if(tdaOrder.orderStrategyType.Equals("TRIGGER"))
+            if (tdaOrder.orderStrategyType.Equals("TRIGGER"))
             {
                 tsOrder.OrderConfirmID = Guid.NewGuid().ToString();
-                var stop = ConvertTdaOrder(tdaOrder.childOrderStrategies[0].childOrderStrategies[0], accountId);
-                var limit = ConvertTdaOrder(tdaOrder.childOrderStrategies[0].childOrderStrategies[1], accountId);
-                var oso = new OrderRequestOSO
+                if (tdaOrder.childOrderStrategies[0].orderStrategyType == "OCO")
                 {
-                    Type = "OCO"
-                };
-                oso.Orders = new List<Model.Order>();
-                oso.Orders.Add(stop);
-                oso.Orders.Add(limit);
+                    var stop = ConvertTdaOrder(tdaOrder.childOrderStrategies[0].childOrderStrategies[0], accountId);
+                    var limit = ConvertTdaOrder(tdaOrder.childOrderStrategies[0].childOrderStrategies[1], accountId);
+                    var oso = new OrderRequestOSO
+                    {
+                        Type = "OCO"
+                    };
+                    oso.Orders = new List<Model.Order>();
+                    oso.Orders.Add(stop);
+                    oso.Orders.Add(limit);
 
-                tsOrder.OSOs.Add(oso);
+                    tsOrder.OSOs.Add(oso);
+                }
+                else
+                {
+                    var oso = new OrderRequestOSO
+                    {
+                        Type = "NORMAL"
+                    };
+
+                    var stop = ConvertTdaOrder(tdaOrder.childOrderStrategies[0], accountId);
+                    oso.Orders = new List<Model.Order>();
+                    oso.Orders.Add(stop);
+                    tsOrder.OSOs.Add(oso);
+
+                }
             }
 
             return tsOrder;
@@ -227,7 +243,7 @@ namespace TdInterface.TradeStation
 
 
 
-        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Tda.Model.Order newOrder)
+        public async Task<ulong> ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Tda.Model.Order newOrder)
         {
             var tsOrder = ConvertTdaOrder(newOrder, accountId);
 
@@ -250,6 +266,14 @@ namespace TdInterface.TradeStation
             };
 
 
+            Debug.Write($"replaceorder {response.Content.ReadAsStringAsync()}");
+            //var orders = Utility.DeserializeJsonFromStream<OrderResponses>(await response.Content.ReadAsStreamAsync());
+            //var o = orders.Orders.OrderByDescending(o => o.OrderID).FirstOrDefault();
+
+            //var orderNumber = ulong.Parse(o.OrderID);
+
+            ulong orderNumber = 0l;
+            return orderNumber;
         }
 
         public async Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Tda.Model.Order order)

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
+//using TdInterface.TradeStation.Model;
 using Websocket.Client;
 
 namespace TdInterface.Tda
@@ -199,7 +200,7 @@ namespace TdInterface.Tda
             return orderNumber;
         }
 
-        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder)
+        public async Task<ulong> ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder)
         {
             var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
 
@@ -218,6 +219,12 @@ namespace TdInterface.Tda
                 Debug.Write(newOrder);
                 throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
             };
+
+            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
+            var orderNumber = ulong.Parse(orderNumberString);
+            Debug.WriteLine(JsonConvert.SerializeObject(newOrder));
+
+            return orderNumber;
 
 
         }

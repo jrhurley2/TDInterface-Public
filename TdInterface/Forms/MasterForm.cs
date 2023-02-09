@@ -74,7 +74,7 @@ namespace TdInterface
                         consumerKey = frm.ConsumerKey;
                         Utility.SaveConsumerKey(consumerKey);
                     }
-                    string loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
+                    string loginUri = string.Empty;
 
                     if (accountInfo.UseTdaEquity)
                     {
