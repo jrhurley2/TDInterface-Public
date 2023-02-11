@@ -30,12 +30,23 @@ namespace TdInterface.Tda
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
+
+            var consumerKey = Utility.GetConsumerKey();
+            var redirectUri = "http://localhost";
+            if (consumerKey.IndexOf("~") > 0)
+            {
+                var parts = consumerKey.Split('~');
+                consumerKey = parts[0];
+                redirectUri = parts[1];
+            }
+
+
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
             postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
             postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
-            postData.Add(new KeyValuePair<string, string>("client_id", $"{Utility.GetConsumerKey()}@AMER.OAUTHTD"));
-            postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
+            postData.Add(new KeyValuePair<string, string>("client_id", $"{consumerKey}@AMER.OAUTHTD"));
+            postData.Add(new KeyValuePair<string, string>("redirect_uri", $"{redirectUri}"));
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
             var rawSTring = await content.ReadAsStringAsync();
@@ -56,11 +67,21 @@ namespace TdInterface.Tda
         {
             try
             {
+                var consumerKey = Utility.GetConsumerKey();
+                var redirectUri = "http://localhost";
+                if (consumerKey.IndexOf("~") > 0)
+                {
+                    var parts = consumerKey.Split('~');
+                    consumerKey = parts[0];
+                    redirectUri = parts[1];
+                }
+
+
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
                 //postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", accessTokenContainer.RefreshToken));
-                postData.Add(new KeyValuePair<string, string>("client_id", $"{Utility.GetConsumerKey()}@AMER.OAUTHTD"));
+                postData.Add(new KeyValuePair<string, string>("client_id", $"{consumerKey}@AMER.OAUTHTD"));
                 //postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);

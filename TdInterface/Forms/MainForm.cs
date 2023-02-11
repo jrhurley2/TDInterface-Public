@@ -38,6 +38,8 @@ namespace TdInterface
         {
             InitializeComponent();
 
+            this.AutoScaleMode = AutoScaleMode.None;
+
             MainFormName = name;
             this.Text = name;
 
@@ -998,6 +1000,8 @@ namespace TdInterface
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
+                    txtOneToOne.Text = String.Empty;
+                    txtRValue.Text = String.Empty;
                     await SetPosition();
                 }
             }
@@ -1100,6 +1104,11 @@ namespace TdInterface
             }
         }
 
+        private void txtLastError_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show(txtLastError.Text, "Last Message");
+        }
+
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
@@ -1127,8 +1136,7 @@ namespace TdInterface
             }
         }
 
+
         #endregion
-
-
     }
 }

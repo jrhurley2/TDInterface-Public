@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
@@ -49,7 +50,16 @@ namespace TdInterface
                         consumerKey = frm.ConsumerKey;
                         Utility.SaveConsumerKey(consumerKey);
                     }
-                    var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
+
+                    var callback = "http://localhost";
+                    if (consumerKey.IndexOf("~") > 0)
+                    {
+                        var parts = consumerKey.Split('~');
+                        consumerKey = parts[0];
+                        callback = parts[1];
+                    }
+                    var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(callback)}&client_id={consumerKey}%40AMER.OAUTHAP");
+                    //var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
                     int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                     Utility.AuthToken = oAuthLoginForm.Code;
                     accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
