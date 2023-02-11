@@ -38,6 +38,8 @@ namespace TdInterface
         {
             InitializeComponent();
 
+            this.AutoScaleMode = AutoScaleMode.None;
+
             MainFormName = name;
             this.Text = name;
 

@@ -136,11 +136,11 @@ namespace TdInterface
             // 
             // txtRisk
             // 
-            this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtRisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRisk.Location = new System.Drawing.Point(291, 93);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(83, 39);
+            this.txtRisk.Size = new System.Drawing.Size(83, 29);
             this.txtRisk.TabIndex = 4;
             this.txtRisk.Text = "5";
             this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -181,11 +181,11 @@ namespace TdInterface
             // 
             // txtStop
             // 
-            this.txtStop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtStop.Location = new System.Drawing.Point(12, 93);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
-            this.txtStop.Size = new System.Drawing.Size(85, 39);
+            this.txtStop.Size = new System.Drawing.Size(85, 29);
             this.txtStop.TabIndex = 1;
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
@@ -198,11 +198,11 @@ namespace TdInterface
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(601, 410);
+            this.txtLastError.Location = new System.Drawing.Point(205, 399);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
-            this.txtLastError.Size = new System.Drawing.Size(80, 23);
+            this.txtLastError.Size = new System.Drawing.Size(163, 23);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;
             this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
@@ -268,7 +268,7 @@ namespace TdInterface
             this.groupBox4.Controls.Add(this.btnExitAsk33);
             this.groupBox4.Location = new System.Drawing.Point(8, 23);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(274, 83);
+            this.groupBox4.Size = new System.Drawing.Size(277, 83);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Bid/Ask";
@@ -276,7 +276,7 @@ namespace TdInterface
             // btnExitAsk10
             // 
             this.btnExitAsk10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk10.Location = new System.Drawing.Point(6, 26);
+            this.btnExitAsk10.Location = new System.Drawing.Point(9, 26);
             this.btnExitAsk10.Name = "btnExitAsk10";
             this.btnExitAsk10.Size = new System.Drawing.Size(46, 39);
             this.btnExitAsk10.TabIndex = 0;
@@ -288,7 +288,7 @@ namespace TdInterface
             // btnExitAsk100
             // 
             this.btnExitAsk100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk100.Location = new System.Drawing.Point(216, 26);
+            this.btnExitAsk100.Location = new System.Drawing.Point(217, 26);
             this.btnExitAsk100.Name = "btnExitAsk100";
             this.btnExitAsk100.Size = new System.Drawing.Size(52, 39);
             this.btnExitAsk100.TabIndex = 4;
@@ -300,7 +300,7 @@ namespace TdInterface
             // btnExitAsk25
             // 
             this.btnExitAsk25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk25.Location = new System.Drawing.Point(58, 26);
+            this.btnExitAsk25.Location = new System.Drawing.Point(61, 26);
             this.btnExitAsk25.Name = "btnExitAsk25";
             this.btnExitAsk25.Size = new System.Drawing.Size(46, 39);
             this.btnExitAsk25.TabIndex = 1;
@@ -312,7 +312,7 @@ namespace TdInterface
             // btnExitAsk50
             // 
             this.btnExitAsk50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk50.Location = new System.Drawing.Point(164, 26);
+            this.btnExitAsk50.Location = new System.Drawing.Point(165, 26);
             this.btnExitAsk50.Name = "btnExitAsk50";
             this.btnExitAsk50.Size = new System.Drawing.Size(46, 39);
             this.btnExitAsk50.TabIndex = 3;
@@ -324,7 +324,7 @@ namespace TdInterface
             // btnExitAsk33
             // 
             this.btnExitAsk33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk33.Location = new System.Drawing.Point(110, 26);
+            this.btnExitAsk33.Location = new System.Drawing.Point(113, 26);
             this.btnExitAsk33.Name = "btnExitAsk33";
             this.btnExitAsk33.Size = new System.Drawing.Size(46, 39);
             this.btnExitAsk33.TabIndex = 2;
@@ -340,7 +340,7 @@ namespace TdInterface
             this.groupBox3.Controls.Add(this.btnExitMark33);
             this.groupBox3.Controls.Add(this.btnExitMark50);
             this.groupBox3.Controls.Add(this.btnExitMark100);
-            this.groupBox3.Location = new System.Drawing.Point(11, 112);
+            this.groupBox3.Location = new System.Drawing.Point(11, 123);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(274, 79);
             this.groupBox3.TabIndex = 1;
@@ -350,7 +350,7 @@ namespace TdInterface
             // btnExitMark10
             // 
             this.btnExitMark10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark10.Location = new System.Drawing.Point(6, 30);
+            this.btnExitMark10.Location = new System.Drawing.Point(6, 27);
             this.btnExitMark10.Name = "btnExitMark10";
             this.btnExitMark10.Size = new System.Drawing.Size(46, 39);
             this.btnExitMark10.TabIndex = 0;
@@ -362,7 +362,7 @@ namespace TdInterface
             // btnExitMark25
             // 
             this.btnExitMark25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark25.Location = new System.Drawing.Point(58, 30);
+            this.btnExitMark25.Location = new System.Drawing.Point(58, 27);
             this.btnExitMark25.Name = "btnExitMark25";
             this.btnExitMark25.Size = new System.Drawing.Size(46, 39);
             this.btnExitMark25.TabIndex = 1;
@@ -374,7 +374,7 @@ namespace TdInterface
             // btnExitMark33
             // 
             this.btnExitMark33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark33.Location = new System.Drawing.Point(109, 30);
+            this.btnExitMark33.Location = new System.Drawing.Point(110, 27);
             this.btnExitMark33.Name = "btnExitMark33";
             this.btnExitMark33.Size = new System.Drawing.Size(46, 39);
             this.btnExitMark33.TabIndex = 2;
@@ -386,7 +386,7 @@ namespace TdInterface
             // btnExitMark50
             // 
             this.btnExitMark50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark50.Location = new System.Drawing.Point(161, 30);
+            this.btnExitMark50.Location = new System.Drawing.Point(162, 27);
             this.btnExitMark50.Name = "btnExitMark50";
             this.btnExitMark50.Size = new System.Drawing.Size(46, 39);
             this.btnExitMark50.TabIndex = 3;
@@ -398,7 +398,7 @@ namespace TdInterface
             // btnExitMark100
             // 
             this.btnExitMark100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark100.Location = new System.Drawing.Point(213, 30);
+            this.btnExitMark100.Location = new System.Drawing.Point(214, 27);
             this.btnExitMark100.Name = "btnExitMark100";
             this.btnExitMark100.Size = new System.Drawing.Size(55, 39);
             this.btnExitMark100.TabIndex = 4;
@@ -421,9 +421,9 @@ namespace TdInterface
             // 
             // txtStopToClose
             // 
-            this.txtStopToClose.Location = new System.Drawing.Point(99, 378);
+            this.txtStopToClose.Location = new System.Drawing.Point(20, 399);
             this.txtStopToClose.Name = "txtStopToClose";
-            this.txtStopToClose.Size = new System.Drawing.Size(93, 23);
+            this.txtStopToClose.Size = new System.Drawing.Size(172, 23);
             this.txtStopToClose.TabIndex = 6;
             this.txtStopToClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -535,10 +535,10 @@ namespace TdInterface
             // 
             // txtLimit
             // 
-            this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLimit.Location = new System.Drawing.Point(103, 93);
             this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(89, 39);
+            this.txtLimit.Size = new System.Drawing.Size(89, 29);
             this.txtLimit.TabIndex = 2;
             this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
@@ -546,7 +546,7 @@ namespace TdInterface
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(291, 139);
+            this.checkBox1.Location = new System.Drawing.Point(283, 129);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(91, 19);
             this.checkBox1.TabIndex = 5;
@@ -556,10 +556,10 @@ namespace TdInterface
             // 
             // txtHeartBeat
             // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(79, 410);
+            this.txtHeartBeat.Location = new System.Drawing.Point(390, 399);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(206, 23);
+            this.txtHeartBeat.Size = new System.Drawing.Size(285, 23);
             this.txtHeartBeat.TabIndex = 36;
             this.txtHeartBeat.TabStop = false;
             this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -567,7 +567,7 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(14, 416);
+            this.label8.Location = new System.Drawing.Point(390, 381);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 15);
             this.label8.TabIndex = 35;
@@ -575,17 +575,17 @@ namespace TdInterface
             // 
             // txtConnectionStatus
             // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(398, 410);
+            this.txtConnectionStatus.Location = new System.Drawing.Point(20, 452);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(197, 23);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(655, 23);
             this.txtConnectionStatus.TabIndex = 38;
             this.txtConnectionStatus.TabStop = false;
             // 
             // lblConnectionStatus
             // 
             this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(291, 416);
+            this.lblConnectionStatus.Location = new System.Drawing.Point(20, 434);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
             this.lblConnectionStatus.Size = new System.Drawing.Size(104, 15);
             this.lblConnectionStatus.TabIndex = 37;
@@ -593,10 +593,10 @@ namespace TdInterface
             // 
             // txtLimitOffset
             // 
-            this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtLimitOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLimitOffset.Location = new System.Drawing.Point(198, 93);
             this.txtLimitOffset.Name = "txtLimitOffset";
-            this.txtLimitOffset.Size = new System.Drawing.Size(87, 39);
+            this.txtLimitOffset.Size = new System.Drawing.Size(87, 29);
             this.txtLimitOffset.TabIndex = 3;
             this.txtLimitOffset.Leave += new System.EventHandler(this.txtLimitOffset_Leave);
             // 
@@ -612,11 +612,11 @@ namespace TdInterface
             // 
             // txtRValue
             // 
-            this.txtRValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txtRValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRValue.Location = new System.Drawing.Point(594, 93);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
-            this.txtRValue.Size = new System.Drawing.Size(87, 39);
+            this.txtRValue.Size = new System.Drawing.Size(87, 29);
             this.txtRValue.TabIndex = 28;
             this.txtRValue.TabStop = false;
             // 
@@ -656,19 +656,19 @@ namespace TdInterface
             // 
             // txtOneToOne
             // 
-            this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txtOneToOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtOneToOne.Location = new System.Drawing.Point(390, 93);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(197, 39);
+            this.txtOneToOne.Size = new System.Drawing.Size(197, 29);
             this.txtOneToOne.TabIndex = 26;
             this.txtOneToOne.TabStop = false;
             // 
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(244, 378);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(205, 377);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(124, 19);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -687,7 +687,7 @@ namespace TdInterface
             // txtMoveStop
             // 
             this.txtMoveStop.AutoSize = true;
-            this.txtMoveStop.Location = new System.Drawing.Point(14, 382);
+            this.txtMoveStop.Location = new System.Drawing.Point(20, 381);
             this.txtMoveStop.Name = "txtMoveStop";
             this.txtMoveStop.Size = new System.Drawing.Size(79, 15);
             this.txtMoveStop.TabIndex = 32;
@@ -695,7 +695,7 @@ namespace TdInterface
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(694, 446);
+            this.ClientSize = new System.Drawing.Size(694, 492);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
