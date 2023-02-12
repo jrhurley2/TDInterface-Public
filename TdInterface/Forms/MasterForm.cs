@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
@@ -46,10 +48,10 @@ namespace TdInterface
             Debug.WriteLine("Start Master Form");
             InitializeComponent();
 
-            Login();
+            Login().ConfigureAwait(false);
         }
 
-        private void Login()
+        private async Task Login()
         {
             try
             {
@@ -78,11 +80,19 @@ namespace TdInterface
 
                     if (accountInfo.UseTdaEquity)
                     {
-                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP";
+                        var callback = "http://localhost";
+                        if (consumerKey.IndexOf("~") > 0)
+                        {
+                            var parts = consumerKey.Split('~');
+                            consumerKey = parts[0];
+                            callback = parts[1];
+                        }
+
+                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={{UrlEncoder.Create().Encode(callback)}}&client_id={{consumerKey}}%40AMER.OAUTHAP\")";
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;
-                        accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
+                        accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
                         Utility.AccessTokenContainer = accessTokenContainer;
                     }
@@ -97,9 +107,9 @@ namespace TdInterface
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;
-                        accessTokenContainer = _tradeStationHelper.GetAccessToken(Utility.AuthToken).Result;
+                        accessTokenContainer = await _tradeStationHelper.GetAccessToken(Utility.AuthToken);
                         Utility.SaveAccessTokenContainer(accessTokenContainer);
-                        Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(accessTokenContainer).Result;
+                        Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(accessTokenContainer);
                     }
                     else
                     {
@@ -111,8 +121,8 @@ namespace TdInterface
 
                 if (accountInfo.UseTdaEquity)
                 {
-                    Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
-                    Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                    Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+                    Utility.UserPrincipal = await _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer);
                     _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
                     _streamer = new TDStreamer(Utility.UserPrincipal);
                     _tradeHelper = new TdHelper();
@@ -121,7 +131,7 @@ namespace TdInterface
                 {
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;
-                    Utility.AccessTokenContainer = _tradeStationHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
+                    Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(Utility.AccessTokenContainer);
                     if (accountInfo.TradeStationUseSimAccount)
                     {
                         //_tradeHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
@@ -135,7 +145,7 @@ namespace TdInterface
                     _tradeHelper = _tradeStationHelper;
 
 
-                    var accounts = _tradeStationHelper.GetAccounts(Utility.AccessTokenContainer).Result;
+                    var accounts = await _tradeStationHelper.GetAccounts(Utility.AccessTokenContainer);
                     //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
                     var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                     _equityAccountId = equitiyAccount.AccountID;
