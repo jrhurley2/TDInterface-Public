@@ -38,7 +38,7 @@ namespace TdInterface
         {
             InitializeComponent();
 
-            this.AutoScaleMode = AutoScaleMode.None;
+            this.AutoScaleMode = AutoScaleMode.Font;
 
             MainFormName = name;
             this.Text = name;
@@ -1002,6 +1002,7 @@ namespace TdInterface
                     txtStopToClose.Text = String.Empty;
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
+                    txtStop.Focus();
                     await SetPosition();
                 }
             }

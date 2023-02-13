@@ -112,7 +112,7 @@ namespace TdInterface
             this.txtSymbol.Location = new System.Drawing.Point(14, 28);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(85, 23);
+            this.txtSymbol.Size = new System.Drawing.Size(85, 25);
             this.txtSymbol.TabIndex = 0;
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
             // 
@@ -121,7 +121,7 @@ namespace TdInterface
             this.lblSymbol.AutoSize = true;
             this.lblSymbol.Location = new System.Drawing.Point(12, 9);
             this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new System.Drawing.Size(47, 15);
+            this.lblSymbol.Size = new System.Drawing.Size(51, 17);
             this.lblSymbol.TabIndex = 8;
             this.lblSymbol.Text = "Symbol";
             // 
@@ -130,17 +130,16 @@ namespace TdInterface
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(291, 74);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 15);
+            this.label1.Size = new System.Drawing.Size(31, 17);
             this.label1.TabIndex = 24;
             this.label1.Text = "Risk";
             // 
             // txtRisk
             // 
-            this.txtRisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRisk.Location = new System.Drawing.Point(291, 93);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(83, 29);
+            this.txtRisk.Size = new System.Drawing.Size(83, 25);
             this.txtRisk.TabIndex = 4;
             this.txtRisk.Text = "5";
             this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -165,7 +164,7 @@ namespace TdInterface
             this.txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastPrice.Name = "txtLastPrice";
             this.txtLastPrice.ReadOnly = true;
-            this.txtLastPrice.Size = new System.Drawing.Size(87, 23);
+            this.txtLastPrice.Size = new System.Drawing.Size(87, 25);
             this.txtLastPrice.TabIndex = 10;
             this.txtLastPrice.TabStop = false;
             this.txtLastPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -175,17 +174,16 @@ namespace TdInterface
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 74);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(35, 17);
             this.label2.TabIndex = 21;
             this.label2.Text = "Stop";
             // 
             // txtStop
             // 
-            this.txtStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtStop.Location = new System.Drawing.Point(12, 93);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
-            this.txtStop.Size = new System.Drawing.Size(85, 29);
+            this.txtStop.Size = new System.Drawing.Size(85, 25);
             this.txtStop.TabIndex = 1;
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
@@ -423,7 +421,7 @@ namespace TdInterface
             // 
             this.txtStopToClose.Location = new System.Drawing.Point(20, 399);
             this.txtStopToClose.Name = "txtStopToClose";
-            this.txtStopToClose.Size = new System.Drawing.Size(172, 23);
+            this.txtStopToClose.Size = new System.Drawing.Size(172, 25);
             this.txtStopToClose.TabIndex = 6;
             this.txtStopToClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -444,7 +442,7 @@ namespace TdInterface
             this.txtAveragePrice.Location = new System.Drawing.Point(390, 28);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.ReadOnly = true;
-            this.txtAveragePrice.Size = new System.Drawing.Size(104, 23);
+            this.txtAveragePrice.Size = new System.Drawing.Size(104, 25);
             this.txtAveragePrice.TabIndex = 16;
             this.txtAveragePrice.TabStop = false;
             // 
@@ -453,7 +451,7 @@ namespace TdInterface
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(390, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 15);
+            this.label3.Size = new System.Drawing.Size(62, 17);
             this.label3.TabIndex = 15;
             this.label3.Text = "Avg Price";
             // 
@@ -462,7 +460,7 @@ namespace TdInterface
             this.txtShares.Location = new System.Drawing.Point(500, 28);
             this.txtShares.Name = "txtShares";
             this.txtShares.ReadOnly = true;
-            this.txtShares.Size = new System.Drawing.Size(87, 23);
+            this.txtShares.Size = new System.Drawing.Size(87, 25);
             this.txtShares.TabIndex = 18;
             this.txtShares.TabStop = false;
             // 
@@ -471,7 +469,7 @@ namespace TdInterface
             this.lblShares.AutoSize = true;
             this.lblShares.Location = new System.Drawing.Point(505, 9);
             this.lblShares.Name = "lblShares";
-            this.lblShares.Size = new System.Drawing.Size(41, 15);
+            this.lblShares.Size = new System.Drawing.Size(47, 17);
             this.lblShares.TabIndex = 17;
             this.lblShares.Text = "Shares";
             // 
@@ -480,7 +478,7 @@ namespace TdInterface
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(107, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 15);
+            this.label4.Size = new System.Drawing.Size(31, 17);
             this.label4.TabIndex = 9;
             this.label4.Text = "Last";
             // 
@@ -489,7 +487,7 @@ namespace TdInterface
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(198, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(24, 15);
+            this.label5.Size = new System.Drawing.Size(26, 17);
             this.label5.TabIndex = 11;
             this.label5.Text = "Bid";
             // 
@@ -499,7 +497,7 @@ namespace TdInterface
             this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBid.Name = "txtBid";
             this.txtBid.ReadOnly = true;
-            this.txtBid.Size = new System.Drawing.Size(87, 23);
+            this.txtBid.Size = new System.Drawing.Size(87, 25);
             this.txtBid.TabIndex = 12;
             this.txtBid.TabStop = false;
             this.txtBid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -509,7 +507,7 @@ namespace TdInterface
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(291, 9);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 15);
+            this.label6.Size = new System.Drawing.Size(28, 17);
             this.label6.TabIndex = 13;
             this.label6.Text = "Ask";
             // 
@@ -519,7 +517,7 @@ namespace TdInterface
             this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAsk.Name = "txtAsk";
             this.txtAsk.ReadOnly = true;
-            this.txtAsk.Size = new System.Drawing.Size(87, 23);
+            this.txtAsk.Size = new System.Drawing.Size(87, 25);
             this.txtAsk.TabIndex = 14;
             this.txtAsk.TabStop = false;
             this.txtAsk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -529,16 +527,15 @@ namespace TdInterface
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(103, 74);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 15);
+            this.label7.Size = new System.Drawing.Size(35, 17);
             this.label7.TabIndex = 22;
             this.label7.Text = "Limit";
             // 
             // txtLimit
             // 
-            this.txtLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLimit.Location = new System.Drawing.Point(103, 93);
             this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(89, 29);
+            this.txtLimit.Size = new System.Drawing.Size(89, 25);
             this.txtLimit.TabIndex = 2;
             this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
@@ -548,7 +545,7 @@ namespace TdInterface
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(283, 129);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(91, 19);
+            this.checkBox1.Size = new System.Drawing.Size(103, 21);
             this.checkBox1.TabIndex = 5;
             this.checkBox1.Text = "Trade Shares";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -559,7 +556,7 @@ namespace TdInterface
             this.txtHeartBeat.Location = new System.Drawing.Point(390, 399);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(285, 23);
+            this.txtHeartBeat.Size = new System.Drawing.Size(285, 25);
             this.txtHeartBeat.TabIndex = 36;
             this.txtHeartBeat.TabStop = false;
             this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -569,7 +566,7 @@ namespace TdInterface
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(390, 381);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 15);
+            this.label8.Size = new System.Drawing.Size(65, 17);
             this.label8.TabIndex = 35;
             this.label8.Text = "HeartBeat";
             // 
@@ -578,7 +575,7 @@ namespace TdInterface
             this.txtConnectionStatus.Location = new System.Drawing.Point(20, 452);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(655, 23);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(655, 25);
             this.txtConnectionStatus.TabIndex = 38;
             this.txtConnectionStatus.TabStop = false;
             // 
@@ -587,36 +584,33 @@ namespace TdInterface
             this.lblConnectionStatus.AutoSize = true;
             this.lblConnectionStatus.Location = new System.Drawing.Point(20, 434);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(104, 15);
+            this.lblConnectionStatus.Size = new System.Drawing.Size(112, 17);
             this.lblConnectionStatus.TabIndex = 37;
             this.lblConnectionStatus.Text = "Connection Status";
             // 
             // txtLimitOffset
             // 
-            this.txtLimitOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLimitOffset.Location = new System.Drawing.Point(198, 93);
             this.txtLimitOffset.Name = "txtLimitOffset";
-            this.txtLimitOffset.Size = new System.Drawing.Size(87, 29);
+            this.txtLimitOffset.Size = new System.Drawing.Size(87, 25);
             this.txtLimitOffset.TabIndex = 3;
             this.txtLimitOffset.Leave += new System.EventHandler(this.txtLimitOffset_Leave);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label9.Location = new System.Drawing.Point(594, 74);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(15, 15);
+            this.label9.Size = new System.Drawing.Size(16, 17);
             this.label9.TabIndex = 27;
             this.label9.Text = "R";
             // 
             // txtRValue
             // 
-            this.txtRValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRValue.Location = new System.Drawing.Point(594, 93);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
-            this.txtRValue.Size = new System.Drawing.Size(87, 29);
+            this.txtRValue.Size = new System.Drawing.Size(87, 25);
             this.txtRValue.TabIndex = 28;
             this.txtRValue.TabStop = false;
             // 
@@ -626,7 +620,7 @@ namespace TdInterface
             this.txtPnL.Location = new System.Drawing.Point(594, 27);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.ReadOnly = true;
-            this.txtPnL.Size = new System.Drawing.Size(87, 23);
+            this.txtPnL.Size = new System.Drawing.Size(87, 25);
             this.txtPnL.TabIndex = 20;
             // 
             // lblPnL
@@ -634,7 +628,7 @@ namespace TdInterface
             this.lblPnL.AutoSize = true;
             this.lblPnL.Location = new System.Drawing.Point(594, 9);
             this.lblPnL.Name = "lblPnL";
-            this.lblPnL.Size = new System.Drawing.Size(27, 15);
+            this.lblPnL.Size = new System.Drawing.Size(28, 17);
             this.lblPnL.TabIndex = 19;
             this.lblPnL.Text = "PnL";
             // 
@@ -647,21 +641,19 @@ namespace TdInterface
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label10.Location = new System.Drawing.Point(390, 74);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(24, 15);
+            this.label10.Size = new System.Drawing.Size(25, 17);
             this.label10.TabIndex = 25;
             this.label10.Text = "1:1";
             // 
             // txtOneToOne
             // 
-            this.txtOneToOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtOneToOne.Location = new System.Drawing.Point(390, 93);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(197, 29);
+            this.txtOneToOne.Size = new System.Drawing.Size(197, 25);
             this.txtOneToOne.TabIndex = 26;
             this.txtOneToOne.TabStop = false;
             // 
@@ -670,7 +662,7 @@ namespace TdInterface
             this.chkDisableFirstTarget.AutoSize = true;
             this.chkDisableFirstTarget.Location = new System.Drawing.Point(205, 377);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
-            this.chkDisableFirstTarget.Size = new System.Drawing.Size(124, 19);
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(139, 21);
             this.chkDisableFirstTarget.TabIndex = 7;
             this.chkDisableFirstTarget.Text = "Disable First Target";
             this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
@@ -680,7 +672,7 @@ namespace TdInterface
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(198, 74);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(69, 15);
+            this.label11.Size = new System.Drawing.Size(74, 17);
             this.label11.TabIndex = 23;
             this.label11.Text = "Limit Offset";
             // 
@@ -689,7 +681,7 @@ namespace TdInterface
             this.txtMoveStop.AutoSize = true;
             this.txtMoveStop.Location = new System.Drawing.Point(20, 381);
             this.txtMoveStop.Name = "txtMoveStop";
-            this.txtMoveStop.Size = new System.Drawing.Size(79, 15);
+            this.txtMoveStop.Size = new System.Drawing.Size(90, 17);
             this.txtMoveStop.TabIndex = 32;
             this.txtMoveStop.Text = "Move Stop To";
             // 
@@ -735,6 +727,7 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.txtSymbol);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(710, 485);
