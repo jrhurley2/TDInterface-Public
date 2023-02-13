@@ -65,10 +65,11 @@ namespace TdInterface
                 }
 
                 var accessTokenContainer = Utility.GetAccessTokenContainer();
+                Utility.AccessTokenContainer = accessTokenContainer;
 
-                if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
+                if (accessTokenContainer == null || (accessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)))
                 {
-                    var consumerKey = Utility.GetConsumerKey();
+                        var consumerKey = Utility.GetConsumerKey();
                     if (consumerKey == null)
                     {
                         var frm = new frmConsmerKey();
@@ -129,9 +130,10 @@ namespace TdInterface
                 }
                 else if (accountInfo.UseTSEquity)
                 {
+
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;
-                    Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+
                     if (accountInfo.TradeStationUseSimAccount)
                     {
                         //_tradeHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
@@ -143,6 +145,9 @@ namespace TdInterface
                         _tradeStationHelper = new TradeStationHelper(clientid, clientSecret);
                     }
                     _tradeHelper = _tradeStationHelper;
+
+
+                    Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(Utility.AccessTokenContainer);
 
 
                     var accounts = await _tradeStationHelper.GetAccounts(Utility.AccessTokenContainer);
