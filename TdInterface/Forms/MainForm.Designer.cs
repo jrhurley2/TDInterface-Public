@@ -109,11 +109,13 @@ namespace TdInterface
             // 
             // txtSymbol
             // 
+            this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSymbol.Location = new System.Drawing.Point(14, 28);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(85, 23);
             this.txtSymbol.TabIndex = 0;
+            this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
             // 
             // lblSymbol

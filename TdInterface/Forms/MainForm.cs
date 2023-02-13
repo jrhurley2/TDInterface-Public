@@ -1002,6 +1002,7 @@ namespace TdInterface
                     txtStopToClose.Text = String.Empty;
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
+                    txtStop.Focus();
                     await SetPosition();
                 }
             }
@@ -1138,5 +1139,14 @@ namespace TdInterface
 
 
         #endregion
+
+        private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                txtSymbol_Leave(sender,e);
+                e.Handled = true;
+            }
+        }
     }
 }
