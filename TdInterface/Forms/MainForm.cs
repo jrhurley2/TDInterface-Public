@@ -1138,5 +1138,15 @@ namespace TdInterface
 
 
         #endregion
+
+        private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                txtSymbol_Leave(sender,e);
+                e.Handled = true;
+                txtStop.Focus();
+            }
+        }
     }
 }
