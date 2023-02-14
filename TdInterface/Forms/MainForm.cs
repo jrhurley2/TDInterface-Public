@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
@@ -38,7 +37,7 @@ namespace TdInterface
         {
             InitializeComponent();
 
-            this.AutoScaleMode = AutoScaleMode.None;
+            this.AutoScaleMode = AutoScaleMode.Font;
 
             MainFormName = name;
             this.Text = name;
@@ -55,12 +54,16 @@ namespace TdInterface
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
-
             btnBuyLmtTriggerOco.Enabled = false;
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
 
+            // Handle always on top setting
+            this.TopMost = settings.AlwaysOnTop;
+
+            // Theme Controls - TODO: Get Light/Dark from Settings, then call themeControls.
+            themeControls();
         }
 
 
@@ -549,7 +552,7 @@ namespace TdInterface
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = Math.Abs((float)_stockQuote.lastPrice - avgPrice);
+                    float reward = (float)_stockQuote.lastPrice - avgPrice;
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
@@ -818,7 +821,7 @@ namespace TdInterface
 
                 _activePosition = position;
                 SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
-                SafeUpdateTextBox(txtShares, _activePosition.Quantity.ToString());
+                SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
             }
             else
             {
@@ -996,12 +999,12 @@ namespace TdInterface
                     _streamer.SubscribeQuote(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //await UpdatePriceHistory();
-                    this.Text = txtSymbol.Text.ToUpper();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
+                    this.Text = txtSymbol.Text;
                     await SetPosition();
                 }
             }
@@ -1109,6 +1112,21 @@ namespace TdInterface
             MessageBox.Show(txtLastError.Text, "Last Message");
         }
 
+        private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                txtSymbol_Leave(sender, e);
+                e.Handled = true;
+                txtStop.Focus();
+            }
+        }
+
+        private void txtSymbol_Enter(object sender, EventArgs e)
+        {
+            txtSymbol.SelectAll();
+        }
+
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
@@ -1135,18 +1153,67 @@ namespace TdInterface
                 Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
         }
-
-
         #endregion
 
-        private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
+        #region ThemeSupport
+        private void themeControls()
         {
-            if (e.KeyChar == (char)Keys.Return)
-            {
-                txtSymbol_Leave(sender,e);
-                e.Handled = true;
-                txtStop.Focus();
-            }
+            // Theme Controls
+            // Open Position Buttons
+            btnBuyMrkTriggerOco.BackColor = Theme.PrimaryPositive;
+            btnSellMrkTriggerOco.BackColor = Theme.PrimaryNegative;
+            btnBuyLmtTriggerOco.BackColor = Theme.PrimaryPositive;
+            btnSellLmtTriggerOco.BackColor = Theme.PrimaryNegative;
+            btnBreakEven.BackColor = Theme.SecondaryPositive;
+            btnCancelAll.BackColor = Theme.SecondaryNegative;
+
+            // Close Position Buttons
+            btnExitAsk10.BackColor = Theme.SecondaryPositive;
+            btnExitAsk25.BackColor = Theme.SecondaryPositive;
+            btnExitAsk33.BackColor = Theme.SecondaryPositive;
+            btnExitAsk50.BackColor = Theme.SecondaryPositive;
+            btnExitAsk100.BackColor = Theme.SecondaryPositive;
+            btnExitMark10.BackColor = Theme.SecondaryNegative;
+            btnExitMark25.BackColor = Theme.SecondaryNegative;
+            btnExitMark33.BackColor = Theme.SecondaryNegative;
+            btnExitMark50.BackColor = Theme.SecondaryNegative;
+            btnExitMark100.BackColor = Theme.SecondaryNegative;
+
+            // Form
+            this.BackColor = Theme.PrimaryBack;
+            this.ForeColor = Theme.PrimaryText;
         }
+
+        private void txtRValue_TextChanged(object sender, EventArgs e)
+        {
+            float rValue = (float)Convert.ToDouble(txtRValue.Text);
+            if (rValue < 0)
+            {
+                txtRValue.ForeColor = Theme.PrimaryNegative;
+            }
+            else
+            { 
+                txtRValue.ForeColor = Theme.PrimaryPositive;
+            }
+
+            // workaround UI framework bug to force readonly text box colors to update.
+            txtRValue.BackColor = txtRValue.BackColor;
+
+        }
+
+        private void txtShares_TextChanged(object sender, EventArgs e)
+        {
+            // don't want to change anything with quantiy as it is used in other calculations....
+            if (_activePosition != null && _activePosition.DisplayQuantity > 0)
+            {
+                txtShares.ForeColor = Theme.PrimaryPositive;
+            }
+            else
+            {
+                txtShares.ForeColor= Theme.PrimaryNegative;
+            }
+            txtShares.BackColor = txtShares.BackColor;
+        }
+        #endregion
     }
 }
