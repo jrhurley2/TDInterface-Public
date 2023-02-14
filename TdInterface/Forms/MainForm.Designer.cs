@@ -98,6 +98,7 @@ namespace TdInterface
             // btnBuyMrkTriggerOco
             // 
             this.btnBuyMrkTriggerOco.AutoSize = true;
+            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
             this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(6, 23);
             this.btnBuyMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
@@ -111,10 +112,10 @@ namespace TdInterface
             // txtSymbol
             // 
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtSymbol.Location = new System.Drawing.Point(14, 28);
+            this.txtSymbol.Location = new System.Drawing.Point(12, 28);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(85, 26);
+            this.txtSymbol.Size = new System.Drawing.Size(87, 26);
             this.txtSymbol.TabIndex = 0;
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
             this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
@@ -153,6 +154,7 @@ namespace TdInterface
             // btnSellMrkTriggerOco
             // 
             this.btnSellMrkTriggerOco.AutoSize = true;
+            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
             this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(6, 85);
             this.btnSellMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
@@ -227,6 +229,7 @@ namespace TdInterface
             // btnSellLmtTriggerOco
             // 
             this.btnSellLmtTriggerOco.AutoSize = true;
+            this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
             this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(186, 83);
             this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
@@ -240,6 +243,7 @@ namespace TdInterface
             // btnBuyLmtTriggerOco
             // 
             this.btnBuyLmtTriggerOco.AutoSize = true;
+            this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
             this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(186, 23);
             this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
@@ -277,6 +281,7 @@ namespace TdInterface
             // 
             // btnExitAsk10
             // 
+            this.btnExitAsk10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnExitAsk10.Location = new System.Drawing.Point(9, 26);
             this.btnExitAsk10.Name = "btnExitAsk10";
             this.btnExitAsk10.Size = new System.Drawing.Size(46, 39);
@@ -288,6 +293,7 @@ namespace TdInterface
             // 
             // btnExitAsk100
             // 
+            this.btnExitAsk100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnExitAsk100.Location = new System.Drawing.Point(217, 26);
             this.btnExitAsk100.Name = "btnExitAsk100";
             this.btnExitAsk100.Size = new System.Drawing.Size(52, 39);
@@ -299,6 +305,7 @@ namespace TdInterface
             // 
             // btnExitAsk25
             // 
+            this.btnExitAsk25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnExitAsk25.Location = new System.Drawing.Point(61, 26);
             this.btnExitAsk25.Name = "btnExitAsk25";
             this.btnExitAsk25.Size = new System.Drawing.Size(46, 39);
@@ -310,6 +317,7 @@ namespace TdInterface
             // 
             // btnExitAsk50
             // 
+            this.btnExitAsk50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnExitAsk50.Location = new System.Drawing.Point(165, 26);
             this.btnExitAsk50.Name = "btnExitAsk50";
             this.btnExitAsk50.Size = new System.Drawing.Size(46, 39);
@@ -321,6 +329,7 @@ namespace TdInterface
             // 
             // btnExitAsk33
             // 
+            this.btnExitAsk33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnExitAsk33.Location = new System.Drawing.Point(113, 26);
             this.btnExitAsk33.Name = "btnExitAsk33";
             this.btnExitAsk33.Size = new System.Drawing.Size(46, 39);
@@ -346,6 +355,7 @@ namespace TdInterface
             // 
             // btnExitMark10
             // 
+            this.btnExitMark10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnExitMark10.Location = new System.Drawing.Point(6, 27);
             this.btnExitMark10.Name = "btnExitMark10";
             this.btnExitMark10.Size = new System.Drawing.Size(46, 39);
@@ -357,6 +367,7 @@ namespace TdInterface
             // 
             // btnExitMark25
             // 
+            this.btnExitMark25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnExitMark25.Location = new System.Drawing.Point(58, 27);
             this.btnExitMark25.Name = "btnExitMark25";
             this.btnExitMark25.Size = new System.Drawing.Size(46, 39);
@@ -368,6 +379,7 @@ namespace TdInterface
             // 
             // btnExitMark33
             // 
+            this.btnExitMark33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnExitMark33.Location = new System.Drawing.Point(110, 27);
             this.btnExitMark33.Name = "btnExitMark33";
             this.btnExitMark33.Size = new System.Drawing.Size(46, 39);
@@ -379,6 +391,7 @@ namespace TdInterface
             // 
             // btnExitMark50
             // 
+            this.btnExitMark50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnExitMark50.Location = new System.Drawing.Point(162, 27);
             this.btnExitMark50.Name = "btnExitMark50";
             this.btnExitMark50.Size = new System.Drawing.Size(46, 39);
@@ -390,6 +403,7 @@ namespace TdInterface
             // 
             // btnExitMark100
             // 
+            this.btnExitMark100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnExitMark100.Location = new System.Drawing.Point(214, 27);
             this.btnExitMark100.Name = "btnExitMark100";
             this.btnExitMark100.Size = new System.Drawing.Size(55, 39);
@@ -401,6 +415,7 @@ namespace TdInterface
             // 
             // btnCancelAll
             // 
+            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
             this.btnCancelAll.Location = new System.Drawing.Point(201, 314);
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
@@ -420,6 +435,7 @@ namespace TdInterface
             // 
             // btnBreakEven
             // 
+            this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
             this.btnBreakEven.Location = new System.Drawing.Point(18, 314);
             this.btnBreakEven.Name = "btnBreakEven";
             this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
@@ -688,7 +704,7 @@ namespace TdInterface
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(708, 533);
+            this.ClientSize = new System.Drawing.Size(694, 496);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
@@ -732,6 +748,8 @@ namespace TdInterface
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(710, 535);
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";

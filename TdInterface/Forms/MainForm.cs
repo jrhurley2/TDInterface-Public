@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
@@ -61,9 +62,6 @@ namespace TdInterface
 
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
-
-            // Theme Controls - TODO: Get Light/Dark from Settings, then call themeControls.
-            themeControls();
         }
 
 
@@ -1155,48 +1153,16 @@ namespace TdInterface
         }
         #endregion
 
-        #region ThemeSupport
-        private void themeControls()
-        {
-            // Theme Controls
-            // Text
-            txtSymbol.BackColor = Theme.SecondaryBack;
-
-            // Open Position Buttons
-            btnBuyMrkTriggerOco.BackColor = Theme.PrimaryPositive;
-            btnSellMrkTriggerOco.BackColor = Theme.PrimaryNegative;
-            btnBuyLmtTriggerOco.BackColor = Theme.PrimaryPositive;
-            btnSellLmtTriggerOco.BackColor = Theme.PrimaryNegative;
-            btnBreakEven.BackColor = Theme.SecondaryPositive;
-            btnCancelAll.BackColor = Theme.SecondaryNegative;
-
-            // Close Position Buttons
-            btnExitAsk10.BackColor = Theme.SecondaryPositive;
-            btnExitAsk25.BackColor = Theme.SecondaryPositive;
-            btnExitAsk33.BackColor = Theme.SecondaryPositive;
-            btnExitAsk50.BackColor = Theme.SecondaryPositive;
-            btnExitAsk100.BackColor = Theme.SecondaryPositive;
-            btnExitMark10.BackColor = Theme.SecondaryNegative;
-            btnExitMark25.BackColor = Theme.SecondaryNegative;
-            btnExitMark33.BackColor = Theme.SecondaryNegative;
-            btnExitMark50.BackColor = Theme.SecondaryNegative;
-            btnExitMark100.BackColor = Theme.SecondaryNegative;
-
-            // Form
-            this.BackColor = Theme.PrimaryBack;
-            this.ForeColor = Theme.PrimaryText;
-        }
-
         private void txtRValue_TextChanged(object sender, EventArgs e)
         {
             float rValue = (float)Convert.ToDouble(txtRValue.Text);
             if (rValue < 0)
             {
-                txtRValue.ForeColor = Theme.PrimaryNegative;
+                txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
             }
             else
             { 
-                txtRValue.ForeColor = Theme.PrimaryPositive;
+                txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
             }
 
             // workaround UI framework bug to force readonly text box colors to update.
@@ -1209,14 +1175,13 @@ namespace TdInterface
             // don't want to change anything with quantiy as it is used in other calculations....
             if (_activePosition != null && _activePosition.DisplayQuantity > 0)
             {
-                txtShares.ForeColor = Theme.PrimaryPositive;
+                txtShares.ForeColor = Color.FromArgb(0, 194, 136);
             }
             else
             {
-                txtShares.ForeColor= Theme.PrimaryNegative;
+                txtShares.ForeColor= Color.FromArgb(255, 82, 109);
             }
             txtShares.BackColor = txtShares.BackColor;
         }
-        #endregion
     }
 }
