@@ -119,6 +119,7 @@ namespace TdInterface
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
             this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
+            this.txtSymbol.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtSymbol_Enter);
             // 
             // lblSymbol
             // 

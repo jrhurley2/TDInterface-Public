@@ -18,7 +18,7 @@ namespace TdInterface
 
                 // Background
                 PrimaryBack = Color.FromArgb(22, 26, 37);
-                SecondaryBack = Color.Red;
+                SecondaryBack = Color.FromArgb(134, 137, 147);
 
                 // Text
                 PrimaryText = Color.FromArgb(209, 212, 220);

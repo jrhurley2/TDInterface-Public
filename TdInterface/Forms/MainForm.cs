@@ -1159,6 +1159,9 @@ namespace TdInterface
         private void themeControls()
         {
             // Theme Controls
+            // Text
+            txtSymbol.BackColor = Theme.SecondaryBack;
+
             // Open Position Buttons
             btnBuyMrkTriggerOco.BackColor = Theme.PrimaryPositive;
             btnSellMrkTriggerOco.BackColor = Theme.PrimaryNegative;
