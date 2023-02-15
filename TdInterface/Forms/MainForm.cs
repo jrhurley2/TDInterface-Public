@@ -1114,7 +1114,6 @@ namespace TdInterface
         {
             if (e.KeyChar == (char)Keys.Return)
             {
-                txtSymbol_Leave(sender, e);
                 e.Handled = true;
                 txtStop.Focus();
             }
