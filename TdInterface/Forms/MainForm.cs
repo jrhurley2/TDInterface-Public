@@ -291,32 +291,34 @@ namespace TdInterface
         {
             try
             {
+                if (_activePosition != null)
+                {
+                    var stopInstruction = "";
+                    int quantity = 0;
+                    if (_activePosition.longQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.SELL;
+                        quantity = (int)_activePosition.longQuantity;
+                    }
+                    else if (_activePosition.shortQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.BUY_TO_COVER;
+                        quantity = (int)_activePosition.shortQuantity;
+                    }
+                    else
+                    {
+                        txtLastError.Text = "BreakEven Button Cant' Deterimine position";
+                        return;
+                    }
 
-                var stopInstruction = "";
-                int quantity = 0;
-                if (_activePosition.longQuantity > 0)
-                {
-                    stopInstruction = OrderHelper.SELL;
-                    quantity = (int)_activePosition.longQuantity;
-                }
-                else if (_activePosition.shortQuantity > 0)
-                {
-                    stopInstruction = OrderHelper.BUY_TO_COVER;
-                    quantity = (int)_activePosition.shortQuantity;
-                }
-                else
-                {
-                    txtLastError.Text = "BreakEven Button Cant' Deterimine position";
-                    return;
-                }
+                    var stopPrice = _activePosition.averagePrice;
+                    if (!string.IsNullOrEmpty(txtStopToClose.Text))
+                    {
+                        stopPrice = float.Parse(txtStopToClose.Text);
+                    }
 
-                var stopPrice = _activePosition.averagePrice;
-                if (!string.IsNullOrEmpty(txtStopToClose.Text))
-                {
-                    stopPrice = float.Parse(txtStopToClose.Text);
+                    await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
                 }
-
-                await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
             }
             catch (Exception ex)
             {
