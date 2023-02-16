@@ -545,7 +545,7 @@ namespace TdInterface
 
             try
             {
-                if (_activePosition != null)
+                if (_activePosition != null && txtStop.Text != String.Empty)
                 {
                     var avgPrice = _activePosition.averagePrice;
                     var initialStop = float.Parse(txtStop.Text);
@@ -1156,19 +1156,21 @@ namespace TdInterface
 
         private void txtRValue_TextChanged(object sender, EventArgs e)
         {
-            float rValue = (float)Convert.ToDouble(txtRValue.Text);
-            if (rValue < 0)
+            if (!string.IsNullOrEmpty(txtRValue.Text))
             {
-                txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
-            }
-            else
-            { 
-                txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
-            }
+                float rValue = (float)Convert.ToDouble(txtRValue.Text);
+                if (rValue < 0)
+                {
+                    txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
+                }
+                else
+                {
+                    txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
+                }
 
-            // workaround UI framework bug to force readonly text box colors to update.
-            txtRValue.BackColor = txtRValue.BackColor;
-
+                // workaround UI framework bug to force readonly text box colors to update.
+                txtRValue.BackColor = txtRValue.BackColor;
+            }
         }
 
         private void txtShares_TextChanged(object sender, EventArgs e)
