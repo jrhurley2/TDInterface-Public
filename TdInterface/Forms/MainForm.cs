@@ -21,6 +21,7 @@ namespace TdInterface
         private IStreamer _streamer;
         private StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
+        private string curSymbol = String.Empty;
 
       
         // Made Public for testing.
@@ -991,8 +992,9 @@ namespace TdInterface
         {
             try
             {
-                if (txtSymbol.Text != String.Empty)
+                if (txtSymbol.Text != String.Empty && !txtSymbol.Text.Equals(curSymbol, StringComparison.OrdinalIgnoreCase))
                 {
+                    curSymbol = txtSymbol.Text;
                     _streamer.SubscribeQuote(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //await UpdatePriceHistory();
