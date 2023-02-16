@@ -39,6 +39,7 @@ namespace TdInterface
             _settings.ShowPnL = chkShowPnL.Checked;
             _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
             _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
+            _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -65,6 +66,7 @@ namespace TdInterface
             chkShowPnL.Checked = _settings.ShowPnL;
             chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
             chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
+            chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
 
         }
 

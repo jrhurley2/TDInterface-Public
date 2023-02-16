@@ -33,6 +33,8 @@ namespace TdInterface.Tda.Model
 
         public int Quantity => longQuantity == 0.0 ? (int)shortQuantity : (int)longQuantity;
 
+        public int DisplayQuantity => shortQuantity == 0 ? Quantity : (Quantity * -1);
+
         //public bool IsSame(Position other) => other != null && this.Symbol == other.Symbol && this.LongQuantity == other.LongQuantity && this.ShortQuantity == other.ShortQuantity && this.AveragePrice == other.AveragePrice;
 
     }
