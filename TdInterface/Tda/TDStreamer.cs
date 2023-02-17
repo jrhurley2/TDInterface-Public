@@ -23,12 +23,10 @@ namespace TdInterface.Tda
 {
     public class TDStreamer : IDisposable, IStreamer
     {
-        private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
         private StreamerSettings.Request _loginRequest;
 
         private WebsocketClient _ws;
-        private StockQuote _stockQuote;
         private List<string> _quoteSymbols = new List<string>();
 
 
@@ -75,8 +73,12 @@ namespace TdInterface.Tda
         }
         public TDStreamer(UserPrincipal userPrincipals)
         {
+            string currentPath = Directory.GetCurrentDirectory();
+            string replayFolder = Path.Combine(currentPath, "replays");
+            if (!Directory.Exists(replayFolder))
+                Directory.CreateDirectory(replayFolder);
 
-            _replayFile = new StreamWriter($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
+            _replayFile = new StreamWriter($"{replayFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
             _credentials = new StreamerSettings.Credentials
             {
@@ -330,10 +332,6 @@ namespace TdInterface.Tda
 
             var _reqs = new List<StreamerSettings.Request>();
 
-            int requestId = 0;
-            //foreach (var symbol in _quoteSymbols)
-            //{
-            //requestId++;
             _quoteRequestId++;
             var quoteRequest = new StreamerSettings.Request
             {
@@ -372,10 +370,6 @@ namespace TdInterface.Tda
 
             var _reqs = new List<StreamerSettings.Request>();
 
-            int requestId = 0;
-            //foreach (var symbol in _quoteSymbols)
-            //{
-            //requestId++;
             _quoteRequestId++;
             var quoteRequest = new StreamerSettings.Request
             {
@@ -501,7 +495,6 @@ namespace TdInterface.Tda
 
         public void Dispose()
         {
-            _isDisposing = true;
             if (_ws != null) _ws.Dispose();
             if (_replayFile != null)
             {

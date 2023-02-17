@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -17,14 +18,7 @@ namespace TdInterface
     public partial class MasterForm : Form
     {
         private IStreamer _streamer;
-        private StockQuote _stockQuote = new StockQuote();
-        private Securitiesaccount _securitiesaccount;
-        private Position _activePosition;
-        private Position _initialPosition;
-        private CandleList _candleList;
-        private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
 
@@ -32,7 +26,12 @@ namespace TdInterface
         {
             try
             {
-                _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+                string currentPath = Directory.GetCurrentDirectory();
+                string logFolder = Path.Combine(currentPath, "logs");
+                if (!Directory.Exists(logFolder))
+                    Directory.CreateDirectory(logFolder);
+
+                _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
                 Trace.Listeners.Add(_textWriterTraceListener);
 
                 Debug.WriteLine("Start Master Form");
@@ -189,7 +188,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
 
         }
