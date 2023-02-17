@@ -59,6 +59,7 @@ namespace TdInterface
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
 
+
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
         }
@@ -1185,6 +1186,17 @@ namespace TdInterface
                 txtShares.ForeColor= Color.FromArgb(255, 82, 109);
             }
             txtShares.BackColor = txtShares.BackColor;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            string startingTicker = this.Tag != null ? this.Tag.ToString() : String.Empty;
+
+            if (!string.IsNullOrEmpty(startingTicker))
+            {
+                txtSymbol.Text = startingTicker;
+                txtStop.Focus();
+            }
         }
     }
 }

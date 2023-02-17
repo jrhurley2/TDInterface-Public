@@ -127,33 +127,7 @@ namespace TdInterface
         private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
-            var name = $"TdInterface Form {_mainForms.Count}";
-
-            MainForm frm = null;
-
-            if (_mainForms.ContainsKey(txtSymbol.Text.ToUpper()))
-            {
-                frm = _mainForms[txtSymbol.Text.ToUpper()];
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(txtSymbol.Text))
-                {
-                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper());
-                    _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
-                }
-                else
-                {
-                    frm = new MainForm(_streamer, _settings, name);
-                    _mainForms.Add(name, frm);
-
-                }
-                frm.FormClosing += MainForm_FormClosing;
-                frm.Show();
-            }
-
-            frm.Focus();
-
+            launchMainForm(txtSymbol.Text);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -193,7 +167,53 @@ namespace TdInterface
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void launchMainForm(string name)
+        {
+            MainForm frm = null;
+
+            var nameAsKey = String.Empty;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                nameAsKey = $"TdInterface Form {_mainForms.Count}";
+            }
+            else
+            {
+                nameAsKey = name.ToUpper();
+            }
+
+            if (_mainForms.ContainsKey(nameAsKey))
+            {
+                frm = _mainForms[nameAsKey];
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    frm = new MainForm(_streamer, _settings, name);
+                    frm.Tag = name;
+                    _mainForms.Add(nameAsKey, frm);
+                }
+                else
+                {
+                    frm = new MainForm(_streamer, _settings, "Enter a symbol...");
+                    _mainForms.Add(nameAsKey, frm);
+
+                }
+                frm.FormClosing += MainForm_FormClosing;
+                frm.Show();
+            }
+
+            frm.Focus();
+        }
+
+        private void btnTicker_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            launchMainForm(btn.Tag != null ? btn.Tag.ToString() : String.Empty);
+        }
+
+        private void btnFuturesCalc_Click(object sender, EventArgs e)
         {
             var futureCalcFrom = new FurtureCalcForm(_streamer);
             futureCalcFrom.Show();

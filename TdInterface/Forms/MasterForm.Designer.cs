@@ -29,15 +29,32 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MasterForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnNewTrade = new System.Windows.Forms.Button();
+            this.btnFuturesCalc = new System.Windows.Forms.Button();
+            this.btnAMZN = new System.Windows.Forms.Button();
+            this.btnMSFT = new System.Windows.Forms.Button();
+            this.btnAMD = new System.Windows.Forms.Button();
+            this.btnAAPL = new System.Windows.Forms.Button();
+            this.lblSymbol = new System.Windows.Forms.Label();
             this.txtSymbol = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnNewTrade = new System.Windows.Forms.Button();
+            this.btnNVDA = new System.Windows.Forms.Button();
+            this.btnMETA = new System.Windows.Forms.Button();
+            this.btnTSLA = new System.Windows.Forms.Button();
+            this.btnSPY = new System.Windows.Forms.Button();
+            this.btnQQQ = new System.Windows.Forms.Button();
+            this.lblQuickTrade = new System.Windows.Forms.Label();
+            this.lblDividerOne = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblTools = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblTrade = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +70,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(301, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -64,69 +81,262 @@
             this.saveCredentialsToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // btnFuturesCalc
+            // 
+            this.btnFuturesCalc.Location = new System.Drawing.Point(16, 257);
+            this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.btnFuturesCalc.Name = "btnFuturesCalc";
+            this.btnFuturesCalc.Size = new System.Drawing.Size(269, 28);
+            this.btnFuturesCalc.TabIndex = 3;
+            this.btnFuturesCalc.Text = "Futures Calculator";
+            this.btnFuturesCalc.UseVisualStyleBackColor = true;
+            this.btnFuturesCalc.Click += new System.EventHandler(this.btnFuturesCalc_Click);
+            // 
+            // btnAMZN
+            // 
+            this.btnAMZN.Location = new System.Drawing.Point(107, 131);
+            this.btnAMZN.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAMZN.Name = "btnAMZN";
+            this.btnAMZN.Size = new System.Drawing.Size(86, 26);
+            this.btnAMZN.TabIndex = 8;
+            this.btnAMZN.Tag = "AMZN";
+            this.btnAMZN.Text = "AMZN";
+            this.btnAMZN.UseVisualStyleBackColor = true;
+            this.btnAMZN.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnMSFT
+            // 
+            this.btnMSFT.Location = new System.Drawing.Point(107, 165);
+            this.btnMSFT.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMSFT.Name = "btnMSFT";
+            this.btnMSFT.Size = new System.Drawing.Size(86, 26);
+            this.btnMSFT.TabIndex = 9;
+            this.btnMSFT.Tag = "MSFT";
+            this.btnMSFT.Text = "MSFT";
+            this.btnMSFT.UseVisualStyleBackColor = true;
+            this.btnMSFT.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnAMD
+            // 
+            this.btnAMD.Location = new System.Drawing.Point(201, 131);
+            this.btnAMD.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAMD.Name = "btnAMD";
+            this.btnAMD.Size = new System.Drawing.Size(86, 26);
+            this.btnAMD.TabIndex = 5;
+            this.btnAMD.Tag = "AMD";
+            this.btnAMD.Text = "AMD";
+            this.btnAMD.UseVisualStyleBackColor = true;
+            this.btnAMD.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnAAPL
+            // 
+            this.btnAAPL.Location = new System.Drawing.Point(13, 131);
+            this.btnAAPL.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAAPL.Name = "btnAAPL";
+            this.btnAAPL.Size = new System.Drawing.Size(86, 26);
+            this.btnAAPL.TabIndex = 4;
+            this.btnAAPL.Tag = "AAPL";
+            this.btnAAPL.Text = "AAPL";
+            this.btnAAPL.UseVisualStyleBackColor = true;
+            this.btnAAPL.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // lblSymbol
+            // 
+            this.lblSymbol.AutoSize = true;
+            this.lblSymbol.Location = new System.Drawing.Point(18, 70);
+            this.lblSymbol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSymbol.Name = "lblSymbol";
+            this.lblSymbol.Size = new System.Drawing.Size(54, 19);
+            this.lblSymbol.TabIndex = 6;
+            this.lblSymbol.Text = "Symbol";
+            this.lblSymbol.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtSymbol
+            // 
+            this.txtSymbol.Location = new System.Drawing.Point(107, 67);
+            this.txtSymbol.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtSymbol.Name = "txtSymbol";
+            this.txtSymbol.Size = new System.Drawing.Size(86, 26);
+            this.txtSymbol.TabIndex = 2;
+            // 
             // btnNewTrade
             // 
-            this.btnNewTrade.Location = new System.Drawing.Point(246, 227);
+            this.btnNewTrade.Location = new System.Drawing.Point(201, 67);
+            this.btnNewTrade.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnNewTrade.Name = "btnNewTrade";
-            this.btnNewTrade.Size = new System.Drawing.Size(94, 29);
+            this.btnNewTrade.Size = new System.Drawing.Size(86, 26);
             this.btnNewTrade.TabIndex = 1;
             this.btnNewTrade.Text = "Trade";
             this.btnNewTrade.UseVisualStyleBackColor = true;
             this.btnNewTrade.Click += new System.EventHandler(this.btnNewTrade_Click);
             // 
-            // txtSymbol
+            // btnNVDA
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(246, 184);
-            this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(125, 27);
-            this.txtSymbol.TabIndex = 2;
+            this.btnNVDA.Location = new System.Drawing.Point(201, 165);
+            this.btnNVDA.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNVDA.Name = "btnNVDA";
+            this.btnNVDA.Size = new System.Drawing.Size(86, 26);
+            this.btnNVDA.TabIndex = 10;
+            this.btnNVDA.Tag = "NVDA";
+            this.btnNVDA.Text = "NVDA";
+            this.btnNVDA.UseVisualStyleBackColor = true;
+            this.btnNVDA.Click += new System.EventHandler(this.btnTicker_Click);
             // 
-            // button1
+            // btnMETA
             // 
-            this.button1.Location = new System.Drawing.Point(602, 321);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 29);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Futures Calc";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnMETA.Location = new System.Drawing.Point(13, 165);
+            this.btnMETA.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMETA.Name = "btnMETA";
+            this.btnMETA.Size = new System.Drawing.Size(86, 26);
+            this.btnMETA.TabIndex = 11;
+            this.btnMETA.Tag = "META";
+            this.btnMETA.Text = "META";
+            this.btnMETA.UseVisualStyleBackColor = true;
+            this.btnMETA.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnTSLA
+            // 
+            this.btnTSLA.Location = new System.Drawing.Point(13, 199);
+            this.btnTSLA.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTSLA.Name = "btnTSLA";
+            this.btnTSLA.Size = new System.Drawing.Size(86, 26);
+            this.btnTSLA.TabIndex = 12;
+            this.btnTSLA.Tag = "TSLA";
+            this.btnTSLA.Text = "TSLA";
+            this.btnTSLA.UseVisualStyleBackColor = true;
+            this.btnTSLA.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnSPY
+            // 
+            this.btnSPY.Location = new System.Drawing.Point(107, 199);
+            this.btnSPY.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSPY.Name = "btnSPY";
+            this.btnSPY.Size = new System.Drawing.Size(86, 26);
+            this.btnSPY.TabIndex = 13;
+            this.btnSPY.Tag = "SPY";
+            this.btnSPY.Text = "SPY";
+            this.btnSPY.UseVisualStyleBackColor = true;
+            this.btnSPY.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // btnQQQ
+            // 
+            this.btnQQQ.Location = new System.Drawing.Point(201, 199);
+            this.btnQQQ.Margin = new System.Windows.Forms.Padding(4);
+            this.btnQQQ.Name = "btnQQQ";
+            this.btnQQQ.Size = new System.Drawing.Size(86, 26);
+            this.btnQQQ.TabIndex = 14;
+            this.btnQQQ.Tag = "QQQ";
+            this.btnQQQ.Text = "QQQ";
+            this.btnQQQ.UseVisualStyleBackColor = true;
+            this.btnQQQ.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
+            // lblQuickTrade
+            // 
+            this.lblQuickTrade.AutoSize = true;
+            this.lblQuickTrade.Location = new System.Drawing.Point(15, 102);
+            this.lblQuickTrade.Name = "lblQuickTrade";
+            this.lblQuickTrade.Size = new System.Drawing.Size(81, 19);
+            this.lblQuickTrade.TabIndex = 15;
+            this.lblQuickTrade.Text = "Quick Trade";
+            // 
+            // lblDividerOne
+            // 
+            this.lblDividerOne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblDividerOne.Location = new System.Drawing.Point(107, 113);
+            this.lblDividerOne.Name = "lblDividerOne";
+            this.lblDividerOne.Size = new System.Drawing.Size(180, 2);
+            this.lblDividerOne.TabIndex = 16;
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(64, 247);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(226, 2);
+            this.label1.TabIndex = 18;
+            // 
+            // lblTools
+            // 
+            this.lblTools.AutoSize = true;
+            this.lblTools.Location = new System.Drawing.Point(13, 236);
+            this.lblTools.Name = "lblTools";
+            this.lblTools.Size = new System.Drawing.Size(40, 19);
+            this.lblTools.TabIndex = 17;
+            this.lblTools.Text = "Tools";
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Location = new System.Drawing.Point(61, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(224, 2);
+            this.label2.TabIndex = 20;
+            // 
+            // lblTrade
+            // 
+            this.lblTrade.AutoSize = true;
+            this.lblTrade.Location = new System.Drawing.Point(13, 40);
+            this.lblTrade.Name = "lblTrade";
+            this.lblTrade.Size = new System.Drawing.Size(42, 19);
+            this.lblTrade.TabIndex = 19;
+            this.lblTrade.Text = "Trade";
             // 
             // MasterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtSymbol);
+            this.ClientSize = new System.Drawing.Size(301, 294);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblTrade);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTools);
+            this.Controls.Add(this.lblDividerOne);
+            this.Controls.Add(this.lblQuickTrade);
+            this.Controls.Add(this.btnQQQ);
+            this.Controls.Add(this.btnSPY);
+            this.Controls.Add(this.btnTSLA);
+            this.Controls.Add(this.btnMETA);
+            this.Controls.Add(this.btnNVDA);
+            this.Controls.Add(this.btnAMD);
+            this.Controls.Add(this.btnAAPL);
             this.Controls.Add(this.btnNewTrade);
+            this.Controls.Add(this.txtSymbol);
+            this.Controls.Add(this.btnMSFT);
+            this.Controls.Add(this.lblSymbol);
+            this.Controls.Add(this.btnAMZN);
+            this.Controls.Add(this.btnFuturesCalc);
             this.Controls.Add(this.menuStrip1);
+            this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "MasterForm";
-            this.Text = "MasterForm";
+            this.Text = "TDA Order Management";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MasterForm_FormClosing);
             this.Load += new System.EventHandler(this.MasterForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -144,8 +354,24 @@
         private System.Windows.Forms.ToolStripMenuItem clearCredentialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveCredentialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.Button btnNewTrade;
+        private System.Windows.Forms.Button btnFuturesCalc;
+        private System.Windows.Forms.Button btnAMZN;
+        private System.Windows.Forms.Button btnMSFT;
+        private System.Windows.Forms.Button btnAMD;
+        private System.Windows.Forms.Button btnAAPL;
+        private System.Windows.Forms.Label lblSymbol;
         private System.Windows.Forms.TextBox txtSymbol;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnNewTrade;
+        private System.Windows.Forms.Button btnNVDA;
+        private System.Windows.Forms.Button btnMETA;
+        private System.Windows.Forms.Button btnTSLA;
+        private System.Windows.Forms.Button btnSPY;
+        private System.Windows.Forms.Button btnQQQ;
+        private System.Windows.Forms.Label lblQuickTrade;
+        private System.Windows.Forms.Label lblDividerOne;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTools;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTrade;
     }
 }
