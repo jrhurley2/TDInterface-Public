@@ -50,10 +50,10 @@
             this.btnSPY = new System.Windows.Forms.Button();
             this.btnQQQ = new System.Windows.Forms.Button();
             this.lblQuickTrade = new System.Windows.Forms.Label();
-            this.lblDividerOne = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblQuickTradeLine = new System.Windows.Forms.Label();
+            this.lblToolsLine = new System.Windows.Forms.Label();
             this.lblTools = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTradeLine = new System.Windows.Forms.Label();
             this.lblTrade = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -107,10 +107,10 @@
             // 
             // btnFuturesCalc
             // 
-            this.btnFuturesCalc.Location = new System.Drawing.Point(16, 257);
+            this.btnFuturesCalc.Location = new System.Drawing.Point(13, 260);
             this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnFuturesCalc.Name = "btnFuturesCalc";
-            this.btnFuturesCalc.Size = new System.Drawing.Size(269, 28);
+            this.btnFuturesCalc.Size = new System.Drawing.Size(274, 28);
             this.btnFuturesCalc.TabIndex = 3;
             this.btnFuturesCalc.Text = "Futures Calculator";
             this.btnFuturesCalc.UseVisualStyleBackColor = true;
@@ -167,7 +167,7 @@
             // lblSymbol
             // 
             this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Location = new System.Drawing.Point(18, 70);
+            this.lblSymbol.Location = new System.Drawing.Point(42, 70);
             this.lblSymbol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSymbol.Name = "lblSymbol";
             this.lblSymbol.Size = new System.Drawing.Size(54, 19);
@@ -263,21 +263,21 @@
             this.lblQuickTrade.TabIndex = 15;
             this.lblQuickTrade.Text = "Quick Trade";
             // 
-            // lblDividerOne
+            // lblQuickTradeLine
             // 
-            this.lblDividerOne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblDividerOne.Location = new System.Drawing.Point(107, 113);
-            this.lblDividerOne.Name = "lblDividerOne";
-            this.lblDividerOne.Size = new System.Drawing.Size(180, 2);
-            this.lblDividerOne.TabIndex = 16;
+            this.lblQuickTradeLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblQuickTradeLine.Location = new System.Drawing.Point(107, 113);
+            this.lblQuickTradeLine.Name = "lblQuickTradeLine";
+            this.lblQuickTradeLine.Size = new System.Drawing.Size(180, 2);
+            this.lblQuickTradeLine.TabIndex = 16;
             // 
-            // label1
+            // lblToolsLine
             // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(64, 247);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(226, 2);
-            this.label1.TabIndex = 18;
+            this.lblToolsLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblToolsLine.Location = new System.Drawing.Point(64, 247);
+            this.lblToolsLine.Name = "lblToolsLine";
+            this.lblToolsLine.Size = new System.Drawing.Size(221, 2);
+            this.lblToolsLine.TabIndex = 18;
             // 
             // lblTools
             // 
@@ -288,13 +288,13 @@
             this.lblTools.TabIndex = 17;
             this.lblTools.Text = "Tools";
             // 
-            // label2
+            // lblTradeLine
             // 
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Location = new System.Drawing.Point(61, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(224, 2);
-            this.label2.TabIndex = 20;
+            this.lblTradeLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblTradeLine.Location = new System.Drawing.Point(61, 51);
+            this.lblTradeLine.Name = "lblTradeLine";
+            this.lblTradeLine.Size = new System.Drawing.Size(224, 2);
+            this.lblTradeLine.TabIndex = 20;
             // 
             // lblTrade
             // 
@@ -309,12 +309,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 294);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(301, 299);
+            this.Controls.Add(this.lblTradeLine);
             this.Controls.Add(this.lblTrade);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblToolsLine);
             this.Controls.Add(this.lblTools);
-            this.Controls.Add(this.lblDividerOne);
+            this.Controls.Add(this.lblQuickTradeLine);
             this.Controls.Add(this.lblQuickTrade);
             this.Controls.Add(this.btnQQQ);
             this.Controls.Add(this.btnSPY);
@@ -368,10 +368,10 @@
         private System.Windows.Forms.Button btnSPY;
         private System.Windows.Forms.Button btnQQQ;
         private System.Windows.Forms.Label lblQuickTrade;
-        private System.Windows.Forms.Label lblDividerOne;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblQuickTradeLine;
+        private System.Windows.Forms.Label lblToolsLine;
         private System.Windows.Forms.Label lblTools;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTradeLine;
         private System.Windows.Forms.Label lblTrade;
     }
 }
