@@ -20,13 +20,13 @@ namespace TdInterface.Tests
         private MainForm _mainForm;
 
         [TestInitialize()]
-        public void Init() 
+        public void Init()
         {
             var mockStreamer = new Mock<Interfaces.IStreamer>();
-            var mockHelper = new Mock<Interfaces.IHelper>();
 
-            _mainForm = new MainForm(mockStreamer.Object, new Settings(), "name", "accountId", mockHelper.Object);
+            _mainForm = new MainForm(mockStreamer.Object, new Settings(), "name");
         }
+
 
         [TestMethod()]
         [ExpectedException(typeof(DailyLossExceededException))]

@@ -32,5 +32,6 @@ namespace TdInterface
         public double MinimumRisk { get; set; }
         public bool SendAltPrtScrOnOpen { get; set; }
         public bool ShowPnL { get;set; }
+        public bool AlwaysOnTop { get; set; }
     }
 }

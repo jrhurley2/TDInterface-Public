@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
@@ -26,6 +26,9 @@ namespace TdInterface
         private TradeStationHelper _tradeStationHelper; 
         private IHelper _tradeHelper;
       
+        private string curSymbol = String.Empty;
+
+      
         // Made Public for testing.
         public bool isTda = false;
         public bool isTradeStation = true;
@@ -33,7 +36,6 @@ namespace TdInterface
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
-        private CandleList _candleList;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
@@ -44,7 +46,7 @@ namespace TdInterface
         {
             InitializeComponent();
 
-            this.AutoScaleMode = AutoScaleMode.None;
+            this.AutoScaleMode = AutoScaleMode.Font;
 
             _tradeHelper = helper;
 
@@ -66,13 +68,15 @@ namespace TdInterface
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
-
             btnBuyLmtTriggerOco.Enabled = false;
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
 
             var securitiesaccount = _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId).Result;
+
+            // Handle always on top setting
+            this.TopMost = settings.AlwaysOnTop;
         }
 
 
@@ -310,32 +314,34 @@ namespace TdInterface
         {
             try
             {
+                if (_activePosition != null)
+                {
+                    var stopInstruction = "";
+                    int quantity = 0;
+                    if (_activePosition.longQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.SELL;
+                        quantity = (int)_activePosition.longQuantity;
+                    }
+                    else if (_activePosition.shortQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.BUY_TO_COVER;
+                        quantity = (int)_activePosition.shortQuantity;
+                    }
+                    else
+                    {
+                        txtLastError.Text = "BreakEven Button Cant' Deterimine position";
+                        return;
+                    }
 
-                var stopInstruction = "";
-                int quantity = 0;
-                if (_activePosition.longQuantity > 0)
-                {
-                    stopInstruction = TDAOrderHelper.SELL;
-                    quantity = (int)_activePosition.longQuantity;
-                }
-                else if (_activePosition.shortQuantity > 0)
-                {
-                    stopInstruction = TDAOrderHelper.BUY_TO_COVER;
-                    quantity = (int)_activePosition.shortQuantity;
-                }
-                else
-                {
-                    txtLastError.Text = "BreakEven Button Cant' Deterimine position";
-                    return;
-                }
+                    var stopPrice = _activePosition.averagePrice;
+                    if (!string.IsNullOrEmpty(txtStopToClose.Text))
+                    {
+                        stopPrice = float.Parse(txtStopToClose.Text);
+                    }
 
-                var stopPrice = _activePosition.averagePrice;
-                if (!string.IsNullOrEmpty(txtStopToClose.Text))
-                {
-                    stopPrice = float.Parse(txtStopToClose.Text);
+                    await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
                 }
-
-                await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
             }
             catch (Exception ex)
             {
@@ -569,13 +575,13 @@ namespace TdInterface
 
             try
             {
-                if (_activePosition != null)
+                if (_activePosition != null && txtStop.Text != String.Empty)
                 {
                     var avgPrice = _activePosition.averagePrice;
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = Math.Abs((float)_stockQuote.lastPrice - avgPrice);
+                    float reward = (float)_stockQuote.lastPrice - avgPrice;
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
@@ -848,7 +854,7 @@ namespace TdInterface
 
                 _activePosition = position;
                 SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
-                SafeUpdateTextBox(txtShares, _activePosition.Quantity.ToString());
+                SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
             }
             else
             {
@@ -1022,17 +1028,18 @@ namespace TdInterface
         {
             try
             {
-                if (txtSymbol.Text != String.Empty)
+                if (txtSymbol.Text != String.Empty && !txtSymbol.Text.Equals(curSymbol, StringComparison.OrdinalIgnoreCase))
                 {
+                    curSymbol = txtSymbol.Text;
                     _streamer.SubscribeQuote(txtSymbol.Text.ToUpper());
                     //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
                     //await UpdatePriceHistory();
-                    this.Text = txtSymbol.Text.ToUpper();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
+                    this.Text = txtSymbol.Text;
                     await SetPosition();
                 }
             }
@@ -1140,6 +1147,20 @@ namespace TdInterface
             MessageBox.Show(txtLastError.Text, "Last Message");
         }
 
+        private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                e.Handled = true;
+                txtStop.Focus();
+            }
+        }
+
+        private void txtSymbol_Enter(object sender, EventArgs e)
+        {
+            txtSymbol.SelectAll();
+        }
+
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
@@ -1166,8 +1187,50 @@ namespace TdInterface
                 Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
         }
-
-
         #endregion
+
+        private void txtRValue_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtRValue.Text))
+            {
+                float rValue = (float)Convert.ToDouble(txtRValue.Text);
+                if (rValue < 0)
+                {
+                    txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
+                }
+                else
+                {
+                    txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
+                }
+
+                // workaround UI framework bug to force readonly text box colors to update.
+                txtRValue.BackColor = txtRValue.BackColor;
+            }
+        }
+
+        private void txtShares_TextChanged(object sender, EventArgs e)
+        {
+            // don't want to change anything with quantiy as it is used in other calculations....
+            if (_activePosition != null && _activePosition.DisplayQuantity > 0)
+            {
+                txtShares.ForeColor = Color.FromArgb(0, 194, 136);
+            }
+            else
+            {
+                txtShares.ForeColor= Color.FromArgb(255, 82, 109);
+            }
+            txtShares.BackColor = txtShares.BackColor;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            string startingTicker = this.Tag != null ? this.Tag.ToString() : String.Empty;
+
+            if (!string.IsNullOrEmpty(startingTicker))
+            {
+                txtSymbol.Text = startingTicker;
+                txtStop.Focus();
+            }
+        }
     }
 }

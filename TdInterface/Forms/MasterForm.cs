@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -30,7 +30,6 @@ namespace TdInterface
         private CandleList _candleList;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
@@ -41,9 +40,15 @@ namespace TdInterface
 
         public MasterForm()
         {
+            try
+            {
+                string currentPath = Directory.GetCurrentDirectory();
+                string logFolder = Path.Combine(currentPath, "logs");
+                if (!Directory.Exists(logFolder))
+                    Directory.CreateDirectory(logFolder);
 
-            _textWriterTraceListener = new TextWriterTraceListener($"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
-            Trace.Listeners.Add(_textWriterTraceListener);
+                _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+                Trace.Listeners.Add(_textWriterTraceListener);
 
             Debug.WriteLine("Start Master Form");
             InitializeComponent();
@@ -212,33 +217,7 @@ namespace TdInterface
         private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
-            var name = $"TdInterface Form {_mainForms.Count}";
-
-            MainForm frm = null;
-
-            if (_mainForms.ContainsKey(txtSymbol.Text.ToUpper()))
-            {
-                frm = _mainForms[txtSymbol.Text.ToUpper()];
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(txtSymbol.Text))
-                {
-                    frm = new MainForm(_streamer, _settings, txtSymbol.Text.ToUpper(), _equityAccountId, _tradeHelper);
-                    _mainForms.Add(txtSymbol.Text.ToUpper(), frm);
-                }
-                else
-                {
-                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
-                    _mainForms.Add(name, frm);
-
-                }
-                frm.FormClosing += MainForm_FormClosing;
-                frm.Show();
-            }
-
-            frm.Focus();
-
+            launchMainForm(txtSymbol.Text);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -273,12 +252,58 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void launchMainForm(string name)
+        {
+            MainForm frm = null;
+
+            var nameAsKey = String.Empty;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                nameAsKey = $"TdInterface Form {_mainForms.Count}";
+            }
+            else
+            {
+                nameAsKey = name.ToUpper();
+            }
+
+            if (_mainForms.ContainsKey(nameAsKey))
+            {
+                frm = _mainForms[nameAsKey];
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    frm = new MainForm(_streamer, _settings, name);
+                    frm.Tag = name;
+                    _mainForms.Add(nameAsKey, frm);
+                }
+                else
+                {
+                    frm = new MainForm(_streamer, _settings, "Enter a symbol...");
+                    _mainForms.Add(nameAsKey, frm);
+
+                }
+                frm.FormClosing += MainForm_FormClosing;
+                frm.Show();
+            }
+
+            frm.Focus();
+        }
+
+        private void btnTicker_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            launchMainForm(btn.Tag != null ? btn.Tag.ToString() : String.Empty);
+        }
+
+        private void btnFuturesCalc_Click(object sender, EventArgs e)
         {
             var futureCalcFrom = new FurtureCalcForm(_streamer);
             futureCalcFrom.Show();
