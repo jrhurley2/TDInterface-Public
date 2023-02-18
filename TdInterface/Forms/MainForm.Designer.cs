@@ -32,6 +32,7 @@ namespace TdInterface
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnBuyMrkTriggerOco = new System.Windows.Forms.Button();
             this.txtSymbol = new System.Windows.Forms.TextBox();
             this.lblSymbol = new System.Windows.Forms.Label();
@@ -746,6 +747,7 @@ namespace TdInterface
             this.Controls.Add(this.txtSymbol);
             this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
@@ -754,6 +756,7 @@ namespace TdInterface
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
