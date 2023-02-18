@@ -320,12 +320,12 @@ namespace TdInterface
                     int quantity = 0;
                     if (_activePosition.longQuantity > 0)
                     {
-                        stopInstruction = OrderHelper.SELL;
+                        stopInstruction = TDAOrderHelper.SELL;
                         quantity = (int)_activePosition.longQuantity;
                     }
                     else if (_activePosition.shortQuantity > 0)
                     {
-                        stopInstruction = OrderHelper.BUY_TO_COVER;
+                        stopInstruction = TDAOrderHelper.BUY_TO_COVER;
                         quantity = (int)_activePosition.shortQuantity;
                     }
                     else

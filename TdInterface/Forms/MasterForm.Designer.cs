@@ -317,13 +317,13 @@
             // 
             // btnLogon
             // 
-            this.btnLogon.Location = new System.Drawing.Point(12, 49);
-            this.btnLogon.Name = "btnLogon";
-            this.btnLogon.Size = new System.Drawing.Size(94, 29);
-            this.btnLogon.TabIndex = 4;
-            this.btnLogon.Text = "Logon";
-            this.btnLogon.UseVisualStyleBackColor = true;
-            this.btnLogon.Click += new System.EventHandler(this.btnLogon_Click);
+            //this.btnLogon.Location = new System.Drawing.Point(12, 49);
+            //this.btnLogon.Name = "btnLogon";
+            //this.btnLogon.Size = new System.Drawing.Size(94, 29);
+            //this.btnLogon.TabIndex = 4;
+            //this.btnLogon.Text = "Logon";
+            //this.btnLogon.UseVisualStyleBackColor = true;
+            //this.btnLogon.Click += new System.EventHandler(this.btnLogon_Click);
             // 
             // MasterForm
             // 

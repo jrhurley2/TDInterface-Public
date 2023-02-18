@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -50,10 +51,13 @@ namespace TdInterface
                 _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
                 Trace.Listeners.Add(_textWriterTraceListener);
 
-            Debug.WriteLine("Start Master Form");
-            InitializeComponent();
+                Debug.WriteLine("Start Master Form");
+                InitializeComponent();
 
-            Login().ConfigureAwait(false);
+                Login().ConfigureAwait(false);
+            }
+            catch (Exception ex) { 
+            }
         }
 
         private async Task Login()
@@ -280,13 +284,13 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    frm = new MainForm(_streamer, _settings, name);
+                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
                     frm.Tag = name;
                     _mainForms.Add(nameAsKey, frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, "Enter a symbol...");
+                    frm = new MainForm(_streamer, _settings, "Enter a symbol...", _equityAccountId, _tradeHelper);
                     _mainForms.Add(nameAsKey, frm);
 
                 }
