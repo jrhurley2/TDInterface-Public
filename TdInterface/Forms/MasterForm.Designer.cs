@@ -118,7 +118,7 @@
             // 
             // btnAMZN
             // 
-            this.btnAMZN.Location = new System.Drawing.Point(107, 131);
+            this.btnAMZN.Location = new System.Drawing.Point(199, 131);
             this.btnAMZN.Margin = new System.Windows.Forms.Padding(4);
             this.btnAMZN.Name = "btnAMZN";
             this.btnAMZN.Size = new System.Drawing.Size(86, 26);
@@ -142,7 +142,7 @@
             // 
             // btnAMD
             // 
-            this.btnAMD.Location = new System.Drawing.Point(201, 131);
+            this.btnAMD.Location = new System.Drawing.Point(107, 131);
             this.btnAMD.Margin = new System.Windows.Forms.Padding(4);
             this.btnAMD.Name = "btnAMD";
             this.btnAMD.Size = new System.Drawing.Size(86, 26);
