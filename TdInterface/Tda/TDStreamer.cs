@@ -75,6 +75,8 @@ namespace TdInterface.Tda
         }
         public TDStreamer(UserPrincipal userPrincipals)
         {
+            _userPrincipal = userPrincipals;
+
             string currentPath = Directory.GetCurrentDirectory();
             string replayFolder = Path.Combine(currentPath, "replays");
             if (!Directory.Exists(replayFolder))
