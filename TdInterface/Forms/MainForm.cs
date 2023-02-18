@@ -291,32 +291,34 @@ namespace TdInterface
         {
             try
             {
+                if (_activePosition != null)
+                {
+                    var stopInstruction = "";
+                    int quantity = 0;
+                    if (_activePosition.longQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.SELL;
+                        quantity = (int)_activePosition.longQuantity;
+                    }
+                    else if (_activePosition.shortQuantity > 0)
+                    {
+                        stopInstruction = OrderHelper.BUY_TO_COVER;
+                        quantity = (int)_activePosition.shortQuantity;
+                    }
+                    else
+                    {
+                        txtLastError.Text = "BreakEven Button Cant' Deterimine position";
+                        return;
+                    }
 
-                var stopInstruction = "";
-                int quantity = 0;
-                if (_activePosition.longQuantity > 0)
-                {
-                    stopInstruction = OrderHelper.SELL;
-                    quantity = (int)_activePosition.longQuantity;
-                }
-                else if (_activePosition.shortQuantity > 0)
-                {
-                    stopInstruction = OrderHelper.BUY_TO_COVER;
-                    quantity = (int)_activePosition.shortQuantity;
-                }
-                else
-                {
-                    txtLastError.Text = "BreakEven Button Cant' Deterimine position";
-                    return;
-                }
+                    var stopPrice = _activePosition.averagePrice;
+                    if (!string.IsNullOrEmpty(txtStopToClose.Text))
+                    {
+                        stopPrice = float.Parse(txtStopToClose.Text);
+                    }
 
-                var stopPrice = _activePosition.averagePrice;
-                if (!string.IsNullOrEmpty(txtStopToClose.Text))
-                {
-                    stopPrice = float.Parse(txtStopToClose.Text);
+                    await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
                 }
-
-                await PlaceStopOrder(_activePosition.instrument.symbol, quantity, stopInstruction, stopPrice);
             }
             catch (Exception ex)
             {
@@ -545,7 +547,7 @@ namespace TdInterface
 
             try
             {
-                if (_activePosition != null)
+                if (_activePosition != null && txtStop.Text != String.Empty)
                 {
                     var avgPrice = _activePosition.averagePrice;
                     var initialStop = float.Parse(txtStop.Text);
@@ -1156,19 +1158,21 @@ namespace TdInterface
 
         private void txtRValue_TextChanged(object sender, EventArgs e)
         {
-            float rValue = (float)Convert.ToDouble(txtRValue.Text);
-            if (rValue < 0)
+            if (!string.IsNullOrEmpty(txtRValue.Text))
             {
-                txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
-            }
-            else
-            { 
-                txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
-            }
+                float rValue = (float)Convert.ToDouble(txtRValue.Text);
+                if (rValue < 0)
+                {
+                    txtRValue.ForeColor = Color.FromArgb(255, 82, 109);
+                }
+                else
+                {
+                    txtRValue.ForeColor = Color.FromArgb(0, 194, 136);
+                }
 
-            // workaround UI framework bug to force readonly text box colors to update.
-            txtRValue.BackColor = txtRValue.BackColor;
-
+                // workaround UI framework bug to force readonly text box colors to update.
+                txtRValue.BackColor = txtRValue.BackColor;
+            }
         }
 
         private void txtShares_TextChanged(object sender, EventArgs e)
