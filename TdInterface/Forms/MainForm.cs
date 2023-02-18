@@ -630,8 +630,12 @@ namespace TdInterface
             {
                 _securitiesaccount = _tradeHelper.Securitiesaccount;
                 await SetPosition();
-                //_securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
-                //txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
+                _securitiesaccount = await GetSecuritiesaccountAsync();
+
+                if (typeof(TdHelper) == _tradeHelper.GetType())
+                {
+                    txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
+                }
             }
             catch (Exception ex)
             {
@@ -640,12 +644,27 @@ namespace TdInterface
             }
         }
 
+        private async Task<Securitiesaccount> GetSecuritiesaccountAsync()
+        {
+            var securitiesaccount = new Securitiesaccount();
+            if (typeof(TdHelper) == _tradeHelper.GetType())
+            {
+                securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
+            }
+            else
+            {
+                securitiesaccount = _tradeHelper.Securitiesaccount;
+            }
+
+            return securitiesaccount;
+
+        }
         private async void HandleOrderRecieved(OrderEntryRequestMessage orderEntryRequestMessage)
         {
             try
             {
-                //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-                _securitiesaccount = _tradeHelper.Securitiesaccount;
+                _securitiesaccount= await GetSecuritiesaccountAsync();
+
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
                 Debug.WriteLine($"HandleOrderReceived: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
@@ -712,8 +731,11 @@ namespace TdInterface
                         if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
+
+                            _securitiesaccount = await GetSecuritiesaccountAsync();
+
                             //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-                            _securitiesaccount = _tradeHelper.Securitiesaccount;
+                            //_securitiesaccount = _tradeHelper.Securitiesaccount;
 
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
@@ -871,7 +893,9 @@ namespace TdInterface
 
             try
             {
-                _securitiesaccount = _tradeHelper.Securitiesaccount;
+                _securitiesaccount = await GetSecuritiesaccountAsync();
+
+                //_securitiesaccount = _tradeHelper.Securitiesaccount;
                 //_securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
 
                 try
@@ -1164,18 +1188,23 @@ namespace TdInterface
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
+            _securitiesaccount = await GetSecuritiesaccountAsync();
+
             //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
 
-            //try
-            //{
-            //    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("Can't Update PnL");
-            //    Debug.WriteLine(ex.Message);
-            //    Debug.WriteLine(ex.StackTrace);
-            //}
+            try
+            {
+                if (_tradeHelper.GetType() == typeof(TdHelper))
+                {
+                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Can't Update PnL");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
 
 
         }
