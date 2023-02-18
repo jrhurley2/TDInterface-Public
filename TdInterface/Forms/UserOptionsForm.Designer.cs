@@ -406,7 +406,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtMaxLossLimit;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtMinRisk;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkSendPrtScrOnOpen;
         private System.Windows.Forms.CheckBox chkShowPnL;
         private System.Windows.Forms.CheckBox chkPreventExceedMaxLoss;

@@ -28,11 +28,9 @@ namespace TdInterface
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
         private Position _initialPosition;
-        private CandleList _candleList;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
-        private TextWriterTraceListener _textWriterTraceListener = null;
         public string MainFormName{ get; private set; }
 
         public MainForm(IStreamer streamer, Settings settings, string name)
