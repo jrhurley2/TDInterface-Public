@@ -37,6 +37,8 @@ namespace TdInterface
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
 
+                this.Icon = TdInterface.Properties.Resources.logo;
+
                 var accessTokenContainer = Utility.GetAccessTokenContainer();
 
                 if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)

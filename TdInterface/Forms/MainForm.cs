@@ -13,6 +13,9 @@ using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
+using Microsoft.VisualBasic;
+using Microsoft.Web.WebView2.Core;
+using System.Runtime.InteropServices;
 
 namespace TdInterface
 {
@@ -37,14 +40,20 @@ namespace TdInterface
         {
             InitializeComponent();
 
+            this.Text = string.Empty;
+            this.ControlBox = false;
+
             this.AutoScaleMode = AutoScaleMode.Font;
 
+            this.Icon = TdInterface.Properties.Resources.logo;
+
+            rpbTickerLogo.Image = TdInterface.Properties.Resources.logo_png;
+
             MainFormName = name;
-            this.Text = name;
 
             _settings = settings;
             txtPnL.Visible = _settings.ShowPnL;
-            lblPnL.Visible = _settings.ShowPnL;
+            //lblPnL.Visible = _settings.ShowPnL;
             _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
@@ -63,6 +72,12 @@ namespace TdInterface
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
         }
+
+        // Handle Window Move without Titlebar
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
 
         public Order CreateGenericTriggerOcoOrder(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, Securitiesaccount securitiesaccount, Settings settings)
@@ -130,7 +145,7 @@ namespace TdInterface
             {
                 if (_streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                 var stopPrice = double.Parse(txtStop.Text);
-                var trainingWheels = checkBox1.Checked;
+                var trainingWheels = cbShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 var triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount, _settings);
@@ -968,7 +983,7 @@ namespace TdInterface
 
         private void ApplySettings()
         {
-            checkBox1.Checked = _settings.TradeShares;
+            cbShares.Checked = _settings.TradeShares;
             chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
 
             if (_settings.TradeShares)
@@ -1005,11 +1020,14 @@ namespace TdInterface
                     txtStopToClose.Text = String.Empty;
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
-                    this.Text = txtSymbol.Text;
                     await SetPosition();
+                    rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@1x.png");
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                Debug.Write(ex);
+            }
         }
 
         private void txtStop_Leave(object sender, EventArgs e)
@@ -1037,10 +1055,11 @@ namespace TdInterface
             d = ValidateOcoStopAndLimit(txtBox);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void cbShares_CheckedChanged(object sender, EventArgs e)
         {
-            _trainingWheels = checkBox1.Checked;
+            _trainingWheels = cbShares.Checked;
             _settings.TradeShares = _trainingWheels;
+            lblRiskPrefix.Text = cbShares.Checked ? "#" : "$";
             ApplySettings();
         }
         #endregion
@@ -1195,8 +1214,27 @@ namespace TdInterface
             if (!string.IsNullOrEmpty(startingTicker))
             {
                 txtSymbol.Text = startingTicker;
+                txtSymbol.Focus();
                 txtStop.Focus();
             }
+        }
+
+        private void pnlTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_EnabledChanged(object sender, EventArgs e)
+        {
+            //Button btn = sender as Button;
+            //btn.ForeColor = btn.Enabled ? Color.White : Color.FromArgb(33, 33, 33);
+            //btn.BackColor = btn.Enabled ? Color.FromArgb(192, 57, 43) : Color.FromArgb(245, 245, 245);
         }
     }
 }
