@@ -39,12 +39,12 @@ jobs:
       with:
         type: 'zip'
         filename: "TDInterface.zip"
-        directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\'
+        directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\'
         
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\netcoreapp3.1\publish\TDInterface.zip'
+        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: "newver"
 
