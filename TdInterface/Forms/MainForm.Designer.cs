@@ -39,20 +39,6 @@ namespace TdInterface
             this.txtLastPrice = new System.Windows.Forms.TextBox();
             this.txtStop = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.txtLastError = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnExitAsk10 = new System.Windows.Forms.Button();
-            this.btnExitAsk100 = new System.Windows.Forms.Button();
-            this.btnExitAsk25 = new System.Windows.Forms.Button();
-            this.btnExitAsk50 = new System.Windows.Forms.Button();
-            this.btnExitAsk33 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnExitMark10 = new System.Windows.Forms.Button();
-            this.btnExitMark25 = new System.Windows.Forms.Button();
-            this.btnExitMark33 = new System.Windows.Forms.Button();
-            this.btnExitMark50 = new System.Windows.Forms.Button();
-            this.btnExitMark100 = new System.Windows.Forms.Button();
             this.txtStopToClose = new System.Windows.Forms.TextBox();
             this.txtAveragePrice = new System.Windows.Forms.TextBox();
             this.txtShares = new System.Windows.Forms.TextBox();
@@ -60,10 +46,7 @@ namespace TdInterface
             this.txtAsk = new System.Windows.Forms.TextBox();
             this.txtLimit = new System.Windows.Forms.TextBox();
             this.cbShares = new System.Windows.Forms.CheckBox();
-            this.txtHeartBeat = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtConnectionStatus = new System.Windows.Forms.TextBox();
-            this.lblConnectionStatus = new System.Windows.Forms.Label();
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.txtRValue = new System.Windows.Forms.TextBox();
             this.txtPnL = new System.Windows.Forms.TextBox();
@@ -80,7 +63,7 @@ namespace TdInterface
             this.pbRisk = new System.Windows.Forms.PictureBox();
             this.lblRiskPrefix = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.btnExit = new System.Windows.Forms.Button();
+            this.btnExitForm = new System.Windows.Forms.Button();
             this.roundedPanel4 = new TdInterface.CustomControls.RoundedPanel();
             this.lblPnL = new System.Windows.Forms.Label();
             this.lblShares = new System.Windows.Forms.Label();
@@ -102,14 +85,23 @@ namespace TdInterface
             this.lblLimitOffset = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblLimit = new System.Windows.Forms.Label();
-            this.lblOpenPosition = new System.Windows.Forms.Label();
+            this.lblStartPosition = new System.Windows.Forms.Label();
             this.roundedPanel8 = new TdInterface.CustomControls.RoundedPanel();
-            this.lblStopTo = new System.Windows.Forms.Label();
             this.btnBreakEven = new TdInterface.CustomControls.RoundedButton();
             this.btnCancelAll = new TdInterface.CustomControls.RoundedButton();
-            this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.roundedPanel9 = new TdInterface.CustomControls.RoundedPanel();
+            this.rbExitBidAsk = new System.Windows.Forms.RadioButton();
+            this.rbExitMarket = new System.Windows.Forms.RadioButton();
+            this.btnExitPos100 = new TdInterface.CustomControls.RoundedButton();
+            this.btnExitPos50 = new TdInterface.CustomControls.RoundedButton();
+            this.btnExitPos33 = new TdInterface.CustomControls.RoundedButton();
+            this.btnExitPos25 = new TdInterface.CustomControls.RoundedButton();
+            this.lblClosePosition = new System.Windows.Forms.Label();
+            this.btnExitPos10 = new TdInterface.CustomControls.RoundedButton();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.lblLastError = new System.Windows.Forms.Label();
+            this.lblHeartbeat = new System.Windows.Forms.Label();
+            this.toolTipStatus = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).BeginInit();
             this.roundedPanel1.SuspendLayout();
             this.roundedPanel2.SuspendLayout();
@@ -124,6 +116,8 @@ namespace TdInterface
             ((System.ComponentModel.ISupportInitialize)(this.pbRValue)).BeginInit();
             this.roundedPanel7.SuspendLayout();
             this.roundedPanel8.SuspendLayout();
+            this.roundedPanel9.SuspendLayout();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtSymbol
@@ -197,205 +191,36 @@ namespace TdInterface
             this.txtStop.PlaceholderText = "STOP";
             this.txtStop.Size = new System.Drawing.Size(85, 27);
             this.txtStop.TabIndex = 1;
-            this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
+            this.txtStop.Leave += new System.EventHandler(this.txtWithDecimalValidation_Leave);
             // 
             // timer1
             // 
             this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // txtLastError
-            // 
-            this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(343, 819);
-            this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtLastError.Multiline = true;
-            this.txtLastError.Name = "txtLastError";
-            this.txtLastError.Size = new System.Drawing.Size(24, 26);
-            this.txtLastError.TabIndex = 34;
-            this.txtLastError.TabStop = false;
-            this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox4);
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Location = new System.Drawing.Point(373, 189);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(291, 208);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "To Close";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.btnExitAsk10);
-            this.groupBox4.Controls.Add(this.btnExitAsk100);
-            this.groupBox4.Controls.Add(this.btnExitAsk25);
-            this.groupBox4.Controls.Add(this.btnExitAsk50);
-            this.groupBox4.Controls.Add(this.btnExitAsk33);
-            this.groupBox4.Location = new System.Drawing.Point(8, 23);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(277, 83);
-            this.groupBox4.TabIndex = 0;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Bid/Ask";
-            // 
-            // btnExitAsk10
-            // 
-            this.btnExitAsk10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk10.Location = new System.Drawing.Point(9, 26);
-            this.btnExitAsk10.Name = "btnExitAsk10";
-            this.btnExitAsk10.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk10.TabIndex = 0;
-            this.btnExitAsk10.TabStop = false;
-            this.btnExitAsk10.Text = "10%";
-            this.btnExitAsk10.UseVisualStyleBackColor = false;
-            this.btnExitAsk10.Click += new System.EventHandler(this.btnExitAsk10_Click);
-            // 
-            // btnExitAsk100
-            // 
-            this.btnExitAsk100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk100.Location = new System.Drawing.Point(217, 26);
-            this.btnExitAsk100.Name = "btnExitAsk100";
-            this.btnExitAsk100.Size = new System.Drawing.Size(52, 39);
-            this.btnExitAsk100.TabIndex = 4;
-            this.btnExitAsk100.TabStop = false;
-            this.btnExitAsk100.Text = "100%";
-            this.btnExitAsk100.UseVisualStyleBackColor = false;
-            this.btnExitAsk100.Click += new System.EventHandler(this.btnExitAsk100_Click);
-            // 
-            // btnExitAsk25
-            // 
-            this.btnExitAsk25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk25.Location = new System.Drawing.Point(61, 26);
-            this.btnExitAsk25.Name = "btnExitAsk25";
-            this.btnExitAsk25.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk25.TabIndex = 1;
-            this.btnExitAsk25.TabStop = false;
-            this.btnExitAsk25.Text = "25%";
-            this.btnExitAsk25.UseVisualStyleBackColor = false;
-            this.btnExitAsk25.Click += new System.EventHandler(this.btnExitAsk25_Click);
-            // 
-            // btnExitAsk50
-            // 
-            this.btnExitAsk50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk50.Location = new System.Drawing.Point(165, 26);
-            this.btnExitAsk50.Name = "btnExitAsk50";
-            this.btnExitAsk50.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk50.TabIndex = 3;
-            this.btnExitAsk50.TabStop = false;
-            this.btnExitAsk50.Text = "50%";
-            this.btnExitAsk50.UseVisualStyleBackColor = false;
-            this.btnExitAsk50.Click += new System.EventHandler(this.btnExitAsk50_Click);
-            // 
-            // btnExitAsk33
-            // 
-            this.btnExitAsk33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk33.Location = new System.Drawing.Point(113, 26);
-            this.btnExitAsk33.Name = "btnExitAsk33";
-            this.btnExitAsk33.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk33.TabIndex = 2;
-            this.btnExitAsk33.TabStop = false;
-            this.btnExitAsk33.Text = "33%";
-            this.btnExitAsk33.UseVisualStyleBackColor = false;
-            this.btnExitAsk33.Click += new System.EventHandler(this.btnExitAsk33_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.btnExitMark10);
-            this.groupBox3.Controls.Add(this.btnExitMark25);
-            this.groupBox3.Controls.Add(this.btnExitMark33);
-            this.groupBox3.Controls.Add(this.btnExitMark50);
-            this.groupBox3.Controls.Add(this.btnExitMark100);
-            this.groupBox3.Location = new System.Drawing.Point(11, 123);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(274, 79);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Market";
-            // 
-            // btnExitMark10
-            // 
-            this.btnExitMark10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark10.Location = new System.Drawing.Point(6, 27);
-            this.btnExitMark10.Name = "btnExitMark10";
-            this.btnExitMark10.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark10.TabIndex = 0;
-            this.btnExitMark10.TabStop = false;
-            this.btnExitMark10.Text = "10%";
-            this.btnExitMark10.UseVisualStyleBackColor = false;
-            this.btnExitMark10.Click += new System.EventHandler(this.btnExitMark10_Click);
-            // 
-            // btnExitMark25
-            // 
-            this.btnExitMark25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark25.Location = new System.Drawing.Point(58, 27);
-            this.btnExitMark25.Name = "btnExitMark25";
-            this.btnExitMark25.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark25.TabIndex = 1;
-            this.btnExitMark25.TabStop = false;
-            this.btnExitMark25.Text = "25%";
-            this.btnExitMark25.UseVisualStyleBackColor = false;
-            this.btnExitMark25.Click += new System.EventHandler(this.btnExitMark25_Click);
-            // 
-            // btnExitMark33
-            // 
-            this.btnExitMark33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark33.Location = new System.Drawing.Point(110, 27);
-            this.btnExitMark33.Name = "btnExitMark33";
-            this.btnExitMark33.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark33.TabIndex = 2;
-            this.btnExitMark33.TabStop = false;
-            this.btnExitMark33.Text = "33%";
-            this.btnExitMark33.UseVisualStyleBackColor = false;
-            this.btnExitMark33.Click += new System.EventHandler(this.btnExitMark33_Click);
-            // 
-            // btnExitMark50
-            // 
-            this.btnExitMark50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark50.Location = new System.Drawing.Point(162, 27);
-            this.btnExitMark50.Name = "btnExitMark50";
-            this.btnExitMark50.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark50.TabIndex = 3;
-            this.btnExitMark50.TabStop = false;
-            this.btnExitMark50.Text = "50%";
-            this.btnExitMark50.UseVisualStyleBackColor = false;
-            this.btnExitMark50.Click += new System.EventHandler(this.btnExitMark50_Click);
-            // 
-            // btnExitMark100
-            // 
-            this.btnExitMark100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark100.Location = new System.Drawing.Point(214, 27);
-            this.btnExitMark100.Name = "btnExitMark100";
-            this.btnExitMark100.Size = new System.Drawing.Size(55, 39);
-            this.btnExitMark100.TabIndex = 4;
-            this.btnExitMark100.TabStop = false;
-            this.btnExitMark100.Text = "100%";
-            this.btnExitMark100.UseVisualStyleBackColor = false;
-            this.btnExitMark100.Click += new System.EventHandler(this.btnExitMark100_Click);
-            // 
             // txtStopToClose
             // 
             this.txtStopToClose.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtStopToClose.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtStopToClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
-            this.txtStopToClose.Location = new System.Drawing.Point(178, 30);
+            this.txtStopToClose.Location = new System.Drawing.Point(176, 13);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.PlaceholderText = "BREAKEVEN";
             this.txtStopToClose.Size = new System.Drawing.Size(155, 27);
             this.txtStopToClose.TabIndex = 6;
+            this.txtStopToClose.Leave += new System.EventHandler(this.txtWithDecimalValidation_Leave);
             // 
             // txtAveragePrice
             // 
             this.txtAveragePrice.BackColor = System.Drawing.SystemColors.Window;
             this.txtAveragePrice.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtAveragePrice.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtAveragePrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
             this.txtAveragePrice.Location = new System.Drawing.Point(125, 32);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.PlaceholderText = "-";
             this.txtAveragePrice.ReadOnly = true;
-            this.txtAveragePrice.Size = new System.Drawing.Size(85, 19);
+            this.txtAveragePrice.Size = new System.Drawing.Size(85, 27);
             this.txtAveragePrice.TabIndex = 16;
             this.txtAveragePrice.TabStop = false;
             // 
@@ -403,12 +228,13 @@ namespace TdInterface
             // 
             this.txtShares.BackColor = System.Drawing.SystemColors.Window;
             this.txtShares.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtShares.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
             this.txtShares.Location = new System.Drawing.Point(19, 32);
             this.txtShares.Name = "txtShares";
             this.txtShares.PlaceholderText = "-";
             this.txtShares.ReadOnly = true;
-            this.txtShares.Size = new System.Drawing.Size(85, 19);
+            this.txtShares.Size = new System.Drawing.Size(85, 27);
             this.txtShares.TabIndex = 18;
             this.txtShares.TabStop = false;
             this.txtShares.TextChanged += new System.EventHandler(this.txtShares_TextChanged);
@@ -447,71 +273,49 @@ namespace TdInterface
             // 
             this.txtLimit.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(28, 193);
+            this.txtLimit.Location = new System.Drawing.Point(28, 166);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.PlaceholderText = "LIMIT";
             this.txtLimit.Size = new System.Drawing.Size(96, 27);
             this.txtLimit.TabIndex = 2;
-            this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
+            this.txtLimit.Leave += new System.EventHandler(this.txtWithDecimalValidation_Leave);
             // 
             // cbShares
             // 
             this.cbShares.AutoSize = true;
-            this.cbShares.Location = new System.Drawing.Point(546, 506);
+            this.cbShares.BackColor = System.Drawing.SystemColors.Window;
+            this.cbShares.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.cbShares.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.cbShares.Location = new System.Drawing.Point(50, 11);
             this.cbShares.Name = "cbShares";
-            this.cbShares.Size = new System.Drawing.Size(68, 23);
+            this.cbShares.Size = new System.Drawing.Size(68, 19);
             this.cbShares.TabIndex = 5;
-            this.cbShares.Text = "Shares";
-            this.cbShares.UseVisualStyleBackColor = true;
+            this.cbShares.Text = "SHARES";
+            this.cbShares.UseVisualStyleBackColor = false;
             this.cbShares.CheckedChanged += new System.EventHandler(this.cbShares_CheckedChanged);
-            // 
-            // txtHeartBeat
-            // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(373, 819);
-            this.txtHeartBeat.Name = "txtHeartBeat";
-            this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(318, 26);
-            this.txtHeartBeat.TabIndex = 36;
-            this.txtHeartBeat.TabStop = false;
-            this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(373, 797);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 19);
-            this.label8.TabIndex = 35;
-            this.label8.Text = "HeartBeat";
             // 
             // txtConnectionStatus
             // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(19, 819);
+            this.txtConnectionStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txtConnectionStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
+            this.txtConnectionStatus.Location = new System.Drawing.Point(6, 6);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(318, 26);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(300, 19);
             this.txtConnectionStatus.TabIndex = 38;
             this.txtConnectionStatus.TabStop = false;
-            // 
-            // lblConnectionStatus
-            // 
-            this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(19, 797);
-            this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
-            this.lblConnectionStatus.TabIndex = 37;
-            this.lblConnectionStatus.Text = "Connection Status";
             // 
             // txtLimitOffset
             // 
             this.txtLimitOffset.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(194, 193);
+            this.txtLimitOffset.Location = new System.Drawing.Point(194, 166);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.PlaceholderText = "OFFSET";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 27);
             this.txtLimitOffset.TabIndex = 3;
-            this.txtLimitOffset.Leave += new System.EventHandler(this.txtLimitOffset_Leave);
+            this.txtLimitOffset.Leave += new System.EventHandler(this.txtWithDecimalValidation_Leave);
             // 
             // txtRValue
             // 
@@ -532,12 +336,13 @@ namespace TdInterface
             this.txtPnL.BackColor = System.Drawing.SystemColors.Window;
             this.txtPnL.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPnL.Enabled = false;
+            this.txtPnL.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtPnL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
             this.txtPnL.Location = new System.Drawing.Point(253, 32);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.PlaceholderText = "-";
             this.txtPnL.ReadOnly = true;
-            this.txtPnL.Size = new System.Drawing.Size(85, 19);
+            this.txtPnL.Size = new System.Drawing.Size(85, 27);
             this.txtPnL.TabIndex = 20;
             // 
             // timerGetSecuritiesAccount
@@ -563,12 +368,15 @@ namespace TdInterface
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(546, 484);
+            this.chkDisableFirstTarget.BackColor = System.Drawing.SystemColors.Window;
+            this.chkDisableFirstTarget.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.chkDisableFirstTarget.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(199, 14);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
-            this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(134, 19);
             this.chkDisableFirstTarget.TabIndex = 7;
-            this.chkDisableFirstTarget.Text = "Disable First Target";
-            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            this.chkDisableFirstTarget.Text = "DISABLE 1ST TARGET";
+            this.chkDisableFirstTarget.UseVisualStyleBackColor = false;
             // 
             // rpbTickerLogo
             // 
@@ -643,6 +451,7 @@ namespace TdInterface
             this.roundedPanel3.Controls.Add(this.txtRisk);
             this.roundedPanel3.Controls.Add(this.lblRiskPrefix);
             this.roundedPanel3.Controls.Add(this.lblRisk);
+            this.roundedPanel3.Controls.Add(this.cbShares);
             this.roundedPanel3.Location = new System.Drawing.Point(188, 110);
             this.roundedPanel3.Name = "roundedPanel3";
             this.roundedPanel3.Size = new System.Drawing.Size(170, 68);
@@ -672,30 +481,30 @@ namespace TdInterface
             // 
             // pnlTop
             // 
-            this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.pnlTop.Controls.Add(this.btnExit);
+            this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.pnlTop.Controls.Add(this.btnExitForm);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1046, 30);
+            this.pnlTop.Size = new System.Drawing.Size(369, 30);
             this.pnlTop.TabIndex = 44;
             this.pnlTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseDown);
             // 
-            // btnExit
+            // btnExitForm
             // 
-            this.btnExit.AutoSize = true;
-            this.btnExit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.btnExit.Location = new System.Drawing.Point(1008, 0);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(38, 30);
-            this.btnExit.TabIndex = 46;
-            this.btnExit.Text = "✖️";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExitForm.AutoSize = true;
+            this.btnExitForm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnExitForm.FlatAppearance.BorderSize = 0;
+            this.btnExitForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitForm.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExitForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.btnExitForm.Location = new System.Drawing.Point(331, 0);
+            this.btnExitForm.Name = "btnExitForm";
+            this.btnExitForm.Size = new System.Drawing.Size(38, 30);
+            this.btnExitForm.TabIndex = 46;
+            this.btnExitForm.Text = "✖️";
+            this.btnExitForm.UseVisualStyleBackColor = true;
+            this.btnExitForm.Click += new System.EventHandler(this.btnExitForm_Click);
             // 
             // roundedPanel4
             // 
@@ -705,7 +514,7 @@ namespace TdInterface
             this.roundedPanel4.Controls.Add(this.txtShares);
             this.roundedPanel4.Controls.Add(this.txtAveragePrice);
             this.roundedPanel4.Controls.Add(this.txtPnL);
-            this.roundedPanel4.Location = new System.Drawing.Point(370, 36);
+            this.roundedPanel4.Location = new System.Drawing.Point(12, 403);
             this.roundedPanel4.Name = "roundedPanel4";
             this.roundedPanel4.Size = new System.Drawing.Size(346, 68);
             this.roundedPanel4.TabIndex = 45;
@@ -755,7 +564,7 @@ namespace TdInterface
             this.roundedPanel5.Controls.Add(this.lblOneToOnePrefix);
             this.roundedPanel5.Controls.Add(this.lblOneToOne);
             this.roundedPanel5.Controls.Add(this.txtOneToOne);
-            this.roundedPanel5.Location = new System.Drawing.Point(370, 110);
+            this.roundedPanel5.Location = new System.Drawing.Point(12, 477);
             this.roundedPanel5.Name = "roundedPanel5";
             this.roundedPanel5.Size = new System.Drawing.Size(170, 68);
             this.roundedPanel5.TabIndex = 46;
@@ -801,7 +610,7 @@ namespace TdInterface
             this.roundedPanel6.Controls.Add(this.pbRValue);
             this.roundedPanel6.Controls.Add(this.lblR);
             this.roundedPanel6.Controls.Add(this.txtRValue);
-            this.roundedPanel6.Location = new System.Drawing.Point(546, 110);
+            this.roundedPanel6.Location = new System.Drawing.Point(188, 477);
             this.roundedPanel6.Name = "roundedPanel6";
             this.roundedPanel6.Size = new System.Drawing.Size(170, 68);
             this.roundedPanel6.TabIndex = 47;
@@ -850,7 +659,7 @@ namespace TdInterface
             this.btnBuyMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(12, 40);
             this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
-            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(155, 58);
+            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(155, 36);
             this.btnBuyMrkTriggerOco.TabIndex = 48;
             this.btnBuyMrkTriggerOco.Text = "BUY MARKET";
             this.btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
@@ -866,7 +675,7 @@ namespace TdInterface
             this.btnSellMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(178, 40);
             this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
-            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(155, 58);
+            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(155, 36);
             this.btnSellMrkTriggerOco.TabIndex = 49;
             this.btnSellMrkTriggerOco.Text = "SELL MARKET";
             this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
@@ -880,9 +689,9 @@ namespace TdInterface
             this.btnBuyLmtTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuyLmtTriggerOco.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnBuyLmtTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(12, 107);
+            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(12, 94);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
-            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(155, 58);
+            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(155, 36);
             this.btnBuyLmtTriggerOco.TabIndex = 50;
             this.btnBuyLmtTriggerOco.Text = "BUY LIMIT";
             this.btnBuyLmtTriggerOco.UseVisualStyleBackColor = false;
@@ -896,9 +705,9 @@ namespace TdInterface
             this.btnSellLmtTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSellLmtTriggerOco.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSellLmtTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(178, 107);
+            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(178, 94);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
-            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(155, 58);
+            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(155, 36);
             this.btnSellLmtTriggerOco.TabIndex = 51;
             this.btnSellLmtTriggerOco.Text = "SELL LIMIT";
             this.btnSellLmtTriggerOco.UseVisualStyleBackColor = false;
@@ -911,16 +720,17 @@ namespace TdInterface
             this.roundedPanel7.Controls.Add(this.lblLimitOffset);
             this.roundedPanel7.Controls.Add(this.label3);
             this.roundedPanel7.Controls.Add(this.lblLimit);
-            this.roundedPanel7.Controls.Add(this.lblOpenPosition);
+            this.roundedPanel7.Controls.Add(this.lblStartPosition);
             this.roundedPanel7.Controls.Add(this.btnSellLmtTriggerOco);
             this.roundedPanel7.Controls.Add(this.btnBuyMrkTriggerOco);
             this.roundedPanel7.Controls.Add(this.btnBuyLmtTriggerOco);
             this.roundedPanel7.Controls.Add(this.btnSellMrkTriggerOco);
             this.roundedPanel7.Controls.Add(this.txtLimit);
             this.roundedPanel7.Controls.Add(this.txtLimitOffset);
+            this.roundedPanel7.Controls.Add(this.chkDisableFirstTarget);
             this.roundedPanel7.Location = new System.Drawing.Point(12, 185);
             this.roundedPanel7.Name = "roundedPanel7";
-            this.roundedPanel7.Size = new System.Drawing.Size(346, 233);
+            this.roundedPanel7.Size = new System.Drawing.Size(346, 212);
             this.roundedPanel7.TabIndex = 52;
             // 
             // label4
@@ -928,7 +738,7 @@ namespace TdInterface
             this.label4.BackColor = System.Drawing.SystemColors.Window;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.label4.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label4.Location = new System.Drawing.Point(178, 193);
+            this.label4.Location = new System.Drawing.Point(178, 166);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(13, 27);
             this.label4.TabIndex = 55;
@@ -941,7 +751,7 @@ namespace TdInterface
             this.lblLimitOffset.BackColor = System.Drawing.SystemColors.Window;
             this.lblLimitOffset.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblLimitOffset.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.lblLimitOffset.Location = new System.Drawing.Point(178, 178);
+            this.lblLimitOffset.Location = new System.Drawing.Point(178, 151);
             this.lblLimitOffset.Name = "lblLimitOffset";
             this.lblLimitOffset.Size = new System.Drawing.Size(83, 15);
             this.lblLimitOffset.TabIndex = 54;
@@ -953,7 +763,7 @@ namespace TdInterface
             this.label3.BackColor = System.Drawing.SystemColors.Window;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.label3.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label3.Location = new System.Drawing.Point(12, 193);
+            this.label3.Location = new System.Drawing.Point(12, 166);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(13, 27);
             this.label3.TabIndex = 53;
@@ -966,47 +776,33 @@ namespace TdInterface
             this.lblLimit.BackColor = System.Drawing.SystemColors.Window;
             this.lblLimit.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblLimit.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.lblLimit.Location = new System.Drawing.Point(12, 178);
+            this.lblLimit.Location = new System.Drawing.Point(12, 151);
             this.lblLimit.Name = "lblLimit";
             this.lblLimit.Size = new System.Drawing.Size(39, 15);
             this.lblLimit.TabIndex = 49;
             this.lblLimit.Text = "LIMIT";
             this.lblLimit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblOpenPosition
+            // lblStartPosition
             // 
-            this.lblOpenPosition.AutoSize = true;
-            this.lblOpenPosition.BackColor = System.Drawing.SystemColors.Window;
-            this.lblOpenPosition.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblOpenPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
-            this.lblOpenPosition.Location = new System.Drawing.Point(12, 12);
-            this.lblOpenPosition.Name = "lblOpenPosition";
-            this.lblOpenPosition.Size = new System.Drawing.Size(120, 20);
-            this.lblOpenPosition.TabIndex = 53;
-            this.lblOpenPosition.Text = "OPEN POSITION";
+            this.lblStartPosition.AutoSize = true;
+            this.lblStartPosition.BackColor = System.Drawing.SystemColors.Window;
+            this.lblStartPosition.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblStartPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
+            this.lblStartPosition.Location = new System.Drawing.Point(12, 12);
+            this.lblStartPosition.Name = "lblStartPosition";
+            this.lblStartPosition.Size = new System.Drawing.Size(134, 21);
+            this.lblStartPosition.TabIndex = 53;
+            this.lblStartPosition.Text = "START POSITION";
             // 
             // roundedPanel8
             // 
-            this.roundedPanel8.Controls.Add(this.lblStopTo);
             this.roundedPanel8.Controls.Add(this.btnBreakEven);
             this.roundedPanel8.Controls.Add(this.txtStopToClose);
-            this.roundedPanel8.Location = new System.Drawing.Point(12, 424);
+            this.roundedPanel8.Location = new System.Drawing.Point(12, 551);
             this.roundedPanel8.Name = "roundedPanel8";
-            this.roundedPanel8.Size = new System.Drawing.Size(346, 80);
+            this.roundedPanel8.Size = new System.Drawing.Size(346, 60);
             this.roundedPanel8.TabIndex = 53;
-            // 
-            // lblStopTo
-            // 
-            this.lblStopTo.AutoSize = true;
-            this.lblStopTo.BackColor = System.Drawing.SystemColors.Window;
-            this.lblStopTo.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblStopTo.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.lblStopTo.Location = new System.Drawing.Point(178, 12);
-            this.lblStopTo.Name = "lblStopTo";
-            this.lblStopTo.Size = new System.Drawing.Size(23, 15);
-            this.lblStopTo.TabIndex = 54;
-            this.lblStopTo.Text = "TO";
-            this.lblStopTo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnBreakEven
             // 
@@ -1017,33 +813,206 @@ namespace TdInterface
             this.btnBreakEven.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.btnBreakEven.Location = new System.Drawing.Point(12, 12);
             this.btnBreakEven.Name = "btnBreakEven";
-            this.btnBreakEven.Size = new System.Drawing.Size(155, 58);
+            this.btnBreakEven.Size = new System.Drawing.Size(155, 36);
             this.btnBreakEven.TabIndex = 56;
-            this.btnBreakEven.Text = "MOVE STOP";
+            this.btnBreakEven.Text = "MOVE STOP TO";
             this.btnBreakEven.UseVisualStyleBackColor = false;
             this.btnBreakEven.EnabledChanged += new System.EventHandler(this.btn_EnabledChanged);
             this.btnBreakEven.Click += new System.EventHandler(this.btnBreakEven_Click);
             // 
             // btnCancelAll
             // 
-            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(154)))), ((int)(((byte)(154)))));
+            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(205)))), ((int)(((byte)(210)))));
             this.btnCancelAll.FlatAppearance.BorderSize = 0;
             this.btnCancelAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelAll.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancelAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(19, 510);
+            this.btnCancelAll.Location = new System.Drawing.Point(12, 715);
             this.btnCancelAll.Name = "btnCancelAll";
-            this.btnCancelAll.Size = new System.Drawing.Size(331, 58);
+            this.btnCancelAll.Size = new System.Drawing.Size(346, 36);
             this.btnCancelAll.TabIndex = 57;
-            this.btnCancelAll.Text = "CANCEL ALL";
+            this.btnCancelAll.Text = "CANCEL ALL ORDERS";
             this.btnCancelAll.UseVisualStyleBackColor = false;
             this.btnCancelAll.EnabledChanged += new System.EventHandler(this.btn_EnabledChanged);
             this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
             // 
+            // roundedPanel9
+            // 
+            this.roundedPanel9.Controls.Add(this.rbExitBidAsk);
+            this.roundedPanel9.Controls.Add(this.rbExitMarket);
+            this.roundedPanel9.Controls.Add(this.btnExitPos100);
+            this.roundedPanel9.Controls.Add(this.btnExitPos50);
+            this.roundedPanel9.Controls.Add(this.btnExitPos33);
+            this.roundedPanel9.Controls.Add(this.btnExitPos25);
+            this.roundedPanel9.Controls.Add(this.lblClosePosition);
+            this.roundedPanel9.Controls.Add(this.btnExitPos10);
+            this.roundedPanel9.Location = new System.Drawing.Point(12, 617);
+            this.roundedPanel9.Name = "roundedPanel9";
+            this.roundedPanel9.Padding = new System.Windows.Forms.Padding(12);
+            this.roundedPanel9.Size = new System.Drawing.Size(346, 92);
+            this.roundedPanel9.TabIndex = 58;
+            // 
+            // rbExitBidAsk
+            // 
+            this.rbExitBidAsk.AutoSize = true;
+            this.rbExitBidAsk.BackColor = System.Drawing.SystemColors.Window;
+            this.rbExitBidAsk.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbExitBidAsk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
+            this.rbExitBidAsk.Location = new System.Drawing.Point(243, 11);
+            this.rbExitBidAsk.Name = "rbExitBidAsk";
+            this.rbExitBidAsk.Size = new System.Drawing.Size(84, 24);
+            this.rbExitBidAsk.TabIndex = 64;
+            this.rbExitBidAsk.Text = "BID/ASK";
+            this.rbExitBidAsk.UseVisualStyleBackColor = false;
+            // 
+            // rbExitMarket
+            // 
+            this.rbExitMarket.AutoSize = true;
+            this.rbExitMarket.BackColor = System.Drawing.SystemColors.Window;
+            this.rbExitMarket.Checked = true;
+            this.rbExitMarket.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbExitMarket.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
+            this.rbExitMarket.Location = new System.Drawing.Point(152, 11);
+            this.rbExitMarket.Name = "rbExitMarket";
+            this.rbExitMarket.Size = new System.Drawing.Size(85, 24);
+            this.rbExitMarket.TabIndex = 59;
+            this.rbExitMarket.TabStop = true;
+            this.rbExitMarket.Text = "MARKET";
+            this.rbExitMarket.UseVisualStyleBackColor = false;
+            // 
+            // btnExitPos100
+            // 
+            this.btnExitPos100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnExitPos100.FlatAppearance.BorderSize = 0;
+            this.btnExitPos100.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitPos100.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExitPos100.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnExitPos100.Location = new System.Drawing.Point(275, 40);
+            this.btnExitPos100.Name = "btnExitPos100";
+            this.btnExitPos100.Size = new System.Drawing.Size(58, 36);
+            this.btnExitPos100.TabIndex = 63;
+            this.btnExitPos100.Tag = "1";
+            this.btnExitPos100.Text = "100%";
+            this.btnExitPos100.UseVisualStyleBackColor = false;
+            this.btnExitPos100.Click += new System.EventHandler(this.btnExitPosition_Click);
+            // 
+            // btnExitPos50
+            // 
+            this.btnExitPos50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnExitPos50.FlatAppearance.BorderSize = 0;
+            this.btnExitPos50.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitPos50.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExitPos50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnExitPos50.Location = new System.Drawing.Point(209, 40);
+            this.btnExitPos50.Name = "btnExitPos50";
+            this.btnExitPos50.Size = new System.Drawing.Size(58, 36);
+            this.btnExitPos50.TabIndex = 62;
+            this.btnExitPos50.Tag = ".5";
+            this.btnExitPos50.Text = "50%";
+            this.btnExitPos50.UseVisualStyleBackColor = false;
+            this.btnExitPos50.Click += new System.EventHandler(this.btnExitPosition_Click);
+            // 
+            // btnExitPos33
+            // 
+            this.btnExitPos33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnExitPos33.FlatAppearance.BorderSize = 0;
+            this.btnExitPos33.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitPos33.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExitPos33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnExitPos33.Location = new System.Drawing.Point(143, 40);
+            this.btnExitPos33.Name = "btnExitPos33";
+            this.btnExitPos33.Size = new System.Drawing.Size(58, 36);
+            this.btnExitPos33.TabIndex = 61;
+            this.btnExitPos33.Tag = ".33";
+            this.btnExitPos33.Text = "33%";
+            this.btnExitPos33.UseVisualStyleBackColor = false;
+            this.btnExitPos33.Click += new System.EventHandler(this.btnExitPosition_Click);
+            // 
+            // btnExitPos25
+            // 
+            this.btnExitPos25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnExitPos25.FlatAppearance.BorderSize = 0;
+            this.btnExitPos25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitPos25.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExitPos25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnExitPos25.Location = new System.Drawing.Point(77, 40);
+            this.btnExitPos25.Name = "btnExitPos25";
+            this.btnExitPos25.Size = new System.Drawing.Size(58, 36);
+            this.btnExitPos25.TabIndex = 60;
+            this.btnExitPos25.Tag = ".25";
+            this.btnExitPos25.Text = "25%";
+            this.btnExitPos25.UseVisualStyleBackColor = false;
+            this.btnExitPos25.Click += new System.EventHandler(this.btnExitPosition_Click);
+            // 
+            // lblClosePosition
+            // 
+            this.lblClosePosition.AutoSize = true;
+            this.lblClosePosition.BackColor = System.Drawing.SystemColors.Window;
+            this.lblClosePosition.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblClosePosition.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblClosePosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(49)))), ((int)(((byte)(75)))));
+            this.lblClosePosition.Location = new System.Drawing.Point(12, 12);
+            this.lblClosePosition.Name = "lblClosePosition";
+            this.lblClosePosition.Size = new System.Drawing.Size(134, 21);
+            this.lblClosePosition.TabIndex = 56;
+            this.lblClosePosition.Text = "CLOSE POSITION";
+            // 
+            // btnExitPos10
+            // 
+            this.btnExitPos10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnExitPos10.FlatAppearance.BorderSize = 0;
+            this.btnExitPos10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitPos10.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExitPos10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnExitPos10.Location = new System.Drawing.Point(11, 40);
+            this.btnExitPos10.Name = "btnExitPos10";
+            this.btnExitPos10.Size = new System.Drawing.Size(58, 36);
+            this.btnExitPos10.TabIndex = 56;
+            this.btnExitPos10.Tag = ".1";
+            this.btnExitPos10.Text = "10%";
+            this.btnExitPos10.UseVisualStyleBackColor = false;
+            this.btnExitPos10.Click += new System.EventHandler(this.btnExitPosition_Click);
+            // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.pnlBottom.Controls.Add(this.lblLastError);
+            this.pnlBottom.Controls.Add(this.lblHeartbeat);
+            this.pnlBottom.Controls.Add(this.txtConnectionStatus);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 759);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(369, 30);
+            this.pnlBottom.TabIndex = 47;
+            // 
+            // lblLastError
+            // 
+            this.lblLastError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblLastError.Location = new System.Drawing.Point(313, 0);
+            this.lblLastError.Name = "lblLastError";
+            this.lblLastError.Size = new System.Drawing.Size(28, 30);
+            this.lblLastError.TabIndex = 60;
+            this.lblLastError.Text = "📄";
+            this.lblLastError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblLastError.DoubleClick += new System.EventHandler(this.lblLastError_DoubleClick);
+            // 
+            // lblHeartbeat
+            // 
+            this.lblHeartbeat.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblHeartbeat.Location = new System.Drawing.Point(341, 0);
+            this.lblHeartbeat.Name = "lblHeartbeat";
+            this.lblHeartbeat.Size = new System.Drawing.Size(28, 30);
+            this.lblHeartbeat.TabIndex = 59;
+            this.lblHeartbeat.Text = "💓";
+            this.lblHeartbeat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblHeartbeat.MouseHover += new System.EventHandler(this.lblHeartbeat_MouseHover);
+            // 
             // MainForm
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.ClientSize = new System.Drawing.Size(1046, 883);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.ClientSize = new System.Drawing.Size(369, 789);
+            this.Controls.Add(this.pnlBottom);
+            this.Controls.Add(this.roundedPanel9);
             this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.roundedPanel8);
             this.Controls.Add(this.roundedPanel7);
@@ -1054,14 +1023,6 @@ namespace TdInterface
             this.Controls.Add(this.roundedPanel3);
             this.Controls.Add(this.roundedPanel2);
             this.Controls.Add(this.roundedPanel1);
-            this.Controls.Add(this.chkDisableFirstTarget);
-            this.Controls.Add(this.lblConnectionStatus);
-            this.Controls.Add(this.txtConnectionStatus);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtHeartBeat);
-            this.Controls.Add(this.cbShares);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.txtLastError);
             this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -1073,9 +1034,6 @@ namespace TdInterface
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).EndInit();
             this.roundedPanel1.ResumeLayout(false);
             this.roundedPanel1.PerformLayout();
@@ -1099,8 +1057,11 @@ namespace TdInterface
             this.roundedPanel7.PerformLayout();
             this.roundedPanel8.ResumeLayout(false);
             this.roundedPanel8.PerformLayout();
+            this.roundedPanel9.ResumeLayout(false);
+            this.roundedPanel9.PerformLayout();
+            this.pnlBottom.ResumeLayout(false);
+            this.pnlBottom.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1111,31 +1072,14 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtLastPrice;
         private System.Windows.Forms.TextBox txtStop;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TextBox txtLastError;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtAveragePrice;
         private System.Windows.Forms.TextBox txtShares;
         private System.Windows.Forms.TextBox txtBid;
         private System.Windows.Forms.TextBox txtAsk;
         private System.Windows.Forms.TextBox txtLimit;
-        private System.Windows.Forms.Button btnExitMark10;
-        private System.Windows.Forms.Button btnExitMark50;
-        private System.Windows.Forms.Button btnExitMark33;
-        private System.Windows.Forms.Button btnExitMark25;
-        private System.Windows.Forms.Button btnExitMark100;
         private System.Windows.Forms.CheckBox cbShares;
-        private System.Windows.Forms.TextBox txtHeartBeat;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtConnectionStatus;
-        private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
-        private System.Windows.Forms.Button btnExitAsk10;
-        private System.Windows.Forms.Button btnExitAsk25;
-        private System.Windows.Forms.Button btnExitAsk33;
-        private System.Windows.Forms.Button btnExitAsk50;
-        private System.Windows.Forms.Button btnExitAsk100;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.TextBox txtRValue;
         private System.Windows.Forms.TextBox txtPnL;
@@ -1150,7 +1094,7 @@ namespace TdInterface
         private System.Windows.Forms.Label lblStopPrefix;
         private System.Windows.Forms.Label lblRiskPrefix;
         private System.Windows.Forms.Panel pnlTop;
-        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnExitForm;
         private CustomControls.RoundedPanel roundedPanel4;
         private System.Windows.Forms.Label lblAvgPrice;
         private System.Windows.Forms.Label lblShares;
@@ -1170,15 +1114,27 @@ namespace TdInterface
         private CustomControls.RoundedButton btnBuyLmtTriggerOco;
         private CustomControls.RoundedButton btnSellLmtTriggerOco;
         private CustomControls.RoundedPanel roundedPanel7;
-        private System.Windows.Forms.Label lblOpenPosition;
+        private System.Windows.Forms.Label lblStartPosition;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblLimitOffset;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblLimit;
         private CustomControls.RoundedPanel roundedPanel8;
-        private System.Windows.Forms.Label lblStopTo;
         private CustomControls.RoundedButton btnBreakEven;
         private CustomControls.RoundedButton btnCancelAll;
+        private CustomControls.RoundedPanel roundedPanel9;
+        private CustomControls.RoundedButton btnExitPos10;
+        private System.Windows.Forms.Label lblClosePosition;
+        private CustomControls.RoundedButton btnExitPos100;
+        private CustomControls.RoundedButton btnExitPos50;
+        private CustomControls.RoundedButton btnExitPos33;
+        private CustomControls.RoundedButton btnExitPos25;
+        private System.Windows.Forms.RadioButton rbExitBidAsk;
+        private System.Windows.Forms.RadioButton rbExitMarket;
+        private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.Label lblHeartbeat;
+        private System.Windows.Forms.ToolTip toolTipStatus;
+        private System.Windows.Forms.Label lblLastError;
     }
 }
 

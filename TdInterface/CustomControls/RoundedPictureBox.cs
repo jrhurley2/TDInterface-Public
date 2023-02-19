@@ -12,9 +12,6 @@ namespace TdInterface.CustomControls
 {
     internal class RoundedPictureBox : PictureBox
     {
-        // Fields
-        private int borderSize = 5;
-
         //Constructor
         public RoundedPictureBox()
         {

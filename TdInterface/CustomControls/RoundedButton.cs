@@ -44,8 +44,7 @@ namespace TdInterface.CustomControls
             if (borderSize > 0)
                 smoothSize = borderSize;
 
-            //Rounded button
-            if (borderRadius > 2) 
+            if (borderRadius > 2) //Rounded button
             {
                 using (GraphicsPath pathSurface = GetFigurePath(rectSurface, borderRadius))
                 using (GraphicsPath pathBorder = GetFigurePath(rectBorder, borderRadius - borderSize))

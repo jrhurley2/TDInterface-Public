@@ -16,6 +16,7 @@ using Websocket.Client.Models;
 using Microsoft.VisualBasic;
 using Microsoft.Web.WebView2.Core;
 using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TdInterface
 {
@@ -67,7 +68,6 @@ namespace TdInterface
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
-
 
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
@@ -153,7 +153,7 @@ namespace TdInterface
                 var orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, Utility.UserPrincipal, triggerOrder);
 
                 ResetInitialOrder();
-                txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
+                lblLastError.Tag = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey, triggerOrder);
                 InputSender.PrintScreen();
             }
@@ -211,7 +211,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
             }
         }
 
@@ -239,7 +239,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
             }
 
         }
@@ -258,7 +258,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
             }
         }
 
@@ -284,7 +284,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
             }
 
         }
@@ -321,7 +321,7 @@ namespace TdInterface
                     }
                     else
                     {
-                        txtLastError.Text = "BreakEven Button Cant' Deterimine position";
+                        lblLastError.Tag = "BreakEven Button Cant' Deterimine position";
                         return;
                     }
 
@@ -336,11 +336,38 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
         }
+
+        private async void btnExitPosition_Click(object sender, EventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button btn = (Button)sender;
+
+                double exitPercentage = Double.Parse(btn.Tag.ToString());
+
+                if (rbExitMarket.Checked == true) // MARKET
+                {
+                    MessageBox.Show("Market @" + exitPercentage.ToString());
+                    //await ExitMarketPercentage(exitPercentage);
+                }
+                else if (rbExitBidAsk.Checked == true) // BID / ASK
+                {
+                    MessageBox.Show("Bid/Ask @" + exitPercentage.ToString());
+                    //await ExitLimitPercentage(exitPercentage);
+                }
+                else
+                {
+                    Debug.WriteLine("Invalid Exit Method Selection");
+                    lblLastError.Tag = "Inavlid Exit Method Selection";
+                }
+            }
+        }
+
 
         private async void btnExitMark10_Click(object sender, EventArgs e)
         {
@@ -399,31 +426,31 @@ namespace TdInterface
         }
 
 
-        private async Task ExitMarketPercentage(double percenntage)
+        private async Task ExitMarketPercentage(double percentage)
         {
             try
             {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
+                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percentage);
                 await ExitMarket(quantity);
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
         }
 
-        private async Task ExitLimitPercentage(double percenntage)
+        private async Task ExitLimitPercentage(double percentage)
         {
             try
             {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
+                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percentage);
                 await ExitBidOrAsk(quantity);
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -542,7 +569,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                lblLastError.Tag = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -749,14 +776,18 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                SafeUpdateTextBox(txtLastError, ex.Message);
+                SafeUpdateLabelTag(lblLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
             }
         }
 
         private async void HandleHeartBeat(SocketNotify notify)
         {
-            SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
+            lblHeartbeat.InvokeIfRequired(() =>
+            {
+                // Do anything you want with the control here
+                lblHeartbeat.Tag = DateTime.Now.ToString();
+            });
         }
 
         private async void HandleDisconnect(DisconnectionInfo disconnectionInfo)
@@ -768,7 +799,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                SafeUpdateTextBox(txtLastError, ex.Message);
+                SafeUpdateLabelTag(lblLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
                 SafeUpdateTextBox(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
 
@@ -802,21 +833,15 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
             }
-
         }
         
-        private void SafeUpdateButton(Button button, string text)
+        private void SafeUpdateLabelTag(Label lbl, string tag)
         {
-            if (button.InvokeRequired)
+            lbl.InvokeIfRequired(() =>
             {
-                var d = new SafeCallDelegate(SafeUpdateTextBox);
-                button.Invoke(d, new object[] { button, text });
-            }
-            else
-            {
-                button.Text = text;
-            }
-
+                // Do anything you want with the control here
+                lbl.Tag = tag;
+            });
         }
         #endregion
 
@@ -921,31 +946,31 @@ namespace TdInterface
                 btnSellLmtTriggerOco.PerformClick();
                 e.SuppressKeyPress = true;
             }
-            else if (e.KeyCode == Keys.F1)
-            {
-                btnExitMark10.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F2)
-            {
-                btnExitMark25.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F3)
-            {
-                btnExitMark33.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F4)
-            {
-                btnExitMark50.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F5)
-            {
-                btnExitMark100.PerformClick();
-                e.SuppressKeyPress = true;
-            }
+            //else if (e.KeyCode == Keys.F1)
+            //{
+            //    btnExitMark10.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F2)
+            //{
+            //    btnExitMark25.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F3)
+            //{
+            //    btnExitMark33.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F4)
+            //{
+            //    btnExitMark50.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F5)
+            //{
+            //    btnExitMark100.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
         }
 
 
@@ -1030,29 +1055,13 @@ namespace TdInterface
             }
         }
 
-        private void txtStop_Leave(object sender, EventArgs e)
+        private void txtWithDecimalValidation_Leave(object sender, EventArgs e)
         {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-        }
-
-        private void txtLimit_Leave(object sender, EventArgs e)
-        {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-
-        }
-
-        private void txtLimitOffset_Leave(object sender, EventArgs e)
-        {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
+            if (sender is TextBox)
+            {
+                TextBox txtBox = (TextBox)sender;
+                ValidateOcoStopAndLimit(txtBox);
+            }
         }
 
         private void cbShares_CheckedChanged(object sender, EventArgs e)
@@ -1078,7 +1087,7 @@ namespace TdInterface
                 {
                     txtBox.SelectAll();
                     txtBox.Focus();
-                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
+                    lblLastError.Tag = $"Can't Parse {txtBox.Name}";
                 }
                 else
                 {
@@ -1129,7 +1138,6 @@ namespace TdInterface
 
         private void txtLastError_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(txtLastError.Text, "Last Message");
         }
 
         private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
@@ -1225,7 +1233,7 @@ namespace TdInterface
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void btnExitForm_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -1235,6 +1243,19 @@ namespace TdInterface
             //Button btn = sender as Button;
             //btn.ForeColor = btn.Enabled ? Color.White : Color.FromArgb(33, 33, 33);
             //btn.BackColor = btn.Enabled ? Color.FromArgb(192, 57, 43) : Color.FromArgb(245, 245, 245);
+        }
+
+        private void lblHeartbeat_MouseHover(object sender, EventArgs e)
+        {
+            toolTipStatus.SetToolTip(lblHeartbeat, lblHeartbeat.Tag.ToString());
+        }
+
+        private void lblLastError_DoubleClick(object sender, EventArgs e)
+        {
+            if (lblLastError.Tag != null)
+            {
+                MessageBox.Show(lblLastError.Tag.ToString(), "Last Message");
+            }
         }
     }
 }
