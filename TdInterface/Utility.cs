@@ -102,26 +102,26 @@ namespace TdInterface
 
         public static byte[] GetEntropy()
         {
-            return UnicodeEncoding.ASCII.GetBytes(GetConsumerKey());
+            return UnicodeEncoding.ASCII.GetBytes("TDInterface");
         }
 
-        public static string GetConsumerKey()
-        {
-            try
-            {
-                if (_consumerKey == null)
-                {
-                    _consumerKey = File.ReadAllText("consumerkey.txt");
-                }
-            }
-            catch (Exception) { }  //Eat exception and return null;
-            return _consumerKey;
-        }
+        //public static string GetConsumerKey()
+        //{
+        //    try
+        //    {
+        //        if (_consumerKey == null)
+        //        {
+        //            _consumerKey = File.ReadAllText("consumerkey.txt");
+        //        }
+        //    }
+        //    catch (Exception) { }  //Eat exception and return null;
+        //    return _consumerKey;
+        //}
 
-        public static void SaveConsumerKey(string key)
-        {
-            File.WriteAllText("consumerkey.txt", key);
-        }
+        //public static void SaveConsumerKey(string key)
+        //{
+        //    File.WriteAllText("consumerkey.txt", key);
+        //}
 
         public static void ClearAccessTokenContainerFile()
         {

@@ -78,18 +78,11 @@ namespace TdInterface
 
                 if (accessTokenContainer == null || (accessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)))
                 {
-                        var consumerKey = Utility.GetConsumerKey();
-                    if (consumerKey == null)
-                    {
-                        var frm = new frmConsmerKey();
-                        frm.ShowDialog();
-                        consumerKey = frm.ConsumerKey;
-                        Utility.SaveConsumerKey(consumerKey);
-                    }
                     string loginUri = string.Empty;
 
                     if (accountInfo.UseTdaEquity)
                     {
+                        var consumerKey = accountInfo.TdaConsumerKey;
                         var callback = "http://localhost";
                         if (consumerKey.IndexOf("~") > 0)
                         {
@@ -98,7 +91,7 @@ namespace TdInterface
                             callback = parts[1];
                         }
 
-                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={{UrlEncoder.Create().Encode(callback)}}&client_id={{consumerKey}}%40AMER.OAUTHAP\")";
+                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(callback)}&client_id={consumerKey}%40AMER.OAUTHAP";
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;

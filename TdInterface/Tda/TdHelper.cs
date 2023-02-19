@@ -49,7 +49,9 @@ namespace TdInterface.Tda
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
 
-            var consumerKey = Utility.GetConsumerKey();
+            var accountInfo = Utility.GetAccountInfo();
+            var consumerKey = accountInfo.TdaConsumerKey;
+
             var redirectUri = "http://localhost";
             if (consumerKey.IndexOf("~") > 0)
             {
@@ -85,7 +87,9 @@ namespace TdInterface.Tda
         {
             try
             {
-                var consumerKey = Utility.GetConsumerKey();
+                var accountInfo = Utility.GetAccountInfo();
+                var consumerKey = accountInfo.TdaConsumerKey;
+
                 var redirectUri = "http://localhost";
                 if (consumerKey.IndexOf("~") > 0)
                 {
