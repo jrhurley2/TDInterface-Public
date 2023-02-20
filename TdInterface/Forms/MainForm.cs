@@ -1263,10 +1263,5 @@ namespace TdInterface
                 txtStop.Focus();
             }
         }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            if (_settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
-        }
     }
 }
