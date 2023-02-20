@@ -90,7 +90,6 @@ namespace TdInterface
             this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtMoveStop = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -704,20 +703,9 @@ namespace TdInterface
             this.txtMoveStop.TabIndex = 32;
             this.txtMoveStop.Text = "Move Stop To";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(428, 384);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 39;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(694, 496);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
@@ -838,7 +826,6 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox chkDisableFirstTarget;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label txtMoveStop;
-        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace TdInterface
@@ -8,14 +7,12 @@ namespace TdInterface
     public class Settings
     {
         private int _oneRProfitPercenatage;
-
         public bool TradeShares { get; set; }
         public int MaxShares { get; set; }
         public decimal MaxRisk { get; set; }
         public bool UseBidAskOcoCalc { get; set; }
         public bool DisableFirstTargetProfitDefault { get; set; }
-        public int OneRProfitPercenatage
-        { 
+        public int OneRProfitPercenatage { 
             get 
             { 
                 return _oneRProfitPercenatage == 0 ? 25 : _oneRProfitPercenatage; 
@@ -36,6 +33,5 @@ namespace TdInterface
         public bool SendAltPrtScrOnOpen { get; set; }
         public bool ShowPnL { get;set; }
         public bool AlwaysOnTop { get; set; }
-        public bool CaptureScreenshotOnOpen { get; set; }
     }
 }
