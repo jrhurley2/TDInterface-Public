@@ -164,7 +164,9 @@ namespace TdInterface
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey, triggerOrder);
 
-                InputSender.PrintScreen();
+                // Capture Screenshots if requested
+                if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
+                if (_settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
             }
             catch (Exception ex)
             {
@@ -1260,6 +1262,11 @@ namespace TdInterface
                 txtSymbol.Text = startingTicker;
                 txtStop.Focus();
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (_settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
         }
     }
 }

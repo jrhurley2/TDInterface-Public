@@ -24,14 +24,14 @@ namespace TdInterface
         private void btnSave_Click(object sender, EventArgs e)
         {
             _settings.TradeShares = chkTrainingWheels.Checked;
-            _settings.MaxRisk = Decimal.Parse(txtMaxRisk.Text);
+            _settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : decimal.Parse(txtMaxRisk.Text);
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
             _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
             _settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
             _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
             _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
             _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
-            _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : Decimal.Parse(txtDefaultLimitOffset.Text);
+            _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : decimal.Parse(txtDefaultLimitOffset.Text);
             _settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
             _settings.MaxLossLimitInR = _settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
             _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
@@ -40,6 +40,7 @@ namespace TdInterface
             _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
             _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
             _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
+            _settings.CaptureScreenshotOnOpen = cbCaptureSSOnOpen.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -67,6 +68,7 @@ namespace TdInterface
             chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
             chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
             chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
+            cbCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
 
         }
 
