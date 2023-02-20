@@ -176,7 +176,7 @@ namespace TdInterface.TradeStation
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
+                        Debug.WriteLine(ex.Message);
                     }
                 }
             }

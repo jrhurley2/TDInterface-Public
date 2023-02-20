@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using TdInterface.Tda.Model;
 using TdInterface.Model;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TdInterface
 {
@@ -144,5 +148,53 @@ namespace TdInterface
 
         }
 
+        public static void CaptureScreen(string ticker)
+        {
+            try
+            {
+                //Creating a new Bitmap object with size of entire virtual screen (all screens in one)
+                Bitmap captureBitmap = new Bitmap(SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, PixelFormat.Format32bppArgb);
+                //Creating a Rectangle object to capture entire virtual screen bounds
+
+                Rectangle captureRectangle = SystemInformation.VirtualScreen;
+
+                //Creating a New Graphics Object pointing to bitmap to capture to
+                Graphics captureGraphics = Graphics.FromImage(captureBitmap);
+                
+                //Copying Image from The Screen
+                captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
+                
+                //Save the screenshot
+                captureBitmap.Save(Path.Combine(ScreenshotPath(), $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}_{ticker}.png"), ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public static string ScreenshotPath()
+        {
+            // Check for existence of the OS provided 'Pictures' folder
+            string screenshotFolder = "Trade Screenshots";
+            string screenshotRootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+
+            if (!Directory.Exists(screenshotRootPath))
+            {
+                // Create folder within application directory
+                screenshotRootPath = Directory.GetCurrentDirectory();
+            }
+
+            string screenshotFullPath = Path.Combine(screenshotRootPath, screenshotFolder);
+
+            if (!Directory.Exists(screenshotFullPath))
+            {
+                Directory.CreateDirectory(screenshotFullPath);
+            }
+
+            // Return screenshot path
+            return screenshotFullPath;
+        }
     }
 }

@@ -164,7 +164,9 @@ namespace TdInterface
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey, triggerOrder);
 
-                InputSender.PrintScreen();
+                // Capture Screenshots if requested
+                if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
+                if (_settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
             }
             catch (Exception ex)
             {

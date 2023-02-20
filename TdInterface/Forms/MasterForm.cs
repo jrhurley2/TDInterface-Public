@@ -226,7 +226,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -249,7 +249,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -315,6 +315,18 @@ namespace TdInterface
         private void btnLogon_Click(object sender, EventArgs e)
         {
             Login();
+        }
+
+        private void btnScreenshots_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("explorer.exe", Utility.ScreenshotPath());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }
