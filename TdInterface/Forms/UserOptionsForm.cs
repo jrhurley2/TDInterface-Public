@@ -24,7 +24,7 @@ namespace TdInterface
         private void btnSave_Click(object sender, EventArgs e)
         {
             _settings.TradeShares = chkTrainingWheels.Checked;
-            _settings.MaxRisk = Decimal.Parse(txtMaxRisk.Text);
+            _settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : Decimal.Parse(txtMaxRisk.Text);
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
             _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
             _settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
