@@ -58,6 +58,7 @@ namespace TdInterface
             this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.chkAlwaysOnTop = new System.Windows.Forms.CheckBox();
+            this.cbCaptureSSOnOpen = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblTrainingWheels
@@ -280,7 +281,7 @@ namespace TdInterface
             // chkShowPnL
             // 
             this.chkShowPnL.AutoSize = true;
-            this.chkShowPnL.Location = new System.Drawing.Point(502, 181);
+            this.chkShowPnL.Location = new System.Drawing.Point(502, 274);
             this.chkShowPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chkShowPnL.Name = "chkShowPnL";
             this.chkShowPnL.Size = new System.Drawing.Size(78, 19);
@@ -339,11 +340,23 @@ namespace TdInterface
             this.chkAlwaysOnTop.Text = "Always On Top";
             this.chkAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
+            // cbCaptureSSOnOpen
+            // 
+            this.cbCaptureSSOnOpen.AutoSize = true;
+            this.cbCaptureSSOnOpen.Location = new System.Drawing.Point(502, 177);
+            this.cbCaptureSSOnOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbCaptureSSOnOpen.Name = "cbCaptureSSOnOpen";
+            this.cbCaptureSSOnOpen.Size = new System.Drawing.Size(178, 19);
+            this.cbCaptureSSOnOpen.TabIndex = 30;
+            this.cbCaptureSSOnOpen.Text = "Capture Screenshot on Open";
+            this.cbCaptureSSOnOpen.UseVisualStyleBackColor = true;
+            // 
             // UserOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 361);
+            this.Controls.Add(this.cbCaptureSSOnOpen);
             this.Controls.Add(this.chkAlwaysOnTop);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.chkDisableFirstTarget);
@@ -413,5 +426,6 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox chkDisableFirstTarget;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkAlwaysOnTop;
+        private System.Windows.Forms.CheckBox cbCaptureSSOnOpen;
     }
 }

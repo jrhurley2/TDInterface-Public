@@ -30,7 +30,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -75,7 +75,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -118,7 +118,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -132,7 +132,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual(OrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -140,7 +140,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual(OrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 
@@ -161,7 +161,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = OrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -175,7 +175,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual(OrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -183,7 +183,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual(OrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 

@@ -42,6 +42,7 @@ namespace TdInterface.Tda.Model
         {
             get
             {
+                if (currentBalances == null || initialBalances == null) return 0.0F;
                 return currentBalances.liquidationValue - initialBalances.liquidationValue;
                 //return this.positions != null ? this.positions.Where(p => p.instrument.assetType == "EQUITY").Sum(p => p.currentDayProfitLoss) : 0;
             }
