@@ -584,6 +584,7 @@ namespace TdInterface
 
                     float risk = Math.Abs(avgPrice - initialStop);
                     float reward = (float)_stockQuote.lastPrice - avgPrice;
+                    reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
                     SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
