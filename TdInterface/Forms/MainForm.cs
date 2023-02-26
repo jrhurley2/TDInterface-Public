@@ -475,13 +475,24 @@ namespace TdInterface
             string exitInstruction = GetExitInstruction(_activePosition);
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
+            //TODO:  THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
+            var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
+
             if (stopOrder != null && _settings.ReduceStopOnClose)
             {
-                //Change the stop order to a Limit order to take profit and repladce
-                var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
-                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder.orderId, newOrder);
-                var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, newStopOrder);
+                if (parent != null && parent.orderStrategyType.Equals("OCO"))
+                {
+                    await CancelAll();
+                    await PlaceMarketOrder(_activePosition.instrument.symbol, quantity, exitInstruction);
+                }
+                else
+                {
+                    //Change the stop order to a Limit order to take profit and repladce
+                    var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
+                    await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, stopOrder.orderId, newOrder);
+                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                    await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, newStopOrder);
+                }
             }
             else
             {
@@ -541,20 +552,7 @@ namespace TdInterface
         {
             try
             {
-
-                _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
-                Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-                var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
-
-                var tasks = new List<Task>();
-                foreach (var order in openOrders)
-                {
-                    Debug.WriteLine(JsonConvert.SerializeObject(order));
-                    var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
-                    tasks.Add(task);
-                }
-
-                await Task.WhenAll(tasks).ConfigureAwait(true);
+                await CancelAll();
             }
             catch (Exception ex)
             {
@@ -562,6 +560,23 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
+        }
+
+        private async Task CancelAll()
+        {
+            _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
+            Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
+            var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
+
+            var tasks = new List<Task>();
+            foreach (var order in openOrders)
+            {
+                Debug.WriteLine(JsonConvert.SerializeObject(order));
+                var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(true);
         }
         #endregion
 

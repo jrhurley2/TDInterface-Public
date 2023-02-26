@@ -118,8 +118,6 @@ namespace TdInterface.TradeStation
                                 _orderFillMessage.OnNext(new OrderFillMessage { Order = new OrderFillMessageOrder { OrderKey = ulong.Parse(order.orderId), Security = new OrderFillMessageOrderSecurity { Symbol = order.orderLegCollection[0].instrument.symbol } } });
                             }
                         }
-
-
                     }
 
                     _acctActivity.OnNext(new Tda.Model.AcctActivity());
