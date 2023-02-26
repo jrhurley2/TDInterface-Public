@@ -20,6 +20,18 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
+
+    - name: Get current version number
+      id: get_version
+      run: echo "::set-output name=version::$(xml sel -t -v '//Project/PropertyGroup/Version' TdInterface/TdInterface.csproj)"
+      
+    - name: Increment version number
+      id: increment_version
+      run: echo "::set-output name=version::$(echo ${{ steps.get_version.outputs.version }} | awk -F. '{$NF = $NF + 1;} 1' OFS=. )"
+      
+    - name: Update version number
+      run: xml ed -L -N msbuild -u '//msbuild:Project/msbuild:PropertyGroup/msbuild:Version' -v "${{ steps.increment_version.outputs.version }}" TdInterface/TdInterface.csproj
+      
     - name: Build
       run: dotnet build --no-restore
 #    - name: Test
