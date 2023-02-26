@@ -20,7 +20,12 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
-
+    
+    - name: Install xmlstarlet
+      run: |
+        sudo apt-get update
+        sudo apt-get install xmlstarlet
+        
     - name: Get current version number
       id: get_version
       run: echo "::set-output name=version::$(xml sel -t -v '//Project/PropertyGroup/Version' TdInterface/TdInterface.csproj)"
