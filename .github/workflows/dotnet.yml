@@ -28,12 +28,12 @@ jobs:
       run: |
         $pathToCsproj = "TdInterface/TdInterface.csproj"
         $xml = [xml](Get-Content $pathToCsproj)
-        $version = $xml.Project.PropertyGroup.Version
+        $version = $xml.Project.PropertyGroup.AssemblyVersion
         $major = [int]($version.Split(".")[0])
         $minor = [int]($version.Split(".")[1])
         $patch = [int]($version.Split(".")[2])
         $newVersion = "{0}.{1}.{2}" -f $major, $minor, ($patch + 1)
-        $xml.Project.PropertyGroup.Version = $newVersion
+        $xml.Project.PropertyGroup.AssemblyVersion = $newVersion
         $xml.Save($pathToCsproj)
 
     - name: Commit changes
