@@ -80,7 +80,41 @@ namespace TdInterface
         }
 
 
-        public Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl /* Securitiesaccount securitiesaccount*/, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        {
+            maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
+
+            var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
+
+            var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
+            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
+            var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
+
+            if (riskPerShare < 0)
+            {
+                throw new Exception("Risk Per Share was negative.");
+            }
+
+            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
+
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
+
+            Order triggerOrder = null;
+
+            if (disableFirstTarget)
+            {
+                triggerOrder = TDAOrderHelper.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
+            }
+            else
+            {
+                triggerOrder = TDAOrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
+            }
+
+            return triggerOrder;
+        }
+
+        public static double CheckMaxRisk(double maxRisk, double dailyPnl, Settings settings)
         {
             if (!settings.TradeShares && settings.EnableMaxLossLimit)
             {
@@ -107,34 +141,7 @@ namespace TdInterface
                 }
             }
 
-            var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
-
-            var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
-            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
-            var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
-            var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
-
-            if (riskPerShare < 0)
-            {
-                throw new Exception("Risk Per Share was negative.");
-            }
-
-            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
-
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
-
-            Order triggerOrder = null;
-            
-            if (chkDisableFirstTarget.Checked)
-            {
-                triggerOrder = TDAOrderHelper.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
-            }
-            else
-            {
-                triggerOrder = TDAOrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
-            }
-
-            return triggerOrder;
+            return maxRisk;
         }
 
         public async Task GenericTriggerOco(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
@@ -151,12 +158,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
                     orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
 
