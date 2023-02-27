@@ -21,10 +21,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-#    - name: Install PowerShell
-#      uses: microsoft/setup-powershell@v1
-
     - name: Increment version number
+      if: github.ref == 'refs/heads/master'
       id: version
       run: |
         $pathToCsproj = "TdInterface/TdInterface.csproj"
@@ -39,6 +37,7 @@ jobs:
         Write-Output "::set-output name=version::$newVersion"
 
     - name: Commit changes
+      if: github.ref == 'refs/heads/master'
       run: |
         git config --global user.name "Jrhurley2"
         git config --global user.email "jrhurley2@outlook.com"
@@ -48,17 +47,12 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore
-#    - name: Test
-#      run: dotnet test --no-build --verbosity normal
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    
     - name: Publish
       run: dotnet publish
-      
-#    - name: Get next version
-#      uses: reecetech/version-increment@2022.5.1
-#      id: version
-#      with:
-#        scheme: semver
-#        increment: patch      
 
     - name: Archive Release
       uses: thedoctor0/zip-release@main
@@ -68,6 +62,7 @@ jobs:
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\'
         
     - name: Upload Release
+      if: github.ref == 'refs/heads/master'
       uses: ncipollo/release-action@v1
       with:
         artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
