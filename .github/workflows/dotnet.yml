@@ -25,6 +25,7 @@ jobs:
 #      uses: microsoft/setup-powershell@v1
 
     - name: Increment version number
+      id: version
       run: |
         $pathToCsproj = "TdInterface/TdInterface.csproj"
         $xml = [xml](Get-Content $pathToCsproj)
@@ -35,6 +36,7 @@ jobs:
         $newVersion = "{0}.{1}.{2}" -f $major, $minor, ($patch + 1)
         $xml.Project.PropertyGroup.AssemblyVersion = $newVersion
         $xml.Save($pathToCsproj)
+        Write-Output "::set-output name=version::$newVersion"
 
     - name: Commit changes
       run: |
@@ -70,5 +72,5 @@ jobs:
       with:
         artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: "newver"
+        tag: "${{ steps.version.outputs.version}}"
 
