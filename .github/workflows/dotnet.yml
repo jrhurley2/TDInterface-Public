@@ -20,23 +20,30 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
-    
-    - name: Install xmlstarlet
-      run: |
-        sudo apt-get update
-        sudo apt-get install xmlstarlet
-        
-    - name: Get current version number
-      id: get_version
-      run: echo "::set-output name=version::$(xml sel -t -v '//Project/PropertyGroup/Version' TdInterface/TdInterface.csproj)"
-      
+
+    - name: Install PowerShell
+      uses: microsoft/setup-powershell@v1
+
     - name: Increment version number
-      id: increment_version
-      run: echo "::set-output name=version::$(echo ${{ steps.get_version.outputs.version }} | awk -F. '{$NF = $NF + 1;} 1' OFS=. )"
-      
-    - name: Update version number
-      run: xml ed -L -N msbuild -u '//msbuild:Project/msbuild:PropertyGroup/msbuild:Version' -v "${{ steps.increment_version.outputs.version }}" TdInterface/TdInterface.csproj
-      
+      run: |
+        $pathToCsproj = "TdInterface/TdInterface.csproj"
+        $xml = [xml](Get-Content $pathToCsproj)
+        $version = $xml.Project.PropertyGroup.Version
+        $major = [int]($version.Split(".")[0])
+        $minor = [int]($version.Split(".")[1])
+        $patch = [int]($version.Split(".")[2])
+        $newVersion = "{0}.{1}.{2}" -f $major, $minor, ($patch + 1)
+        $xml.Project.PropertyGroup.Version = $newVersion
+        $xml.Save($pathToCsproj)
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "Jrhurley2"
+        git config --global user.email "jrhurley2@outlook.com"
+        git add TdInterface/TdInterface.csproj
+        git commit -m "Increment version number"
+        git push
+
     - name: Build
       run: dotnet build --no-restore
 #    - name: Test
