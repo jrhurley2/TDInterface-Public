@@ -21,8 +21,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Install PowerShell
-      uses: microsoft/setup-powershell@v1
+#    - name: Install PowerShell
+#      uses: microsoft/setup-powershell@v1
 
     - name: Increment version number
       run: |
