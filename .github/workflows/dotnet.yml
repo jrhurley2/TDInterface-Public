@@ -68,4 +68,5 @@ jobs:
         artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: "${{ steps.version.outputs.version}}"
+        makeLatest: false
 
