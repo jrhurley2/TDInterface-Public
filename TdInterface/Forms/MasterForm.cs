@@ -5,22 +5,39 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation;
 
 namespace TdInterface
 {
     public partial class MasterForm : Form
     {
         private IStreamer _streamer;
+        private string _equityAccountId;
+
+        private StockQuote _stockQuote = new StockQuote();
+        private Securitiesaccount _securitiesaccount;
+        private Position _activePosition;
+        private Position _initialPosition;
+        private CandleList _candleList;
+        private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
+        private TradeStationHelper _tradeStationHelper;
+        private IHelper _tradeHelper;
+
+
+        private bool _isLoggedIn = false;
 
         public MasterForm()
         {
@@ -41,58 +58,131 @@ namespace TdInterface
 
                 var accessTokenContainer = Utility.GetAccessTokenContainer();
 
-                if (accessTokenContainer == null || accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)
-                {
-                    var consumerKey = Utility.GetConsumerKey();
-                    if (consumerKey == null)
-                    {
-                        var frm = new frmConsmerKey();
-                        frm.ShowDialog();
-                        consumerKey = frm.ConsumerKey;
-                        Utility.SaveConsumerKey(consumerKey);
-                    }
+                Login().ConfigureAwait(false);
+            }
+            catch (Exception ex) { 
+            }
+        }
 
-                    var callback = "http://localhost";
-                    if (consumerKey.IndexOf("~") > 0)
-                    {
-                        var parts = consumerKey.Split('~');
-                        consumerKey = parts[0];
-                        callback = parts[1];
-                    }
-                    var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(callback)}&client_id={consumerKey}%40AMER.OAUTHAP");
-                    //var oAuthLoginForm = new OAuthLoginForm($"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost&client_id={consumerKey}%40AMER.OAUTHAP");
-                    int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                    Utility.AuthToken = oAuthLoginForm.Code;
-                    accessTokenContainer = _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken)).Result;
-                    Utility.SaveAccessTokenContainer(accessTokenContainer);
+
+        private async Task Login()
+        {
+            try
+            {
+
+                var accountInfo = Utility.GetAccountInfo();
+                if (accountInfo == null)
+                {
+                    var frmAccountInfo = new AccountInfoForm();
+                    frmAccountInfo.ShowDialog();
+                    accountInfo = Utility.GetAccountInfo();
                 }
 
+                var accessTokenContainer = Utility.GetAccessTokenContainer();
                 Utility.AccessTokenContainer = accessTokenContainer;
 
-                Utility.AccessTokenContainer = _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer).Result;
-                Utility.UserPrincipal = _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer).Result;
+                if (accessTokenContainer == null || (accessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (accessTokenContainer.IsRefreshTokenExpired || accessTokenContainer.RefreshTokenExpiresInDays < 5)))
+                {
+                    string loginUri = string.Empty;
+
+                    if (accountInfo.UseTdaEquity)
+                    {
+                        var consumerKey = accountInfo.TdaConsumerKey;
+                        var callback = "http://localhost";
+                        if (consumerKey.IndexOf("~") > 0)
+                        {
+                            var parts = consumerKey.Split('~');
+                            consumerKey = parts[0];
+                            callback = parts[1];
+                        }
+
+                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(callback)}&client_id={consumerKey}%40AMER.OAUTHAP";
+                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
+                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+                        Utility.AuthToken = oAuthLoginForm.Code;
+                        accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
+                        Utility.SaveAccessTokenContainer(accessTokenContainer);
+                        Utility.AccessTokenContainer = accessTokenContainer;
+                    }
+                    else if (accountInfo.UseTSEquity)
+                    {
+                        _tradeStationHelper = new TradeStationHelper(accountInfo.TradeStationClientId, accountInfo.TradeStationClientSecret);
+
+                        var clientid = accountInfo.TradeStationClientId;
+                        var clientSecret = accountInfo.TradeStationClientSecret;
+                        loginUri = $"https://signin.tradestation.com/authorize?response_type=code&client_id={clientid}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
+
+                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
+                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
+                        Utility.AuthToken = oAuthLoginForm.Code;
+                        accessTokenContainer = await _tradeStationHelper.GetAccessToken(Utility.AuthToken);
+                        Utility.SaveAccessTokenContainer(accessTokenContainer);
+                        Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(accessTokenContainer);
+                    }
+                    else
+                    {
+                        var frmAccountInfo = new AccountInfoForm();
+                        frmAccountInfo.ShowDialog();
+                        accountInfo = Utility.GetAccountInfo();
+                    }
+                }
+
+                if (accountInfo.UseTdaEquity)
+                {
+                    Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+                    Utility.UserPrincipal = await _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer);
+                    _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
+                    _streamer = new TDStreamer(Utility.UserPrincipal);
+                    _tradeHelper = new TdHelper();
+                }
+                else if (accountInfo.UseTSEquity)
+                {
+
+                    var clientid = accountInfo.TradeStationClientId;
+                    var clientSecret = accountInfo.TradeStationClientSecret;
+
+                    if (accountInfo.TradeStationUseSimAccount)
+                    {
+                        //_tradeHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
+                        _tradeStationHelper = new TradeStationHelper("https://sim-api.tradestation.com/", clientid, clientSecret);
+                    }
+                    else
+                    {
+                        //_tradeHelper = new TradeStationHelper();
+                        _tradeStationHelper = new TradeStationHelper(clientid, clientSecret);
+                    }
+                    _tradeHelper = _tradeStationHelper;
 
 
-                _streamer = new TDStreamer(Utility.UserPrincipal);
+                    Utility.AccessTokenContainer = await _tradeStationHelper.RefreshAccessToken(Utility.AccessTokenContainer);
 
+
+                    var accounts = await _tradeStationHelper.GetAccounts(Utility.AccessTokenContainer);
+                    //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
+                    var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    _equityAccountId = equitiyAccount.AccountID;
+
+                    _streamer = new TradeStationStreamer(_tradeStationHelper, _equityAccountId);
+                    ((TradeStationStreamer)_streamer).StartAccountStream();
+                }
                 timer1.Start();
+
+                _isLoggedIn = true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
-                throw;
+                MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
+                _isLoggedIn = false;
             }
-
-
-            //InitializeComponent();
         }
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
             if (Utility.AccessTokenContainer.ExpiresIn < 100)
             {
-                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
+                Utility.AccessTokenContainer = await _tradeHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
         }
 
@@ -120,7 +210,7 @@ namespace TdInterface
             var settings = Utility.GetSettings();
             if (settings != null)
             {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
+                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;    
                 _settings = settings;
             }
 
@@ -141,7 +231,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -153,7 +243,7 @@ namespace TdInterface
             {
                 _textWriterTraceListener.Flush();
                 _textWriterTraceListener.Close();
-                _streamer.Dispose();
+                if(_streamer != null) _streamer.Dispose();
                 _textWriterTraceListener.Dispose();
 
                 foreach(var frm in _mainForms)
@@ -164,7 +254,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -192,13 +282,13 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    frm = new MainForm(_streamer, _settings, name);
+                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
                     frm.Tag = name;
                     _mainForms.Add(nameAsKey, frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, "Enter a symbol...");
+                    frm = new MainForm(_streamer, _settings, "Enter a symbol...", _equityAccountId, _tradeHelper);
                     _mainForms.Add(nameAsKey, frm);
 
                 }
@@ -219,6 +309,29 @@ namespace TdInterface
         {
             var futureCalcFrom = new FurtureCalcForm(_streamer);
             futureCalcFrom.Show();
+        }
+
+        private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var accountInfoForm = new AccountInfoForm();
+            accountInfoForm.Show();
+        }
+
+        private void btnLogon_Click(object sender, EventArgs e)
+        {
+            Login();
+        }
+
+        private void btnScreenshots_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("explorer.exe", Utility.ScreenshotPath());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }

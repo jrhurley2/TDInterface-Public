@@ -8,12 +8,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
+//using TdInterface.TradeStation.Model;
 using Websocket.Client;
 
 namespace TdInterface.Tda
 {
-    public class TdHelper
+    public class TdHelper : IHelper
     {
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tdameritrade.com");
@@ -28,10 +30,28 @@ namespace TdInterface.Tda
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
+
+        private static Securitiesaccount _securitiesaccount;
+
+        public Securitiesaccount Securitiesaccount
+        {
+            get
+            {
+                return _securitiesaccount;
+            }
+            set
+            {
+                _securitiesaccount = value;
+            }
+        }
+
+
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
 
-            var consumerKey = Utility.GetConsumerKey();
+            var accountInfo = Utility.GetAccountInfo();
+            var consumerKey = accountInfo.TdaConsumerKey;
+
             var redirectUri = "http://localhost";
             if (consumerKey.IndexOf("~") > 0)
             {
@@ -58,8 +78,8 @@ namespace TdInterface.Tda
 
             var response = await _httpClient.SendAsync(request);
 
-            var accessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
-
+            var accessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            accessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
             return accessTokenContainer;
         }
 
@@ -67,7 +87,9 @@ namespace TdInterface.Tda
         {
             try
             {
-                var consumerKey = Utility.GetConsumerKey();
+                var accountInfo = Utility.GetAccountInfo();
+                var consumerKey = accountInfo.TdaConsumerKey;
+
                 var redirectUri = "http://localhost";
                 if (consumerKey.IndexOf("~") > 0)
                 {
@@ -94,9 +116,10 @@ namespace TdInterface.Tda
 
                 var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-                var newAccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
+                newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
 
                 return newAccessTokenContainer;
             }
@@ -107,9 +130,9 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
+        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, userPrincipal.primaryAccountId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
             {
                 Method = HttpMethod.Get,
             };
@@ -134,7 +157,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var account = DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
+            var account = Utility.DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
 
             return account;
         }
@@ -149,7 +172,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var stockQuote = DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
+            var stockQuote = Utility.DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
 
             return stockQuote[symbol.ToUpper()];
         }
@@ -167,7 +190,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var candleList = DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
+            var candleList = Utility.DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
 
             foreach(var candle in candleList.candles)
             {
@@ -177,9 +200,10 @@ namespace TdInterface.Tda
             return candleList;
         }
 
-        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        //public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, userPrincipal.accounts[0].accountId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, accountId)))
             {
                 Method = HttpMethod.Post,
                 Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
@@ -201,9 +225,9 @@ namespace TdInterface.Tda
             return orderNumber;
         }
 
-        public async Task ReplaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, string orderId, Order newOrder)
+        public async Task<ulong> ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder)
         {
-            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, userPrincipal.accounts[0].accountId, orderId));
+            var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
 
             var request = new HttpRequestMessage(HttpMethod.Put, uri)
             {
@@ -221,12 +245,18 @@ namespace TdInterface.Tda
                 throw new Exception($"Error Replacing Order {await response.Content.ReadAsStringAsync()} ");
             };
 
+            var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
+            var orderNumber = ulong.Parse(orderNumberString);
+            Debug.WriteLine(JsonConvert.SerializeObject(newOrder));
+
+            return orderNumber;
+
 
         }
 
-        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
+        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, userPrincipal.accounts[0].accountId, order.orderId)))
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, accountId, order.orderId)))
             {
                 Method = HttpMethod.Delete,
             };
@@ -258,7 +288,7 @@ namespace TdInterface.Tda
                 throw new Exception("Error retreiving UserPrincipals");
             }
 
-            var userPrincipal = DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
+            var userPrincipal = Utility.DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
 
             return userPrincipal;
         }
@@ -280,7 +310,7 @@ namespace TdInterface.Tda
                     throw new Exception("Error retreiving Streamer Subscription Keys");
                 };
 
-                var keys = DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
+                var keys = Utility.DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
 
             }
             catch (Exception ex)
@@ -291,19 +321,10 @@ namespace TdInterface.Tda
             return string.Empty;
         }
 
-        private static T DeserializeJsonFromStream<T>(Stream stream)
+        public Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Order triggerOrder)
         {
-            if (stream == null || stream.CanRead == false)
-                return default(T);
-
-            using (var sr = new StreamReader(stream))
-            using (var jtr = new JsonTextReader(sr))
-            {
-                var js = new JsonSerializer();
-                var searchResult = js.Deserialize<T>(jtr);
-                return searchResult;
-            }
-
+            var lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol.ToUpper() == triggerOrder.orderLegCollection[0].instrument.symbol.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+            return lmitOrder;
         }
 
     }

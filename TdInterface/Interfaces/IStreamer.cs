@@ -14,12 +14,12 @@ namespace TdInterface.Interfaces
         IObservable<OrderFillMessage> OrderFilled { get; }
         IObservable<OrderEntryRequestMessage> OrderRecieved { get; }
         IObservable<ReconnectionInfo> Reconnection { get; }
-        IObservable<StockQuote> StockQuoteReceived { get; }
+        IObservable<TdInterface.Model.StockQuote> StockQuoteReceived { get; }
         WebsocketClient WebsocketClient { get; }
 
         void Dispose();
         void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol);
         void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol);
-        void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol);
+        void SubscribeQuote(string tickerSymbol);
     }
 }

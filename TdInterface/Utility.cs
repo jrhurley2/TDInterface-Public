@@ -7,6 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using TdInterface.Tda.Model;
+using TdInterface.Model;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TdInterface
 {
@@ -14,6 +19,7 @@ namespace TdInterface
     {
         private static string TokenFile = "AccessToken.json";
         private static string SettingsFile = "Settings.json";
+        private static string AccountInfoFile = "AccountInfo.json";
 
         public static string AuthToken { get; set; }
         private static string _consumerKey = null;
@@ -67,32 +73,128 @@ namespace TdInterface
             }
         }
 
-        public static byte[] GetEntropy()
+        public static void SaveAccountInfo(AccountInfo accountInfo)
         {
-            return UnicodeEncoding.ASCII.GetBytes(GetConsumerKey());
+            var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
+
+            var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accountInfoAsString);
+            var encrypted = ProtectedData.Protect(bytesToEncrypt, null, DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(AccountInfoFile, encrypted);
+            //var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
+
+            //File.WriteAllText(AccountInfoFile, accountInfoAsString);
         }
 
-        public static string GetConsumerKey()
+        public static AccountInfo GetAccountInfo()
         {
             try
             {
-                if (_consumerKey == null)
-                {
-                    _consumerKey = File.ReadAllText("consumerkey.txt");
-                }
+                var bytesToDecrypt = File.ReadAllBytes(AccountInfoFile);
+                var decrypted = ProtectedData.Unprotect(bytesToDecrypt, null, DataProtectionScope.CurrentUser);
+
+                var accountInfoString = UnicodeEncoding.ASCII.GetString(decrypted);
+                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoString);
+                //var accountInfoAsString = File.ReadAllText(AccountInfoFile);
+                //return JsonConvert.DeserializeObject<AccountInfo>(accountInfoAsString);
             }
-            catch (Exception) { }  //Eat exception and return null;
-            return _consumerKey;
+            catch
+            {
+                return null;
+            }
         }
 
-        public static void SaveConsumerKey(string key)
+
+        public static byte[] GetEntropy()
         {
-            File.WriteAllText("consumerkey.txt", key);
+            return UnicodeEncoding.ASCII.GetBytes("TDInterface");
         }
+
+        //public static string GetConsumerKey()
+        //{
+        //    try
+        //    {
+        //        if (_consumerKey == null)
+        //        {
+        //            _consumerKey = File.ReadAllText("consumerkey.txt");
+        //        }
+        //    }
+        //    catch (Exception) { }  //Eat exception and return null;
+        //    return _consumerKey;
+        //}
+
+        //public static void SaveConsumerKey(string key)
+        //{
+        //    File.WriteAllText("consumerkey.txt", key);
+        //}
 
         public static void ClearAccessTokenContainerFile()
         {
             File.Delete(TokenFile);
+        }
+
+
+        public static T DeserializeJsonFromStream<T>(Stream stream)
+        {
+            if (stream == null || stream.CanRead == false)
+                return default(T);
+
+            using (var sr = new StreamReader(stream))
+            using (var jtr = new JsonTextReader(sr))
+            {
+                var js = new JsonSerializer();
+                var searchResult = js.Deserialize<T>(jtr);
+                return searchResult;
+            }
+
+        }
+
+        public static void CaptureScreen(string ticker)
+        {
+            try
+            {
+                //Creating a new Bitmap object with size of entire virtual screen (all screens in one)
+                Bitmap captureBitmap = new Bitmap(SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, PixelFormat.Format32bppArgb);
+                //Creating a Rectangle object to capture entire virtual screen bounds
+
+                Rectangle captureRectangle = SystemInformation.VirtualScreen;
+
+                //Creating a New Graphics Object pointing to bitmap to capture to
+                Graphics captureGraphics = Graphics.FromImage(captureBitmap);
+                
+                //Copying Image from The Screen
+                captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
+                
+                //Save the screenshot
+                captureBitmap.Save(Path.Combine(ScreenshotPath(), $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}_{ticker}.png"), ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public static string ScreenshotPath()
+        {
+            // Check for existence of the OS provided 'Pictures' folder
+            string screenshotFolder = "Trade Screenshots";
+            string screenshotRootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+
+            if (!Directory.Exists(screenshotRootPath))
+            {
+                // Create folder within application directory
+                screenshotRootPath = Directory.GetCurrentDirectory();
+            }
+
+            string screenshotFullPath = Path.Combine(screenshotRootPath, screenshotFolder);
+
+            if (!Directory.Exists(screenshotFullPath))
+            {
+                Directory.CreateDirectory(screenshotFullPath);
+            }
+
+            // Return screenshot path
+            return screenshotFullPath;
         }
     }
 }

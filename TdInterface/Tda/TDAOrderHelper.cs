@@ -6,7 +6,7 @@ using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
 {
-    public class OrderHelper
+    public class TDAOrderHelper
     {
         public const string BUY = "BUY";
         public const string BUY_TO_COVER = "BUY_TO_COVER";
@@ -140,5 +140,46 @@ namespace TdInterface.Tda
             return marketOrder;
         }
 
+
+        public static Order GetParentOrder(Order[] orders, Order childOrder)
+        {
+            foreach (Order order in orders)
+            {
+                Order parent = GetParentOrder(order, childOrder);
+                if (parent != null)
+                {
+                    return parent;
+                }
+            }
+
+            return null;
+        }
+
+        private static Order GetParentOrder(Order order, Order child)
+        {
+            if (order == child)
+            {
+                return null;
+            }
+
+            if (order.childOrderStrategies != null)
+            {
+                foreach (Order childOrder in order.childOrderStrategies)
+                {
+                    if (childOrder == child)
+                    {
+                        return order;
+                    }
+
+                    Order parentOrder = GetParentOrder(childOrder, child);
+                    if (parentOrder != null)
+                    {
+                        return parentOrder;
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }

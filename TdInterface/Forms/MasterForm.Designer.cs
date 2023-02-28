@@ -36,14 +36,15 @@
             this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFuturesCalc = new System.Windows.Forms.Button();
             this.btnAMZN = new System.Windows.Forms.Button();
             this.btnMSFT = new System.Windows.Forms.Button();
             this.btnAMD = new System.Windows.Forms.Button();
             this.btnAAPL = new System.Windows.Forms.Button();
             this.lblSymbol = new System.Windows.Forms.Label();
-            this.txtSymbol = new System.Windows.Forms.TextBox();
             this.btnNewTrade = new System.Windows.Forms.Button();
+            this.txtSymbol = new System.Windows.Forms.TextBox();
             this.btnNVDA = new System.Windows.Forms.Button();
             this.btnMETA = new System.Windows.Forms.Button();
             this.btnTSLA = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@
             this.lblTools = new System.Windows.Forms.Label();
             this.lblTradeLine = new System.Windows.Forms.Label();
             this.lblTrade = new System.Windows.Forms.Label();
+            this.btnScreenshots = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +81,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearCredentialsToolStripMenuItem,
             this.saveCredentialsToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.accountSettingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -87,30 +90,37 @@
             // clearCredentialsToolStripMenuItem
             // 
             this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
             this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
             // 
             // saveCredentialsToolStripMenuItem
             // 
             this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
             this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // accountSettingsToolStripMenuItem
+            // 
+            this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.accountSettingsToolStripMenuItem.Text = "Account Settings";
+            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
             // 
             // btnFuturesCalc
             // 
             this.btnFuturesCalc.Location = new System.Drawing.Point(13, 260);
             this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnFuturesCalc.Name = "btnFuturesCalc";
-            this.btnFuturesCalc.Size = new System.Drawing.Size(274, 28);
+            this.btnFuturesCalc.Size = new System.Drawing.Size(130, 28);
             this.btnFuturesCalc.TabIndex = 3;
             this.btnFuturesCalc.Text = "Futures Calculator";
             this.btnFuturesCalc.UseVisualStyleBackColor = true;
@@ -118,7 +128,7 @@
             // 
             // btnAMZN
             // 
-            this.btnAMZN.Location = new System.Drawing.Point(107, 131);
+            this.btnAMZN.Location = new System.Drawing.Point(199, 131);
             this.btnAMZN.Margin = new System.Windows.Forms.Padding(4);
             this.btnAMZN.Name = "btnAMZN";
             this.btnAMZN.Size = new System.Drawing.Size(86, 26);
@@ -142,7 +152,7 @@
             // 
             // btnAMD
             // 
-            this.btnAMD.Location = new System.Drawing.Point(201, 131);
+            this.btnAMD.Location = new System.Drawing.Point(107, 131);
             this.btnAMD.Margin = new System.Windows.Forms.Padding(4);
             this.btnAMD.Name = "btnAMD";
             this.btnAMD.Size = new System.Drawing.Size(86, 26);
@@ -175,14 +185,6 @@
             this.lblSymbol.Text = "Symbol";
             this.lblSymbol.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtSymbol
-            // 
-            this.txtSymbol.Location = new System.Drawing.Point(107, 67);
-            this.txtSymbol.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(86, 26);
-            this.txtSymbol.TabIndex = 2;
-            // 
             // btnNewTrade
             // 
             this.btnNewTrade.Location = new System.Drawing.Point(201, 67);
@@ -193,6 +195,14 @@
             this.btnNewTrade.Text = "Trade";
             this.btnNewTrade.UseVisualStyleBackColor = true;
             this.btnNewTrade.Click += new System.EventHandler(this.btnNewTrade_Click);
+            // 
+            // txtSymbol
+            // 
+            this.txtSymbol.Location = new System.Drawing.Point(107, 67);
+            this.txtSymbol.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtSymbol.Name = "txtSymbol";
+            this.txtSymbol.Size = new System.Drawing.Size(86, 26);
+            this.txtSymbol.TabIndex = 2;
             // 
             // btnNVDA
             // 
@@ -305,11 +315,23 @@
             this.lblTrade.TabIndex = 19;
             this.lblTrade.Text = "Trade";
             // 
+            // btnScreenshots
+            // 
+            this.btnScreenshots.Location = new System.Drawing.Point(155, 260);
+            this.btnScreenshots.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.btnScreenshots.Name = "btnScreenshots";
+            this.btnScreenshots.Size = new System.Drawing.Size(130, 28);
+            this.btnScreenshots.TabIndex = 21;
+            this.btnScreenshots.Text = "View Screenshots";
+            this.btnScreenshots.UseVisualStyleBackColor = true;
+            this.btnScreenshots.Click += new System.EventHandler(this.btnScreenshots_Click);
+            // 
             // MasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(301, 299);
+            this.Controls.Add(this.btnScreenshots);
             this.Controls.Add(this.lblTradeLine);
             this.Controls.Add(this.lblTrade);
             this.Controls.Add(this.lblToolsLine);
@@ -372,5 +394,7 @@
         private System.Windows.Forms.Label lblTools;
         private System.Windows.Forms.Label lblTradeLine;
         private System.Windows.Forms.Label lblTrade;
+        private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
+        private System.Windows.Forms.Button btnScreenshots;
     }
 }

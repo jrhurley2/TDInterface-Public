@@ -23,6 +23,8 @@ namespace TdInterface.Tda
 {
     public class TDStreamer : IDisposable, IStreamer
     {
+        private UserPrincipal _userPrincipal;
+        private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
         private StreamerSettings.Request _loginRequest;
 
@@ -30,8 +32,8 @@ namespace TdInterface.Tda
         private List<string> _quoteSymbols = new List<string>();
 
 
-        private readonly Subject<StockQuote> _stockQuoteRecievedSubject = new Subject<StockQuote>();
-        public IObservable<StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
+        public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
         private readonly Subject<StockQuote> _futureQuoteRecievedSubject = new Subject<StockQuote>();
         public IObservable<StockQuote> FutureQuoteReceived => _futureQuoteRecievedSubject.AsObservable();
@@ -73,6 +75,8 @@ namespace TdInterface.Tda
         }
         public TDStreamer(UserPrincipal userPrincipals)
         {
+            _userPrincipal = userPrincipals;
+
             string currentPath = Directory.GetCurrentDirectory();
             string replayFolder = Path.Combine(currentPath, "replays");
             if (!Directory.Exists(replayFolder))
@@ -321,7 +325,7 @@ namespace TdInterface.Tda
 
         public int _quoteRequestId = 0;
 
-        public void SubscribeQuote(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeQuote(string tickerSymbol)
         {
             if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
             {
@@ -338,8 +342,8 @@ namespace TdInterface.Tda
                 service = "QUOTE",
                 command = "SUBS",
                 requestid = "1", //_quoteRequestId.ToString(),
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
                     keys = symbols,

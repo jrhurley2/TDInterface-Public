@@ -1028,7 +1028,7 @@ namespace TdInterface
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(710, 535);
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";
             this.Load += new System.EventHandler(this.MainForm_Load);
