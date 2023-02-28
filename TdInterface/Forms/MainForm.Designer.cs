@@ -63,6 +63,7 @@ namespace TdInterface
             this.pbRisk = new System.Windows.Forms.PictureBox();
             this.lblRiskPrefix = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.btnMinimizeForm = new System.Windows.Forms.Button();
             this.btnExitForm = new System.Windows.Forms.Button();
             this.roundedPanel4 = new TdInterface.CustomControls.RoundedPanel();
             this.lblPnL = new System.Windows.Forms.Label();
@@ -482,6 +483,7 @@ namespace TdInterface
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.pnlTop.Controls.Add(this.btnMinimizeForm);
             this.pnlTop.Controls.Add(this.btnExitForm);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
@@ -489,6 +491,22 @@ namespace TdInterface
             this.pnlTop.Size = new System.Drawing.Size(369, 30);
             this.pnlTop.TabIndex = 44;
             this.pnlTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseDown);
+            // 
+            // btnMinimizeForm
+            // 
+            this.btnMinimizeForm.AutoSize = true;
+            this.btnMinimizeForm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMinimizeForm.FlatAppearance.BorderSize = 0;
+            this.btnMinimizeForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinimizeForm.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnMinimizeForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.btnMinimizeForm.Location = new System.Drawing.Point(293, 0);
+            this.btnMinimizeForm.Name = "btnMinimizeForm";
+            this.btnMinimizeForm.Size = new System.Drawing.Size(38, 30);
+            this.btnMinimizeForm.TabIndex = 47;
+            this.btnMinimizeForm.Text = "➖";
+            this.btnMinimizeForm.UseVisualStyleBackColor = true;
+            this.btnMinimizeForm.Click += new System.EventHandler(this.btnMinimizeForm_Click);
             // 
             // btnExitForm
             // 
@@ -1028,7 +1046,8 @@ namespace TdInterface
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(710, 535);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(385, 828);
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -1135,6 +1154,7 @@ namespace TdInterface
         private System.Windows.Forms.Label lblHeartbeat;
         private System.Windows.Forms.ToolTip toolTipStatus;
         private System.Windows.Forms.Label lblLastError;
+        private System.Windows.Forms.Button btnMinimizeForm;
     }
 }
 

@@ -50,6 +50,8 @@ namespace TdInterface
         {
             InitializeComponent();
 
+            this.Icon = TdInterface.Properties.Resources.logo;
+
             this.Text = string.Empty;
             this.ControlBox = false;
 
@@ -187,6 +189,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 var msgBox = MessageBox.Show(ex.Message);
             }
 
@@ -239,7 +242,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                lblLastError.Tag = ex.Message;
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -268,6 +271,7 @@ namespace TdInterface
             catch (Exception ex)
             {
                 lblLastError.Tag = ex.Message;
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -1338,6 +1342,11 @@ namespace TdInterface
             {
                 MessageBox.Show(lblLastError.Tag.ToString(), "Last Message");
             }
+        }
+
+        private void btnMinimizeForm_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
