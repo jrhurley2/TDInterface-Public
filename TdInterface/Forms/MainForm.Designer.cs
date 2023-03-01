@@ -47,19 +47,6 @@ namespace TdInterface
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
             this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnExitAsk10 = new System.Windows.Forms.Button();
-            this.btnExitAsk100 = new System.Windows.Forms.Button();
-            this.btnExitAsk25 = new System.Windows.Forms.Button();
-            this.btnExitAsk50 = new System.Windows.Forms.Button();
-            this.btnExitAsk33 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnExitMark10 = new System.Windows.Forms.Button();
-            this.btnExitMark25 = new System.Windows.Forms.Button();
-            this.btnExitMark33 = new System.Windows.Forms.Button();
-            this.btnExitMark50 = new System.Windows.Forms.Button();
-            this.btnExitMark100 = new System.Windows.Forms.Button();
             this.btnCancelAll = new System.Windows.Forms.Button();
             this.txtStopToClose = new System.Windows.Forms.TextBox();
             this.btnBreakEven = new System.Windows.Forms.Button();
@@ -90,10 +77,16 @@ namespace TdInterface
             this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtMoveStop = new System.Windows.Forms.Label();
+            this.rbExitMarket = new System.Windows.Forms.RadioButton();
+            this.rbExitBidAsk = new System.Windows.Forms.RadioButton();
+            this.btnExitAsk33 = new System.Windows.Forms.Button();
+            this.btnExitAsk50 = new System.Windows.Forms.Button();
+            this.btnExitAsk25 = new System.Windows.Forms.Button();
+            this.btnExitAsk100 = new System.Windows.Forms.Button();
+            this.btnExitAsk10 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBuyMrkTriggerOco
@@ -205,11 +198,11 @@ namespace TdInterface
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(344, 453);
+            this.txtLastError.Location = new System.Drawing.Point(390, 315);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
-            this.txtLastError.Size = new System.Drawing.Size(24, 26);
+            this.txtLastError.Size = new System.Drawing.Size(291, 92);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;
             this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
@@ -254,165 +247,6 @@ namespace TdInterface
             this.btnBuyLmtTriggerOco.Text = "Buy Limit";
             this.btnBuyLmtTriggerOco.UseVisualStyleBackColor = false;
             this.btnBuyLmtTriggerOco.Click += new System.EventHandler(this.btnBuyLmtTriggerOco_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox4);
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Location = new System.Drawing.Point(390, 164);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(291, 208);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "To Close";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.btnExitAsk10);
-            this.groupBox4.Controls.Add(this.btnExitAsk100);
-            this.groupBox4.Controls.Add(this.btnExitAsk25);
-            this.groupBox4.Controls.Add(this.btnExitAsk50);
-            this.groupBox4.Controls.Add(this.btnExitAsk33);
-            this.groupBox4.Location = new System.Drawing.Point(8, 23);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(277, 83);
-            this.groupBox4.TabIndex = 0;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Bid/Ask";
-            // 
-            // btnExitAsk10
-            // 
-            this.btnExitAsk10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk10.Location = new System.Drawing.Point(9, 26);
-            this.btnExitAsk10.Name = "btnExitAsk10";
-            this.btnExitAsk10.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk10.TabIndex = 0;
-            this.btnExitAsk10.TabStop = false;
-            this.btnExitAsk10.Text = "10%";
-            this.btnExitAsk10.UseVisualStyleBackColor = false;
-            this.btnExitAsk10.Click += new System.EventHandler(this.btnExitAsk10_Click);
-            // 
-            // btnExitAsk100
-            // 
-            this.btnExitAsk100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk100.Location = new System.Drawing.Point(217, 26);
-            this.btnExitAsk100.Name = "btnExitAsk100";
-            this.btnExitAsk100.Size = new System.Drawing.Size(52, 39);
-            this.btnExitAsk100.TabIndex = 4;
-            this.btnExitAsk100.TabStop = false;
-            this.btnExitAsk100.Text = "100%";
-            this.btnExitAsk100.UseVisualStyleBackColor = false;
-            this.btnExitAsk100.Click += new System.EventHandler(this.btnExitAsk100_Click);
-            // 
-            // btnExitAsk25
-            // 
-            this.btnExitAsk25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk25.Location = new System.Drawing.Point(61, 26);
-            this.btnExitAsk25.Name = "btnExitAsk25";
-            this.btnExitAsk25.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk25.TabIndex = 1;
-            this.btnExitAsk25.TabStop = false;
-            this.btnExitAsk25.Text = "25%";
-            this.btnExitAsk25.UseVisualStyleBackColor = false;
-            this.btnExitAsk25.Click += new System.EventHandler(this.btnExitAsk25_Click);
-            // 
-            // btnExitAsk50
-            // 
-            this.btnExitAsk50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk50.Location = new System.Drawing.Point(165, 26);
-            this.btnExitAsk50.Name = "btnExitAsk50";
-            this.btnExitAsk50.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk50.TabIndex = 3;
-            this.btnExitAsk50.TabStop = false;
-            this.btnExitAsk50.Text = "50%";
-            this.btnExitAsk50.UseVisualStyleBackColor = false;
-            this.btnExitAsk50.Click += new System.EventHandler(this.btnExitAsk50_Click);
-            // 
-            // btnExitAsk33
-            // 
-            this.btnExitAsk33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExitAsk33.Location = new System.Drawing.Point(113, 26);
-            this.btnExitAsk33.Name = "btnExitAsk33";
-            this.btnExitAsk33.Size = new System.Drawing.Size(46, 39);
-            this.btnExitAsk33.TabIndex = 2;
-            this.btnExitAsk33.TabStop = false;
-            this.btnExitAsk33.Text = "33%";
-            this.btnExitAsk33.UseVisualStyleBackColor = false;
-            this.btnExitAsk33.Click += new System.EventHandler(this.btnExitAsk33_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.btnExitMark10);
-            this.groupBox3.Controls.Add(this.btnExitMark25);
-            this.groupBox3.Controls.Add(this.btnExitMark33);
-            this.groupBox3.Controls.Add(this.btnExitMark50);
-            this.groupBox3.Controls.Add(this.btnExitMark100);
-            this.groupBox3.Location = new System.Drawing.Point(11, 123);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(274, 79);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Market";
-            // 
-            // btnExitMark10
-            // 
-            this.btnExitMark10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark10.Location = new System.Drawing.Point(6, 27);
-            this.btnExitMark10.Name = "btnExitMark10";
-            this.btnExitMark10.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark10.TabIndex = 0;
-            this.btnExitMark10.TabStop = false;
-            this.btnExitMark10.Text = "10%";
-            this.btnExitMark10.UseVisualStyleBackColor = false;
-            this.btnExitMark10.Click += new System.EventHandler(this.btnExitMark10_Click);
-            // 
-            // btnExitMark25
-            // 
-            this.btnExitMark25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark25.Location = new System.Drawing.Point(58, 27);
-            this.btnExitMark25.Name = "btnExitMark25";
-            this.btnExitMark25.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark25.TabIndex = 1;
-            this.btnExitMark25.TabStop = false;
-            this.btnExitMark25.Text = "25%";
-            this.btnExitMark25.UseVisualStyleBackColor = false;
-            this.btnExitMark25.Click += new System.EventHandler(this.btnExitMark25_Click);
-            // 
-            // btnExitMark33
-            // 
-            this.btnExitMark33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark33.Location = new System.Drawing.Point(110, 27);
-            this.btnExitMark33.Name = "btnExitMark33";
-            this.btnExitMark33.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark33.TabIndex = 2;
-            this.btnExitMark33.TabStop = false;
-            this.btnExitMark33.Text = "33%";
-            this.btnExitMark33.UseVisualStyleBackColor = false;
-            this.btnExitMark33.Click += new System.EventHandler(this.btnExitMark33_Click);
-            // 
-            // btnExitMark50
-            // 
-            this.btnExitMark50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark50.Location = new System.Drawing.Point(162, 27);
-            this.btnExitMark50.Name = "btnExitMark50";
-            this.btnExitMark50.Size = new System.Drawing.Size(46, 39);
-            this.btnExitMark50.TabIndex = 3;
-            this.btnExitMark50.TabStop = false;
-            this.btnExitMark50.Text = "50%";
-            this.btnExitMark50.UseVisualStyleBackColor = false;
-            this.btnExitMark50.Click += new System.EventHandler(this.btnExitMark50_Click);
-            // 
-            // btnExitMark100
-            // 
-            this.btnExitMark100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnExitMark100.Location = new System.Drawing.Point(214, 27);
-            this.btnExitMark100.Name = "btnExitMark100";
-            this.btnExitMark100.Size = new System.Drawing.Size(55, 39);
-            this.btnExitMark100.TabIndex = 4;
-            this.btnExitMark100.TabStop = false;
-            this.btnExitMark100.Text = "100%";
-            this.btnExitMark100.UseVisualStyleBackColor = false;
-            this.btnExitMark100.Click += new System.EventHandler(this.btnExitMark100_Click);
             // 
             // btnCancelAll
             // 
@@ -703,6 +537,109 @@ namespace TdInterface
             this.txtMoveStop.TabIndex = 32;
             this.txtMoveStop.Text = "Move Stop To";
             // 
+            // rbExitMarket
+            // 
+            this.rbExitMarket.AutoSize = true;
+            this.rbExitMarket.Checked = true;
+            this.rbExitMarket.Location = new System.Drawing.Point(114, 23);
+            this.rbExitMarket.Name = "rbExitMarket";
+            this.rbExitMarket.Size = new System.Drawing.Size(79, 23);
+            this.rbExitMarket.TabIndex = 39;
+            this.rbExitMarket.TabStop = true;
+            this.rbExitMarket.Text = "MARKET";
+            this.rbExitMarket.UseVisualStyleBackColor = true;
+            // 
+            // rbExitBidAsk
+            // 
+            this.rbExitBidAsk.AutoSize = true;
+            this.rbExitBidAsk.Location = new System.Drawing.Point(199, 23);
+            this.rbExitBidAsk.Name = "rbExitBidAsk";
+            this.rbExitBidAsk.Size = new System.Drawing.Size(86, 23);
+            this.rbExitBidAsk.TabIndex = 40;
+            this.rbExitBidAsk.Text = "BID / ASK";
+            this.rbExitBidAsk.UseVisualStyleBackColor = true;
+            // 
+            // btnExitAsk33
+            // 
+            this.btnExitAsk33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExitAsk33.Location = new System.Drawing.Point(120, 85);
+            this.btnExitAsk33.Name = "btnExitAsk33";
+            this.btnExitAsk33.Size = new System.Drawing.Size(46, 39);
+            this.btnExitAsk33.TabIndex = 2;
+            this.btnExitAsk33.TabStop = false;
+            this.btnExitAsk33.Tag = ".33";
+            this.btnExitAsk33.Text = "33%";
+            this.btnExitAsk33.UseVisualStyleBackColor = false;
+            this.btnExitAsk33.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            // 
+            // btnExitAsk50
+            // 
+            this.btnExitAsk50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExitAsk50.Location = new System.Drawing.Point(172, 85);
+            this.btnExitAsk50.Name = "btnExitAsk50";
+            this.btnExitAsk50.Size = new System.Drawing.Size(46, 39);
+            this.btnExitAsk50.TabIndex = 3;
+            this.btnExitAsk50.TabStop = false;
+            this.btnExitAsk50.Tag = ".5";
+            this.btnExitAsk50.Text = "50%";
+            this.btnExitAsk50.UseVisualStyleBackColor = false;
+            this.btnExitAsk50.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            // 
+            // btnExitAsk25
+            // 
+            this.btnExitAsk25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExitAsk25.Location = new System.Drawing.Point(68, 85);
+            this.btnExitAsk25.Name = "btnExitAsk25";
+            this.btnExitAsk25.Size = new System.Drawing.Size(46, 39);
+            this.btnExitAsk25.TabIndex = 1;
+            this.btnExitAsk25.TabStop = false;
+            this.btnExitAsk25.Tag = ".25";
+            this.btnExitAsk25.Text = "25%";
+            this.btnExitAsk25.UseVisualStyleBackColor = false;
+            this.btnExitAsk25.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            // 
+            // btnExitAsk100
+            // 
+            this.btnExitAsk100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExitAsk100.Location = new System.Drawing.Point(224, 85);
+            this.btnExitAsk100.Name = "btnExitAsk100";
+            this.btnExitAsk100.Size = new System.Drawing.Size(52, 39);
+            this.btnExitAsk100.TabIndex = 4;
+            this.btnExitAsk100.TabStop = false;
+            this.btnExitAsk100.Tag = "1";
+            this.btnExitAsk100.Text = "100%";
+            this.btnExitAsk100.UseVisualStyleBackColor = false;
+            this.btnExitAsk100.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            // 
+            // btnExitAsk10
+            // 
+            this.btnExitAsk10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExitAsk10.Location = new System.Drawing.Point(16, 85);
+            this.btnExitAsk10.Name = "btnExitAsk10";
+            this.btnExitAsk10.Size = new System.Drawing.Size(46, 39);
+            this.btnExitAsk10.TabIndex = 0;
+            this.btnExitAsk10.TabStop = false;
+            this.btnExitAsk10.Tag = ".1";
+            this.btnExitAsk10.Text = "10%";
+            this.btnExitAsk10.UseVisualStyleBackColor = false;
+            this.btnExitAsk10.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rbExitBidAsk);
+            this.groupBox2.Controls.Add(this.btnExitAsk10);
+            this.groupBox2.Controls.Add(this.rbExitMarket);
+            this.groupBox2.Controls.Add(this.btnExitAsk100);
+            this.groupBox2.Controls.Add(this.btnExitAsk50);
+            this.groupBox2.Controls.Add(this.btnExitAsk25);
+            this.groupBox2.Controls.Add(this.btnExitAsk33);
+            this.groupBox2.Location = new System.Drawing.Point(390, 164);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(291, 144);
+            this.groupBox2.TabIndex = 33;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "To Close";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(694, 496);
@@ -760,8 +697,7 @@ namespace TdInterface
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -780,7 +716,6 @@ namespace TdInterface
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtLastError;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnBreakEven;
         private System.Windows.Forms.TextBox txtAveragePrice;
         private System.Windows.Forms.Label label3;
@@ -795,11 +730,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtAsk;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtLimit;
-        private System.Windows.Forms.Button btnExitMark10;
-        private System.Windows.Forms.Button btnExitMark50;
-        private System.Windows.Forms.Button btnExitMark33;
-        private System.Windows.Forms.Button btnExitMark25;
-        private System.Windows.Forms.Button btnExitMark100;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtHeartBeat;
         private System.Windows.Forms.Label label8;
@@ -807,13 +737,6 @@ namespace TdInterface
         private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
         private System.Windows.Forms.Button btnCancelAll;
-        private System.Windows.Forms.Button btnExitAsk10;
-        private System.Windows.Forms.Button btnExitAsk25;
-        private System.Windows.Forms.Button btnExitAsk33;
-        private System.Windows.Forms.Button btnExitAsk50;
-        private System.Windows.Forms.Button btnExitAsk100;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
@@ -825,6 +748,14 @@ namespace TdInterface
         private System.Windows.Forms.CheckBox chkDisableFirstTarget;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label txtMoveStop;
+        private System.Windows.Forms.RadioButton rbExitMarket;
+        private System.Windows.Forms.RadioButton rbExitBidAsk;
+        private System.Windows.Forms.Button btnExitAsk33;
+        private System.Windows.Forms.Button btnExitAsk50;
+        private System.Windows.Forms.Button btnExitAsk25;
+        private System.Windows.Forms.Button btnExitAsk100;
+        private System.Windows.Forms.Button btnExitAsk10;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
