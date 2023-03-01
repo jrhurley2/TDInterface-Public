@@ -22,7 +22,6 @@ namespace TdInterface
         private static string AccountInfoFile = "AccountInfo.json";
 
         public static string AuthToken { get; set; }
-        private static string _consumerKey = null;
 
         public static AccessTokenContainer AccessTokenContainer { get; set; }
 
