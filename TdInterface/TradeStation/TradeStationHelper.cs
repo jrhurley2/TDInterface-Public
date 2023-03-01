@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
-using System.Linq;
-using System.Net.Http.Headers;
 
 namespace TdInterface.TradeStation
 {

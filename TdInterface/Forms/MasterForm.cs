@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,20 +21,11 @@ namespace TdInterface
         private IStreamer _streamer;
         private string _equityAccountId;
 
-        private StockQuote _stockQuote = new StockQuote();
-        private Securitiesaccount _securitiesaccount;
-        private Position _activePosition;
-        private Position _initialPosition;
-        private CandleList _candleList;
-        private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
-
-
-        private bool _isLoggedIn = false;
 
         public MasterForm()
         {
@@ -161,15 +149,12 @@ namespace TdInterface
                     ((TradeStationStreamer)_streamer).StartAccountStream();
                 }
                 timer1.Start();
-
-                _isLoggedIn = true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
                 MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
-                _isLoggedIn = false;
             }
         }
 

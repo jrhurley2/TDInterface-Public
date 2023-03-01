@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
@@ -357,6 +356,31 @@ namespace TdInterface
                 txtLastError.Text = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        private async void btnExitPercentage_Click(object sender, EventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button btn = (Button)sender;
+
+                double exitPercentage = Double.Parse(btn.Tag.ToString());
+
+                if (rbExitMarket.Checked == true) // MARKET
+                {
+                    // MessageBox.Show($"Market @ {exitPercentage.ToString()}");
+                    await ExitMarketPercentage(exitPercentage);
+                }
+                else if (rbExitBidAsk.Checked == true) // BID / ASK
+                {
+                    // MessageBox.Show($"Bid/Ask @ {exitPercentage.ToString()}");
+                    await ExitLimitPercentage(exitPercentage);
+                }
+                else
+                {
+                    Debug.WriteLine("Invalid Exit Method Selection");
+                }
             }
         }
 
@@ -908,7 +932,7 @@ namespace TdInterface
                 _activePosition = null;
                 SafeUpdateTextBox(txtAveragePrice, string.Empty);
                 SafeUpdateTextBox(txtShares, string.Empty);
-                Debug.WriteLine($"Error getting postion for {txtSymbol.Text.ToUpper()}");
+                Debug.WriteLine($"No position found for txtSymbol:{txtSymbol.Text.ToUpper()} | curSymbol: {curSymbol}");
             }
         }
 
@@ -941,7 +965,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Debug.WriteLine($"GetPosition: {ex.Message}");
                 Debug.WriteLine(ex.StackTrace);
             }
             return position;
@@ -989,31 +1013,31 @@ namespace TdInterface
                 btnSellLmtTriggerOco.PerformClick();
                 e.SuppressKeyPress = true;
             }
-            else if (e.KeyCode == Keys.F1)
-            {
-                btnExitMark10.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F2)
-            {
-                btnExitMark25.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F3)
-            {
-                btnExitMark33.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F4)
-            {
-                btnExitMark50.PerformClick();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F5)
-            {
-                btnExitMark100.PerformClick();
-                e.SuppressKeyPress = true;
-            }
+            //else if (e.KeyCode == Keys.F1)
+            //{
+            //    btnExitMark10.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F2)
+            //{
+            //    btnExitMark25.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F3)
+            //{
+            //    btnExitMark33.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F4)
+            //{
+            //    btnExitMark50.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
+            //else if (e.KeyCode == Keys.F5)
+            //{
+            //    btnExitMark100.PerformClick();
+            //    e.SuppressKeyPress = true;
+            //}
         }
 
 
