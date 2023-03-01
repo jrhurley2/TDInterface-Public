@@ -202,6 +202,8 @@ namespace TdInterface
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
+            this.txtLastError.ReadOnly = true;
+            this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtLastError.Size = new System.Drawing.Size(291, 92);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;

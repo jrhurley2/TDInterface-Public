@@ -933,7 +933,7 @@ namespace TdInterface
                 _activePosition = null;
                 SafeUpdateTextBox(txtAveragePrice, string.Empty);
                 SafeUpdateTextBox(txtShares, string.Empty);
-                Debug.WriteLine($"Error getting postion for {txtSymbol.Text.ToUpper()}");
+                Debug.WriteLine($"No position found for txtSymbol:{txtSymbol.Text.ToUpper()} | curSymbol: {curSymbol}");
             }
         }
 
@@ -966,7 +966,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Debug.WriteLine($"GetPosition: {ex.Message}");
                 Debug.WriteLine(ex.StackTrace);
             }
             return position;

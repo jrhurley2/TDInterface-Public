@@ -109,24 +109,6 @@ namespace TdInterface
             return UnicodeEncoding.ASCII.GetBytes("TDInterface");
         }
 
-        //public static string GetConsumerKey()
-        //{
-        //    try
-        //    {
-        //        if (_consumerKey == null)
-        //        {
-        //            _consumerKey = File.ReadAllText("consumerkey.txt");
-        //        }
-        //    }
-        //    catch (Exception) { }  //Eat exception and return null;
-        //    return _consumerKey;
-        //}
-
-        //public static void SaveConsumerKey(string key)
-        //{
-        //    File.WriteAllText("consumerkey.txt", key);
-        //}
-
         public static void ClearAccessTokenContainerFile()
         {
             File.Delete(TokenFile);
@@ -165,7 +147,7 @@ namespace TdInterface
                 captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
                 
                 //Save the screenshot
-                captureBitmap.Save(Path.Combine(ScreenshotPath(), $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}_{ticker}.png"), ImageFormat.Png);
+                captureBitmap.Save(Path.Combine(ScreenshotPath(ticker), $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}_{ticker}.png"), ImageFormat.Png);
             }
             catch (Exception ex)
             {
@@ -186,7 +168,7 @@ namespace TdInterface
                 screenshotRootPath = Directory.GetCurrentDirectory();
             }
 
-            string screenshotFullPath = Path.Combine(screenshotRootPath, screenshotFolder);
+            string screenshotFullPath = Path.Combine(screenshotRootPath, screenshotFolder, DateTime.Now.ToString("yyyyMMdd"));
 
             if (!Directory.Exists(screenshotFullPath))
             {
@@ -195,6 +177,13 @@ namespace TdInterface
 
             // Return screenshot path
             return screenshotFullPath;
+        }
+
+        public static string ScreenshotPath(string ticker)
+        {
+            string screenshotFullPathWithTicker = Path.Combine(ScreenshotPath(), ticker);
+            Directory.CreateDirectory(screenshotFullPathWithTicker);
+            return screenshotFullPathWithTicker;
         }
     }
 }
