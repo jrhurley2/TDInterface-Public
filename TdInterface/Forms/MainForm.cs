@@ -659,9 +659,9 @@ namespace TdInterface
                         }
                         else
                         {
-                            oneToOne = stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                            oneToOne = _stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
                         }
-                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                       SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                     }
                 }
             }

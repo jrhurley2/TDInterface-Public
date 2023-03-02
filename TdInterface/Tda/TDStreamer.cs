@@ -248,7 +248,7 @@ namespace TdInterface.Tda
 
                                 var stockQuote = new StockQuote(quoteJson);
                                 _stockQuoteRecievedSubject.OnNext(stockQuote);
-                                Debug.WriteLine(JsonConvert.SerializeObject(stockQuote));
+                                Debug.WriteLine("TDStreamer:" + JsonConvert.SerializeObject(stockQuote));
                             }
                         }
                         else if (service == "LEVELONE_FUTURES")
