@@ -226,5 +226,6 @@ namespace TdInterface.Tests
             var actual = TDAOrderHelper.GetParentOrder(securitiesaccount.orderStrategies, stopOrder);
             Assert.IsNull(actual);
         }
+
     }
 }
