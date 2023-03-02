@@ -141,12 +141,15 @@ namespace TdInterface.Tda
 
         public static Order GetParentOrder(Order[] orders, Order childOrder)
         {
-            foreach (Order order in orders)
+            if (orders != null)
             {
-                Order parent = GetParentOrder(order, childOrder);
-                if (parent != null)
+                foreach (Order order in orders)
                 {
-                    return parent;
+                    Order parent = GetParentOrder(order, childOrder);
+                    if (parent != null)
+                    {
+                        return parent;
+                    }
                 }
             }
 
