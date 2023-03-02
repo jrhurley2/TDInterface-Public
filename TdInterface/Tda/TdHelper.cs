@@ -47,16 +47,8 @@ namespace TdInterface.Tda
         {
 
             var accountInfo = Utility.GetAccountInfo();
-            var consumerKey = accountInfo.TdaConsumerKey;
 
-            var redirectUri = "http://localhost";
-            if (consumerKey.IndexOf("~") > 0)
-            {
-                var parts = consumerKey.Split('~');
-                consumerKey = parts[0];
-                redirectUri = parts[1];
-            }
-
+            Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
@@ -85,16 +77,8 @@ namespace TdInterface.Tda
             try
             {
                 var accountInfo = Utility.GetAccountInfo();
-                var consumerKey = accountInfo.TdaConsumerKey;
 
-                var redirectUri = "http://localhost";
-                if (consumerKey.IndexOf("~") > 0)
-                {
-                    var parts = consumerKey.Split('~');
-                    consumerKey = parts[0];
-                    redirectUri = parts[1];
-                }
-
+                Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));

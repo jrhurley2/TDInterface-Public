@@ -63,12 +63,12 @@ jobs:
         filename: "TDInterface.zip"
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\'
         
-    - name: Upload Release
-      if: github.ref == 'refs/heads/master' && env.IsRelease
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: "${{ steps.version.outputs.version}}"
-        makeLatest: false
+    # - name: Upload Release
+    #   if: github.ref == 'refs/heads/master' && env.IsRelease
+    #   uses: ncipollo/release-action@v1
+    #   with:
+    #     artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     tag: "${{ steps.version.outputs.version}}"
+    #     makeLatest: false
 
