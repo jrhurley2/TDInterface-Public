@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Interfaces;
@@ -76,6 +77,8 @@ namespace TdInterface
 
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
+
+            lblVersion.Text = $"v {Assembly.GetExecutingAssembly().GetName().Version}";
         }
 
 
