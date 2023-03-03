@@ -85,6 +85,7 @@ namespace TdInterface
             this.btnExitAsk100 = new System.Windows.Forms.Button();
             this.btnExitAsk10 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -204,7 +205,7 @@ namespace TdInterface
             this.txtLastError.Name = "txtLastError";
             this.txtLastError.ReadOnly = true;
             this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLastError.Size = new System.Drawing.Size(291, 92);
+            this.txtLastError.Size = new System.Drawing.Size(291, 108);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;
             this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
@@ -413,7 +414,7 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(396, 431);
+            this.label8.Location = new System.Drawing.Point(396, 430);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 19);
             this.label8.TabIndex = 35;
@@ -642,9 +643,20 @@ namespace TdInterface
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "To Close";
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(280, 430);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(54, 19);
+            this.lblVersion.TabIndex = 39;
+            this.lblVersion.Text = "Version";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(694, 496);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
@@ -758,6 +770,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExitAsk100;
         private System.Windows.Forms.Button btnExitAsk10;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 
