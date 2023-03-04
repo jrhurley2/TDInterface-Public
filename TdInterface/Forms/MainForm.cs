@@ -21,9 +21,7 @@ namespace TdInterface
     {
         private IStreamer _streamer;
         private string _accountId;
-        private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
         private TdHelper _tdHelper= new TdHelper();
-        private TradeStationHelper _tradeStationHelper; 
         private IHelper _tradeHelper;
       
         private string curSymbol = String.Empty;
@@ -38,7 +36,6 @@ namespace TdInterface
         private Position _initialPosition;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public string MainFormName{ get; private set; }
 
@@ -220,7 +217,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
@@ -239,7 +236,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.SELL_SHORT;
@@ -268,7 +265,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -286,7 +283,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -477,15 +474,16 @@ namespace TdInterface
 
         private async Task ExitBidOrAsk(int quantity)
         {
+            var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
             if (exitInstruction == TDAOrderHelper.SELL)
             {
-                limitPrice = _stockQuote.askPrice;
+                limitPrice = stockQuote.askPrice;
             }
             else
             {
-                limitPrice = _stockQuote.bidPrice;
+                limitPrice = stockQuote.bidPrice;
             }
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
@@ -618,10 +616,10 @@ namespace TdInterface
         private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
-            _stockQuote = _stockQuote.Update(stockQuote);
-            SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
+            stockQuote = _tradeHelper.SetStockQuote(stockQuote);
+            SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
 
 
             try
@@ -632,7 +630,7 @@ namespace TdInterface
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = (float)_stockQuote.lastPrice - avgPrice;
+                    float reward = (float)stockQuote.lastPrice - avgPrice;
                     reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
@@ -656,13 +654,13 @@ namespace TdInterface
                     if (double.TryParse(txtStop.Text, out stop))
                     {
                         double oneToOne;
-                        if (stop < _stockQuote.lastPrice)
+                        if (stop < stockQuote.lastPrice)
                         {
-                            oneToOne = (_stockQuote.lastPrice - stop) + _stockQuote.lastPrice;
+                            oneToOne = (stockQuote.lastPrice - stop) + stockQuote.lastPrice;
                         }
                         else
                         {
-                            oneToOne = _stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                            oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                     }

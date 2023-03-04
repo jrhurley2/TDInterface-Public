@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
 
@@ -28,6 +29,8 @@ namespace TdInterface.TradeStation
         public const string routeGetAccounts = "v3/brokerage/accounts";
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
+
+        private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
 
         private static Securitiesaccount _securitiesaccount;
         
@@ -434,6 +437,23 @@ namespace TdInterface.TradeStation
             return lmitOrder;
         }
 
+        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        {
+            if (!_stockQuotes.ContainsKey(stockQuote.symbol))
+            {
+                _stockQuotes.Add(stockQuote.symbol, stockQuote);
+            }
 
+            _stockQuotes[stockQuote.symbol] = _stockQuotes[stockQuote.symbol].Update(stockQuote);
+
+            return _stockQuotes[stockQuote.symbol];
+        }
+
+        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        {
+            if (!_stockQuotes.ContainsKey(symbol)) { return null; }
+
+            return _stockQuotes[symbol];
+        }
     }
 }

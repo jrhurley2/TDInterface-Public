@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
@@ -29,6 +30,8 @@ namespace TdInterface.Tda
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
 
         private static Securitiesaccount _securitiesaccount;
+
+        private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
 
         public Securitiesaccount Securitiesaccount
         {
@@ -143,20 +146,20 @@ namespace TdInterface.Tda
             return account;
         }
 
-        public async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetQuote, symbol)))
-            {
-                Method = HttpMethod.Get,
-            };
+        //public async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
+        //{
+        //    var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetQuote, symbol)))
+        //    {
+        //        Method = HttpMethod.Get,
+        //    };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+        //    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
 
-            var response = await _httpClient.SendAsync(request);
-            var stockQuote = Utility.DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
+        //    var response = await _httpClient.SendAsync(request);
+        //    var stockQuote = Utility.DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
 
-            return stockQuote[symbol.ToUpper()];
-        }
+        //    return stockQuote[symbol.ToUpper()];
+        //}
 
         public async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
         {
@@ -308,5 +311,23 @@ namespace TdInterface.Tda
             return lmitOrder;
         }
 
+        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        {
+            if (!_stockQuotes.ContainsKey(stockQuote.symbol))
+            {
+                _stockQuotes.Add(stockQuote.symbol, stockQuote);
+            }
+
+            _stockQuotes[stockQuote.symbol] = _stockQuotes[stockQuote.symbol].Update(stockQuote);
+
+            return _stockQuotes[stockQuote.symbol];
+        }
+
+        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        {
+            if(!_stockQuotes.ContainsKey(symbol)) { return null; }
+
+            return _stockQuotes[symbol];
+        }
     }
 }
