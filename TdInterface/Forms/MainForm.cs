@@ -33,7 +33,6 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private Position _initialPosition;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
 
@@ -168,7 +167,7 @@ namespace TdInterface
 
                 ResetInitialOrder();
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
-                AddInitialOrder(symbol, orderKey, triggerOrder);
+                AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
                 if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
@@ -200,16 +199,16 @@ namespace TdInterface
             return quantity;
         }
 
-        private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
+        private Dictionary<string, List<ulong>> _initialOrders = new Dictionary<string, List<ulong>>();
 
-        private void AddInitialOrder(string symbol, ulong orderKey, Order order)
+        public void AddInitialOrder(string symbol, ulong orderKey)
         {
             if (!_initialOrders.ContainsKey(symbol.ToUpper()))
             {
-                _initialOrders.Add(symbol.ToUpper(), new Dictionary<ulong, Order>());
+                _initialOrders.Add(symbol.ToUpper(), new List<ulong>());
             }
 
-            _initialOrders[symbol.ToUpper()].Add(orderKey, order);
+            _initialOrders[symbol.ToUpper()].Add(orderKey);
         }
 
         #region Order Open 
@@ -309,7 +308,6 @@ namespace TdInterface
 
         private void ResetInitialOrder()
         {
-            _initialPosition = null;
             txtAveragePrice.Text = string.Empty;
             txtShares.Text = string.Empty;
             txtStopToClose.Text = string.Empty;
@@ -723,7 +721,7 @@ namespace TdInterface
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].ContainsKey(orderEntryRequestMessage.Order.OrderKey))
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey))
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
                         var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
@@ -778,14 +776,12 @@ namespace TdInterface
                     {
                         Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
                         //Initial Trigger Order filled, adjust limit
-                        if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                        if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
 
                             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-                            //_securitiesaccount = _tradeHelper.Securitiesaccount;
 
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
@@ -919,11 +915,6 @@ namespace TdInterface
 
             if (position != null)
             {
-                if (_initialPosition == null)
-                {
-                    _initialPosition = position;
-                }
-
                 _activePosition = position;
                 SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
                 SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
@@ -945,8 +936,6 @@ namespace TdInterface
             {
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                //_securitiesaccount = _tradeHelper.Securitiesaccount;
-                //_securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
 
                 try
                 {
