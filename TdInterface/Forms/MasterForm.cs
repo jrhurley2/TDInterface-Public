@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
@@ -21,7 +22,7 @@ namespace TdInterface
         private IStreamer _streamer;
         private string _equityAccountId;
 
-        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
+        private Settings _settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
@@ -44,7 +45,8 @@ namespace TdInterface
 
                 Login().ConfigureAwait(false);
             }
-            catch (Exception ex) { 
+            catch (Exception)
+            { 
             }
         }
 
@@ -70,16 +72,9 @@ namespace TdInterface
 
                     if (accountInfo.UseTdaEquity)
                     {
-                        var consumerKey = accountInfo.TdaConsumerKey;
-                        var callback = "http://localhost";
-                        if (consumerKey.IndexOf("~") > 0)
-                        {
-                            var parts = consumerKey.Split('~');
-                            consumerKey = parts[0];
-                            callback = parts[1];
-                        }
+                        Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
-                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(callback)}&client_id={consumerKey}%40AMER.OAUTHAP";
+                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
                         var oAuthLoginForm = new OAuthLoginForm(loginUri);
                         int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
                         Utility.AuthToken = oAuthLoginForm.Code;
@@ -157,6 +152,7 @@ namespace TdInterface
                 MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
             }
         }
+
 
         private async void timer1_Tick(object sender, EventArgs e)
         {

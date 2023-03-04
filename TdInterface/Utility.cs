@@ -184,5 +184,18 @@ namespace TdInterface
             Directory.CreateDirectory(screenshotFullPathWithTicker);
             return screenshotFullPathWithTicker;
         }
+
+        public static void SplitTdaConsumerKey(string tdaConsumerKey, out string consumerKey, out string callback)
+        {
+            consumerKey = tdaConsumerKey;
+            callback = "http://localhost";
+            if (consumerKey.IndexOf("~") > 0)
+            {
+                var parts = consumerKey.Split('~');
+                consumerKey = parts[0];
+                callback = parts[1];
+            }
+        }
+
     }
 }
