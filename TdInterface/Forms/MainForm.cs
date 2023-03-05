@@ -21,7 +21,7 @@ namespace TdInterface
     {
         private IStreamer _streamer;
         private string _accountId;
-        private TdHelper _tdHelper= new TdHelper();
+
         private IHelper _tradeHelper;
       
         private string curSymbol = String.Empty;
@@ -157,7 +157,7 @@ namespace TdInterface
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
-                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
+                    orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
@@ -1018,28 +1018,7 @@ namespace TdInterface
             //}
         }
 
-
-        #region Menu Events
-        private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-        }
-
-        private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-            Utility.SaveAccessTokenContainer(accessTokenContainer);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new UserOptionsForm();
-            frm.ShowDialog();
-            _settings = Utility.GetSettings();
-            ApplySettings();
-        }
-        #endregion
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
             var settings = Utility.GetSettings();
@@ -1217,8 +1196,6 @@ namespace TdInterface
         {
             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-
             try
             {
                 if (_tradeHelper.GetType() == typeof(TdHelper))
@@ -1236,13 +1213,6 @@ namespace TdInterface
 
         }
 
-        private async void timer1_Tick(object sender, EventArgs e)
-        {
-            if (Utility.AccessTokenContainer.ExpiresIn < 100)
-            {
-                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
-            }
-        }
         #endregion
 
         private void txtRValue_TextChanged(object sender, EventArgs e)

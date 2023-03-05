@@ -191,11 +191,6 @@ namespace TdInterface
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStop.Leave += new System.EventHandler(this.txtStop_Leave);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 10000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
