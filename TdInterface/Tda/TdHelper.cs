@@ -329,5 +329,20 @@ namespace TdInterface.Tda
 
             return _stockQuotes[symbol];
         }
+
+        public async Task CancelAll(AccessTokenContainer accessTokenContainer, string accountId, string symbol)
+        {
+            var securitiesaccount = await this.GetAccount(Utility.AccessTokenContainer, accountId);
+            var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
+
+            var tasks = new List<Task>();
+            foreach (var order in openOrders)
+            {
+                var task = this.CancelOrder(Utility.AccessTokenContainer, accountId, order);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(true);
+        }
     }
 }

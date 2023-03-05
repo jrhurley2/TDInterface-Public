@@ -20,7 +20,7 @@ namespace TdInterface.Interfaces
         public Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Order triggerOrder);
         public Model.StockQuote SetStockQuote(Model.StockQuote stockQuote);
         public Model.StockQuote GetStockQuote(string symbol);
-
+        public Task CancelAll(AccessTokenContainer accessTokenContainer, string accountId, string symbol);
     }
 
 }

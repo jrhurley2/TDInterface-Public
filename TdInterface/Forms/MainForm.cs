@@ -594,19 +594,7 @@ namespace TdInterface
 
         private async Task CancelAll()
         {
-            _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
-            Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-            var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
-
-            var tasks = new List<Task>();
-            foreach (var order in openOrders)
-            {
-                Debug.WriteLine(JsonConvert.SerializeObject(order));
-                var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(true);
+            await _tradeHelper.CancelAll(Utility.AccessTokenContainer, _accountId, txtSymbol.Text);
         }
         #endregion
 
