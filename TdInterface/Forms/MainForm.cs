@@ -21,9 +21,7 @@ namespace TdInterface
     {
         private IStreamer _streamer;
         private string _accountId;
-        private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
-        private TdHelper _tdHelper= new TdHelper();
-        private TradeStationHelper _tradeStationHelper; 
+
         private IHelper _tradeHelper;
       
         private string curSymbol = String.Empty;
@@ -35,10 +33,8 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private Position _initialPosition;
         private bool _trainingWheels = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public string MainFormName{ get; private set; }
 
@@ -161,7 +157,7 @@ namespace TdInterface
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
-                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
+                    orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
@@ -171,7 +167,7 @@ namespace TdInterface
 
                 ResetInitialOrder();
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
-                AddInitialOrder(symbol, orderKey, triggerOrder);
+                AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
                 if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
@@ -203,16 +199,16 @@ namespace TdInterface
             return quantity;
         }
 
-        private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
+        private Dictionary<string, List<ulong>> _initialOrders = new Dictionary<string, List<ulong>>();
 
-        private void AddInitialOrder(string symbol, ulong orderKey, Order order)
+        public void AddInitialOrder(string symbol, ulong orderKey)
         {
             if (!_initialOrders.ContainsKey(symbol.ToUpper()))
             {
-                _initialOrders.Add(symbol.ToUpper(), new Dictionary<ulong, Order>());
+                _initialOrders.Add(symbol.ToUpper(), new List<ulong>());
             }
 
-            _initialOrders[symbol.ToUpper()].Add(orderKey, order);
+            _initialOrders[symbol.ToUpper()].Add(orderKey);
         }
 
         #region Order Open 
@@ -220,7 +216,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
@@ -239,7 +235,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.SELL_SHORT;
@@ -268,7 +264,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -286,7 +282,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -312,7 +308,6 @@ namespace TdInterface
 
         private void ResetInitialOrder()
         {
-            _initialPosition = null;
             txtAveragePrice.Text = string.Empty;
             txtShares.Text = string.Empty;
             txtStopToClose.Text = string.Empty;
@@ -477,15 +472,16 @@ namespace TdInterface
 
         private async Task ExitBidOrAsk(int quantity)
         {
+            var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
             if (exitInstruction == TDAOrderHelper.SELL)
             {
-                limitPrice = _stockQuote.askPrice;
+                limitPrice = stockQuote.askPrice;
             }
             else
             {
-                limitPrice = _stockQuote.bidPrice;
+                limitPrice = stockQuote.bidPrice;
             }
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
@@ -598,19 +594,7 @@ namespace TdInterface
 
         private async Task CancelAll()
         {
-            _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
-            Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-            var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
-
-            var tasks = new List<Task>();
-            foreach (var order in openOrders)
-            {
-                Debug.WriteLine(JsonConvert.SerializeObject(order));
-                var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(true);
+            await _tradeHelper.CancelAll(Utility.AccessTokenContainer, _accountId, txtSymbol.Text);
         }
         #endregion
 
@@ -618,10 +602,10 @@ namespace TdInterface
         private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
-            _stockQuote = _stockQuote.Update(stockQuote);
-            SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
+            stockQuote = _tradeHelper.SetStockQuote(stockQuote);
+            SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
 
 
             try
@@ -632,7 +616,7 @@ namespace TdInterface
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = (float)_stockQuote.lastPrice - avgPrice;
+                    float reward = (float)stockQuote.lastPrice - avgPrice;
                     reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
@@ -656,13 +640,13 @@ namespace TdInterface
                     if (double.TryParse(txtStop.Text, out stop))
                     {
                         double oneToOne;
-                        if (stop < _stockQuote.lastPrice)
+                        if (stop < stockQuote.lastPrice)
                         {
-                            oneToOne = (_stockQuote.lastPrice - stop) + _stockQuote.lastPrice;
+                            oneToOne = (stockQuote.lastPrice - stop) + stockQuote.lastPrice;
                         }
                         else
                         {
-                            oneToOne = _stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                            oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                     }
@@ -725,7 +709,7 @@ namespace TdInterface
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].ContainsKey(orderEntryRequestMessage.Order.OrderKey))
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey))
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
                         var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
@@ -780,14 +764,12 @@ namespace TdInterface
                     {
                         Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
                         //Initial Trigger Order filled, adjust limit
-                        if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                        if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
 
                             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-                            //_securitiesaccount = _tradeHelper.Securitiesaccount;
 
                             var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                             //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
@@ -921,11 +903,6 @@ namespace TdInterface
 
             if (position != null)
             {
-                if (_initialPosition == null)
-                {
-                    _initialPosition = position;
-                }
-
                 _activePosition = position;
                 SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
                 SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
@@ -947,8 +924,6 @@ namespace TdInterface
             {
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                //_securitiesaccount = _tradeHelper.Securitiesaccount;
-                //_securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
 
                 try
                 {
@@ -1043,28 +1018,7 @@ namespace TdInterface
             //}
         }
 
-
-        #region Menu Events
-        private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-        }
-
-        private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-            Utility.SaveAccessTokenContainer(accessTokenContainer);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new UserOptionsForm();
-            frm.ShowDialog();
-            _settings = Utility.GetSettings();
-            ApplySettings();
-        }
-        #endregion
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
             var settings = Utility.GetSettings();
@@ -1242,8 +1196,6 @@ namespace TdInterface
         {
             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-
             try
             {
                 if (_tradeHelper.GetType() == typeof(TdHelper))
@@ -1261,13 +1213,6 @@ namespace TdInterface
 
         }
 
-        private async void timer1_Tick(object sender, EventArgs e)
-        {
-            if (Utility.AccessTokenContainer.ExpiresIn < 100)
-            {
-                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
-            }
-        }
         #endregion
 
         private void txtRValue_TextChanged(object sender, EventArgs e)

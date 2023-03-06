@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
 
@@ -28,6 +29,8 @@ namespace TdInterface.TradeStation
         public const string routeGetAccounts = "v3/brokerage/accounts";
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
+
+        private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
 
         private static Securitiesaccount _securitiesaccount;
         
@@ -434,6 +437,38 @@ namespace TdInterface.TradeStation
             return lmitOrder;
         }
 
+        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        {
+            if (!_stockQuotes.ContainsKey(stockQuote.symbol))
+            {
+                _stockQuotes.Add(stockQuote.symbol, stockQuote);
+            }
 
+            _stockQuotes[stockQuote.symbol] = _stockQuotes[stockQuote.symbol].Update(stockQuote);
+
+            return _stockQuotes[stockQuote.symbol];
+        }
+
+        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        {
+            if (!_stockQuotes.ContainsKey(symbol)) { return null; }
+
+            return _stockQuotes[symbol];
+        }
+
+        public async Task CancelAll(AccessTokenContainer accessTokenContainer, string accountId, string symbol)
+        {
+            var securitiesaccount = await this.GetAccount(Utility.AccessTokenContainer, accountId);
+            var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
+
+            var tasks = new List<Task>();
+            foreach (var order in openOrders)
+            {
+                var task = this.CancelOrder(Utility.AccessTokenContainer, accountId, order);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(true);
+        }
     }
 }
