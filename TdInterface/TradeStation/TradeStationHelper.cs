@@ -437,6 +437,7 @@ namespace TdInterface.TradeStation
             return lmitOrder;
         }
 
+
         public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!_stockQuotes.ContainsKey(stockQuote.symbol))
