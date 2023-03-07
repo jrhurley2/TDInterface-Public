@@ -340,35 +340,28 @@ namespace TdInterface
 
         private async void btnExitPercentage_Click(object sender, EventArgs e)
         {
-            if (sender is Button)
-            {
-                Button btn = (Button)sender;
-
-                double exitPercentage = Double.Parse(btn.Tag.ToString());
-
-                if (rbExitMarket.Checked == true) // MARKET
-                {
-                    // MessageBox.Show($"Market @ {exitPercentage.ToString()}");
-                    await ExitMarketPercentage(exitPercentage);
-                }
-                else if (rbExitBidAsk.Checked == true) // BID / ASK
-                {
-                    // MessageBox.Show($"Bid/Ask @ {exitPercentage.ToString()}");
-                    await ExitLimitPercentage(exitPercentage);
-                }
-                else
-                {
-                    Debug.WriteLine("Invalid Exit Method Selection");
-                }
-            }
-        }
-
-        private async Task ExitMarketPercentage(double percenntage)
-        {
             try
             {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitMarket(quantity);
+                if (sender is Button)
+                {
+                    Button btn = (Button)sender;
+
+                    double exitPercentage = Double.Parse(btn.Tag.ToString());
+                    var quantity = (int)Math.Ceiling(_activePosition.Quantity * exitPercentage);
+
+                    if (rbExitMarket.Checked == true) // MARKET
+                    {
+                        await ExitMarket(quantity);
+                    }
+                    else if (rbExitBidAsk.Checked == true) // BID / ASK
+                    {
+                        await ExitBidOrAsk(quantity);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Invalid Exit Method Selection");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -377,22 +370,6 @@ namespace TdInterface
                 Debug.WriteLine(ex.StackTrace);
             }
         }
-
-        private async Task ExitLimitPercentage(double percenntage)
-        {
-            try
-            {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitBidOrAsk(quantity);
-            }
-            catch (Exception ex)
-            {
-                txtLastError.Text = ex.Message;
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-        }
-
 
         private async Task ExitBidOrAsk(int quantity)
         {
