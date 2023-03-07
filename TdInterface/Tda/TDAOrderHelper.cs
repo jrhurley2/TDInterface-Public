@@ -156,12 +156,12 @@ namespace TdInterface.Tda
             return null;
         }
 
-        public static int CalculateShares(double riskPerShare, double maxRisk, double minRisk, bool trainingWheels = false)
+        public static int CalculateShares(double riskPerShare, double maxRisk, double minRisk, bool tradeShares = false)
         {
             double calcShares;
 
             // If trade shares is true, use the value in maxRisk which will be a max share amount instead of a dollar amount
-            if (trainingWheels)
+            if (tradeShares)
             {
                 calcShares = maxRisk;
             }

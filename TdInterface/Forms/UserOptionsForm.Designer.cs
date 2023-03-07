@@ -29,8 +29,8 @@ namespace TdInterface
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTrainingWheels = new System.Windows.Forms.Label();
-            this.chkTrainingWheels = new System.Windows.Forms.CheckBox();
+            this.lblTradeShares = new System.Windows.Forms.Label();
+            this.chkTradeShares = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMaxShares = new System.Windows.Forms.TextBox();
             this.lblMaxRisk = new System.Windows.Forms.Label();
@@ -61,25 +61,24 @@ namespace TdInterface
             this.cbCaptureSSOnOpen = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // lblTrainingWheels
+            // lblTradeShares
             // 
-            this.lblTrainingWheels.AutoSize = true;
-            this.lblTrainingWheels.Location = new System.Drawing.Point(46, 38);
-            this.lblTrainingWheels.Name = "lblTrainingWheels";
-            this.lblTrainingWheels.Size = new System.Drawing.Size(72, 15);
-            this.lblTrainingWheels.TabIndex = 1;
-            this.lblTrainingWheels.Text = "Trade Shares";
+            this.lblTradeShares.AutoSize = true;
+            this.lblTradeShares.Location = new System.Drawing.Point(46, 38);
+            this.lblTradeShares.Name = "lblTradeShares";
+            this.lblTradeShares.Size = new System.Drawing.Size(72, 15);
+            this.lblTradeShares.TabIndex = 1;
+            this.lblTradeShares.Text = "Trade Shares";
             // 
-            // chkTrainingWheels
+            // chkTradeShares
             // 
-            this.chkTrainingWheels.AutoSize = true;
-            this.chkTrainingWheels.Location = new System.Drawing.Point(235, 40);
-            this.chkTrainingWheels.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chkTrainingWheels.Name = "chkTrainingWheels";
-            this.chkTrainingWheels.Size = new System.Drawing.Size(15, 14);
-            this.chkTrainingWheels.TabIndex = 2;
-            this.chkTrainingWheels.UseVisualStyleBackColor = true;
-            this.chkTrainingWheels.CheckedChanged += new System.EventHandler(this.chkTrainingWheels_CheckedChanged);
+            this.chkTradeShares.AutoSize = true;
+            this.chkTradeShares.Location = new System.Drawing.Point(235, 40);
+            this.chkTradeShares.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chkTradeShares.Name = "chkTradeShares";
+            this.chkTradeShares.Size = new System.Drawing.Size(15, 14);
+            this.chkTradeShares.TabIndex = 2;
+            this.chkTradeShares.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -384,8 +383,8 @@ namespace TdInterface
             this.Controls.Add(this.lblMaxRisk);
             this.Controls.Add(this.txtMaxShares);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.chkTrainingWheels);
-            this.Controls.Add(this.lblTrainingWheels);
+            this.Controls.Add(this.chkTradeShares);
+            this.Controls.Add(this.lblTradeShares);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserOptionsForm";
             this.Text = "UserOptionsForm";
@@ -397,8 +396,8 @@ namespace TdInterface
 
         #endregion
 
-        private System.Windows.Forms.Label lblTrainingWheels;
-        private System.Windows.Forms.CheckBox chkTrainingWheels;
+        private System.Windows.Forms.Label lblTradeShares;
+        private System.Windows.Forms.CheckBox chkTradeShares;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtMaxShares;
         private System.Windows.Forms.Label lblMaxRisk;

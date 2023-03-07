@@ -33,7 +33,7 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private bool _trainingWheels = false;
+        private bool _tradeShares = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
 
         public string MainFormName{ get; private set; }
@@ -78,7 +78,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
             maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
 
@@ -94,7 +94,7 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, trainingWheels);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
@@ -148,7 +148,7 @@ namespace TdInterface
             try
             {
                 var stopPrice = double.Parse(txtStop.Text);
-                var trainingWheels = checkBox1.Checked;
+                var tradeShares = cbTradeShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 ulong orderKey = 0;
@@ -156,12 +156,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
 
@@ -1013,7 +1013,7 @@ namespace TdInterface
 
         private void ApplySettings()
         {
-            checkBox1.Checked = _settings.TradeShares;
+            cbTradeShares.Checked = _settings.TradeShares;
             chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
 
             if (_settings.TradeShares)
@@ -1082,10 +1082,10 @@ namespace TdInterface
             d = ValidateOcoStopAndLimit(txtBox);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void cbTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            _trainingWheels = checkBox1.Checked;
-            _settings.TradeShares = _trainingWheels;
+            _tradeShares = cbTradeShares.Checked;
+            _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
         #endregion
