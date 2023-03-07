@@ -61,7 +61,7 @@ namespace TdInterface
             this.txtAsk = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtLimit = new System.Windows.Forms.TextBox();
-            this.cbTradeShares = new System.Windows.Forms.CheckBox();
+            this.chkTradeShares = new System.Windows.Forms.CheckBox();
             this.txtHeartBeat = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtConnectionStatus = new System.Windows.Forms.TextBox();
@@ -385,16 +385,16 @@ namespace TdInterface
             this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLimit.Leave += new System.EventHandler(this.txtLimit_Leave);
             // 
-            // cbTradeShares
+            // chkTradeShares
             // 
-            this.cbTradeShares.AutoSize = true;
-            this.cbTradeShares.Location = new System.Drawing.Point(310, 129);
-            this.cbTradeShares.Name = "cbTradeShares";
-            this.cbTradeShares.Size = new System.Drawing.Size(68, 23);
-            this.cbTradeShares.TabIndex = 5;
-            this.cbTradeShares.Text = "Shares";
-            this.cbTradeShares.UseVisualStyleBackColor = true;
-            this.cbTradeShares.CheckedChanged += new System.EventHandler(this.cbTradeShares_CheckedChanged);
+            this.chkTradeShares.AutoSize = true;
+            this.chkTradeShares.Location = new System.Drawing.Point(310, 129);
+            this.chkTradeShares.Name = "chkTradeShares";
+            this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
+            this.chkTradeShares.TabIndex = 5;
+            this.chkTradeShares.Text = "Shares";
+            this.chkTradeShares.UseVisualStyleBackColor = true;
+            this.chkTradeShares.CheckedChanged += new System.EventHandler(this.chkTradeShares_CheckedChanged);
             // 
             // txtHeartBeat
             // 
@@ -669,7 +669,7 @@ namespace TdInterface
             this.Controls.Add(this.txtConnectionStatus);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtHeartBeat);
-            this.Controls.Add(this.cbTradeShares);
+            this.Controls.Add(this.chkTradeShares);
             this.Controls.Add(this.txtLimit);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -739,7 +739,7 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtAsk;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtLimit;
-        private System.Windows.Forms.CheckBox cbTradeShares;
+        private System.Windows.Forms.CheckBox chkTradeShares;
         private System.Windows.Forms.TextBox txtHeartBeat;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtConnectionStatus;

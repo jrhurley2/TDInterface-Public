@@ -30,7 +30,7 @@ namespace TdInterface
             _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
             _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
             _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
-            _settings.CaptureScreenshotOnOpen = cbCaptureSSOnOpen.Checked;
+            _settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -58,7 +58,7 @@ namespace TdInterface
             chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
             chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
             chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
-            cbCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
+            chkCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
 
         }
 

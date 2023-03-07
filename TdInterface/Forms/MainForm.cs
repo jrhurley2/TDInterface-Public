@@ -148,7 +148,7 @@ namespace TdInterface
             try
             {
                 var stopPrice = double.Parse(txtStop.Text);
-                var tradeShares = cbTradeShares.Checked;
+                var tradeShares = chkTradeShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 ulong orderKey = 0;
@@ -1013,7 +1013,7 @@ namespace TdInterface
 
         private void ApplySettings()
         {
-            cbTradeShares.Checked = _settings.TradeShares;
+            chkTradeShares.Checked = _settings.TradeShares;
             chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
 
             if (_settings.TradeShares)
@@ -1082,9 +1082,9 @@ namespace TdInterface
             d = ValidateOcoStopAndLimit(txtBox);
         }
 
-        private void cbTradeShares_CheckedChanged(object sender, EventArgs e)
+        private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            _tradeShares = cbTradeShares.Checked;
+            _tradeShares = chkTradeShares.Checked;
             _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
