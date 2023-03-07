@@ -363,63 +363,6 @@ namespace TdInterface
             }
         }
 
-        private async void btnExitMark10_Click(object sender, EventArgs e)
-        {
-            double percentage = .10D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark25_Click(object sender, EventArgs e)
-        {
-            double percentage = .25D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark33_Click(object sender, EventArgs e)
-        {
-            double percentage = .33D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark50_Click(object sender, EventArgs e)
-        {
-            double percentage = .50D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark100_Click(object sender, EventArgs e)
-        {
-            double percentage = 1.0D;
-            await ExitMarketPercentage(percentage);
-
-        }
-
-        private async void btnExitAsk10_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.10D);
-        }
-
-        private async void btnExitAsk25_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.25D);
-        }
-
-        private async void btnExitAsk33_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.33D);
-        }
-
-        private async void btnExitAsk50_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.50D);
-        }
-
-        private async void btnExitAsk100_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(1.0D);
-        }
-
-
         private async Task ExitMarketPercentage(double percenntage)
         {
             try
