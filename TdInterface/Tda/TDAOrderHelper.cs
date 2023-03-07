@@ -156,6 +156,27 @@ namespace TdInterface.Tda
             return null;
         }
 
+        public static int CalculateShares(double riskPerShare, double maxRisk, double minRisk, bool tradeShares = false)
+        {
+            double calcShares;
+
+            // If trade shares is true, use the value in maxRisk which will be a max share amount instead of a dollar amount
+            if (tradeShares)
+            {
+                calcShares = maxRisk;
+            }
+            else
+            {
+                // check if the user has the option enabled to minimize how little the risk can be to help avoid issues with slippp
+                var rps = riskPerShare > minRisk ? riskPerShare : minRisk;
+                calcShares = maxRisk / rps;
+            }
+
+            var quantity = Convert.ToInt32(calcShares);
+
+            return quantity;
+        }
+
         private static Order GetParentOrder(Order order, Order child)
         {
             if (order == child)

@@ -11,14 +11,9 @@ namespace TdInterface
             InitializeComponent();
         }
 
-        private void chkTrainingWheels_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _settings.TradeShares = chkTrainingWheels.Checked;
+            _settings.TradeShares = chkTradeShares.Checked;
             _settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : decimal.Parse(txtMaxRisk.Text);
             _settings.MaxShares = int.Parse(txtMaxShares.Text);
             _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
@@ -35,7 +30,7 @@ namespace TdInterface
             _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
             _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
             _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
-            _settings.CaptureScreenshotOnOpen = cbCaptureSSOnOpen.Checked;
+            _settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
 
             Utility.SaveSettings(_settings);
             this.Close();
@@ -46,7 +41,7 @@ namespace TdInterface
             _settings = Utility.GetSettings();
             if(_settings == null) _settings = new Settings();
 
-            chkTrainingWheels.Checked = _settings.TradeShares;
+            chkTradeShares.Checked = _settings.TradeShares;
             txtMaxRisk.Text = _settings.MaxRisk.ToString("#.##");
             txtMaxShares.Text = _settings.MaxShares.ToString();
             chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
@@ -63,7 +58,7 @@ namespace TdInterface
             chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
             chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
             chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
-            cbCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
+            chkCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
 
         }
 
