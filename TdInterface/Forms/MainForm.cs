@@ -33,7 +33,7 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private bool _trainingWheels = false;
+        private bool _tradeShares = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
 
         public string MainFormName{ get; private set; }
@@ -78,7 +78,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
             maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
 
@@ -94,7 +94,7 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
@@ -148,7 +148,7 @@ namespace TdInterface
             try
             {
                 var stopPrice = double.Parse(txtStop.Text);
-                var trainingWheels = checkBox1.Checked;
+                var tradeShares = chkTradeShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 ulong orderKey = 0;
@@ -156,12 +156,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
 
@@ -178,25 +178,6 @@ namespace TdInterface
                 var msgBox = MessageBox.Show(ex.Message);
             }
 
-        }
-
-        private static int CalcShares(double riskPerShare, double maxRisk, Settings settings, bool trainingWheels = false)
-        {
-            double calcShares;
-
-            if (trainingWheels)
-            {
-                calcShares = maxRisk;
-            }
-            else
-            {
-                var rps = riskPerShare > settings.MinimumRisk ? riskPerShare : settings.MinimumRisk;
-                calcShares = maxRisk / rps;
-            }
-
-            var quantity = Convert.ToInt32(calcShares);
-
-            return quantity;
         }
 
         private Dictionary<string, List<ulong>> _initialOrders = new Dictionary<string, List<ulong>>();
@@ -359,92 +340,28 @@ namespace TdInterface
 
         private async void btnExitPercentage_Click(object sender, EventArgs e)
         {
-            if (sender is Button)
-            {
-                Button btn = (Button)sender;
-
-                double exitPercentage = Double.Parse(btn.Tag.ToString());
-
-                if (rbExitMarket.Checked == true) // MARKET
-                {
-                    // MessageBox.Show($"Market @ {exitPercentage.ToString()}");
-                    await ExitMarketPercentage(exitPercentage);
-                }
-                else if (rbExitBidAsk.Checked == true) // BID / ASK
-                {
-                    // MessageBox.Show($"Bid/Ask @ {exitPercentage.ToString()}");
-                    await ExitLimitPercentage(exitPercentage);
-                }
-                else
-                {
-                    Debug.WriteLine("Invalid Exit Method Selection");
-                }
-            }
-        }
-
-        private async void btnExitMark10_Click(object sender, EventArgs e)
-        {
-            double percentage = .10D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark25_Click(object sender, EventArgs e)
-        {
-            double percentage = .25D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark33_Click(object sender, EventArgs e)
-        {
-            double percentage = .33D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark50_Click(object sender, EventArgs e)
-        {
-            double percentage = .50D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark100_Click(object sender, EventArgs e)
-        {
-            double percentage = 1.0D;
-            await ExitMarketPercentage(percentage);
-
-        }
-
-        private async void btnExitAsk10_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.10D);
-        }
-
-        private async void btnExitAsk25_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.25D);
-        }
-
-        private async void btnExitAsk33_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.33D);
-        }
-
-        private async void btnExitAsk50_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.50D);
-        }
-
-        private async void btnExitAsk100_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(1.0D);
-        }
-
-
-        private async Task ExitMarketPercentage(double percenntage)
-        {
             try
             {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitMarket(quantity);
+                if (sender is Button)
+                {
+                    Button btn = (Button)sender;
+
+                    double exitPercentage = Double.Parse(btn.Tag.ToString());
+                    var quantity = (int)Math.Ceiling(_activePosition.Quantity * exitPercentage);
+
+                    if (rbExitMarket.Checked == true) // MARKET
+                    {
+                        await ExitMarket(quantity);
+                    }
+                    else if (rbExitBidAsk.Checked == true) // BID / ASK
+                    {
+                        await ExitBidOrAsk(quantity);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Invalid Exit Method Selection");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -453,22 +370,6 @@ namespace TdInterface
                 Debug.WriteLine(ex.StackTrace);
             }
         }
-
-        private async Task ExitLimitPercentage(double percenntage)
-        {
-            try
-            {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitBidOrAsk(quantity);
-            }
-            catch (Exception ex)
-            {
-                txtLastError.Text = ex.Message;
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-        }
-
 
         private async Task ExitBidOrAsk(int quantity)
         {
@@ -1032,7 +933,7 @@ namespace TdInterface
 
         private void ApplySettings()
         {
-            checkBox1.Checked = _settings.TradeShares;
+            chkTradeShares.Checked = _settings.TradeShares;
             chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
 
             if (_settings.TradeShares)
@@ -1101,10 +1002,10 @@ namespace TdInterface
             d = ValidateOcoStopAndLimit(txtBox);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            _trainingWheels = checkBox1.Checked;
-            _settings.TradeShares = _trainingWheels;
+            _tradeShares = chkTradeShares.Checked;
+            _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
         #endregion
