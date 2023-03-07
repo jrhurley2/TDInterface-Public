@@ -94,7 +94,7 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, trainingWheels);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
@@ -178,25 +178,6 @@ namespace TdInterface
                 var msgBox = MessageBox.Show(ex.Message);
             }
 
-        }
-
-        private static int CalcShares(double riskPerShare, double maxRisk, Settings settings, bool trainingWheels = false)
-        {
-            double calcShares;
-
-            if (trainingWheels)
-            {
-                calcShares = maxRisk;
-            }
-            else
-            {
-                var rps = riskPerShare > settings.MinimumRisk ? riskPerShare : settings.MinimumRisk;
-                calcShares = maxRisk / rps;
-            }
-
-            var quantity = Convert.ToInt32(calcShares);
-
-            return quantity;
         }
 
         private Dictionary<string, List<ulong>> _initialOrders = new Dictionary<string, List<ulong>>();
