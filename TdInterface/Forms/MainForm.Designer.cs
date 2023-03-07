@@ -484,7 +484,7 @@ namespace TdInterface
             // timerGetSecuritiesAccount
             // 
             this.timerGetSecuritiesAccount.Enabled = true;
-            this.timerGetSecuritiesAccount.Interval = 10000;
+            this.timerGetSecuritiesAccount.Interval = 20000;
             this.timerGetSecuritiesAccount.Tick += new System.EventHandler(this.timerGetSecuritiesAccount_Tick);
             // 
             // label10
