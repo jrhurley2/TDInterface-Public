@@ -342,7 +342,7 @@ namespace TdInterface
         {
             try
             {
-                if (sender is Button)
+                if (sender is Button && _activePosition != null)
                 {
                     Button btn = (Button)sender;
 
@@ -569,7 +569,7 @@ namespace TdInterface
                 await SetPosition();
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                if (typeof(TdHelper) == _tradeHelper.GetType())
+                if (typeof(TdHelper) == _tradeHelper.GetType() && _securitiesaccount != null)
                 {
                     txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
                 }
@@ -600,7 +600,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount= await GetSecuritiesaccountAsync();
+                _securitiesaccount = await GetSecuritiesaccountAsync();
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -610,7 +610,7 @@ namespace TdInterface
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey))
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && _securitiesaccount != null)
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
                         var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
@@ -671,34 +671,36 @@ namespace TdInterface
 
                             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-
-                            var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                            //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                            //So the Trigger has an OCO that has the limit and stop.
-                            //
-                            Order lmitOrder = null;
-
-                            if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                            if (_securitiesaccount != null)
                             {
-                                lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                            }
+                                var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                                //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                                //So the Trigger has an OCO that has the limit and stop.
+                                //
+                                Order lmitOrder = null;
 
-                            if (lmitOrder != null)
-                            {
-                                Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
-                                var stop = float.Parse(txtStop.Text);
-                                var avgPrice = _activePosition.averagePrice;
-                                var risk = Math.Abs(avgPrice - stop);
+                                if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                                {
+                                    lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                                }
+
+                                if (lmitOrder != null)
+                                {
+                                    Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
+                                    var stop = float.Parse(txtStop.Text);
+                                    var avgPrice = _activePosition.averagePrice;
+                                    var risk = Math.Abs(avgPrice - stop);
 
 
-                                string exitInstruction = GetExitInstruction(_activePosition);
+                                    string exitInstruction = GetExitInstruction(_activePosition);
 
-                                var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
+                                    var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
 
-                                Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
+                                    Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                    var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                    await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                }
                             }
                         }
                     }
@@ -825,21 +827,23 @@ namespace TdInterface
             {
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
+                if (_securitiesaccount != null)
+                {
+                    try
+                    {
+                        SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Can't Update PnL");
+                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine(ex.StackTrace);
+                    }
 
-                try
-                {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Can't Update PnL");
-                    Debug.WriteLine(ex.Message);
-                    Debug.WriteLine(ex.StackTrace);
-                }
-
-                if (_securitiesaccount.positions != null)
-                {
-                    position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                    if (_securitiesaccount.positions != null)
+                    {
+                        position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                    }
                 }
             }
             catch (Exception ex)
@@ -1099,7 +1103,7 @@ namespace TdInterface
 
             try
             {
-                if (_tradeHelper.GetType() == typeof(TdHelper))
+                if (_tradeHelper.GetType() == typeof(TdHelper) && _securitiesaccount != null)
                 {
                     SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                 }
