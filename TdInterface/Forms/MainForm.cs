@@ -342,7 +342,7 @@ namespace TdInterface
         {
             try
             {
-                if (sender is Button)
+                if (sender is Button && _activePosition != null)
                 {
                     Button btn = (Button)sender;
 
