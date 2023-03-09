@@ -76,7 +76,6 @@ namespace TdInterface.Tda
             return triggerOrder;
         }
 
-
         public static Order CreateLimitOrder(string instruction, string symbol, int quanity, double limitPrice)
         {
             var limitOrder = new Order()

@@ -68,6 +68,12 @@ namespace TdInterface
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
+            btnExit10.Enabled = false;
+            btnExit25.Enabled = false;
+            btnExit33.Enabled = false;
+            btnExit50.Enabled = false;
+            btnExit100.Enabled = false;
+            btnBreakEven.Enabled = false;
 
             var securitiesaccount = _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId).Result;
 
@@ -781,20 +787,6 @@ namespace TdInterface
             }
 
         }
-        
-        private void SafeUpdateButton(Button button, string text)
-        {
-            if (button.InvokeRequired)
-            {
-                var d = new SafeCallDelegate(SafeUpdateTextBox);
-                button.Invoke(d, new object[] { button, text });
-            }
-            else
-            {
-                button.Text = text;
-            }
-
-        }
         #endregion
 
         private Order _initialLimitOrder;
@@ -981,24 +973,7 @@ namespace TdInterface
             catch (Exception) { }
         }
 
-        private void txtStop_Leave(object sender, EventArgs e)
-        {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-        }
-
-        private void txtLimit_Leave(object sender, EventArgs e)
-        {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-
-        }
-
-        private void txtLimitOffset_Leave(object sender, EventArgs e)
+        private void txtWithValidation_Leave(object sender, EventArgs e)
         {
             Decimal d;
             TextBox txtBox = (TextBox)sender;
@@ -1012,69 +987,17 @@ namespace TdInterface
             _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
-        #endregion
-
-        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        
+        private void SetButtonsState()
         {
-            decimal d = decimal.MinValue;
-            if (string.IsNullOrEmpty(txtBox.Text.Trim()))
-            {
+            bool isLimitValid = validateDecimalTextBox(txtLimit) || validateDecimalTextBox(txtLimitOffset);
+            btnBuyLmtTriggerOco.Enabled = isLimitValid;
+            btnSellLmtTriggerOco.Enabled = isLimitValid;
 
-            }
-            else
-            {
-                var canParse = Decimal.TryParse(txtBox.Text, out d);
-                if (!canParse)
-                {
-                    txtBox.SelectAll();
-                    txtBox.Focus();
-                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
-                }
-                else
-                {
-                    txtBox.Text = d.ToString("0.00");
-                }
-            }
-            SetToOpenButtons();
-            return d;
-        }
-
-        private void SetToOpenButtons()
-        {
-            decimal d;
-            if (!string.IsNullOrEmpty(txtStop.Text.Trim()) && decimal.TryParse(txtStop.Text.Trim(), out d))
-            {
-                btnBuyMrkTriggerOco.Enabled = true;
-                btnSellMrkTriggerOco.Enabled = true;
-            }
-            else
-            {
-                btnBuyMrkTriggerOco.Enabled = false;
-                btnSellMrkTriggerOco.Enabled = false;
-                btnBuyLmtTriggerOco.Enabled = false;
-                btnSellLmtTriggerOco.Enabled = false;
-                return;
-            }
-
-            btnBuyLmtTriggerOco.Enabled = false;
-            btnSellLmtTriggerOco.Enabled = false;
-
-            if (!string.IsNullOrEmpty(txtLimit.Text.Trim()))
-            {
-                if (decimal.TryParse(txtLimit.Text.Trim(), out d))
-                {
-                    btnBuyLmtTriggerOco.Enabled = true;
-                    btnSellLmtTriggerOco.Enabled = true;
-                }
-            }
-            else if (!string.IsNullOrEmpty(txtLimitOffset.Text.Trim()))
-            {
-                if (decimal.TryParse(txtLimitOffset.Text.Trim(), out d))
-                {
-                    btnBuyLmtTriggerOco.Enabled = true;
-                    btnSellLmtTriggerOco.Enabled = true;
-                }
-            }
+            bool isStopValid = validateDecimalTextBox(txtStop);
+            btnBuyMrkTriggerOco.Enabled = isStopValid;
+            btnSellMrkTriggerOco.Enabled = isStopValid;
+            btnBreakEven.Enabled = isStopValid || validateDecimalTextBox(txtStopToClose);
         }
 
         private void txtLastError_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1095,31 +1018,6 @@ namespace TdInterface
         {
             txtSymbol.SelectAll();
         }
-
-        #region Timers
-        private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
-        {
-            _securitiesaccount = await GetSecuritiesaccountAsync();
-
-            try
-            {
-                if (_tradeHelper.GetType() == typeof(TdHelper) && _securitiesaccount != null)
-                {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Can't Update PnL");
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-
-
-        }
-
-        #endregion
-
         private void txtRValue_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtRValue.Text))
@@ -1148,10 +1046,19 @@ namespace TdInterface
             }
             else
             {
-                txtShares.ForeColor= Color.FromArgb(255, 82, 109);
+                txtShares.ForeColor = Color.FromArgb(255, 82, 109);
             }
             txtShares.BackColor = txtShares.BackColor;
+
+            bool hasPosition = _activePosition != null && _activePosition.DisplayQuantity != 0;
+            // No Active Position, so we should disable exit buttons
+            btnExit10.Enabled = hasPosition;
+            btnExit25.Enabled = hasPosition;
+            btnExit33.Enabled = hasPosition;
+            btnExit50.Enabled = hasPosition;
+            btnExit100.Enabled = hasPosition;
         }
+
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -1163,5 +1070,63 @@ namespace TdInterface
                 txtStop.Focus();
             }
         }
+        #endregion
+
+        #region Validations
+
+        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        {
+            decimal d = decimal.MinValue;
+            if (string.IsNullOrEmpty(txtBox.Text.Trim()))
+            {
+
+            }
+            else
+            {
+                var canParse = Decimal.TryParse(txtBox.Text, out d);
+                if (!canParse)
+                {
+                    txtBox.SelectAll();
+                    txtBox.Focus();
+                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
+                }
+                else
+                {
+                    txtBox.Text = d.ToString("0.00");
+                }
+            }
+            SetButtonsState();
+            return d;
+        }
+
+        private bool validateDecimalTextBox(TextBox txtBox)
+        {
+            return (!string.IsNullOrEmpty(txtBox.Text.Trim()) && decimal.TryParse(txtBox.Text.Trim(), out decimal d));
+        }
+        #endregion
+
+        #region Timers
+        private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
+        {
+            _securitiesaccount = await GetSecuritiesaccountAsync();
+
+            try
+            {
+                if (_tradeHelper.GetType() == typeof(TdHelper) && _securitiesaccount != null)
+                {
+                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Can't Update PnL");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+
+        }
+
+        #endregion
     }
 }
