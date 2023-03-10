@@ -1057,6 +1057,7 @@ namespace TdInterface
             btnExit33.Enabled = hasPosition;
             btnExit50.Enabled = hasPosition;
             btnExit100.Enabled = hasPosition;
+            btnBreakEven.Enabled = hasPosition;
         }
 
 
