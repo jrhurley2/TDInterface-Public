@@ -1,3 +1,21 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+---
+name: Custom issue template
+about: Describe this issue template's purpose here.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 > Your issue may already be reported! Please search on the [issue tracker](https://github.com/jrhurley2/TDInterface-Public/issues) before creating one.
 
 ## Expected Behavior

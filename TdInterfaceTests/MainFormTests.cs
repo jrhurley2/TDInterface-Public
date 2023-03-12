@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using TdInterface;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 //using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation.Model;
 
 namespace TdInterface.Tests
 {
@@ -35,10 +37,10 @@ namespace TdInterface.Tests
             settings.MaxRisk = 5;
             settings.EnableMaxLossLimit = true;
 
-            var quote = new StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2484 };
-            var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances= initialBalances };
+            var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
 
             var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, false, settings);
         }
@@ -54,7 +56,7 @@ namespace TdInterface.Tests
             settings.EnableMaxLossLimit = true;
             settings.PreventRiskExceedMaxLoss = true;
 
-            var quote = new StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
@@ -75,7 +77,7 @@ namespace TdInterface.Tests
             settings.UseBidAskOcoCalc = false;
 
 
-            var quote = new StockQuote { symbol = "AAPL", bidPrice = 149.99, lastPrice = 150.0, askPrice = 150.01 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 149.99, lastPrice = 150.0, askPrice = 150.01 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
@@ -83,15 +85,15 @@ namespace TdInterface.Tests
             var expectedRiskPerShare = .20;
             var stop = quote.lastPrice - expectedRiskPerShare;
 
-            var expectedShares = Convert.ToInt32( ((settings.MaxLossLimitInR * settings.MaxRisk) + Convert.ToDecimal(securitiesAccount.DailyPnL)) / Convert.ToDecimal(expectedRiskPerShare));
+            var expectedShares = Convert.ToInt32(((settings.MaxLossLimitInR * settings.MaxRisk) + Convert.ToDecimal(securitiesAccount.DailyPnL)) / Convert.ToDecimal(expectedRiskPerShare));
 
             var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, stop, false, 5, securitiesAccount.DailyPnL, false, settings);
-            
+
             Assert.AreEqual(expectedShares, actual.orderLegCollection[0].quantity);
         }
 
         [TestMethod]
-        public void CheckMaxRisk_Under_Daily() 
+        public void CheckMaxRisk_Under_Daily()
         {
             double expectedMaxRisk = 5;
             double dailyPnl = 0;
@@ -123,6 +125,17 @@ namespace TdInterface.Tests
             var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
         }
 
+        [TestMethod()]
+        public void AddInitialOrderTest()
+        {
+            var initialOrders = new Dictionary<string, List<ulong>>();
 
+
+            initialOrders.Add("TEST", new List<ulong>());
+            initialOrders["TEST"].Add(1234UL);
+
+            Assert.IsTrue(initialOrders["TEST"].Contains(1234UL));
+
+        }
     }
 }

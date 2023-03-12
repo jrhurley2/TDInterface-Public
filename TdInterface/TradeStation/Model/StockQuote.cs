@@ -19,6 +19,10 @@ namespace TdInterface.TradeStation.Model
             {
                 return Bid != null ? double.Parse(Bid) : 0.0;
             }
+            set
+            {
+                Bid = value.ToString();
+            }
         }
         public override double askPrice
         {
@@ -26,11 +30,19 @@ namespace TdInterface.TradeStation.Model
             {
                 return Ask != null ? double.Parse(Ask) : 0.0;
             }
+            set
+            {
+                Ask = value.ToString();
+            }
         }
         public override double lastPrice {
             get
             {
                 return Last != null ? double.Parse(Last) : 0.0;
+            }
+            set
+            {
+                Last = value.ToString();
             }
         }
     }

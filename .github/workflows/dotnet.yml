@@ -60,15 +60,15 @@ jobs:
       uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
-        filename: "TDInterface.zip"
+        filename: "TDInterface${{steps.version.outputs.version}}.zip"
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\'
         
-    # - name: Upload Release
-    #   if: github.ref == 'refs/heads/master' && env.IsRelease
-    #   uses: ncipollo/release-action@v1
-    #   with:
-    #     artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface.zip'
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     tag: "${{ steps.version.outputs.version}}"
-    #     makeLatest: false
+    - name: Upload Release
+      if: github.ref == 'refs/heads/master'
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface${{steps.version.outputs.version}}.zip'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: "${{ steps.version.outputs.version}}"
+        makeLatest: false
 

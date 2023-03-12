@@ -21,9 +21,7 @@ namespace TdInterface
     {
         private IStreamer _streamer;
         private string _accountId;
-        private TdInterface.Model.StockQuote _stockQuote = new StockQuote();
-        private TdHelper _tdHelper= new TdHelper();
-        private TradeStationHelper _tradeStationHelper; 
+
         private IHelper _tradeHelper;
       
         private string curSymbol = String.Empty;
@@ -35,10 +33,8 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private Position _initialPosition;
-        private bool _trainingWheels = false;
+        private bool _tradeShares = false;
         private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private Dictionary<ulong, Order> _placedOrders = new Dictionary<ulong, Order>();
 
         public string MainFormName{ get; private set; }
 
@@ -72,6 +68,12 @@ namespace TdInterface
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
             btnSellMrkTriggerOco.Enabled = false;
+            btnExit10.Enabled = false;
+            btnExit25.Enabled = false;
+            btnExit33.Enabled = false;
+            btnExit50.Enabled = false;
+            btnExit100.Enabled = false;
+            btnBreakEven.Enabled = false;
 
             var securitiesaccount = _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId).Result;
 
@@ -82,7 +84,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool trainingWheels, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
             maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
 
@@ -98,7 +100,7 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = CalcShares(riskPerShare, maxRisk, settings, trainingWheels);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
@@ -152,7 +154,7 @@ namespace TdInterface
             try
             {
                 var stopPrice = double.Parse(txtStop.Text);
-                var trainingWheels = checkBox1.Checked;
+                var tradeShares = chkTradeShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 ulong orderKey = 0;
@@ -160,18 +162,18 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
-                    orderKey = await _tdHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
+                    orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, trainingWheels, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
                     orderKey = await _tradeHelper.PlaceOrder(Utility.AccessTokenContainer, _accountId, triggerOrder);
                 }
 
                 ResetInitialOrder();
                 txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
-                AddInitialOrder(symbol, orderKey, triggerOrder);
+                AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
                 if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
@@ -184,35 +186,16 @@ namespace TdInterface
 
         }
 
-        private static int CalcShares(double riskPerShare, double maxRisk, Settings settings, bool trainingWheels = false)
-        {
-            double calcShares;
+        private Dictionary<string, List<ulong>> _initialOrders = new Dictionary<string, List<ulong>>();
 
-            if (trainingWheels)
-            {
-                calcShares = maxRisk;
-            }
-            else
-            {
-                var rps = riskPerShare > settings.MinimumRisk ? riskPerShare : settings.MinimumRisk;
-                calcShares = maxRisk / rps;
-            }
-
-            var quantity = Convert.ToInt32(calcShares);
-
-            return quantity;
-        }
-
-        private Dictionary<string, Dictionary<ulong, Order>> _initialOrders = new Dictionary<string, Dictionary<ulong, Order>>();
-
-        private void AddInitialOrder(string symbol, ulong orderKey, Order order)
+        public void AddInitialOrder(string symbol, ulong orderKey)
         {
             if (!_initialOrders.ContainsKey(symbol.ToUpper()))
             {
-                _initialOrders.Add(symbol.ToUpper(), new Dictionary<ulong, Order>());
+                _initialOrders.Add(symbol.ToUpper(), new List<ulong>());
             }
 
-            _initialOrders[symbol.ToUpper()].Add(orderKey, order);
+            _initialOrders[symbol.ToUpper()].Add(orderKey);
         }
 
         #region Order Open 
@@ -220,7 +203,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
@@ -239,7 +222,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.SELL_SHORT;
@@ -268,7 +251,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -286,7 +269,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _stockQuote;
+                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -312,7 +295,6 @@ namespace TdInterface
 
         private void ResetInitialOrder()
         {
-            _initialPosition = null;
             txtAveragePrice.Text = string.Empty;
             txtShares.Text = string.Empty;
             txtStopToClose.Text = string.Empty;
@@ -364,92 +346,28 @@ namespace TdInterface
 
         private async void btnExitPercentage_Click(object sender, EventArgs e)
         {
-            if (sender is Button)
-            {
-                Button btn = (Button)sender;
-
-                double exitPercentage = Double.Parse(btn.Tag.ToString());
-
-                if (rbExitMarket.Checked == true) // MARKET
-                {
-                    // MessageBox.Show($"Market @ {exitPercentage.ToString()}");
-                    await ExitMarketPercentage(exitPercentage);
-                }
-                else if (rbExitBidAsk.Checked == true) // BID / ASK
-                {
-                    // MessageBox.Show($"Bid/Ask @ {exitPercentage.ToString()}");
-                    await ExitLimitPercentage(exitPercentage);
-                }
-                else
-                {
-                    Debug.WriteLine("Invalid Exit Method Selection");
-                }
-            }
-        }
-
-        private async void btnExitMark10_Click(object sender, EventArgs e)
-        {
-            double percentage = .10D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark25_Click(object sender, EventArgs e)
-        {
-            double percentage = .25D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark33_Click(object sender, EventArgs e)
-        {
-            double percentage = .33D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark50_Click(object sender, EventArgs e)
-        {
-            double percentage = .50D;
-            await ExitMarketPercentage(percentage);
-        }
-
-        private async void btnExitMark100_Click(object sender, EventArgs e)
-        {
-            double percentage = 1.0D;
-            await ExitMarketPercentage(percentage);
-
-        }
-
-        private async void btnExitAsk10_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.10D);
-        }
-
-        private async void btnExitAsk25_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.25D);
-        }
-
-        private async void btnExitAsk33_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.33D);
-        }
-
-        private async void btnExitAsk50_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(.50D);
-        }
-
-        private async void btnExitAsk100_Click(object sender, EventArgs e)
-        {
-            await ExitLimitPercentage(1.0D);
-        }
-
-
-        private async Task ExitMarketPercentage(double percenntage)
-        {
             try
             {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitMarket(quantity);
+                if (sender is Button && _activePosition != null)
+                {
+                    Button btn = (Button)sender;
+
+                    double exitPercentage = Double.Parse(btn.Tag.ToString());
+                    var quantity = (int)Math.Ceiling(_activePosition.Quantity * exitPercentage);
+
+                    if (rbExitMarket.Checked == true) // MARKET
+                    {
+                        await ExitMarket(quantity);
+                    }
+                    else if (rbExitBidAsk.Checked == true) // BID / ASK
+                    {
+                        await ExitBidOrAsk(quantity);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Invalid Exit Method Selection");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -458,34 +376,19 @@ namespace TdInterface
                 Debug.WriteLine(ex.StackTrace);
             }
         }
-
-        private async Task ExitLimitPercentage(double percenntage)
-        {
-            try
-            {
-                var quantity = (int)Math.Ceiling(_activePosition.Quantity * percenntage);
-                await ExitBidOrAsk(quantity);
-            }
-            catch (Exception ex)
-            {
-                txtLastError.Text = ex.Message;
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-        }
-
 
         private async Task ExitBidOrAsk(int quantity)
         {
+            var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
             if (exitInstruction == TDAOrderHelper.SELL)
             {
-                limitPrice = _stockQuote.askPrice;
+                limitPrice = stockQuote.askPrice;
             }
             else
             {
-                limitPrice = _stockQuote.bidPrice;
+                limitPrice = stockQuote.bidPrice;
             }
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
@@ -598,19 +501,7 @@ namespace TdInterface
 
         private async Task CancelAll()
         {
-            _securitiesaccount = await _tradeHelper.GetAccount(Utility.AccessTokenContainer, _accountId);
-            Debug.WriteLine(JsonConvert.SerializeObject(_securitiesaccount.orderStrategies));
-            var openOrders = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase));
-
-            var tasks = new List<Task>();
-            foreach (var order in openOrders)
-            {
-                Debug.WriteLine(JsonConvert.SerializeObject(order));
-                var task = _tradeHelper.CancelOrder(Utility.AccessTokenContainer, _accountId, order);
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(true);
+            await _tradeHelper.CancelAll(Utility.AccessTokenContainer, _accountId, txtSymbol.Text);
         }
         #endregion
 
@@ -618,10 +509,10 @@ namespace TdInterface
         private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
-            _stockQuote = _stockQuote.Update(stockQuote);
-            SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
+            stockQuote = _tradeHelper.SetStockQuote(stockQuote);
+            SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
+            SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
 
 
             try
@@ -632,7 +523,7 @@ namespace TdInterface
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = (float)_stockQuote.lastPrice - avgPrice;
+                    float reward = (float)stockQuote.lastPrice - avgPrice;
                     reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
@@ -656,13 +547,13 @@ namespace TdInterface
                     if (double.TryParse(txtStop.Text, out stop))
                     {
                         double oneToOne;
-                        if (stop < _stockQuote.lastPrice)
+                        if (stop < stockQuote.lastPrice)
                         {
-                            oneToOne = (_stockQuote.lastPrice - stop) + _stockQuote.lastPrice;
+                            oneToOne = (stockQuote.lastPrice - stop) + stockQuote.lastPrice;
                         }
                         else
                         {
-                            oneToOne = _stockQuote.lastPrice - (stop - _stockQuote.lastPrice);
+                            oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                     }
@@ -684,7 +575,7 @@ namespace TdInterface
                 await SetPosition();
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                if (typeof(TdHelper) == _tradeHelper.GetType())
+                if (typeof(TdHelper) == _tradeHelper.GetType() && _securitiesaccount != null)
                 {
                     txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
                 }
@@ -715,7 +606,7 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount= await GetSecuritiesaccountAsync();
+                _securitiesaccount = await GetSecuritiesaccountAsync();
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -725,7 +616,7 @@ namespace TdInterface
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].ContainsKey(orderEntryRequestMessage.Order.OrderKey))
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && _securitiesaccount != null)
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
                         var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
@@ -780,42 +671,42 @@ namespace TdInterface
                     {
                         Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
                         //Initial Trigger Order filled, adjust limit
-                        if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                        if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
                         {
                             Debug.WriteLine("Found OrderKey");
 
                             _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal.accounts[0].accountId);
-                            //_securitiesaccount = _tradeHelper.Securitiesaccount;
-
-                            var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                            //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                            //So the Trigger has an OCO that has the limit and stop.
-                            //
-                            Order lmitOrder = null;
-
-                            if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                            if (_securitiesaccount != null)
                             {
-                                lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                            }
+                                var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                                //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                                //So the Trigger has an OCO that has the limit and stop.
+                                //
+                                Order lmitOrder = null;
 
-                            if (lmitOrder != null)
-                            {
-                                Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
-                                var stop = float.Parse(txtStop.Text);
-                                var avgPrice = _activePosition.averagePrice;
-                                var risk = Math.Abs(avgPrice - stop);
+                                if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                                {
+                                    lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                                }
+
+                                if (lmitOrder != null)
+                                {
+                                    Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
+                                    var stop = float.Parse(txtStop.Text);
+                                    var avgPrice = _activePosition.averagePrice;
+                                    var risk = Math.Abs(avgPrice - stop);
 
 
-                                string exitInstruction = GetExitInstruction(_activePosition);
+                                    string exitInstruction = GetExitInstruction(_activePosition);
 
-                                var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
+                                    var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
 
-                                Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
+                                    Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                    var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                    await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                }
                             }
                         }
                     }
@@ -896,20 +787,6 @@ namespace TdInterface
             }
 
         }
-        
-        private void SafeUpdateButton(Button button, string text)
-        {
-            if (button.InvokeRequired)
-            {
-                var d = new SafeCallDelegate(SafeUpdateTextBox);
-                button.Invoke(d, new object[] { button, text });
-            }
-            else
-            {
-                button.Text = text;
-            }
-
-        }
         #endregion
 
         private Order _initialLimitOrder;
@@ -921,11 +798,6 @@ namespace TdInterface
 
             if (position != null)
             {
-                if (_initialPosition == null)
-                {
-                    _initialPosition = position;
-                }
-
                 _activePosition = position;
                 SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
                 SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
@@ -947,23 +819,23 @@ namespace TdInterface
             {
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                //_securitiesaccount = _tradeHelper.Securitiesaccount;
-                //_securitiesaccount = await _tradeHelper.GetAccount(accessTokenContainer, accountId);
+                if (_securitiesaccount != null)
+                {
+                    try
+                    {
+                        SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Can't Update PnL");
+                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine(ex.StackTrace);
+                    }
 
-                try
-                {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Can't Update PnL");
-                    Debug.WriteLine(ex.Message);
-                    Debug.WriteLine(ex.StackTrace);
-                }
-
-                if (_securitiesaccount.positions != null)
-                {
-                    position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                    if (_securitiesaccount.positions != null)
+                    {
+                        position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                    }
                 }
             }
             catch (Exception ex)
@@ -1043,28 +915,7 @@ namespace TdInterface
             //}
         }
 
-
-        #region Menu Events
-        private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-        }
-
-        private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-            Utility.SaveAccessTokenContainer(accessTokenContainer);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new UserOptionsForm();
-            frm.ShowDialog();
-            _settings = Utility.GetSettings();
-            ApplySettings();
-        }
-        #endregion
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
             var settings = Utility.GetSettings();
@@ -1078,7 +929,7 @@ namespace TdInterface
 
         private void ApplySettings()
         {
-            checkBox1.Checked = _settings.TradeShares;
+            chkTradeShares.Checked = _settings.TradeShares;
             chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
 
             if (_settings.TradeShares)
@@ -1122,7 +973,7 @@ namespace TdInterface
             catch (Exception) { }
         }
 
-        private void txtStop_Leave(object sender, EventArgs e)
+        private void txtWithValidation_Leave(object sender, EventArgs e)
         {
             Decimal d;
             TextBox txtBox = (TextBox)sender;
@@ -1130,92 +981,23 @@ namespace TdInterface
             d = ValidateOcoStopAndLimit(txtBox);
         }
 
-        private void txtLimit_Leave(object sender, EventArgs e)
+        private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-
-        }
-
-        private void txtLimitOffset_Leave(object sender, EventArgs e)
-        {
-            Decimal d;
-            TextBox txtBox = (TextBox)sender;
-
-            d = ValidateOcoStopAndLimit(txtBox);
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            _trainingWheels = checkBox1.Checked;
-            _settings.TradeShares = _trainingWheels;
+            _tradeShares = chkTradeShares.Checked;
+            _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
-        #endregion
-
-        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        
+        private void SetButtonsState()
         {
-            decimal d = decimal.MinValue;
-            if (string.IsNullOrEmpty(txtBox.Text.Trim()))
-            {
+            bool isLimitValid = validateDecimalTextBox(txtLimit) || validateDecimalTextBox(txtLimitOffset);
+            btnBuyLmtTriggerOco.Enabled = isLimitValid;
+            btnSellLmtTriggerOco.Enabled = isLimitValid;
 
-            }
-            else
-            {
-                var canParse = Decimal.TryParse(txtBox.Text, out d);
-                if (!canParse)
-                {
-                    txtBox.SelectAll();
-                    txtBox.Focus();
-                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
-                }
-                else
-                {
-                    txtBox.Text = d.ToString("0.00");
-                }
-            }
-            SetToOpenButtons();
-            return d;
-        }
-
-        private void SetToOpenButtons()
-        {
-            decimal d;
-            if (!string.IsNullOrEmpty(txtStop.Text.Trim()) && decimal.TryParse(txtStop.Text.Trim(), out d))
-            {
-                btnBuyMrkTriggerOco.Enabled = true;
-                btnSellMrkTriggerOco.Enabled = true;
-            }
-            else
-            {
-                btnBuyMrkTriggerOco.Enabled = false;
-                btnSellMrkTriggerOco.Enabled = false;
-                btnBuyLmtTriggerOco.Enabled = false;
-                btnSellLmtTriggerOco.Enabled = false;
-                return;
-            }
-
-            btnBuyLmtTriggerOco.Enabled = false;
-            btnSellLmtTriggerOco.Enabled = false;
-
-            if (!string.IsNullOrEmpty(txtLimit.Text.Trim()))
-            {
-                if (decimal.TryParse(txtLimit.Text.Trim(), out d))
-                {
-                    btnBuyLmtTriggerOco.Enabled = true;
-                    btnSellLmtTriggerOco.Enabled = true;
-                }
-            }
-            else if (!string.IsNullOrEmpty(txtLimitOffset.Text.Trim()))
-            {
-                if (decimal.TryParse(txtLimitOffset.Text.Trim(), out d))
-                {
-                    btnBuyLmtTriggerOco.Enabled = true;
-                    btnSellLmtTriggerOco.Enabled = true;
-                }
-            }
+            bool isStopValid = validateDecimalTextBox(txtStop);
+            btnBuyMrkTriggerOco.Enabled = isStopValid;
+            btnSellMrkTriggerOco.Enabled = isStopValid;
+            btnBreakEven.Enabled = isStopValid || validateDecimalTextBox(txtStopToClose);
         }
 
         private void txtLastError_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1236,40 +1018,6 @@ namespace TdInterface
         {
             txtSymbol.SelectAll();
         }
-
-        #region Timers
-        private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
-        {
-            _securitiesaccount = await GetSecuritiesaccountAsync();
-
-            //_securitiesaccount = await _tdHelper.GetAccount(Utility.AccessTokenContainer, Utility.UserPrincipal);
-
-            try
-            {
-                if (_tradeHelper.GetType() == typeof(TdHelper))
-                {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Can't Update PnL");
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-
-
-        }
-
-        private async void timer1_Tick(object sender, EventArgs e)
-        {
-            if (Utility.AccessTokenContainer.ExpiresIn < 100)
-            {
-                Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
-            }
-        }
-        #endregion
-
         private void txtRValue_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtRValue.Text))
@@ -1298,10 +1046,20 @@ namespace TdInterface
             }
             else
             {
-                txtShares.ForeColor= Color.FromArgb(255, 82, 109);
+                txtShares.ForeColor = Color.FromArgb(255, 82, 109);
             }
             txtShares.BackColor = txtShares.BackColor;
+
+            bool hasPosition = _activePosition != null && _activePosition.DisplayQuantity != 0;
+            // No Active Position, so we should disable exit buttons
+            btnExit10.Enabled = hasPosition;
+            btnExit25.Enabled = hasPosition;
+            btnExit33.Enabled = hasPosition;
+            btnExit50.Enabled = hasPosition;
+            btnExit100.Enabled = hasPosition;
+            btnBreakEven.Enabled = hasPosition;
         }
+
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -1313,5 +1071,63 @@ namespace TdInterface
                 txtStop.Focus();
             }
         }
+        #endregion
+
+        #region Validations
+
+        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        {
+            decimal d = decimal.MinValue;
+            if (string.IsNullOrEmpty(txtBox.Text.Trim()))
+            {
+
+            }
+            else
+            {
+                var canParse = Decimal.TryParse(txtBox.Text, out d);
+                if (!canParse)
+                {
+                    txtBox.SelectAll();
+                    txtBox.Focus();
+                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
+                }
+                else
+                {
+                    txtBox.Text = d.ToString("0.00");
+                }
+            }
+            SetButtonsState();
+            return d;
+        }
+
+        private bool validateDecimalTextBox(TextBox txtBox)
+        {
+            return (!string.IsNullOrEmpty(txtBox.Text.Trim()) && decimal.TryParse(txtBox.Text.Trim(), out decimal d));
+        }
+        #endregion
+
+        #region Timers
+        private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
+        {
+            _securitiesaccount = await GetSecuritiesaccountAsync();
+
+            try
+            {
+                if (_tradeHelper.GetType() == typeof(TdHelper) && _securitiesaccount != null)
+                {
+                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Can't Update PnL");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+
+        }
+
+        #endregion
     }
 }
