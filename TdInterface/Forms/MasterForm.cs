@@ -162,17 +162,6 @@ namespace TdInterface
             }
         }
 
-        private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-        }
-
-        private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-            Utility.SaveAccessTokenContainer(accessTokenContainer);
-        }
-
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new UserOptionsForm();
