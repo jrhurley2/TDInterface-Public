@@ -29,7 +29,6 @@ namespace TdInterface
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserOptionsForm));
             this.lblTradeShares = new System.Windows.Forms.Label();
             this.chkTradeShares = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -386,7 +385,6 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.chkTradeShares);
             this.Controls.Add(this.lblTradeShares);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserOptionsForm";
             this.Text = "EZTM Settings";

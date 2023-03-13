@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using TdInterface.Forms;
 
 namespace TdInterface
 {
-    public partial class UserOptionsForm : Form
+    public partial class UserOptionsForm : EZTMBaseForm
     {
         public Settings _settings;
         public UserOptionsForm()

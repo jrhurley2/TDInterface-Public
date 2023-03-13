@@ -5,10 +5,11 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TdInterface.Forms;
 
 namespace TdInterface
 {
-    public class OAuthLoginForm : Form
+    public class OAuthLoginForm : EZTMBaseForm
     {
         private bool _autoConfirmAmeritrade;
         private IContainer components;

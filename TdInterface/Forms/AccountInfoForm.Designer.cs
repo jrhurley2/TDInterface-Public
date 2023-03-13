@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountInfoForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkTdaEnableEquity = new System.Windows.Forms.CheckBox();
             this.txtConsumerKey = new System.Windows.Forms.TextBox();
@@ -209,7 +208,6 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "AccountInfoForm";
             this.Text = "EZTM Account Settings";

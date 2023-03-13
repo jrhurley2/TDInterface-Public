@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,13 +12,14 @@ using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Model;
+using TdInterface.Properties;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
 
 namespace TdInterface
 {
-    public partial class MasterForm : Form
+    public partial class MasterForm : EZTMBaseForm
     {
         private IStreamer _streamer;
         private string _equityAccountId;
@@ -149,7 +151,7 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
-                MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
+                MessageBox.Show("Error Logging In, Clear Creds or enter account info, shut down and retry.");
             }
         }
 

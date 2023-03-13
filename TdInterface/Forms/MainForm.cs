@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
@@ -17,7 +18,7 @@ using Websocket.Client.Models;
 
 namespace TdInterface
 {
-    public partial class MainForm : Form
+    public partial class MainForm : EZTMBaseForm
     {
         private IStreamer _streamer;
         private string _accountId;
