@@ -700,7 +700,7 @@ namespace TdInterface
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(710, 535);
             this.Name = "MainForm";
-            this.Text = "JrHurley\'s TDInterface";
+            this.Text = "EZTM - EZ Trade Manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);

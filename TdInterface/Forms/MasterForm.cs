@@ -243,7 +243,7 @@ namespace TdInterface
 
             if (string.IsNullOrEmpty(name))
             {
-                nameAsKey = $"TdInterface Form {_mainForms.Count}";
+                nameAsKey = $"EZTM Form {_mainForms.Count}";
             }
             else
             {
