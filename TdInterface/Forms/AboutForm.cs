@@ -12,12 +12,5 @@ namespace TdInterface.Forms
             InitializeComponent();
             lblVersion.Text = $"Version: {Program.GetAppVersion()}";
         }
-
-        private void lnkAppGithub_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-        {
-            this.lnkAppGithub.LinkVisited = true;
-
-            Utility.OpenAppOnGitHub();
-        }
     }
 }
