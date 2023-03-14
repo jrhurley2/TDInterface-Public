@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
@@ -17,7 +18,7 @@ using Websocket.Client.Models;
 
 namespace TdInterface
 {
-    public partial class MainForm : Form
+    public partial class MainForm : EZTMBaseForm
     {
         private IStreamer _streamer;
         private string _accountId;
@@ -642,93 +643,96 @@ namespace TdInterface
         {
             try
             {
-                await SetPosition();
-
-                Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
-
-                var symbol = orderFillMessage.Order.Security.Symbol;
-                Debug.WriteLine($"HandleOrderFilled: symbol {symbol}");
-                Debug.WriteLine($"HandleOrderFilled: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
-
-
-                //check to see if this is the initial Limit order, if it is, set the stop to BE.
-                if (_initialLimitOrder != null)
+                if (orderFillMessage != null)
                 {
-                    Debug.WriteLine($"HandleOrderFilled equals Order Key {orderFillMessage.Order.OrderKey} {JsonConvert.SerializeObject(_initialLimitOrder)}");
-                    if (_initialLimitOrder.orderId.Equals(orderFillMessage.Order.OrderKey))
-                    {
-                        Debug.WriteLine($"HandleOrderFilled equals Order Key {JsonConvert.SerializeObject(_initialLimitOrder)}");
-                        btnBreakEven.PerformClick();
-                    }
-                }
+                    await SetPosition();
 
-                if (_settings.MoveLimitPriceOnFill)
-                {
+                    Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
 
-                    Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
-                    //var symbol = orderFillMessage.Order.Security.Symbol;
-                    if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                    var symbol = orderFillMessage.Order.Security.Symbol;
+                    Debug.WriteLine($"HandleOrderFilled: symbol {symbol}");
+                    Debug.WriteLine($"HandleOrderFilled: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
+
+
+                    //check to see if this is the initial Limit order, if it is, set the stop to BE.
+                    if (_initialLimitOrder != null)
                     {
-                        Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
-                        //Initial Trigger Order filled, adjust limit
-                        if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
+                        Debug.WriteLine($"HandleOrderFilled equals Order Key {orderFillMessage.Order.OrderKey} {JsonConvert.SerializeObject(_initialLimitOrder)}");
+                        if (_initialLimitOrder.orderId.Equals(orderFillMessage.Order.OrderKey))
                         {
-                            Debug.WriteLine("Found OrderKey");
+                            Debug.WriteLine($"HandleOrderFilled equals Order Key {JsonConvert.SerializeObject(_initialLimitOrder)}");
+                            btnBreakEven.PerformClick();
+                        }
+                    }
 
-                            _securitiesaccount = await GetSecuritiesaccountAsync();
+                    if (_settings.MoveLimitPriceOnFill)
+                    {
 
-                            if (_securitiesaccount != null)
+                        Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
+                        //var symbol = orderFillMessage.Order.Security.Symbol;
+                        if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                        {
+                            Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
+                            //Initial Trigger Order filled, adjust limit
+                            if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
                             {
-                                var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                                //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                                //So the Trigger has an OCO that has the limit and stop.
-                                //
-                                Order lmitOrder = null;
+                                Debug.WriteLine("Found OrderKey");
 
-                                if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                                _securitiesaccount = await GetSecuritiesaccountAsync();
+
+                                if (_securitiesaccount != null)
                                 {
-                                    lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                                }
+                                    var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                                    //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                                    //So the Trigger has an OCO that has the limit and stop.
+                                    //
+                                    Order lmitOrder = null;
 
-                                if (lmitOrder != null)
-                                {
-                                    Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
-                                    var stop = float.Parse(txtStop.Text);
-                                    var avgPrice = _activePosition.averagePrice;
-                                    var risk = Math.Abs(avgPrice - stop);
+                                    if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                                    {
+                                        lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                                    }
+
+                                    if (lmitOrder != null)
+                                    {
+                                        Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
+                                        var stop = float.Parse(txtStop.Text);
+                                        var avgPrice = _activePosition.averagePrice;
+                                        var risk = Math.Abs(avgPrice - stop);
 
 
-                                    string exitInstruction = GetExitInstruction(_activePosition);
+                                        string exitInstruction = GetExitInstruction(_activePosition);
 
-                                    var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
+                                        var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
 
-                                    Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
+                                        Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                    var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                    await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                        var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                        await _tradeHelper.ReplaceOrder(Utility.AccessTokenContainer, _accountId, lmitOrder.orderId, newLimitOrder);
+                                    }
                                 }
                             }
                         }
                     }
+
+                    //TODO:  IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
+                    //if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                    //{
+                    //    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
+                    //    //We have an initial order lets find the limit and save it off
+                    //    if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
+                    //    {
+                    //        Debug.WriteLine("HandleOrderFilled: Found Initial Order by OrderKey");
+                    //        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                    //        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                    //        //So the Trigger has an OCO that has the limit and stop.  
+                    //        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                    //        Debug.WriteLine($"HandleOrderFilled: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
+                    //    }
+                    //}
+
+                    Debug.WriteLine(orderFillMessage.Order.OrderKey);
                 }
-
-                //TODO:  IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
-                //if (_initialOrders.ContainsKey(symbol.ToUpper()))
-                //{
-                //    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
-                //    //We have an initial order lets find the limit and save it off
-                //    if (_initialOrders[symbol].ContainsKey(orderFillMessage.Order.OrderKey))
-                //    {
-                //        Debug.WriteLine("HandleOrderFilled: Found Initial Order by OrderKey");
-                //        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                //        //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                //        //So the Trigger has an OCO that has the limit and stop.  
-                //        _initialLimitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                //        Debug.WriteLine($"HandleOrderFilled: _initialLimitOrder {JsonConvert.SerializeObject(_initialLimitOrder)}");
-                //    }
-                //}
-
-                Debug.WriteLine(orderFillMessage.Order.OrderKey);
             }
             catch (Exception ex)
             {

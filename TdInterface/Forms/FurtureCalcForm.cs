@@ -4,12 +4,13 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda.Model;
 
 namespace TdInterface
 {
-    public partial class FurtureCalcForm : Form
+    public partial class FurtureCalcForm : EZTMBaseForm
     {
         IStreamer _streamer = null;
 
@@ -24,6 +25,7 @@ namespace TdInterface
         public FurtureCalcForm(IStreamer streamer)
         {
             InitializeComponent();
+
             _streamer = streamer;
 
             _streamer.FutureQuoteReceived.Subscribe(f => HandleFutureQuote(f));

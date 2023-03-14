@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TdInterface.Model;
 
 namespace TdInterface.Forms
 {
-    public partial class AccountInfoForm : Form
+    public partial class AccountInfoForm : EZTMBaseForm
     {
 
         private AccountInfo _accountInfo = new AccountInfo();
@@ -59,6 +60,11 @@ namespace TdInterface.Forms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnClearCreds_Click(object sender, EventArgs e)
+        {
+            Utility.ClearAccessTokenContainerFile();
         }
     }
 }

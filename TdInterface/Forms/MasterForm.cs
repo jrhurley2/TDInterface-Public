@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,13 +12,14 @@ using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Model;
+using TdInterface.Properties;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
 
 namespace TdInterface
 {
-    public partial class MasterForm : Form
+    public partial class MasterForm : EZTMBaseForm
     {
         private IStreamer _streamer;
         private string _equityAccountId;
@@ -149,7 +151,7 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
-                MessageBox.Show("Error Logging In,  Clear Creds or enter account info, shut down and retry.");
+                MessageBox.Show("Error Logging In, Clear Creds or enter account info, shut down and retry.");
             }
         }
 
@@ -160,17 +162,6 @@ namespace TdInterface
             {
                 Utility.AccessTokenContainer = await _tradeHelper.RefreshAccessToken(Utility.AccessTokenContainer);
             }
-        }
-
-        private void clearCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-        }
-
-        private async void saveCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accessTokenContainer = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-            Utility.SaveAccessTokenContainer(accessTokenContainer);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,7 +234,7 @@ namespace TdInterface
 
             if (string.IsNullOrEmpty(name))
             {
-                nameAsKey = $"TdInterface Form {_mainForms.Count}";
+                nameAsKey = $"EZTM Form {_mainForms.Count}";
             }
             else
             {

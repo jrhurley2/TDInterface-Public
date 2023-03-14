@@ -29,12 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MasterForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFuturesCalc = new System.Windows.Forms.Button();
@@ -79,39 +76,23 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearCredentialsToolStripMenuItem,
-            this.saveCredentialsToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.accountSettingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // clearCredentialsToolStripMenuItem
-            // 
-            this.clearCredentialsToolStripMenuItem.Name = "clearCredentialsToolStripMenuItem";
-            this.clearCredentialsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.clearCredentialsToolStripMenuItem.Text = "Clear Credentials";
-            this.clearCredentialsToolStripMenuItem.Click += new System.EventHandler(this.clearCredentialsToolStripMenuItem_Click);
-            // 
-            // saveCredentialsToolStripMenuItem
-            // 
-            this.saveCredentialsToolStripMenuItem.Name = "saveCredentialsToolStripMenuItem";
-            this.saveCredentialsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.saveCredentialsToolStripMenuItem.Text = "Save Credentials";
-            this.saveCredentialsToolStripMenuItem.Click += new System.EventHandler(this.saveCredentialsToolStripMenuItem_Click);
-            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // accountSettingsToolStripMenuItem
             // 
             this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
             this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
             // 
@@ -354,11 +335,10 @@
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "MasterForm";
-            this.Text = "TDA Order Management";
+            this.Text = "EZTM";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MasterForm_FormClosing);
             this.Load += new System.EventHandler(this.MasterForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -373,8 +353,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearCredentialsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveCredentialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btnFuturesCalc;
         private System.Windows.Forms.Button btnAMZN;
