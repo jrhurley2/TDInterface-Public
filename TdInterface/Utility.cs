@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json.Nodes;
 using System.Net;
+using TdInterface.Properties;
 
 namespace TdInterface
 {
@@ -206,7 +207,7 @@ namespace TdInterface
         /// <returns>
         /// <c>True</c> if there is a newer version available, <c>False</c> otherwise.
         /// </returns>
-        public async static Task<bool> CheckForAppUpdates()
+        public async static Task<bool> IsAppUpdateAvailable()
         {
             try
             {
@@ -239,6 +240,24 @@ namespace TdInterface
                 Debug.WriteLine($"CheckForAppUpdates: {ex.Message}");
             }
             return false;
+        }
+
+        public static void OpenAppOnGitHub()
+        {
+            openWebUrl(Resources.githubProjectURL);
+        }
+
+        public static void OpenAppLatestReleaseOnGitHub()
+        {
+            openWebUrl(Resources.githubProjectLatestReleaseURL);
+        }
+
+        private static void openWebUrl(string url)
+        {
+            if (!String.IsNullOrEmpty(url))
+            {
+                Process.Start(new ProcessStartInfo() { FileName = url, UseShellExecute = true });
+            }
         }
 
         private static void VerifyGitHubAPIResponse(HttpStatusCode statusCode, string content)

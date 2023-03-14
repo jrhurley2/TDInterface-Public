@@ -5,10 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text.Encodings.Web;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
@@ -306,6 +305,21 @@ namespace TdInterface
             var aboutForm = new AboutForm();
             aboutForm.Show();
 
+        }
+
+        private async void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (await Utility.IsAppUpdateAvailable())
+            {
+                if (MessageBox.Show("Updated version is available on GitHub.\nWould you like to download it?", "New Version Available", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                {
+                    Utility.OpenAppLatestReleaseOnGitHub();
+                };
+            }
+            else
+            {
+                MessageBox.Show("You have the latest version.");
+            }
         }
     }
 }

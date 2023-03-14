@@ -33,6 +33,7 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.lnkAppGithub = new System.Windows.Forms.LinkLabel();
             this.lblCopyright = new System.Windows.Forms.Label();
+            this.btnCheckUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +87,21 @@
             this.lblCopyright.Text = "Copyright 2022 - 2023, EZTM\r\nAll Rights Reserved.";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // btnCheckUpdate
+            // 
+            this.btnCheckUpdate.Location = new System.Drawing.Point(85, 201);
+            this.btnCheckUpdate.Name = "btnCheckUpdate";
+            this.btnCheckUpdate.Size = new System.Drawing.Size(135, 30);
+            this.btnCheckUpdate.TabIndex = 5;
+            this.btnCheckUpdate.Text = "Check for Updates";
+            this.btnCheckUpdate.UseVisualStyleBackColor = true;
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 281);
+            this.Controls.Add(this.btnCheckUpdate);
             this.Controls.Add(this.lblCopyright);
             this.Controls.Add(this.lnkAppGithub);
             this.Controls.Add(this.lblVersion);
@@ -111,5 +122,6 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel lnkAppGithub;
         private System.Windows.Forms.Label lblCopyright;
+        private System.Windows.Forms.Button btnCheckUpdate;
     }
 }
