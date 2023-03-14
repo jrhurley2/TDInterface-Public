@@ -300,5 +300,12 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new AboutForm();
+            aboutForm.Show();
+
+        }
     }
 }
