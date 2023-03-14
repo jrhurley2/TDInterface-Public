@@ -61,6 +61,15 @@ namespace TdInterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/jrhurley2/TDInterface-Public.
+        /// </summary>
+        internal static string githubProjectURL {
+            get {
+                return ResourceManager.GetString("githubProjectURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon logo {

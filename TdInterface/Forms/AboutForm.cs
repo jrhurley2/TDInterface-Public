@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using TdInterface.Properties;
 
 namespace TdInterface.Forms
 {
@@ -15,7 +16,7 @@ namespace TdInterface.Forms
         {
             this.lnkAppGithub.LinkVisited = true;
 
-            ProcessStartInfo sInfo = new ProcessStartInfo { FileName = "https://www.github.com/jrhurley2/TDInterface-Public", UseShellExecute = true };
+            ProcessStartInfo sInfo = new ProcessStartInfo { FileName = Resources.githubProjectURL, UseShellExecute = true };
 
             Process.Start(sInfo);
         }
