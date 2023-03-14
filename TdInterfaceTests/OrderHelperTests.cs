@@ -227,5 +227,51 @@ namespace TdInterface.Tests
             Assert.IsNull(actual);
         }
 
+        [TestMethod]
+        public void CalculateSharesTest()
+        {
+            var riskPerShare = .50;
+            var maxRisk = 50;
+            var minRisk = 0;
+
+            var shares = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, minRisk);
+
+            Assert.AreEqual(100, shares);
+
+        }
+
+        [TestMethod]
+        public void CalculateSharesWithFixedSharesTest()
+        {
+            var riskPerShare = .50;
+            var maxRisk = 50; // shares
+            var minRisk = 0;
+
+            var shares = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, minRisk, true);
+
+            Assert.AreEqual(50, shares);
+
+        }
     }
 }
+
+//public static int CalculateShares(double riskPerShare, double maxRisk, double minRisk, bool tradeShares = false)
+//{
+//    double calcShares;
+
+//    // If trade shares is true, use the value in maxRisk which will be a max share amount instead of a dollar amount
+//    if (tradeShares)
+//    {
+//        calcShares = maxRisk;
+//    }
+//    else
+//    {
+//        // check if the user has the option enabled to minimize how little the risk can be to help avoid issues with slippp
+//        var rps = riskPerShare > minRisk ? riskPerShare : minRisk;
+//        calcShares = maxRisk / rps;
+//    }
+
+//    var quantity = Convert.ToInt32(calcShares);
+
+//    return quantity;
+//}
