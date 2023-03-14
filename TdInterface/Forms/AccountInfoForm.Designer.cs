@@ -42,6 +42,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClearCreds = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -187,17 +188,32 @@
             this.btnClearCreds.UseVisualStyleBackColor = true;
             this.btnClearCreds.Click += new System.EventHandler(this.btnClearCreds_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.textBox1.Location = new System.Drawing.Point(12, 413);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(283, 62);
+            this.textBox1.TabIndex = 5;
+            this.textBox1.Text = "At this time, there is NO support for futures trading in the application.\r\nIt is " +
+    "on our list of features to add.";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // AccountInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 412);
+            this.ClientSize = new System.Drawing.Size(304, 484);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnClearCreds);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.Margin = new System.Windows.Forms.Padding(3);
             this.Name = "AccountInfoForm";
             this.Text = "EZTM Account Settings";
             this.Load += new System.EventHandler(this.AccountInfoForm_Load);
@@ -206,6 +222,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -225,5 +242,6 @@
         private System.Windows.Forms.CheckBox chkTdaEnableEquity;
         private System.Windows.Forms.CheckBox chkTsEnableEquity;
         private System.Windows.Forms.Button btnClearCreds;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
