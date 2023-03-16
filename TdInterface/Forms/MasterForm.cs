@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -44,6 +45,8 @@ namespace TdInterface
 
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
+
+                lblVersion.Text = $"Version: {Assembly.GetExecutingAssembly().GetName().Version}";
 
                 Login().ConfigureAwait(false);
             }

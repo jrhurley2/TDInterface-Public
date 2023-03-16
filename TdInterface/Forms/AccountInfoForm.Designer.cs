@@ -52,7 +52,7 @@
             this.groupBox1.Controls.Add(this.chkTdaEnableEquity);
             this.groupBox1.Controls.Add(this.txtConsumerKey);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 12);
+            this.groupBox1.Location = new System.Drawing.Point(6, 76);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(284, 110);
             this.groupBox1.TabIndex = 0;
@@ -95,7 +95,7 @@
             this.groupBox2.Controls.Add(this.txtClientId);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 137);
+            this.groupBox2.Location = new System.Drawing.Point(7, 201);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(283, 187);
             this.groupBox2.TabIndex = 1;
@@ -159,7 +159,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(201, 376);
+            this.btnSave.Location = new System.Drawing.Point(196, 440);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(94, 28);
             this.btnSave.TabIndex = 2;
@@ -169,7 +169,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(11, 376);
+            this.btnCancel.Location = new System.Drawing.Point(6, 440);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 28);
             this.btnCancel.TabIndex = 3;
@@ -179,7 +179,7 @@
             // 
             // btnClearCreds
             // 
-            this.btnClearCreds.Location = new System.Drawing.Point(11, 340);
+            this.btnClearCreds.Location = new System.Drawing.Point(6, 404);
             this.btnClearCreds.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnClearCreds.Name = "btnClearCreds";
             this.btnClearCreds.Size = new System.Drawing.Size(284, 29);
@@ -192,7 +192,7 @@
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.textBox1.Location = new System.Drawing.Point(12, 413);
+            this.textBox1.Location = new System.Drawing.Point(7, 477);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -206,7 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 484);
+            this.ClientSize = new System.Drawing.Size(299, 554);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnClearCreds);
             this.Controls.Add(this.btnCancel);

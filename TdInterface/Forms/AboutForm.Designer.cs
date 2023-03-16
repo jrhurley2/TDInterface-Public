@@ -39,7 +39,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TdInterface.Properties.Resources.logo_96;
-            this.pictureBox1.Location = new System.Drawing.Point(104, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(104, 84);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(96, 96);
             this.pictureBox1.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.lblAppName.AutoSize = true;
             this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblAppName.Location = new System.Drawing.Point(61, 111);
+            this.lblAppName.Location = new System.Drawing.Point(61, 183);
             this.lblAppName.Name = "lblAppName";
             this.lblAppName.Size = new System.Drawing.Size(183, 28);
             this.lblAppName.TabIndex = 1;
@@ -58,7 +58,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(101, 151);
+            this.lblVersion.Location = new System.Drawing.Point(101, 223);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(102, 19);
             this.lblVersion.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             this.lnkAppGithub.ActiveLinkColor = System.Drawing.Color.ForestGreen;
             this.lnkAppGithub.AutoSize = true;
-            this.lnkAppGithub.Location = new System.Drawing.Point(59, 179);
+            this.lnkAppGithub.Location = new System.Drawing.Point(59, 251);
             this.lnkAppGithub.Name = "lnkAppGithub";
             this.lnkAppGithub.Size = new System.Drawing.Size(186, 19);
             this.lnkAppGithub.TabIndex = 3;
@@ -79,7 +79,7 @@
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
-            this.lblCopyright.Location = new System.Drawing.Point(55, 234);
+            this.lblCopyright.Location = new System.Drawing.Point(55, 306);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(194, 38);
             this.lblCopyright.TabIndex = 4;
@@ -90,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 281);
+            this.ClientSize = new System.Drawing.Size(304, 368);
             this.Controls.Add(this.lblCopyright);
             this.Controls.Add(this.lnkAppGithub);
             this.Controls.Add(this.lblVersion);
