@@ -45,7 +45,7 @@ namespace TdInterface
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
 
-                lblVersion.Text = $"Version: {Assembly.GetExecutingAssembly().GetName().Version}";
+                lblVersion.Text = $"Version: {Program.GetAppVersion()}";
 
                 Login().ConfigureAwait(false);
             }
@@ -301,13 +301,6 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
             }
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var aboutForm = new AboutForm();
-            aboutForm.Show();
-
         }
 
         private async void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)

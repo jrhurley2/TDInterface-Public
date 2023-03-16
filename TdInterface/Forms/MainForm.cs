@@ -43,8 +43,6 @@ namespace TdInterface
         {
             InitializeComponent();
 
-            this.AutoScaleMode = AutoScaleMode.Font;
-
             _tradeHelper = helper;
 
             MainFormName = name;

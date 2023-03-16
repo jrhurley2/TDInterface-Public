@@ -34,6 +34,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFuturesCalc = new System.Windows.Forms.Button();
             this.btnAMZN = new System.Windows.Forms.Button();
@@ -59,23 +60,11 @@
             this.tpHome = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.tpAbout = new System.Windows.Forms.TabPage();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
-            this.lblAppName = new MaterialSkin.Controls.MaterialLabel();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lnkAppGithub = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mtcMasterForm = new MaterialSkin.Controls.MaterialTabControl();
-            this.tpHome = new System.Windows.Forms.TabPage();
-            this.tpSettings = new System.Windows.Forms.TabPage();
-            this.tpAbout = new System.Windows.Forms.TabPage();
-            this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
-            this.lblAppName = new MaterialSkin.Controls.MaterialLabel();
-            this.lblCopyright = new System.Windows.Forms.Label();
-            this.lnkAppGithub = new System.Windows.Forms.LinkLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mtcMasterForm.SuspendLayout();
             this.tpHome.SuspendLayout();
@@ -90,12 +79,15 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.menuStrip1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.menuStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(3, 64);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(301, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(311, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -104,41 +96,44 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.settingsToolStripMenuItem,
             this.accountSettingsToolStripMenuItem,
+            this.checkForUpdateToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(69, 21);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // accountSettingsToolStripMenuItem
             // 
             this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
             this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
             // 
+            // checkForUpdateToolStripMenuItem
+            // 
+            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
+            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
+            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // btnFuturesCalc
             // 
+            this.btnFuturesCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnFuturesCalc.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnFuturesCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnFuturesCalc.Location = new System.Drawing.Point(13, 260);
             this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnFuturesCalc.Name = "btnFuturesCalc";
@@ -405,7 +400,6 @@
             this.btnScreenshots.UseVisualStyleBackColor = false;
             this.btnScreenshots.Click += new System.EventHandler(this.btnScreenshots_Click);
             // 
-            // checkForUpdateToolStripMenuItem
             // mtcMasterForm
             // 
             this.mtcMasterForm.Controls.Add(this.tpHome);
@@ -419,7 +413,7 @@
             this.mtcMasterForm.Multiline = true;
             this.mtcMasterForm.Name = "mtcMasterForm";
             this.mtcMasterForm.SelectedIndex = 0;
-            this.mtcMasterForm.Size = new System.Drawing.Size(379, 462);
+            this.mtcMasterForm.Size = new System.Drawing.Size(311, 731);
             this.mtcMasterForm.TabIndex = 22;
             // 
             // tpHome
@@ -448,7 +442,7 @@
             this.tpHome.Location = new System.Drawing.Point(4, 28);
             this.tpHome.Name = "tpHome";
             this.tpHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHome.Size = new System.Drawing.Size(371, 430);
+            this.tpHome.Size = new System.Drawing.Size(303, 699);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             // 
@@ -458,52 +452,55 @@
             this.tpSettings.Location = new System.Drawing.Point(4, 28);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(355, 391);
+            this.tpSettings.Size = new System.Drawing.Size(303, 699);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             // 
             // tpAbout
             // 
             this.tpAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpAbout.Controls.Add(this.materialLabel1);
             this.tpAbout.Controls.Add(this.lblVersion);
-            this.tpAbout.Controls.Add(this.lblAppName);
             this.tpAbout.Controls.Add(this.lblCopyright);
             this.tpAbout.Controls.Add(this.lnkAppGithub);
             this.tpAbout.Controls.Add(this.pictureBox1);
             this.tpAbout.Location = new System.Drawing.Point(4, 28);
             this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Size = new System.Drawing.Size(355, 391);
+            this.tpAbout.Size = new System.Drawing.Size(303, 699);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
             // 
+            // materialLabel1
+            // 
+            this.materialLabel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(68, 146);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(166, 24);
+            this.materialLabel1.TabIndex = 12;
+            this.materialLabel1.Text = "EZ Trade Manager";
+            // 
             // lblVersion
             // 
+            this.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblVersion.AutoSize = true;
             this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblVersion.Depth = 0;
             this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(127, 191);
+            this.lblVersion.Location = new System.Drawing.Point(101, 191);
             this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(100, 19);
             this.lblVersion.TabIndex = 11;
             this.lblVersion.Text = "Version: #.#.#";
-            // 
-            // lblAppName
-            // 
-            this.lblAppName.AutoSize = true;
-            this.lblAppName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblAppName.Depth = 0;
-            this.lblAppName.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblAppName.FontType = MaterialSkin.MaterialSkinManager.fontType.H4;
-            this.lblAppName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblAppName.Location = new System.Drawing.Point(37, 133);
-            this.lblAppName.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblAppName.Name = "lblAppName";
-            this.lblAppName.Size = new System.Drawing.Size(280, 41);
-            this.lblAppName.TabIndex = 10;
-            this.lblAppName.Text = "EZ Trade Manager";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblCopyright
             // 
@@ -511,7 +508,7 @@
             this.lblCopyright.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblCopyright.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblCopyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblCopyright.Location = new System.Drawing.Point(78, 289);
+            this.lblCopyright.Location = new System.Drawing.Point(74, 263);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(188, 34);
             this.lblCopyright.TabIndex = 9;
@@ -525,7 +522,7 @@
             this.lnkAppGithub.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lnkAppGithub.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lnkAppGithub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lnkAppGithub.Location = new System.Drawing.Point(82, 234);
+            this.lnkAppGithub.Location = new System.Drawing.Point(76, 234);
             this.lnkAppGithub.Name = "lnkAppGithub";
             this.lnkAppGithub.Size = new System.Drawing.Size(185, 17);
             this.lnkAppGithub.TabIndex = 8;
@@ -534,29 +531,25 @@
             // 
             // pictureBox1
             // 
-            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
-            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pictureBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pictureBox1.Image = global::TdInterface.Properties.Resources.logo_96;
-            this.pictureBox1.Location = new System.Drawing.Point(129, 22);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(96, 96);
+            this.pictureBox1.Size = new System.Drawing.Size(303, 96);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
             // MasterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 554);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(317, 823);
             this.Controls.Add(this.mtcMasterForm);
             this.Controls.Add(this.menuStrip1);
             this.DrawerTabControl = this.mtcMasterForm;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "MasterForm";
@@ -610,9 +603,9 @@
         private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.TabPage tpAbout;
         private MaterialSkin.Controls.MaterialLabel lblVersion;
-        private MaterialSkin.Controls.MaterialLabel lblAppName;
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.LinkLabel lnkAppGithub;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
     }
 }
