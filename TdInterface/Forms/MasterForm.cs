@@ -317,5 +317,10 @@ namespace TdInterface
                 MessageBox.Show("You have the latest version.");
             }
         }
+
+        private void mbtnGitHub_Click(object sender, EventArgs e)
+        {
+            Utility.OpenAppOnGitHub();
+        }
     }
 }

@@ -35,7 +35,6 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFuturesCalc = new System.Windows.Forms.Button();
             this.btnAMZN = new System.Windows.Forms.Button();
             this.btnMSFT = new System.Windows.Forms.Button();
@@ -60,10 +59,10 @@
             this.tpHome = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.tpAbout = new System.Windows.Forms.TabPage();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.mbtnGitHub = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
-            this.lblCopyright = new System.Windows.Forms.Label();
-            this.lnkAppGithub = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.mtcMasterForm.SuspendLayout();
@@ -96,8 +95,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.settingsToolStripMenuItem,
             this.accountSettingsToolStripMenuItem,
-            this.checkForUpdateToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.checkForUpdateToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(69, 21);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -122,12 +120,6 @@
             this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
             this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.aboutToolStripMenuItem.Text = "About";
             // 
             // btnFuturesCalc
             // 
@@ -413,7 +405,7 @@
             this.mtcMasterForm.Multiline = true;
             this.mtcMasterForm.Name = "mtcMasterForm";
             this.mtcMasterForm.SelectedIndex = 0;
-            this.mtcMasterForm.Size = new System.Drawing.Size(311, 731);
+            this.mtcMasterForm.Size = new System.Drawing.Size(311, 350);
             this.mtcMasterForm.TabIndex = 22;
             // 
             // tpHome
@@ -442,7 +434,7 @@
             this.tpHome.Location = new System.Drawing.Point(4, 28);
             this.tpHome.Name = "tpHome";
             this.tpHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHome.Size = new System.Drawing.Size(303, 699);
+            this.tpHome.Size = new System.Drawing.Size(303, 318);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             // 
@@ -452,23 +444,61 @@
             this.tpSettings.Location = new System.Drawing.Point(4, 28);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(303, 699);
+            this.tpSettings.Size = new System.Drawing.Size(303, 318);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             // 
             // tpAbout
             // 
             this.tpAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpAbout.Controls.Add(this.materialLabel2);
+            this.tpAbout.Controls.Add(this.mbtnGitHub);
             this.tpAbout.Controls.Add(this.materialLabel1);
             this.tpAbout.Controls.Add(this.lblVersion);
-            this.tpAbout.Controls.Add(this.lblCopyright);
-            this.tpAbout.Controls.Add(this.lnkAppGithub);
             this.tpAbout.Controls.Add(this.pictureBox1);
             this.tpAbout.Location = new System.Drawing.Point(4, 28);
             this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Size = new System.Drawing.Size(303, 699);
+            this.tpAbout.Size = new System.Drawing.Size(303, 318);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.materialLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(36, 262);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(231, 45);
+            this.materialLabel2.TabIndex = 14;
+            this.materialLabel2.Text = "Copyright 2022 - 2023, EZTM\r\nAll Rights Reserved.";
+            this.materialLabel2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // mbtnGitHub
+            // 
+            this.mbtnGitHub.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.mbtnGitHub.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.mbtnGitHub.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.mbtnGitHub.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.mbtnGitHub.Depth = 0;
+            this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mbtnGitHub.HighEmphasis = false;
+            this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
+            this.mbtnGitHub.Location = new System.Drawing.Point(98, 195);
+            this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
+            this.mbtnGitHub.Name = "mbtnGitHub";
+            this.mbtnGitHub.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.mbtnGitHub.Size = new System.Drawing.Size(102, 36);
+            this.mbtnGitHub.TabIndex = 13;
+            this.mbtnGitHub.Text = "GitHub";
+            this.mbtnGitHub.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.mbtnGitHub.UseAccentColor = false;
+            this.mbtnGitHub.UseVisualStyleBackColor = false;
+            this.mbtnGitHub.Click += new System.EventHandler(this.mbtnGitHub_Click);
             // 
             // materialLabel1
             // 
@@ -476,13 +506,13 @@
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H4;
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(68, 146);
+            this.materialLabel1.Location = new System.Drawing.Point(11, 99);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(166, 24);
+            this.materialLabel1.Size = new System.Drawing.Size(280, 41);
             this.materialLabel1.TabIndex = 12;
             this.materialLabel1.Text = "EZ Trade Manager";
             // 
@@ -494,40 +524,13 @@
             this.lblVersion.Depth = 0;
             this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(101, 191);
+            this.lblVersion.Location = new System.Drawing.Point(100, 150);
             this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(100, 19);
             this.lblVersion.TabIndex = 11;
             this.lblVersion.Text = "Version: #.#.#";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblCopyright
-            // 
-            this.lblCopyright.AutoSize = true;
-            this.lblCopyright.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblCopyright.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblCopyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblCopyright.Location = new System.Drawing.Point(74, 263);
-            this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(188, 34);
-            this.lblCopyright.TabIndex = 9;
-            this.lblCopyright.Text = "Copyright 2022 - 2023, EZTM\r\nAll Rights Reserved.";
-            this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lnkAppGithub
-            // 
-            this.lnkAppGithub.ActiveLinkColor = System.Drawing.Color.ForestGreen;
-            this.lnkAppGithub.AutoSize = true;
-            this.lnkAppGithub.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lnkAppGithub.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lnkAppGithub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lnkAppGithub.Location = new System.Drawing.Point(76, 234);
-            this.lnkAppGithub.Name = "lnkAppGithub";
-            this.lnkAppGithub.Size = new System.Drawing.Size(185, 17);
-            this.lnkAppGithub.TabIndex = 8;
-            this.lnkAppGithub.TabStop = true;
-            this.lnkAppGithub.Text = "EZ Trade Manager on Github";
             // 
             // pictureBox1
             // 
@@ -546,7 +549,7 @@
             // MasterForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(317, 823);
+            this.ClientSize = new System.Drawing.Size(317, 442);
             this.Controls.Add(this.mtcMasterForm);
             this.Controls.Add(this.menuStrip1);
             this.DrawerTabControl = this.mtcMasterForm;
@@ -596,16 +599,15 @@
         private System.Windows.Forms.Label lblTrade;
         private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
         private System.Windows.Forms.Button btnScreenshots;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
         private System.Windows.Forms.TabPage tpHome;
         private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.TabPage tpAbout;
         private MaterialSkin.Controls.MaterialLabel lblVersion;
-        private System.Windows.Forms.Label lblCopyright;
-        private System.Windows.Forms.LinkLabel lnkAppGithub;
         private System.Windows.Forms.PictureBox pictureBox1;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialButton mbtnGitHub;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
     }
 }
