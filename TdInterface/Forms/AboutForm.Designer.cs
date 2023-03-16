@@ -74,7 +74,6 @@
             this.lnkAppGithub.TabIndex = 3;
             this.lnkAppGithub.TabStop = true;
             this.lnkAppGithub.Text = "EZ Trade Manager on Github";
-            this.lnkAppGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAppGithub_LinkClicked);
             // 
             // lblCopyright
             // 

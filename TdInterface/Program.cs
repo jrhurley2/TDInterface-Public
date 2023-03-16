@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 
@@ -34,5 +35,12 @@ namespace TdInterface
         {
             services.AddSingleton<MasterForm>();
         }
+
+        public static string GetAppVersion()
+        {
+            var versionInfo = Assembly.GetExecutingAssembly().GetName().Version;
+            return $"{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}";
+        }
+
     }
 }
