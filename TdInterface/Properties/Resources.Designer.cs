@@ -61,6 +61,15 @@ namespace TdInterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/jrhurley2/TDInterface-Public/releases/latest.
+        /// </summary>
+        internal static string githubProjectLatestReleaseURL {
+            get {
+                return ResourceManager.GetString("githubProjectLatestReleaseURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/jrhurley2/TDInterface-Public.
         /// </summary>
         internal static string githubProjectURL {

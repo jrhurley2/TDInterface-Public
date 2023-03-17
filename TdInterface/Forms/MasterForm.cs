@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
-using TdInterface.Model;
-using TdInterface.Properties;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
+using MessageBox = System.Windows.MessageBox;
 
 namespace TdInterface
 {
@@ -306,6 +305,21 @@ namespace TdInterface
             var aboutForm = new AboutForm();
             aboutForm.Show();
 
+        }
+
+        private async void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (await Utility.IsAppUpdateAvailable())
+            {
+                if (MessageBox.Show("Updated version is available on GitHub.\nWould you like to download it?", "New Version Available", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                {
+                    Utility.OpenAppLatestReleaseOnGitHub();
+                };
+            }
+            else
+            {
+                MessageBox.Show("You have the latest version.");
+            }
         }
     }
 }
