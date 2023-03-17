@@ -2,9 +2,12 @@
 
 This app was inspired by Steve over at https://largecapdaytrader.com/   If you are tired of losing money and want to learn to read price action, go check it out.
 
-********* Right now TDA is migrationg with Schwab.   You can't get an API key until the migration is over.   I will update this page and update the app when everything moves over to Schwab 
 
-![image](https://user-images.githubusercontent.com/13562737/212210538-d6736416-90f3-489b-a3ea-5fd055e3c59c.png)
+> ⚠️ **TDA is working on their migration with Schwab. At this time you can NOT get an API key. ** ⚠️
+> 
+>  ℹ️ We will update this page and update the app with any changes required when the migration to Schwab is complete.
+>  
+> ![image](https://user-images.githubusercontent.com/13562737/212210538-d6736416-90f3-489b-a3ea-5fd055e3c59c.png)
 
 
 *****
