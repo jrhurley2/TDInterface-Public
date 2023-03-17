@@ -86,7 +86,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(3, 64);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(311, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1054, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -126,7 +126,7 @@
             this.btnFuturesCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnFuturesCalc.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnFuturesCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnFuturesCalc.Location = new System.Drawing.Point(13, 260);
+            this.btnFuturesCalc.Location = new System.Drawing.Point(17, 235);
             this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnFuturesCalc.Name = "btnFuturesCalc";
             this.btnFuturesCalc.Size = new System.Drawing.Size(130, 28);
@@ -405,7 +405,7 @@
             this.mtcMasterForm.Multiline = true;
             this.mtcMasterForm.Name = "mtcMasterForm";
             this.mtcMasterForm.SelectedIndex = 0;
-            this.mtcMasterForm.Size = new System.Drawing.Size(311, 350);
+            this.mtcMasterForm.Size = new System.Drawing.Size(1054, 567);
             this.mtcMasterForm.TabIndex = 22;
             // 
             // tpHome
@@ -434,7 +434,7 @@
             this.tpHome.Location = new System.Drawing.Point(4, 28);
             this.tpHome.Name = "tpHome";
             this.tpHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHome.Size = new System.Drawing.Size(303, 318);
+            this.tpHome.Size = new System.Drawing.Size(1046, 535);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             // 
@@ -444,7 +444,7 @@
             this.tpSettings.Location = new System.Drawing.Point(4, 28);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(303, 318);
+            this.tpSettings.Size = new System.Drawing.Size(1046, 535);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             // 
@@ -458,7 +458,7 @@
             this.tpAbout.Controls.Add(this.pictureBox1);
             this.tpAbout.Location = new System.Drawing.Point(4, 28);
             this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Size = new System.Drawing.Size(303, 318);
+            this.tpAbout.Size = new System.Drawing.Size(1046, 535);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
             // 
@@ -469,7 +469,7 @@
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(36, 262);
+            this.materialLabel2.Location = new System.Drawing.Point(408, 262);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(231, 45);
@@ -487,14 +487,14 @@
             this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.mbtnGitHub.HighEmphasis = false;
             this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
-            this.mbtnGitHub.Location = new System.Drawing.Point(98, 195);
+            this.mbtnGitHub.Location = new System.Drawing.Point(479, 195);
             this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
             this.mbtnGitHub.Name = "mbtnGitHub";
             this.mbtnGitHub.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.mbtnGitHub.Size = new System.Drawing.Size(102, 36);
+            this.mbtnGitHub.Size = new System.Drawing.Size(88, 36);
             this.mbtnGitHub.TabIndex = 13;
-            this.mbtnGitHub.Text = "GitHub";
+            this.mbtnGitHub.Text = "EZTM";
             this.mbtnGitHub.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
             this.mbtnGitHub.UseAccentColor = false;
             this.mbtnGitHub.UseVisualStyleBackColor = false;
@@ -509,7 +509,7 @@
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H4;
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(11, 99);
+            this.materialLabel1.Location = new System.Drawing.Point(383, 99);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(280, 41);
@@ -524,7 +524,7 @@
             this.lblVersion.Depth = 0;
             this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(100, 150);
+            this.lblVersion.Location = new System.Drawing.Point(472, 150);
             this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(100, 19);
@@ -541,7 +541,7 @@
             this.pictureBox1.Image = global::TdInterface.Properties.Resources.logo_96;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(303, 96);
+            this.pictureBox1.Size = new System.Drawing.Size(1046, 96);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
@@ -549,7 +549,7 @@
             // MasterForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(317, 442);
+            this.ClientSize = new System.Drawing.Size(1060, 659);
             this.Controls.Add(this.mtcMasterForm);
             this.Controls.Add(this.menuStrip1);
             this.DrawerTabControl = this.mtcMasterForm;
