@@ -269,24 +269,7 @@ namespace TdInterface
             futureCalcFrom.Show();
         }
 
-        private void btnLogon_Click(object sender, EventArgs e)
-        {
-            Login();
-        }
-
-        private void btnScreenshots_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start("explorer.exe", Utility.ScreenshotPath());
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
-        #region Settings
+         #region Settings
         private void btnSettingsSave_Click(object sender, EventArgs e)
         {
             _settings.TradeShares = chkTradeShares.Checked;
@@ -345,6 +328,23 @@ namespace TdInterface
         {
             Utility.OpenAppOnGitHub();
         }
+        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
+        {
+            if (await Utility.IsAppUpdateAvailable())
+            {
+                MaterialDialog materialDialog = new MaterialDialog(this, "New Version Available", "An updated version is available on GitHub. Would you like to see the latest version on GitHub for download?", "Yes", true, "No");
+                DialogResult result = materialDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Utility.OpenAppLatestReleaseOnGitHub();
+                };
+            }
+            else
+            {
+                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("You have the latest available version.", "OK", true);
+                SnackBarMessage.Show(this);
+            }
+        }
         #endregion
 
         #region Account Settings
@@ -396,8 +396,6 @@ namespace TdInterface
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar("All credentials have been cleared. Please restart the app.", "OK", true);
             SnackBarMessage.Show(this);
         }
-        #endregion
-
         private void tpAccountSettings_Enter(object sender, EventArgs e)
         {
             _accountInfo = Utility.GetAccountInfo();
@@ -410,33 +408,9 @@ namespace TdInterface
             txtClientSecret.Text = _accountInfo.TradeStationClientSecret;
             chkUseSimAccount.Checked = _accountInfo.TradeStationUseSimAccount;
         }
+        #endregion
 
-        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
-        {
-            if (await Utility.IsAppUpdateAvailable())
-            {
-                MaterialDialog materialDialog = new MaterialDialog(this, "New Version Available", "An updated version is available on GitHub. Would you like to see the latest version on GitHub for download?", "Yes", true, "No");
-                DialogResult result = materialDialog.ShowDialog(this);
-                if (result == DialogResult.OK)
-                {
-                    Utility.OpenAppLatestReleaseOnGitHub();
-                };
-            }
-            else
-            {
-                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("You have the latest available version.", "OK", true);
-                SnackBarMessage.Show(this);
-            }
-        }
 
-        private void tpLogs_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
-        {
-            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
-        }
 
         private void tpHome_Enter(object sender, EventArgs e)
         {
@@ -456,7 +430,8 @@ namespace TdInterface
             rpbAMZN.LoadAsync($"https://universal.hellopublic.com/companyLogos/AMZN@1x.png");
         }
 
-        private void btnScreenshots_Click_1(object sender, EventArgs e)
+        #region Tools
+        private void btnScreenshots_Click(object sender, EventArgs e)
         {
             try
             {
@@ -483,5 +458,28 @@ namespace TdInterface
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
             SnackBarMessage.Show(this);
         }
+        #endregion
+
+        #region Settings
+        private void chkDisableFirstTarget_CheckedChanged(object sender, EventArgs e)
+        {
+            txtOneRSharePct.Enabled = !chkDisableFirstTarget.Checked;
+        }
+
+        private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMaxShares.Enabled = chkTradeShares.Checked;
+        }
+
+        private void chkMaxLossLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMaxLossLimit.Enabled= chkMaxLossLimit.Checked;
+        }
+
+        private void btnSettingsHelp_Click(object sender, EventArgs e)
+        {
+            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
+        }
+        #endregion
     }
 }
