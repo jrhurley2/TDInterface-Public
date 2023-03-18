@@ -276,5 +276,10 @@ namespace TdInterface
             }
         }
 
+        public static string GetTickerImage(string ticker)
+        {
+            return $"https://universal.hellopublic.com/companyLogos/{ticker}@1x.png";
+        }
+
     }
 }

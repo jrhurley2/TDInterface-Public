@@ -257,7 +257,7 @@ namespace TdInterface
             }
         }
 
-        private void btnTicker_Click(object sender, EventArgs e)
+        private async void btnTicker_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             launchMainForm(btn.Tag != null ? btn.Tag.ToString() : String.Empty);
@@ -425,9 +425,15 @@ namespace TdInterface
                     pbCurrentAccountLogo.Image = Properties.Resources.Logo_TDA;
                 }
             }
-            rpbAAPL.LoadAsync($"https://universal.hellopublic.com/companyLogos/AAPL@1x.png");
-            rpbAMD.LoadAsync($"https://universal.hellopublic.com/companyLogos/AMD@1x.png");
-            rpbAMZN.LoadAsync($"https://universal.hellopublic.com/companyLogos/AMZN@1x.png");
+            rpbAAPL.LoadAsync(Utility.GetTickerImage("AAPL"));
+            rpbAMD.LoadAsync(Utility.GetTickerImage("AMD"));
+            rpbAMZN.LoadAsync(Utility.GetTickerImage("AMZN"));
+            rpbMETA.LoadAsync(Utility.GetTickerImage("META"));
+            rpbMSFT.LoadAsync(Utility.GetTickerImage("MSFT"));
+            rpbNVDA.LoadAsync(Utility.GetTickerImage("NVDA"));
+            rpbTSLA.LoadAsync(Utility.GetTickerImage("TSLA"));
+            rpbSPY.LoadAsync(Utility.GetTickerImage("SPY"));
+            rpbQQQ.LoadAsync(Utility.GetTickerImage("QQQ"));
         }
 
         #region Tools
