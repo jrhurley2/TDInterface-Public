@@ -110,6 +110,7 @@
             this.txtMaxRisk = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblMaxRisk = new MaterialSkin.Controls.MaterialLabel();
             this.tpHome = new System.Windows.Forms.TabPage();
+            this.rpbAMD = new TdInterface.CustomControls.RoundedPictureBox();
             this.rpbAAPL = new TdInterface.CustomControls.RoundedPictureBox();
             this.materialCard18 = new MaterialSkin.Controls.MaterialCard();
             this.pbAppLogo = new System.Windows.Forms.PictureBox();
@@ -121,11 +122,11 @@
             this.materialCard21 = new MaterialSkin.Controls.MaterialCard();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.pbCurrentAccountLogo = new System.Windows.Forms.PictureBox();
+            this.btnAMD = new MaterialSkin.Controls.MaterialButton();
             this.materialCard20 = new MaterialSkin.Controls.MaterialCard();
             this.btnQQQ = new MaterialSkin.Controls.MaterialButton();
             this.btnAMZN = new MaterialSkin.Controls.MaterialButton();
             this.btnSPY = new MaterialSkin.Controls.MaterialButton();
-            this.btnAMD = new MaterialSkin.Controls.MaterialButton();
             this.btnTSLA = new MaterialSkin.Controls.MaterialButton();
             this.lblQuickTrade = new MaterialSkin.Controls.MaterialLabel();
             this.btnNVDA = new MaterialSkin.Controls.MaterialButton();
@@ -148,7 +149,7 @@
             this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
             this.btnFuturesCalc = new MaterialSkin.Controls.MaterialButton();
-            this.rpbAMD = new TdInterface.CustomControls.RoundedPictureBox();
+            this.rpbAMZN = new TdInterface.CustomControls.RoundedPictureBox();
             this.tpAccountSettings.SuspendLayout();
             this.materialCard2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -171,6 +172,7 @@
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.tpHome.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAAPL)).BeginInit();
             this.materialCard18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).BeginInit();
@@ -182,7 +184,7 @@
             this.tpTools.SuspendLayout();
             this.materialCard24.SuspendLayout();
             this.materialCard23.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbAMZN)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -1646,7 +1648,9 @@
             // tpHome
             // 
             this.tpHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpHome.Controls.Add(this.rpbAMZN);
             this.tpHome.Controls.Add(this.rpbAMD);
+            this.tpHome.Controls.Add(this.btnAMZN);
             this.tpHome.Controls.Add(this.rpbAAPL);
             this.tpHome.Controls.Add(this.materialCard18);
             this.tpHome.Controls.Add(this.materialCard21);
@@ -1661,6 +1665,18 @@
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             this.tpHome.Enter += new System.EventHandler(this.tpHome_Enter);
+            // 
+            // rpbAMD
+            // 
+            this.rpbAMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.rpbAMD.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rpbAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpbAMD.Location = new System.Drawing.Point(239, 273);
+            this.rpbAMD.Name = "rpbAMD";
+            this.rpbAMD.Size = new System.Drawing.Size(48, 48);
+            this.rpbAMD.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbAMD.TabIndex = 43;
+            this.rpbAMD.TabStop = false;
             // 
             // rpbAAPL
             // 
@@ -1843,11 +1859,34 @@
             this.pbCurrentAccountLogo.TabIndex = 21;
             this.pbCurrentAccountLogo.TabStop = false;
             // 
+            // btnAMD
+            // 
+            this.btnAMD.AutoSize = false;
+            this.btnAMD.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnAMD.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnAMD.Depth = 0;
+            this.btnAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnAMD.HighEmphasis = false;
+            this.btnAMD.Icon = global::TdInterface.Properties.Resources.update_24;
+            this.btnAMD.Location = new System.Drawing.Point(229, 260);
+            this.btnAMD.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnAMD.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAMD.Name = "btnAMD";
+            this.btnAMD.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnAMD.Size = new System.Drawing.Size(180, 77);
+            this.btnAMD.TabIndex = 27;
+            this.btnAMD.Tag = "AMD";
+            this.btnAMD.Text = "AMD";
+            this.btnAMD.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnAMD.UseAccentColor = false;
+            this.btnAMD.UseVisualStyleBackColor = false;
+            this.btnAMD.Click += new System.EventHandler(this.btnTicker_Click);
+            // 
             // materialCard20
             // 
             this.materialCard20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialCard20.Controls.Add(this.btnQQQ);
-            this.materialCard20.Controls.Add(this.btnAMZN);
             this.materialCard20.Controls.Add(this.btnSPY);
             this.materialCard20.Controls.Add(this.btnTSLA);
             this.materialCard20.Controls.Add(this.lblQuickTrade);
@@ -1889,19 +1928,20 @@
             // 
             // btnAMZN
             // 
+            this.btnAMZN.AutoSize = false;
             this.btnAMZN.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAMZN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnAMZN.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnAMZN.Depth = 0;
             this.btnAMZN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnAMZN.HighEmphasis = true;
-            this.btnAMZN.Icon = null;
-            this.btnAMZN.Location = new System.Drawing.Point(205, 46);
+            this.btnAMZN.HighEmphasis = false;
+            this.btnAMZN.Icon = global::TdInterface.Properties.Resources.update_24;
+            this.btnAMZN.Location = new System.Drawing.Point(435, 260);
             this.btnAMZN.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAMZN.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAMZN.Name = "btnAMZN";
             this.btnAMZN.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnAMZN.Size = new System.Drawing.Size(64, 36);
+            this.btnAMZN.Size = new System.Drawing.Size(180, 77);
             this.btnAMZN.TabIndex = 28;
             this.btnAMZN.Tag = "AMZN";
             this.btnAMZN.Text = "AMZN";
@@ -1932,30 +1972,6 @@
             this.btnSPY.UseAccentColor = false;
             this.btnSPY.UseVisualStyleBackColor = false;
             this.btnSPY.Click += new System.EventHandler(this.btnTicker_Click);
-            // 
-            // btnAMD
-            // 
-            this.btnAMD.AutoSize = false;
-            this.btnAMD.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnAMD.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnAMD.Depth = 0;
-            this.btnAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnAMD.HighEmphasis = false;
-            this.btnAMD.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnAMD.Location = new System.Drawing.Point(229, 260);
-            this.btnAMD.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnAMD.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAMD.Name = "btnAMD";
-            this.btnAMD.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnAMD.Size = new System.Drawing.Size(180, 77);
-            this.btnAMD.TabIndex = 27;
-            this.btnAMD.Tag = "AMD";
-            this.btnAMD.Text = "AMD";
-            this.btnAMD.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnAMD.UseAccentColor = false;
-            this.btnAMD.UseVisualStyleBackColor = false;
-            this.btnAMD.Click += new System.EventHandler(this.btnTicker_Click);
             // 
             // btnTSLA
             // 
@@ -2381,17 +2397,17 @@
             this.btnFuturesCalc.UseVisualStyleBackColor = false;
             this.btnFuturesCalc.Click += new System.EventHandler(this.btnFuturesCalc_Click);
             // 
-            // rpbAMD
+            // rpbAMZN
             // 
-            this.rpbAMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.rpbAMD.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.rpbAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbAMD.Location = new System.Drawing.Point(239, 273);
-            this.rpbAMD.Name = "rpbAMD";
-            this.rpbAMD.Size = new System.Drawing.Size(48, 48);
-            this.rpbAMD.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.rpbAMD.TabIndex = 43;
-            this.rpbAMD.TabStop = false;
+            this.rpbAMZN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.rpbAMZN.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rpbAMZN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpbAMZN.Location = new System.Drawing.Point(445, 273);
+            this.rpbAMZN.Name = "rpbAMZN";
+            this.rpbAMZN.Size = new System.Drawing.Size(48, 48);
+            this.rpbAMZN.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbAMZN.TabIndex = 44;
+            this.rpbAMZN.TabStop = false;
             // 
             // MasterForm
             // 
@@ -2451,6 +2467,7 @@
             this.materialCard3.ResumeLayout(false);
             this.materialCard3.PerformLayout();
             this.tpHome.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAAPL)).EndInit();
             this.materialCard18.ResumeLayout(false);
             this.materialCard18.PerformLayout();
@@ -2468,7 +2485,7 @@
             this.materialCard24.PerformLayout();
             this.materialCard23.ResumeLayout(false);
             this.materialCard23.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbAMZN)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2594,5 +2611,6 @@
         private System.Windows.Forms.PictureBox pbAppLogo;
         private CustomControls.RoundedPictureBox rpbAAPL;
         private CustomControls.RoundedPictureBox rpbAMD;
+        private CustomControls.RoundedPictureBox rpbAMZN;
     }
 }
