@@ -235,7 +235,7 @@
             this.btnClearCreds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnClearCreds.HighEmphasis = true;
             this.btnClearCreds.Icon = null;
-            this.btnClearCreds.Location = new System.Drawing.Point(20, 656);
+            this.btnClearCreds.Location = new System.Drawing.Point(21, 650);
             this.btnClearCreds.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnClearCreds.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnClearCreds.Name = "btnClearCreds";
@@ -258,7 +258,7 @@
             this.btnSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSave.HighEmphasis = true;
             this.btnSave.Icon = null;
-            this.btnSave.Location = new System.Drawing.Point(700, 656);
+            this.btnSave.Location = new System.Drawing.Point(700, 650);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSave.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSave.Name = "btnSave";
@@ -716,7 +716,7 @@
             this.btnSettingsHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSettingsHelp.HighEmphasis = false;
             this.btnSettingsHelp.Icon = null;
-            this.btnSettingsHelp.Location = new System.Drawing.Point(21, 651);
+            this.btnSettingsHelp.Location = new System.Drawing.Point(21, 650);
             this.btnSettingsHelp.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSettingsHelp.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSettingsHelp.Name = "btnSettingsHelp";
@@ -739,7 +739,7 @@
             this.btnSettingsSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSettingsSave.HighEmphasis = true;
             this.btnSettingsSave.Icon = null;
-            this.btnSettingsSave.Location = new System.Drawing.Point(697, 651);
+            this.btnSettingsSave.Location = new System.Drawing.Point(700, 650);
             this.btnSettingsSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSettingsSave.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSettingsSave.Name = "btnSettingsSave";
