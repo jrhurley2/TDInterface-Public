@@ -117,16 +117,9 @@
             this.txtMaxRisk = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblMaxRisk = new MaterialSkin.Controls.MaterialLabel();
             this.tpHome = new System.Windows.Forms.TabPage();
+            this.materialCard25 = new MaterialSkin.Controls.MaterialCard();
             this.materialCard22 = new MaterialSkin.Controls.MaterialCard();
-            this.btnReplays = new MaterialSkin.Controls.MaterialButton();
-            this.btnLogs = new MaterialSkin.Controls.MaterialButton();
-            this.btnScreenshots = new MaterialSkin.Controls.MaterialButton();
-            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
-            this.lblArtifacts = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard21 = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel12 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnFuturesCalc = new MaterialSkin.Controls.MaterialButton();
-            this.lblFutures = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard20 = new MaterialSkin.Controls.MaterialCard();
             this.btnQQQ = new MaterialSkin.Controls.MaterialButton();
             this.btnAMZN = new MaterialSkin.Controls.MaterialButton();
@@ -146,6 +139,17 @@
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.pbCurrentAccountLogo = new System.Windows.Forms.PictureBox();
             this.mtcMasterForm = new MaterialSkin.Controls.MaterialTabControl();
+            this.tpTools = new System.Windows.Forms.TabPage();
+            this.materialCard24 = new MaterialSkin.Controls.MaterialCard();
+            this.lblArtifacts = new MaterialSkin.Controls.MaterialLabel();
+            this.btnLogs = new MaterialSkin.Controls.MaterialButton();
+            this.btnReplays = new MaterialSkin.Controls.MaterialButton();
+            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnScreenshots = new MaterialSkin.Controls.MaterialButton();
+            this.materialCard23 = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnFuturesCalc = new MaterialSkin.Controls.MaterialButton();
             this.tpAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).BeginInit();
             this.tpAccountSettings.SuspendLayout();
@@ -170,13 +174,14 @@
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.tpHome.SuspendLayout();
-            this.materialCard22.SuspendLayout();
-            this.materialCard21.SuspendLayout();
             this.materialCard20.SuspendLayout();
             this.materialCard19.SuspendLayout();
             this.materialCard18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentAccountLogo)).BeginInit();
             this.mtcMasterForm.SuspendLayout();
+            this.tpTools.SuspendLayout();
+            this.materialCard24.SuspendLayout();
+            this.materialCard23.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -189,15 +194,11 @@
             this.ilMenuIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.ilMenuIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilMenuIcons.ImageStream")));
             this.ilMenuIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilMenuIcons.Images.SetKeyName(0, "update_available-24.png");
-            this.ilMenuIcons.Images.SetKeyName(1, "update-24.png");
-            this.ilMenuIcons.Images.SetKeyName(2, "about-24.png");
-            this.ilMenuIcons.Images.SetKeyName(3, "settings-24.png");
-            this.ilMenuIcons.Images.SetKeyName(4, "account-24.png");
-            this.ilMenuIcons.Images.SetKeyName(5, "home-24.png");
-            this.ilMenuIcons.Images.SetKeyName(6, "screenshot-24.png");
-            this.ilMenuIcons.Images.SetKeyName(7, "logs-24.png");
-            this.ilMenuIcons.Images.SetKeyName(8, "futures-24.png");
+            this.ilMenuIcons.Images.SetKeyName(0, "about-24.png");
+            this.ilMenuIcons.Images.SetKeyName(1, "settings-24.png");
+            this.ilMenuIcons.Images.SetKeyName(2, "account-24.png");
+            this.ilMenuIcons.Images.SetKeyName(3, "home-24.png");
+            this.ilMenuIcons.Images.SetKeyName(4, "tools-24.png");
             // 
             // tpAbout
             // 
@@ -582,15 +583,16 @@
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel3.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.Location = new System.Drawing.Point(20, 90);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(660, 19);
+            this.materialLabel3.Size = new System.Drawing.Size(572, 14);
             this.materialLabel3.TabIndex = 20;
-            this.materialLabel3.Text = "Please choose an account to use with the EZTM tool. You may only have one active " +
-    "at a time.";
+            this.materialLabel3.Text = "Please choose an account to use with the EZ Trade Manager tool. You may only have" +
+    " one active at a time.";
             // 
             // materialCard1
             // 
@@ -1768,6 +1770,7 @@
             // tpHome
             // 
             this.tpHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpHome.Controls.Add(this.materialCard25);
             this.tpHome.Controls.Add(this.materialCard22);
             this.tpHome.Controls.Add(this.materialCard21);
             this.tpHome.Controls.Add(this.materialCard20);
@@ -1781,14 +1784,22 @@
             this.tpHome.Text = "Home";
             this.tpHome.Enter += new System.EventHandler(this.tpHome_Enter);
             // 
+            // materialCard25
+            // 
+            this.materialCard25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard25.Depth = 0;
+            this.materialCard25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard25.Location = new System.Drawing.Point(343, 343);
+            this.materialCard25.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard25.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard25.Name = "materialCard25";
+            this.materialCard25.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard25.Size = new System.Drawing.Size(535, 116);
+            this.materialCard25.TabIndex = 29;
+            // 
             // materialCard22
             // 
             this.materialCard22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard22.Controls.Add(this.btnReplays);
-            this.materialCard22.Controls.Add(this.btnLogs);
-            this.materialCard22.Controls.Add(this.btnScreenshots);
-            this.materialCard22.Controls.Add(this.materialLabel13);
-            this.materialCard22.Controls.Add(this.lblArtifacts);
             this.materialCard22.Depth = 0;
             this.materialCard22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard22.Location = new System.Drawing.Point(343, 130);
@@ -1799,106 +1810,9 @@
             this.materialCard22.Size = new System.Drawing.Size(535, 197);
             this.materialCard22.TabIndex = 28;
             // 
-            // btnReplays
-            // 
-            this.btnReplays.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReplays.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnReplays.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReplays.Depth = 0;
-            this.btnReplays.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnReplays.HighEmphasis = true;
-            this.btnReplays.Icon = null;
-            this.btnReplays.Location = new System.Drawing.Point(361, 141);
-            this.btnReplays.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReplays.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReplays.Name = "btnReplays";
-            this.btnReplays.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReplays.Size = new System.Drawing.Size(84, 36);
-            this.btnReplays.TabIndex = 31;
-            this.btnReplays.Text = "Replays";
-            this.btnReplays.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnReplays.UseAccentColor = false;
-            this.btnReplays.UseVisualStyleBackColor = false;
-            this.btnReplays.Click += new System.EventHandler(this.btnReplays_Click);
-            // 
-            // btnLogs
-            // 
-            this.btnLogs.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnLogs.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnLogs.Depth = 0;
-            this.btnLogs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnLogs.HighEmphasis = true;
-            this.btnLogs.Icon = null;
-            this.btnLogs.Location = new System.Drawing.Point(453, 141);
-            this.btnLogs.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnLogs.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnLogs.Name = "btnLogs";
-            this.btnLogs.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnLogs.Size = new System.Drawing.Size(64, 36);
-            this.btnLogs.TabIndex = 30;
-            this.btnLogs.Text = "Logs";
-            this.btnLogs.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnLogs.UseAccentColor = false;
-            this.btnLogs.UseVisualStyleBackColor = false;
-            this.btnLogs.Click += new System.EventHandler(this.btnLogs_Click);
-            // 
-            // btnScreenshots
-            // 
-            this.btnScreenshots.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnScreenshots.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnScreenshots.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnScreenshots.Depth = 0;
-            this.btnScreenshots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnScreenshots.HighEmphasis = true;
-            this.btnScreenshots.Icon = null;
-            this.btnScreenshots.Location = new System.Drawing.Point(17, 140);
-            this.btnScreenshots.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnScreenshots.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnScreenshots.Name = "btnScreenshots";
-            this.btnScreenshots.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnScreenshots.Size = new System.Drawing.Size(163, 36);
-            this.btnScreenshots.TabIndex = 29;
-            this.btnScreenshots.Text = "View Screenshots";
-            this.btnScreenshots.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnScreenshots.UseAccentColor = false;
-            this.btnScreenshots.UseVisualStyleBackColor = false;
-            this.btnScreenshots.Click += new System.EventHandler(this.btnScreenshots_Click_1);
-            // 
-            // materialLabel13
-            // 
-            this.materialLabel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.materialLabel13.Depth = 0;
-            this.materialLabel13.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel13.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
-            this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel13.Location = new System.Drawing.Point(17, 46);
-            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel13.Name = "materialLabel13";
-            this.materialLabel13.Size = new System.Drawing.Size(501, 82);
-            this.materialLabel13.TabIndex = 29;
-            this.materialLabel13.Text = resources.GetString("materialLabel13.Text");
-            // 
-            // lblArtifacts
-            // 
-            this.lblArtifacts.AutoSize = true;
-            this.lblArtifacts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblArtifacts.Depth = 0;
-            this.lblArtifacts.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblArtifacts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblArtifacts.Location = new System.Drawing.Point(17, 14);
-            this.lblArtifacts.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblArtifacts.Name = "lblArtifacts";
-            this.lblArtifacts.Size = new System.Drawing.Size(61, 19);
-            this.lblArtifacts.TabIndex = 29;
-            this.lblArtifacts.Text = "Artifacts";
-            // 
             // materialCard21
             // 
             this.materialCard21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard21.Controls.Add(this.materialLabel12);
-            this.materialCard21.Controls.Add(this.btnFuturesCalc);
-            this.materialCard21.Controls.Add(this.lblFutures);
             this.materialCard21.Depth = 0;
             this.materialCard21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard21.Location = new System.Drawing.Point(343, 23);
@@ -1908,57 +1822,6 @@
             this.materialCard21.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard21.Size = new System.Drawing.Size(535, 89);
             this.materialCard21.TabIndex = 27;
-            // 
-            // materialLabel12
-            // 
-            this.materialLabel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.materialLabel12.Depth = 0;
-            this.materialLabel12.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel12.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
-            this.materialLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel12.Location = new System.Drawing.Point(17, 41);
-            this.materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel12.Name = "materialLabel12";
-            this.materialLabel12.Size = new System.Drawing.Size(299, 34);
-            this.materialLabel12.TabIndex = 28;
-            this.materialLabel12.Text = "Futures trading is currently not supported. Please use the calculator to calculat" +
-    "e risk for futures trading.";
-            // 
-            // btnFuturesCalc
-            // 
-            this.btnFuturesCalc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnFuturesCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnFuturesCalc.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnFuturesCalc.Depth = 0;
-            this.btnFuturesCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnFuturesCalc.HighEmphasis = true;
-            this.btnFuturesCalc.Icon = null;
-            this.btnFuturesCalc.Location = new System.Drawing.Point(338, 41);
-            this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnFuturesCalc.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnFuturesCalc.Name = "btnFuturesCalc";
-            this.btnFuturesCalc.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnFuturesCalc.Size = new System.Drawing.Size(180, 36);
-            this.btnFuturesCalc.TabIndex = 26;
-            this.btnFuturesCalc.Text = "Futures Calculator";
-            this.btnFuturesCalc.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnFuturesCalc.UseAccentColor = false;
-            this.btnFuturesCalc.UseVisualStyleBackColor = false;
-            this.btnFuturesCalc.Click += new System.EventHandler(this.btnFuturesCalc_Click);
-            // 
-            // lblFutures
-            // 
-            this.lblFutures.AutoSize = true;
-            this.lblFutures.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblFutures.Depth = 0;
-            this.lblFutures.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblFutures.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFutures.Location = new System.Drawing.Point(17, 14);
-            this.lblFutures.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblFutures.Name = "lblFutures";
-            this.lblFutures.Size = new System.Drawing.Size(54, 19);
-            this.lblFutures.TabIndex = 28;
-            this.lblFutures.Text = "Futures";
             // 
             // materialCard20
             // 
@@ -2247,12 +2110,13 @@
             this.txtSymbol.AnimateReadOnly = false;
             this.txtSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.txtSymbol.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSymbol.Depth = 0;
             this.txtSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtSymbol.HideSelection = true;
-            this.txtSymbol.Hint = "Symbol";
+            this.txtSymbol.Hint = "Enter Symbol";
             this.txtSymbol.LeadingIcon = null;
+            this.txtSymbol.LeaveOnEnterKey = true;
             this.txtSymbol.Location = new System.Drawing.Point(17, 41);
             this.txtSymbol.MaxLength = 32767;
             this.txtSymbol.MouseState = MaterialSkin.MouseState.OUT;
@@ -2333,6 +2197,7 @@
             // mtcMasterForm
             // 
             this.mtcMasterForm.Controls.Add(this.tpHome);
+            this.mtcMasterForm.Controls.Add(this.tpTools);
             this.mtcMasterForm.Controls.Add(this.tpSettings);
             this.mtcMasterForm.Controls.Add(this.tpAccountSettings);
             this.mtcMasterForm.Controls.Add(this.tpAbout);
@@ -2348,6 +2213,195 @@
             this.mtcMasterForm.SelectedIndex = 0;
             this.mtcMasterForm.Size = new System.Drawing.Size(954, 853);
             this.mtcMasterForm.TabIndex = 22;
+            // 
+            // tpTools
+            // 
+            this.tpTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpTools.Controls.Add(this.materialCard24);
+            this.tpTools.Controls.Add(this.materialCard23);
+            this.tpTools.ImageKey = "tools-24.png";
+            this.tpTools.Location = new System.Drawing.Point(4, 31);
+            this.tpTools.Name = "tpTools";
+            this.tpTools.Size = new System.Drawing.Size(946, 818);
+            this.tpTools.TabIndex = 4;
+            this.tpTools.Text = "Tools";
+            // 
+            // materialCard24
+            // 
+            this.materialCard24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard24.Controls.Add(this.lblArtifacts);
+            this.materialCard24.Controls.Add(this.btnLogs);
+            this.materialCard24.Controls.Add(this.btnReplays);
+            this.materialCard24.Controls.Add(this.materialLabel13);
+            this.materialCard24.Controls.Add(this.btnScreenshots);
+            this.materialCard24.Depth = 0;
+            this.materialCard24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard24.Location = new System.Drawing.Point(14, 168);
+            this.materialCard24.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard24.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard24.Name = "materialCard24";
+            this.materialCard24.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard24.Size = new System.Drawing.Size(870, 197);
+            this.materialCard24.TabIndex = 38;
+            // 
+            // lblArtifacts
+            // 
+            this.lblArtifacts.AutoSize = true;
+            this.lblArtifacts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblArtifacts.Depth = 0;
+            this.lblArtifacts.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblArtifacts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblArtifacts.Location = new System.Drawing.Point(17, 14);
+            this.lblArtifacts.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblArtifacts.Name = "lblArtifacts";
+            this.lblArtifacts.Size = new System.Drawing.Size(61, 19);
+            this.lblArtifacts.TabIndex = 35;
+            this.lblArtifacts.Text = "Artifacts";
+            // 
+            // btnLogs
+            // 
+            this.btnLogs.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnLogs.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnLogs.Depth = 0;
+            this.btnLogs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnLogs.HighEmphasis = true;
+            this.btnLogs.Icon = null;
+            this.btnLogs.Location = new System.Drawing.Point(525, 141);
+            this.btnLogs.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnLogs.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnLogs.Name = "btnLogs";
+            this.btnLogs.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnLogs.Size = new System.Drawing.Size(64, 36);
+            this.btnLogs.TabIndex = 36;
+            this.btnLogs.Text = "Logs";
+            this.btnLogs.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnLogs.UseAccentColor = false;
+            this.btnLogs.UseVisualStyleBackColor = false;
+            // 
+            // btnReplays
+            // 
+            this.btnReplays.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReplays.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnReplays.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnReplays.Depth = 0;
+            this.btnReplays.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnReplays.HighEmphasis = true;
+            this.btnReplays.Icon = null;
+            this.btnReplays.Location = new System.Drawing.Point(597, 141);
+            this.btnReplays.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnReplays.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnReplays.Name = "btnReplays";
+            this.btnReplays.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnReplays.Size = new System.Drawing.Size(84, 36);
+            this.btnReplays.TabIndex = 37;
+            this.btnReplays.Text = "Replays";
+            this.btnReplays.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnReplays.UseAccentColor = false;
+            this.btnReplays.UseVisualStyleBackColor = false;
+            // 
+            // materialLabel13
+            // 
+            this.materialLabel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel13.Depth = 0;
+            this.materialLabel13.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel13.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
+            this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel13.Location = new System.Drawing.Point(17, 49);
+            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel13.Name = "materialLabel13";
+            this.materialLabel13.Size = new System.Drawing.Size(835, 82);
+            this.materialLabel13.TabIndex = 34;
+            this.materialLabel13.Text = resources.GetString("materialLabel13.Text");
+            // 
+            // btnScreenshots
+            // 
+            this.btnScreenshots.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnScreenshots.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnScreenshots.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnScreenshots.Depth = 0;
+            this.btnScreenshots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnScreenshots.HighEmphasis = true;
+            this.btnScreenshots.Icon = null;
+            this.btnScreenshots.Location = new System.Drawing.Point(689, 141);
+            this.btnScreenshots.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnScreenshots.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnScreenshots.Name = "btnScreenshots";
+            this.btnScreenshots.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnScreenshots.Size = new System.Drawing.Size(163, 36);
+            this.btnScreenshots.TabIndex = 33;
+            this.btnScreenshots.Text = "View Screenshots";
+            this.btnScreenshots.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnScreenshots.UseAccentColor = false;
+            this.btnScreenshots.UseVisualStyleBackColor = false;
+            // 
+            // materialCard23
+            // 
+            this.materialCard23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard23.Controls.Add(this.materialLabel14);
+            this.materialCard23.Controls.Add(this.materialLabel15);
+            this.materialCard23.Controls.Add(this.btnFuturesCalc);
+            this.materialCard23.Depth = 0;
+            this.materialCard23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard23.Location = new System.Drawing.Point(14, 14);
+            this.materialCard23.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard23.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard23.Name = "materialCard23";
+            this.materialCard23.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard23.Size = new System.Drawing.Size(870, 138);
+            this.materialCard23.TabIndex = 32;
+            // 
+            // materialLabel14
+            // 
+            this.materialLabel14.AutoSize = true;
+            this.materialLabel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel14.Depth = 0;
+            this.materialLabel14.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel14.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
+            this.materialLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel14.Location = new System.Drawing.Point(17, 45);
+            this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel14.Name = "materialLabel14";
+            this.materialLabel14.Size = new System.Drawing.Size(558, 14);
+            this.materialLabel14.TabIndex = 30;
+            this.materialLabel14.Text = "Futures trading is currently not supported. Please use the calculator to calculat" +
+    "e risk for futures trading.";
+            // 
+            // materialLabel15
+            // 
+            this.materialLabel15.AutoSize = true;
+            this.materialLabel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel15.Depth = 0;
+            this.materialLabel15.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel15.Location = new System.Drawing.Point(17, 14);
+            this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel15.Name = "materialLabel15";
+            this.materialLabel15.Size = new System.Drawing.Size(54, 19);
+            this.materialLabel15.TabIndex = 31;
+            this.materialLabel15.Text = "Futures";
+            // 
+            // btnFuturesCalc
+            // 
+            this.btnFuturesCalc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFuturesCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnFuturesCalc.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnFuturesCalc.Depth = 0;
+            this.btnFuturesCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnFuturesCalc.HighEmphasis = true;
+            this.btnFuturesCalc.Icon = null;
+            this.btnFuturesCalc.Location = new System.Drawing.Point(672, 82);
+            this.btnFuturesCalc.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnFuturesCalc.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnFuturesCalc.Name = "btnFuturesCalc";
+            this.btnFuturesCalc.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnFuturesCalc.Size = new System.Drawing.Size(180, 36);
+            this.btnFuturesCalc.TabIndex = 29;
+            this.btnFuturesCalc.Text = "Futures Calculator";
+            this.btnFuturesCalc.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnFuturesCalc.UseAccentColor = false;
+            this.btnFuturesCalc.UseVisualStyleBackColor = false;
+            this.btnFuturesCalc.Click += new System.EventHandler(this.btnFuturesCalc_Click);
             // 
             // MasterForm
             // 
@@ -2410,10 +2464,6 @@
             this.materialCard3.ResumeLayout(false);
             this.materialCard3.PerformLayout();
             this.tpHome.ResumeLayout(false);
-            this.materialCard22.ResumeLayout(false);
-            this.materialCard22.PerformLayout();
-            this.materialCard21.ResumeLayout(false);
-            this.materialCard21.PerformLayout();
             this.materialCard20.ResumeLayout(false);
             this.materialCard20.PerformLayout();
             this.materialCard19.ResumeLayout(false);
@@ -2422,6 +2472,11 @@
             this.materialCard18.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentAccountLogo)).EndInit();
             this.mtcMasterForm.ResumeLayout(false);
+            this.tpTools.ResumeLayout(false);
+            this.materialCard24.ResumeLayout(false);
+            this.materialCard24.PerformLayout();
+            this.materialCard23.ResumeLayout(false);
+            this.materialCard23.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2522,9 +2577,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel13;
         private MaterialSkin.Controls.MaterialLabel lblArtifacts;
         private MaterialSkin.Controls.MaterialCard materialCard21;
-        private MaterialSkin.Controls.MaterialLabel materialLabel12;
-        private MaterialSkin.Controls.MaterialButton btnFuturesCalc;
-        private MaterialSkin.Controls.MaterialLabel lblFutures;
         private MaterialSkin.Controls.MaterialCard materialCard20;
         private MaterialSkin.Controls.MaterialButton btnQQQ;
         private MaterialSkin.Controls.MaterialButton btnAMZN;
@@ -2544,5 +2596,12 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel11;
         private System.Windows.Forms.PictureBox pbCurrentAccountLogo;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
+        private System.Windows.Forms.TabPage tpTools;
+        private MaterialSkin.Controls.MaterialCard materialCard23;
+        private MaterialSkin.Controls.MaterialLabel materialLabel14;
+        private MaterialSkin.Controls.MaterialLabel materialLabel15;
+        private MaterialSkin.Controls.MaterialButton btnFuturesCalc;
+        private MaterialSkin.Controls.MaterialCard materialCard25;
+        private MaterialSkin.Controls.MaterialCard materialCard24;
     }
 }

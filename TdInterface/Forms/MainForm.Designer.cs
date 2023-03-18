@@ -41,7 +41,6 @@ namespace TdInterface
             this.txtLastPrice = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtStop = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLastError = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
@@ -92,7 +91,9 @@ namespace TdInterface
             // btnBuyMrkTriggerOco
             // 
             this.btnBuyMrkTriggerOco.AutoSize = true;
-            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
+            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnBuyMrkTriggerOco.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnBuyMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(6, 23);
             this.btnBuyMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
@@ -105,11 +106,14 @@ namespace TdInterface
             // 
             // txtSymbol
             // 
+            this.txtSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtSymbol.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtSymbol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtSymbol.Location = new System.Drawing.Point(12, 94);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(87, 26);
+            this.txtSymbol.Size = new System.Drawing.Size(87, 24);
             this.txtSymbol.TabIndex = 0;
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
             this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
@@ -119,28 +123,36 @@ namespace TdInterface
             // lblSymbol
             // 
             this.lblSymbol.AutoSize = true;
+            this.lblSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblSymbol.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblSymbol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblSymbol.Location = new System.Drawing.Point(12, 75);
             this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new System.Drawing.Size(54, 19);
+            this.lblSymbol.Size = new System.Drawing.Size(54, 17);
             this.lblSymbol.TabIndex = 8;
             this.lblSymbol.Text = "Symbol";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(291, 140);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 19);
+            this.label1.Size = new System.Drawing.Size(34, 17);
             this.label1.TabIndex = 24;
             this.label1.Text = "Risk";
             // 
             // txtRisk
             // 
-            this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtRisk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtRisk.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtRisk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtRisk.Location = new System.Drawing.Point(291, 159);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(87, 34);
+            this.txtRisk.Size = new System.Drawing.Size(87, 24);
             this.txtRisk.TabIndex = 4;
             this.txtRisk.Text = "5";
             this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -148,7 +160,9 @@ namespace TdInterface
             // btnSellMrkTriggerOco
             // 
             this.btnSellMrkTriggerOco.AutoSize = true;
-            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
+            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSellMrkTriggerOco.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnSellMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(6, 85);
             this.btnSellMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
@@ -161,11 +175,14 @@ namespace TdInterface
             // 
             // txtLastPrice
             // 
+            this.txtLastPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtLastPrice.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLastPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtLastPrice.Location = new System.Drawing.Point(105, 94);
             this.txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastPrice.Name = "txtLastPrice";
             this.txtLastPrice.ReadOnly = true;
-            this.txtLastPrice.Size = new System.Drawing.Size(87, 26);
+            this.txtLastPrice.Size = new System.Drawing.Size(87, 24);
             this.txtLastPrice.TabIndex = 10;
             this.txtLastPrice.TabStop = false;
             this.txtLastPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -173,26 +190,33 @@ namespace TdInterface
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label2.Location = new System.Drawing.Point(14, 140);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 19);
+            this.label2.Size = new System.Drawing.Size(37, 17);
             this.label2.TabIndex = 21;
             this.label2.Text = "Stop";
             // 
             // txtStop
             // 
-            this.txtStop.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtStop.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtStop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtStop.Location = new System.Drawing.Point(12, 159);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
-            this.txtStop.Size = new System.Drawing.Size(85, 34);
+            this.txtStop.Size = new System.Drawing.Size(85, 24);
             this.txtStop.TabIndex = 1;
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStop.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
             // txtLastError
             // 
-            this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
+            this.txtLastError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtLastError.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLastError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtLastError.Location = new System.Drawing.Point(390, 381);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
@@ -206,10 +230,13 @@ namespace TdInterface
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.groupBox1.Controls.Add(this.btnSellLmtTriggerOco);
             this.groupBox1.Controls.Add(this.btnBuyLmtTriggerOco);
             this.groupBox1.Controls.Add(this.btnSellMrkTriggerOco);
             this.groupBox1.Controls.Add(this.btnBuyMrkTriggerOco);
+            this.groupBox1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.groupBox1.Location = new System.Drawing.Point(12, 230);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(362, 144);
@@ -220,7 +247,9 @@ namespace TdInterface
             // btnSellLmtTriggerOco
             // 
             this.btnSellLmtTriggerOco.AutoSize = true;
-            this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
+            this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSellLmtTriggerOco.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnSellLmtTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(186, 83);
             this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
@@ -234,7 +263,9 @@ namespace TdInterface
             // btnBuyLmtTriggerOco
             // 
             this.btnBuyLmtTriggerOco.AutoSize = true;
-            this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
+            this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnBuyLmtTriggerOco.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnBuyLmtTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(186, 23);
             this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
@@ -247,7 +278,9 @@ namespace TdInterface
             // 
             // btnCancelAll
             // 
-            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnCancelAll.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnCancelAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancelAll.Location = new System.Drawing.Point(201, 380);
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
@@ -259,16 +292,21 @@ namespace TdInterface
             // 
             // txtStopToClose
             // 
+            this.txtStopToClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtStopToClose.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtStopToClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtStopToClose.Location = new System.Drawing.Point(18, 463);
             this.txtStopToClose.Name = "txtStopToClose";
-            this.txtStopToClose.Size = new System.Drawing.Size(172, 26);
+            this.txtStopToClose.Size = new System.Drawing.Size(172, 24);
             this.txtStopToClose.TabIndex = 6;
             this.txtStopToClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStopToClose.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
             // btnBreakEven
             // 
-            this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
+            this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnBreakEven.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnBreakEven.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnBreakEven.Location = new System.Drawing.Point(18, 380);
             this.btnBreakEven.Name = "btnBreakEven";
             this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
@@ -280,10 +318,13 @@ namespace TdInterface
             // 
             // txtAveragePrice
             // 
+            this.txtAveragePrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtAveragePrice.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtAveragePrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtAveragePrice.Location = new System.Drawing.Point(390, 94);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.ReadOnly = true;
-            this.txtAveragePrice.Size = new System.Drawing.Size(104, 26);
+            this.txtAveragePrice.Size = new System.Drawing.Size(104, 24);
             this.txtAveragePrice.TabIndex = 16;
             this.txtAveragePrice.TabStop = false;
             this.txtAveragePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -291,18 +332,24 @@ namespace TdInterface
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label3.Location = new System.Drawing.Point(390, 75);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 19);
+            this.label3.Size = new System.Drawing.Size(66, 17);
             this.label3.TabIndex = 15;
             this.label3.Text = "Avg Price";
             // 
             // txtShares
             // 
+            this.txtShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtShares.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtShares.Location = new System.Drawing.Point(500, 94);
             this.txtShares.Name = "txtShares";
             this.txtShares.ReadOnly = true;
-            this.txtShares.Size = new System.Drawing.Size(87, 26);
+            this.txtShares.Size = new System.Drawing.Size(87, 24);
             this.txtShares.TabIndex = 18;
             this.txtShares.TabStop = false;
             this.txtShares.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -311,37 +358,49 @@ namespace TdInterface
             // lblShares
             // 
             this.lblShares.AutoSize = true;
+            this.lblShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblShares.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblShares.Location = new System.Drawing.Point(505, 75);
             this.lblShares.Name = "lblShares";
-            this.lblShares.Size = new System.Drawing.Size(49, 19);
+            this.lblShares.Size = new System.Drawing.Size(51, 17);
             this.lblShares.TabIndex = 17;
             this.lblShares.Text = "Shares";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label4.Location = new System.Drawing.Point(107, 75);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 19);
+            this.label4.Size = new System.Drawing.Size(36, 17);
             this.label4.TabIndex = 9;
             this.label4.Text = "Last";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label5.Location = new System.Drawing.Point(198, 75);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 19);
+            this.label5.Size = new System.Drawing.Size(28, 17);
             this.label5.TabIndex = 11;
             this.label5.Text = "Bid";
             // 
             // txtBid
             // 
+            this.txtBid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtBid.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtBid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtBid.Location = new System.Drawing.Point(198, 94);
             this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBid.Name = "txtBid";
             this.txtBid.ReadOnly = true;
-            this.txtBid.Size = new System.Drawing.Size(87, 26);
+            this.txtBid.Size = new System.Drawing.Size(87, 24);
             this.txtBid.TabIndex = 12;
             this.txtBid.TabStop = false;
             this.txtBid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -349,19 +408,25 @@ namespace TdInterface
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label6.Location = new System.Drawing.Point(291, 75);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 19);
+            this.label6.Size = new System.Drawing.Size(31, 17);
             this.label6.TabIndex = 13;
             this.label6.Text = "Ask";
             // 
             // txtAsk
             // 
+            this.txtAsk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtAsk.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtAsk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtAsk.Location = new System.Drawing.Point(291, 94);
             this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAsk.Name = "txtAsk";
             this.txtAsk.ReadOnly = true;
-            this.txtAsk.Size = new System.Drawing.Size(87, 26);
+            this.txtAsk.Size = new System.Drawing.Size(87, 24);
             this.txtAsk.TabIndex = 14;
             this.txtAsk.TabStop = false;
             this.txtAsk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -369,18 +434,23 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label7.Location = new System.Drawing.Point(103, 140);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 19);
+            this.label7.Size = new System.Drawing.Size(39, 17);
             this.label7.TabIndex = 22;
             this.label7.Text = "Limit";
             // 
             // txtLimit
             // 
-            this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtLimit.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtLimit.Location = new System.Drawing.Point(103, 159);
             this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(89, 34);
+            this.txtLimit.Size = new System.Drawing.Size(89, 24);
             this.txtLimit.TabIndex = 2;
             this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLimit.Leave += new System.EventHandler(this.txtWithValidation_Leave);
@@ -388,20 +458,26 @@ namespace TdInterface
             // chkTradeShares
             // 
             this.chkTradeShares.AutoSize = true;
+            this.chkTradeShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkTradeShares.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.chkTradeShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.chkTradeShares.Location = new System.Drawing.Point(310, 195);
             this.chkTradeShares.Name = "chkTradeShares";
-            this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
+            this.chkTradeShares.Size = new System.Drawing.Size(70, 21);
             this.chkTradeShares.TabIndex = 5;
             this.chkTradeShares.Text = "Shares";
-            this.chkTradeShares.UseVisualStyleBackColor = true;
+            this.chkTradeShares.UseVisualStyleBackColor = false;
             this.chkTradeShares.CheckedChanged += new System.EventHandler(this.chkTradeShares_CheckedChanged);
             // 
             // txtHeartBeat
             // 
+            this.txtHeartBeat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtHeartBeat.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtHeartBeat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtHeartBeat.Location = new System.Drawing.Point(396, 519);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(285, 26);
+            this.txtHeartBeat.Size = new System.Drawing.Size(285, 24);
             this.txtHeartBeat.TabIndex = 36;
             this.txtHeartBeat.TabStop = false;
             this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -409,75 +485,97 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label8.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label8.Location = new System.Drawing.Point(396, 496);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 19);
+            this.label8.Size = new System.Drawing.Size(72, 17);
             this.label8.TabIndex = 35;
             this.label8.Text = "HeartBeat";
             // 
             // txtConnectionStatus
             // 
+            this.txtConnectionStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtConnectionStatus.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtConnectionStatus.Location = new System.Drawing.Point(20, 519);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(318, 26);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(318, 24);
             this.txtConnectionStatus.TabIndex = 38;
             this.txtConnectionStatus.TabStop = false;
             // 
             // lblConnectionStatus
             // 
             this.lblConnectionStatus.AutoSize = true;
+            this.lblConnectionStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblConnectionStatus.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblConnectionStatus.Location = new System.Drawing.Point(20, 496);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
+            this.lblConnectionStatus.Size = new System.Drawing.Size(123, 17);
             this.lblConnectionStatus.TabIndex = 37;
             this.lblConnectionStatus.Text = "Connection Status";
             // 
             // txtLimitOffset
             // 
-            this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLimitOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtLimitOffset.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtLimitOffset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtLimitOffset.Location = new System.Drawing.Point(198, 159);
             this.txtLimitOffset.Name = "txtLimitOffset";
-            this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
+            this.txtLimitOffset.Size = new System.Drawing.Size(87, 24);
             this.txtLimitOffset.TabIndex = 3;
             this.txtLimitOffset.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label9.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label9.Location = new System.Drawing.Point(594, 140);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(17, 19);
+            this.label9.Size = new System.Drawing.Size(17, 17);
             this.label9.TabIndex = 27;
             this.label9.Text = "R";
             // 
             // txtRValue
             // 
-            this.txtRValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtRValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtRValue.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtRValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtRValue.Location = new System.Drawing.Point(594, 159);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
-            this.txtRValue.Size = new System.Drawing.Size(87, 34);
+            this.txtRValue.Size = new System.Drawing.Size(87, 24);
             this.txtRValue.TabIndex = 28;
             this.txtRValue.TabStop = false;
             this.txtRValue.TextChanged += new System.EventHandler(this.txtRValue_TextChanged);
             // 
             // txtPnL
             // 
+            this.txtPnL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtPnL.Enabled = false;
+            this.txtPnL.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtPnL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtPnL.Location = new System.Drawing.Point(594, 93);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.ReadOnly = true;
-            this.txtPnL.Size = new System.Drawing.Size(87, 26);
+            this.txtPnL.Size = new System.Drawing.Size(87, 24);
             this.txtPnL.TabIndex = 20;
             this.txtPnL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPnL
             // 
             this.lblPnL.AutoSize = true;
+            this.lblPnL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblPnL.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblPnL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblPnL.Location = new System.Drawing.Point(594, 75);
             this.lblPnL.Name = "lblPnL";
-            this.lblPnL.Size = new System.Drawing.Size(32, 19);
+            this.lblPnL.Size = new System.Drawing.Size(33, 17);
             this.lblPnL.TabIndex = 19;
             this.lblPnL.Text = "PnL";
             // 
@@ -490,76 +588,98 @@ namespace TdInterface
             // label10
             // 
             this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label10.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label10.Location = new System.Drawing.Point(390, 140);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(28, 19);
+            this.label10.Size = new System.Drawing.Size(27, 17);
             this.label10.TabIndex = 25;
             this.label10.Text = "1:1";
             // 
             // txtOneToOne
             // 
-            this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtOneToOne.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtOneToOne.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtOneToOne.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtOneToOne.Location = new System.Drawing.Point(390, 159);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(197, 34);
+            this.txtOneToOne.Size = new System.Drawing.Size(197, 24);
             this.txtOneToOne.TabIndex = 26;
             this.txtOneToOne.TabStop = false;
             // 
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
+            this.chkDisableFirstTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkDisableFirstTarget.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.chkDisableFirstTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.chkDisableFirstTarget.Location = new System.Drawing.Point(205, 440);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
-            this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(146, 21);
             this.chkDisableFirstTarget.TabIndex = 7;
             this.chkDisableFirstTarget.Text = "Disable First Target";
-            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            this.chkDisableFirstTarget.UseVisualStyleBackColor = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.label11.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label11.Location = new System.Drawing.Point(198, 140);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(80, 19);
+            this.label11.Size = new System.Drawing.Size(81, 17);
             this.label11.TabIndex = 23;
             this.label11.Text = "Limit Offset";
             // 
             // txtMoveStop
             // 
             this.txtMoveStop.AutoSize = true;
+            this.txtMoveStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtMoveStop.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtMoveStop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtMoveStop.Location = new System.Drawing.Point(20, 441);
             this.txtMoveStop.Name = "txtMoveStop";
-            this.txtMoveStop.Size = new System.Drawing.Size(94, 19);
+            this.txtMoveStop.Size = new System.Drawing.Size(92, 17);
             this.txtMoveStop.TabIndex = 32;
             this.txtMoveStop.Text = "Move Stop To";
             // 
             // rbExitMarket
             // 
             this.rbExitMarket.AutoSize = true;
+            this.rbExitMarket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rbExitMarket.Checked = true;
+            this.rbExitMarket.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rbExitMarket.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.rbExitMarket.Location = new System.Drawing.Point(114, 23);
             this.rbExitMarket.Name = "rbExitMarket";
-            this.rbExitMarket.Size = new System.Drawing.Size(79, 23);
+            this.rbExitMarket.Size = new System.Drawing.Size(81, 21);
             this.rbExitMarket.TabIndex = 39;
             this.rbExitMarket.TabStop = true;
             this.rbExitMarket.Text = "MARKET";
-            this.rbExitMarket.UseVisualStyleBackColor = true;
+            this.rbExitMarket.UseVisualStyleBackColor = false;
             // 
             // rbExitBidAsk
             // 
             this.rbExitBidAsk.AutoSize = true;
+            this.rbExitBidAsk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.rbExitBidAsk.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rbExitBidAsk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.rbExitBidAsk.Location = new System.Drawing.Point(199, 23);
             this.rbExitBidAsk.Name = "rbExitBidAsk";
-            this.rbExitBidAsk.Size = new System.Drawing.Size(86, 23);
+            this.rbExitBidAsk.Size = new System.Drawing.Size(86, 21);
             this.rbExitBidAsk.TabIndex = 40;
             this.rbExitBidAsk.Text = "BID / ASK";
-            this.rbExitBidAsk.UseVisualStyleBackColor = true;
+            this.rbExitBidAsk.UseVisualStyleBackColor = false;
             // 
             // btnExit33
             // 
-            this.btnExit33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExit33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnExit33.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExit33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnExit33.Location = new System.Drawing.Point(120, 85);
             this.btnExit33.Name = "btnExit33";
             this.btnExit33.Size = new System.Drawing.Size(46, 39);
@@ -572,7 +692,9 @@ namespace TdInterface
             // 
             // btnExit50
             // 
-            this.btnExit50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExit50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnExit50.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExit50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnExit50.Location = new System.Drawing.Point(172, 85);
             this.btnExit50.Name = "btnExit50";
             this.btnExit50.Size = new System.Drawing.Size(46, 39);
@@ -585,7 +707,9 @@ namespace TdInterface
             // 
             // btnExit25
             // 
-            this.btnExit25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExit25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnExit25.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExit25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnExit25.Location = new System.Drawing.Point(68, 85);
             this.btnExit25.Name = "btnExit25";
             this.btnExit25.Size = new System.Drawing.Size(46, 39);
@@ -598,7 +722,9 @@ namespace TdInterface
             // 
             // btnExit100
             // 
-            this.btnExit100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExit100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnExit100.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExit100.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnExit100.Location = new System.Drawing.Point(224, 85);
             this.btnExit100.Name = "btnExit100";
             this.btnExit100.Size = new System.Drawing.Size(52, 39);
@@ -611,7 +737,9 @@ namespace TdInterface
             // 
             // btnExit10
             // 
-            this.btnExit10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
+            this.btnExit10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnExit10.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnExit10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnExit10.Location = new System.Drawing.Point(16, 85);
             this.btnExit10.Name = "btnExit10";
             this.btnExit10.Size = new System.Drawing.Size(46, 39);
@@ -624,6 +752,7 @@ namespace TdInterface
             // 
             // groupBox2
             // 
+            this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.groupBox2.Controls.Add(this.rbExitBidAsk);
             this.groupBox2.Controls.Add(this.btnExit10);
             this.groupBox2.Controls.Add(this.rbExitMarket);
@@ -631,6 +760,8 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnExit50);
             this.groupBox2.Controls.Add(this.btnExit25);
             this.groupBox2.Controls.Add(this.btnExit33);
+            this.groupBox2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.groupBox2.Location = new System.Drawing.Point(390, 230);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(291, 144);
@@ -641,9 +772,12 @@ namespace TdInterface
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
+            this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblVersion.Location = new System.Drawing.Point(280, 496);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(54, 19);
+            this.lblVersion.Size = new System.Drawing.Size(55, 17);
             this.lblVersion.TabIndex = 39;
             this.lblVersion.Text = "Version";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -651,7 +785,7 @@ namespace TdInterface
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.ClientSize = new System.Drawing.Size(700, 570);
+            this.ClientSize = new System.Drawing.Size(732, 648);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
@@ -719,7 +853,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtLastPrice;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtStop;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtLastError;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnBreakEven;
