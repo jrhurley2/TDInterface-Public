@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MasterForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnFuturesCalc = new System.Windows.Forms.Button();
             this.btnAMZN = new System.Windows.Forms.Button();
@@ -49,10 +50,63 @@
             this.lblTools = new System.Windows.Forms.Label();
             this.lblTradeLine = new System.Windows.Forms.Label();
             this.lblTrade = new System.Windows.Forms.Label();
-            this.btnScreenshots = new System.Windows.Forms.Button();
             this.mtcMasterForm = new MaterialSkin.Controls.MaterialTabControl();
             this.tpHome = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.btnSettingsSave = new MaterialSkin.Controls.MaterialButton();
+            this.materialCard17 = new MaterialSkin.Controls.MaterialCard();
+            this.txtDefaultLimitOffset = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblDefaultLimitOffset = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard16 = new MaterialSkin.Controls.MaterialCard();
+            this.chkReduceStopOnClose = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblReduceStopOnClose = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard15 = new MaterialSkin.Controls.MaterialCard();
+            this.txtOneRSharePct = new MaterialSkin.Controls.MaterialTextBox2();
+            this.chkDisableFirstTarget = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblDisableFirstTarget = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
+            this.chkAlwaysOnTop = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblAlwaysOnTop = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard13 = new MaterialSkin.Controls.MaterialCard();
+            this.chkCaptureSSOnOpen = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblCaptureFullScreenOnOpen = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard12 = new MaterialSkin.Controls.MaterialCard();
+            this.chkSendPrtScrOnOpen = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblSendAltPrtSc = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard11 = new MaterialSkin.Controls.MaterialCard();
+            this.chkShowPnL = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblShowPnL = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard10 = new MaterialSkin.Controls.MaterialCard();
+            this.chkAdjustRiskForMaxLoss = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblAdjustRiskNotExceedMaxLoss = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard9 = new MaterialSkin.Controls.MaterialCard();
+            this.chkPreventExceedMaxLoss = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblPreventRiskExceedMaxLoss = new MaterialSkin.Controls.MaterialLabel();
+            this.lblMiscellaneous = new MaterialSkin.Controls.MaterialLabel();
+            this.lblMaxLossProtection = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard8 = new MaterialSkin.Controls.MaterialCard();
+            this.txtMaxLossLimit = new MaterialSkin.Controls.MaterialTextBox2();
+            this.chkMaxLossLimit = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblEnableMaxLossLimit = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard7 = new MaterialSkin.Controls.MaterialCard();
+            this.txtMinRisk = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblMinRiskPerShare = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard6 = new MaterialSkin.Controls.MaterialCard();
+            this.chkUseBidAskOcoCalc = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblBidAskCalc = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
+            this.lblTradeShares = new MaterialSkin.Controls.MaterialLabel();
+            this.txtMaxShares = new MaterialSkin.Controls.MaterialTextBox2();
+            this.chkTradeShares = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
+            this.chkMoveLimitOnFill = new MaterialSkin.Controls.MaterialSwitch();
+            this.lblMoveLimitOnFill = new MaterialSkin.Controls.MaterialLabel();
+            this.lblPositionManagement = new MaterialSkin.Controls.MaterialLabel();
+            this.lblSettings = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
+            this.txtMaxRisk = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblMaxRisk = new MaterialSkin.Controls.MaterialLabel();
             this.tpAccountSettings = new System.Windows.Forms.TabPage();
             this.btnClearCreds = new MaterialSkin.Controls.MaterialButton();
             this.btnSave = new MaterialSkin.Controls.MaterialButton();
@@ -81,8 +135,27 @@
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
             this.pbAppLogo = new System.Windows.Forms.PictureBox();
+            this.tpScreenshots = new System.Windows.Forms.TabPage();
+            this.tpLogs = new System.Windows.Forms.TabPage();
+            this.ilMenuIcons = new System.Windows.Forms.ImageList(this.components);
             this.mtcMasterForm.SuspendLayout();
             this.tpHome.SuspendLayout();
+            this.tpSettings.SuspendLayout();
+            this.materialCard17.SuspendLayout();
+            this.materialCard16.SuspendLayout();
+            this.materialCard15.SuspendLayout();
+            this.materialCard14.SuspendLayout();
+            this.materialCard13.SuspendLayout();
+            this.materialCard12.SuspendLayout();
+            this.materialCard11.SuspendLayout();
+            this.materialCard10.SuspendLayout();
+            this.materialCard9.SuspendLayout();
+            this.materialCard8.SuspendLayout();
+            this.materialCard7.SuspendLayout();
+            this.materialCard6.SuspendLayout();
+            this.materialCard5.SuspendLayout();
+            this.materialCard4.SuspendLayout();
+            this.materialCard3.SuspendLayout();
             this.tpAccountSettings.SuspendLayout();
             this.materialCard2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -177,7 +250,7 @@
             this.lblSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblSymbol.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblSymbol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSymbol.Location = new System.Drawing.Point(46, 45);
+            this.lblSymbol.Location = new System.Drawing.Point(43, 42);
             this.lblSymbol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSymbol.Name = "lblSymbol";
             this.lblSymbol.Size = new System.Drawing.Size(54, 17);
@@ -291,7 +364,7 @@
             this.lblQuickTrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblQuickTrade.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblQuickTrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblQuickTrade.Location = new System.Drawing.Point(19, 77);
+            this.lblQuickTrade.Location = new System.Drawing.Point(16, 74);
             this.lblQuickTrade.Name = "lblQuickTrade";
             this.lblQuickTrade.Size = new System.Drawing.Size(81, 17);
             this.lblQuickTrade.TabIndex = 15;
@@ -325,7 +398,7 @@
             this.lblTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblTools.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblTools.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTools.Location = new System.Drawing.Point(17, 211);
+            this.lblTools.Location = new System.Drawing.Point(14, 208);
             this.lblTools.Name = "lblTools";
             this.lblTools.Size = new System.Drawing.Size(41, 17);
             this.lblTools.TabIndex = 17;
@@ -348,25 +421,11 @@
             this.lblTrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblTrade.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblTrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTrade.Location = new System.Drawing.Point(17, 15);
+            this.lblTrade.Location = new System.Drawing.Point(14, 12);
             this.lblTrade.Name = "lblTrade";
             this.lblTrade.Size = new System.Drawing.Size(43, 17);
             this.lblTrade.TabIndex = 19;
             this.lblTrade.Text = "Trade";
-            // 
-            // btnScreenshots
-            // 
-            this.btnScreenshots.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnScreenshots.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnScreenshots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnScreenshots.Location = new System.Drawing.Point(159, 235);
-            this.btnScreenshots.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.btnScreenshots.Name = "btnScreenshots";
-            this.btnScreenshots.Size = new System.Drawing.Size(130, 28);
-            this.btnScreenshots.TabIndex = 21;
-            this.btnScreenshots.Text = "View Screenshots";
-            this.btnScreenshots.UseVisualStyleBackColor = false;
-            this.btnScreenshots.Click += new System.EventHandler(this.btnScreenshots_Click);
             // 
             // mtcMasterForm
             // 
@@ -374,9 +433,13 @@
             this.mtcMasterForm.Controls.Add(this.tpSettings);
             this.mtcMasterForm.Controls.Add(this.tpAccountSettings);
             this.mtcMasterForm.Controls.Add(this.tpAbout);
+            this.mtcMasterForm.Controls.Add(this.tpScreenshots);
+            this.mtcMasterForm.Controls.Add(this.tpLogs);
             this.mtcMasterForm.Depth = 0;
             this.mtcMasterForm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtcMasterForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.mtcMasterForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mtcMasterForm.ImageList = this.ilMenuIcons;
             this.mtcMasterForm.Location = new System.Drawing.Point(3, 64);
             this.mtcMasterForm.MouseState = MaterialSkin.MouseState.HOVER;
             this.mtcMasterForm.Multiline = true;
@@ -388,7 +451,6 @@
             // tpHome
             // 
             this.tpHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.tpHome.Controls.Add(this.btnScreenshots);
             this.tpHome.Controls.Add(this.btnFuturesCalc);
             this.tpHome.Controls.Add(this.lblTradeLine);
             this.tpHome.Controls.Add(this.btnAMZN);
@@ -408,23 +470,1040 @@
             this.tpHome.Controls.Add(this.btnNVDA);
             this.tpHome.Controls.Add(this.btnTSLA);
             this.tpHome.Controls.Add(this.btnMETA);
-            this.tpHome.Location = new System.Drawing.Point(4, 28);
+            this.tpHome.ImageKey = "home-24.png";
+            this.tpHome.Location = new System.Drawing.Point(4, 31);
             this.tpHome.Name = "tpHome";
-            this.tpHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHome.Size = new System.Drawing.Size(946, 836);
+            this.tpHome.Size = new System.Drawing.Size(946, 858);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             // 
             // tpSettings
             // 
             this.tpSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.tpSettings.Location = new System.Drawing.Point(4, 28);
+            this.tpSettings.Controls.Add(this.btnSettingsSave);
+            this.tpSettings.Controls.Add(this.materialCard17);
+            this.tpSettings.Controls.Add(this.materialCard16);
+            this.tpSettings.Controls.Add(this.materialCard15);
+            this.tpSettings.Controls.Add(this.materialCard14);
+            this.tpSettings.Controls.Add(this.materialCard13);
+            this.tpSettings.Controls.Add(this.materialCard12);
+            this.tpSettings.Controls.Add(this.materialCard11);
+            this.tpSettings.Controls.Add(this.materialCard10);
+            this.tpSettings.Controls.Add(this.materialCard9);
+            this.tpSettings.Controls.Add(this.lblMiscellaneous);
+            this.tpSettings.Controls.Add(this.lblMaxLossProtection);
+            this.tpSettings.Controls.Add(this.materialCard8);
+            this.tpSettings.Controls.Add(this.materialCard7);
+            this.tpSettings.Controls.Add(this.materialCard6);
+            this.tpSettings.Controls.Add(this.materialCard5);
+            this.tpSettings.Controls.Add(this.materialCard4);
+            this.tpSettings.Controls.Add(this.lblPositionManagement);
+            this.tpSettings.Controls.Add(this.lblSettings);
+            this.tpSettings.Controls.Add(this.materialLabel10);
+            this.tpSettings.Controls.Add(this.materialCard3);
+            this.tpSettings.ImageKey = "settings-24.png";
+            this.tpSettings.Location = new System.Drawing.Point(4, 31);
             this.tpSettings.Name = "tpSettings";
-            this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(946, 836);
+            this.tpSettings.Size = new System.Drawing.Size(946, 858);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             this.tpSettings.Enter += new System.EventHandler(this.tpSettings_Enter);
+            // 
+            // btnSettingsSave
+            // 
+            this.btnSettingsSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingsSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSettingsSave.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnSettingsSave.Depth = 0;
+            this.btnSettingsSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnSettingsSave.HighEmphasis = true;
+            this.btnSettingsSave.Icon = null;
+            this.btnSettingsSave.Location = new System.Drawing.Point(815, 34);
+            this.btnSettingsSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnSettingsSave.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSettingsSave.Name = "btnSettingsSave";
+            this.btnSettingsSave.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnSettingsSave.Size = new System.Drawing.Size(64, 36);
+            this.btnSettingsSave.TabIndex = 29;
+            this.btnSettingsSave.Text = "Save";
+            this.btnSettingsSave.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnSettingsSave.UseAccentColor = false;
+            this.btnSettingsSave.UseVisualStyleBackColor = false;
+            this.btnSettingsSave.Click += new System.EventHandler(this.btnSettingsSave_Click);
+            // 
+            // materialCard17
+            // 
+            this.materialCard17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard17.Controls.Add(this.txtDefaultLimitOffset);
+            this.materialCard17.Controls.Add(this.lblDefaultLimitOffset);
+            this.materialCard17.Depth = 0;
+            this.materialCard17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard17.Location = new System.Drawing.Point(464, 319);
+            this.materialCard17.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard17.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard17.Name = "materialCard17";
+            this.materialCard17.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard17.Size = new System.Drawing.Size(415, 60);
+            this.materialCard17.TabIndex = 28;
+            // 
+            // txtDefaultLimitOffset
+            // 
+            this.txtDefaultLimitOffset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDefaultLimitOffset.AnimateReadOnly = false;
+            this.txtDefaultLimitOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtDefaultLimitOffset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtDefaultLimitOffset.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtDefaultLimitOffset.Depth = 0;
+            this.txtDefaultLimitOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtDefaultLimitOffset.HideSelection = true;
+            this.txtDefaultLimitOffset.Hint = "Offset";
+            this.txtDefaultLimitOffset.LeadingIcon = null;
+            this.txtDefaultLimitOffset.Location = new System.Drawing.Point(291, 12);
+            this.txtDefaultLimitOffset.MaxLength = 32767;
+            this.txtDefaultLimitOffset.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
+            this.txtDefaultLimitOffset.PasswordChar = '\0';
+            this.txtDefaultLimitOffset.PrefixSuffixText = null;
+            this.txtDefaultLimitOffset.ReadOnly = false;
+            this.txtDefaultLimitOffset.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtDefaultLimitOffset.SelectedText = "";
+            this.txtDefaultLimitOffset.SelectionLength = 0;
+            this.txtDefaultLimitOffset.SelectionStart = 0;
+            this.txtDefaultLimitOffset.ShortcutsEnabled = true;
+            this.txtDefaultLimitOffset.Size = new System.Drawing.Size(108, 36);
+            this.txtDefaultLimitOffset.TabIndex = 3;
+            this.txtDefaultLimitOffset.TabStop = false;
+            this.txtDefaultLimitOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDefaultLimitOffset.TrailingIcon = null;
+            this.txtDefaultLimitOffset.UseAccent = false;
+            this.txtDefaultLimitOffset.UseSystemPasswordChar = false;
+            this.txtDefaultLimitOffset.UseTallSize = false;
+            // 
+            // lblDefaultLimitOffset
+            // 
+            this.lblDefaultLimitOffset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblDefaultLimitOffset.AutoSize = true;
+            this.lblDefaultLimitOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblDefaultLimitOffset.Depth = 0;
+            this.lblDefaultLimitOffset.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDefaultLimitOffset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblDefaultLimitOffset.Location = new System.Drawing.Point(12, 21);
+            this.lblDefaultLimitOffset.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDefaultLimitOffset.Name = "lblDefaultLimitOffset";
+            this.lblDefaultLimitOffset.Size = new System.Drawing.Size(183, 19);
+            this.lblDefaultLimitOffset.TabIndex = 2;
+            this.lblDefaultLimitOffset.Text = "Disable 1st profit target %";
+            this.lblDefaultLimitOffset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard16
+            // 
+            this.materialCard16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard16.Controls.Add(this.chkReduceStopOnClose);
+            this.materialCard16.Controls.Add(this.lblReduceStopOnClose);
+            this.materialCard16.Depth = 0;
+            this.materialCard16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard16.Location = new System.Drawing.Point(464, 254);
+            this.materialCard16.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard16.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard16.Name = "materialCard16";
+            this.materialCard16.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard16.Size = new System.Drawing.Size(415, 60);
+            this.materialCard16.TabIndex = 18;
+            // 
+            // chkReduceStopOnClose
+            // 
+            this.chkReduceStopOnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkReduceStopOnClose.AutoSize = true;
+            this.chkReduceStopOnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkReduceStopOnClose.Depth = 0;
+            this.chkReduceStopOnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkReduceStopOnClose.Location = new System.Drawing.Point(341, 12);
+            this.chkReduceStopOnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.chkReduceStopOnClose.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkReduceStopOnClose.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkReduceStopOnClose.Name = "chkReduceStopOnClose";
+            this.chkReduceStopOnClose.Ripple = true;
+            this.chkReduceStopOnClose.Size = new System.Drawing.Size(58, 37);
+            this.chkReduceStopOnClose.TabIndex = 3;
+            this.chkReduceStopOnClose.UseVisualStyleBackColor = false;
+            // 
+            // lblReduceStopOnClose
+            // 
+            this.lblReduceStopOnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblReduceStopOnClose.AutoSize = true;
+            this.lblReduceStopOnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblReduceStopOnClose.Depth = 0;
+            this.lblReduceStopOnClose.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblReduceStopOnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblReduceStopOnClose.Location = new System.Drawing.Point(12, 21);
+            this.lblReduceStopOnClose.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblReduceStopOnClose.Name = "lblReduceStopOnClose";
+            this.lblReduceStopOnClose.Size = new System.Drawing.Size(151, 19);
+            this.lblReduceStopOnClose.TabIndex = 2;
+            this.lblReduceStopOnClose.Text = "Reduce stop on close";
+            this.lblReduceStopOnClose.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard15
+            // 
+            this.materialCard15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard15.Controls.Add(this.txtOneRSharePct);
+            this.materialCard15.Controls.Add(this.chkDisableFirstTarget);
+            this.materialCard15.Controls.Add(this.lblDisableFirstTarget);
+            this.materialCard15.Depth = 0;
+            this.materialCard15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard15.Location = new System.Drawing.Point(464, 124);
+            this.materialCard15.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard15.Name = "materialCard15";
+            this.materialCard15.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard15.Size = new System.Drawing.Size(415, 60);
+            this.materialCard15.TabIndex = 27;
+            // 
+            // txtOneRSharePct
+            // 
+            this.txtOneRSharePct.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOneRSharePct.AnimateReadOnly = false;
+            this.txtOneRSharePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtOneRSharePct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtOneRSharePct.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtOneRSharePct.Depth = 0;
+            this.txtOneRSharePct.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtOneRSharePct.HideSelection = true;
+            this.txtOneRSharePct.Hint = "%";
+            this.txtOneRSharePct.LeadingIcon = null;
+            this.txtOneRSharePct.Location = new System.Drawing.Point(291, 13);
+            this.txtOneRSharePct.MaxLength = 32767;
+            this.txtOneRSharePct.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtOneRSharePct.Name = "txtOneRSharePct";
+            this.txtOneRSharePct.PasswordChar = '\0';
+            this.txtOneRSharePct.PrefixSuffixText = null;
+            this.txtOneRSharePct.ReadOnly = false;
+            this.txtOneRSharePct.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtOneRSharePct.SelectedText = "";
+            this.txtOneRSharePct.SelectionLength = 0;
+            this.txtOneRSharePct.SelectionStart = 0;
+            this.txtOneRSharePct.ShortcutsEnabled = true;
+            this.txtOneRSharePct.Size = new System.Drawing.Size(108, 36);
+            this.txtOneRSharePct.TabIndex = 5;
+            this.txtOneRSharePct.TabStop = false;
+            this.txtOneRSharePct.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtOneRSharePct.TrailingIcon = null;
+            this.txtOneRSharePct.UseAccent = false;
+            this.txtOneRSharePct.UseSystemPasswordChar = false;
+            this.txtOneRSharePct.UseTallSize = false;
+            // 
+            // chkDisableFirstTarget
+            // 
+            this.chkDisableFirstTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkDisableFirstTarget.AutoSize = true;
+            this.chkDisableFirstTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkDisableFirstTarget.Depth = 0;
+            this.chkDisableFirstTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(225, 11);
+            this.chkDisableFirstTarget.Margin = new System.Windows.Forms.Padding(0);
+            this.chkDisableFirstTarget.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkDisableFirstTarget.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
+            this.chkDisableFirstTarget.Ripple = true;
+            this.chkDisableFirstTarget.Size = new System.Drawing.Size(58, 37);
+            this.chkDisableFirstTarget.TabIndex = 4;
+            this.chkDisableFirstTarget.UseVisualStyleBackColor = false;
+            // 
+            // lblDisableFirstTarget
+            // 
+            this.lblDisableFirstTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblDisableFirstTarget.AutoSize = true;
+            this.lblDisableFirstTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblDisableFirstTarget.Depth = 0;
+            this.lblDisableFirstTarget.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDisableFirstTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblDisableFirstTarget.Location = new System.Drawing.Point(12, 21);
+            this.lblDisableFirstTarget.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDisableFirstTarget.Name = "lblDisableFirstTarget";
+            this.lblDisableFirstTarget.Size = new System.Drawing.Size(183, 19);
+            this.lblDisableFirstTarget.TabIndex = 3;
+            this.lblDisableFirstTarget.Text = "Disable 1st profit target %";
+            this.lblDisableFirstTarget.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard14
+            // 
+            this.materialCard14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard14.Controls.Add(this.chkAlwaysOnTop);
+            this.materialCard14.Controls.Add(this.lblAlwaysOnTop);
+            this.materialCard14.Depth = 0;
+            this.materialCard14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard14.Location = new System.Drawing.Point(468, 638);
+            this.materialCard14.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard14.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard14.Name = "materialCard14";
+            this.materialCard14.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard14.Size = new System.Drawing.Size(415, 60);
+            this.materialCard14.TabIndex = 26;
+            // 
+            // chkAlwaysOnTop
+            // 
+            this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkAlwaysOnTop.AutoSize = true;
+            this.chkAlwaysOnTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkAlwaysOnTop.Depth = 0;
+            this.chkAlwaysOnTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkAlwaysOnTop.Location = new System.Drawing.Point(337, 13);
+            this.chkAlwaysOnTop.Margin = new System.Windows.Forms.Padding(0);
+            this.chkAlwaysOnTop.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkAlwaysOnTop.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
+            this.chkAlwaysOnTop.Ripple = true;
+            this.chkAlwaysOnTop.Size = new System.Drawing.Size(58, 37);
+            this.chkAlwaysOnTop.TabIndex = 3;
+            this.chkAlwaysOnTop.UseVisualStyleBackColor = false;
+            // 
+            // lblAlwaysOnTop
+            // 
+            this.lblAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAlwaysOnTop.AutoSize = true;
+            this.lblAlwaysOnTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblAlwaysOnTop.Depth = 0;
+            this.lblAlwaysOnTop.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblAlwaysOnTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblAlwaysOnTop.Location = new System.Drawing.Point(12, 21);
+            this.lblAlwaysOnTop.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblAlwaysOnTop.Name = "lblAlwaysOnTop";
+            this.lblAlwaysOnTop.Size = new System.Drawing.Size(212, 19);
+            this.lblAlwaysOnTop.TabIndex = 2;
+            this.lblAlwaysOnTop.Text = "Trade windows always on top";
+            this.lblAlwaysOnTop.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard13
+            // 
+            this.materialCard13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard13.Controls.Add(this.chkCaptureSSOnOpen);
+            this.materialCard13.Controls.Add(this.lblCaptureFullScreenOnOpen);
+            this.materialCard13.Depth = 0;
+            this.materialCard13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard13.Location = new System.Drawing.Point(468, 573);
+            this.materialCard13.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard13.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard13.Name = "materialCard13";
+            this.materialCard13.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard13.Size = new System.Drawing.Size(415, 60);
+            this.materialCard13.TabIndex = 18;
+            // 
+            // chkCaptureSSOnOpen
+            // 
+            this.chkCaptureSSOnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkCaptureSSOnOpen.AutoSize = true;
+            this.chkCaptureSSOnOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkCaptureSSOnOpen.Depth = 0;
+            this.chkCaptureSSOnOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkCaptureSSOnOpen.Location = new System.Drawing.Point(337, 12);
+            this.chkCaptureSSOnOpen.Margin = new System.Windows.Forms.Padding(0);
+            this.chkCaptureSSOnOpen.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkCaptureSSOnOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkCaptureSSOnOpen.Name = "chkCaptureSSOnOpen";
+            this.chkCaptureSSOnOpen.Ripple = true;
+            this.chkCaptureSSOnOpen.Size = new System.Drawing.Size(58, 37);
+            this.chkCaptureSSOnOpen.TabIndex = 3;
+            this.chkCaptureSSOnOpen.UseVisualStyleBackColor = false;
+            // 
+            // lblCaptureFullScreenOnOpen
+            // 
+            this.lblCaptureFullScreenOnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblCaptureFullScreenOnOpen.AutoSize = true;
+            this.lblCaptureFullScreenOnOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblCaptureFullScreenOnOpen.Depth = 0;
+            this.lblCaptureFullScreenOnOpen.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblCaptureFullScreenOnOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblCaptureFullScreenOnOpen.Location = new System.Drawing.Point(12, 21);
+            this.lblCaptureFullScreenOnOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblCaptureFullScreenOnOpen.Name = "lblCaptureFullScreenOnOpen";
+            this.lblCaptureFullScreenOnOpen.Size = new System.Drawing.Size(196, 19);
+            this.lblCaptureFullScreenOnOpen.TabIndex = 2;
+            this.lblCaptureFullScreenOnOpen.Text = "Capture all screens on open";
+            this.lblCaptureFullScreenOnOpen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard12
+            // 
+            this.materialCard12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard12.Controls.Add(this.chkSendPrtScrOnOpen);
+            this.materialCard12.Controls.Add(this.lblSendAltPrtSc);
+            this.materialCard12.Depth = 0;
+            this.materialCard12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard12.Location = new System.Drawing.Point(468, 508);
+            this.materialCard12.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard12.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard12.Name = "materialCard12";
+            this.materialCard12.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard12.Size = new System.Drawing.Size(415, 60);
+            this.materialCard12.TabIndex = 18;
+            // 
+            // chkSendPrtScrOnOpen
+            // 
+            this.chkSendPrtScrOnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSendPrtScrOnOpen.AutoSize = true;
+            this.chkSendPrtScrOnOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkSendPrtScrOnOpen.Depth = 0;
+            this.chkSendPrtScrOnOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkSendPrtScrOnOpen.Location = new System.Drawing.Point(337, 12);
+            this.chkSendPrtScrOnOpen.Margin = new System.Windows.Forms.Padding(0);
+            this.chkSendPrtScrOnOpen.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkSendPrtScrOnOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkSendPrtScrOnOpen.Name = "chkSendPrtScrOnOpen";
+            this.chkSendPrtScrOnOpen.Ripple = true;
+            this.chkSendPrtScrOnOpen.Size = new System.Drawing.Size(58, 37);
+            this.chkSendPrtScrOnOpen.TabIndex = 3;
+            this.chkSendPrtScrOnOpen.UseVisualStyleBackColor = false;
+            // 
+            // lblSendAltPrtSc
+            // 
+            this.lblSendAltPrtSc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblSendAltPrtSc.AutoSize = true;
+            this.lblSendAltPrtSc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblSendAltPrtSc.Depth = 0;
+            this.lblSendAltPrtSc.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblSendAltPrtSc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSendAltPrtSc.Location = new System.Drawing.Point(12, 21);
+            this.lblSendAltPrtSc.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblSendAltPrtSc.Name = "lblSendAltPrtSc";
+            this.lblSendAltPrtSc.Size = new System.Drawing.Size(163, 19);
+            this.lblSendAltPrtSc.TabIndex = 2;
+            this.lblSendAltPrtSc.Text = "Send Alt-PrtSc on open";
+            this.lblSendAltPrtSc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard11
+            // 
+            this.materialCard11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard11.Controls.Add(this.chkShowPnL);
+            this.materialCard11.Controls.Add(this.lblShowPnL);
+            this.materialCard11.Depth = 0;
+            this.materialCard11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard11.Location = new System.Drawing.Point(468, 443);
+            this.materialCard11.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard11.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard11.Name = "materialCard11";
+            this.materialCard11.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard11.Size = new System.Drawing.Size(415, 60);
+            this.materialCard11.TabIndex = 25;
+            // 
+            // chkShowPnL
+            // 
+            this.chkShowPnL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkShowPnL.AutoSize = true;
+            this.chkShowPnL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkShowPnL.Depth = 0;
+            this.chkShowPnL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkShowPnL.Location = new System.Drawing.Point(337, 12);
+            this.chkShowPnL.Margin = new System.Windows.Forms.Padding(0);
+            this.chkShowPnL.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkShowPnL.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkShowPnL.Name = "chkShowPnL";
+            this.chkShowPnL.Ripple = true;
+            this.chkShowPnL.Size = new System.Drawing.Size(58, 37);
+            this.chkShowPnL.TabIndex = 3;
+            this.chkShowPnL.UseVisualStyleBackColor = false;
+            // 
+            // lblShowPnL
+            // 
+            this.lblShowPnL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblShowPnL.AutoSize = true;
+            this.lblShowPnL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblShowPnL.Depth = 0;
+            this.lblShowPnL.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblShowPnL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblShowPnL.Location = new System.Drawing.Point(12, 21);
+            this.lblShowPnL.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblShowPnL.Name = "lblShowPnL";
+            this.lblShowPnL.Size = new System.Drawing.Size(73, 19);
+            this.lblShowPnL.TabIndex = 2;
+            this.lblShowPnL.Text = "Show PnL";
+            this.lblShowPnL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard10
+            // 
+            this.materialCard10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard10.Controls.Add(this.chkAdjustRiskForMaxLoss);
+            this.materialCard10.Controls.Add(this.lblAdjustRiskNotExceedMaxLoss);
+            this.materialCard10.Depth = 0;
+            this.materialCard10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard10.Location = new System.Drawing.Point(21, 573);
+            this.materialCard10.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard10.Name = "materialCard10";
+            this.materialCard10.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard10.Size = new System.Drawing.Size(415, 60);
+            this.materialCard10.TabIndex = 24;
+            // 
+            // chkAdjustRiskForMaxLoss
+            // 
+            this.chkAdjustRiskForMaxLoss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkAdjustRiskForMaxLoss.AutoSize = true;
+            this.chkAdjustRiskForMaxLoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkAdjustRiskForMaxLoss.Depth = 0;
+            this.chkAdjustRiskForMaxLoss.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkAdjustRiskForMaxLoss.Location = new System.Drawing.Point(340, 13);
+            this.chkAdjustRiskForMaxLoss.Margin = new System.Windows.Forms.Padding(0);
+            this.chkAdjustRiskForMaxLoss.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkAdjustRiskForMaxLoss.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkAdjustRiskForMaxLoss.Name = "chkAdjustRiskForMaxLoss";
+            this.chkAdjustRiskForMaxLoss.Ripple = true;
+            this.chkAdjustRiskForMaxLoss.Size = new System.Drawing.Size(58, 37);
+            this.chkAdjustRiskForMaxLoss.TabIndex = 3;
+            this.chkAdjustRiskForMaxLoss.UseVisualStyleBackColor = false;
+            // 
+            // lblAdjustRiskNotExceedMaxLoss
+            // 
+            this.lblAdjustRiskNotExceedMaxLoss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAdjustRiskNotExceedMaxLoss.AutoSize = true;
+            this.lblAdjustRiskNotExceedMaxLoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblAdjustRiskNotExceedMaxLoss.Depth = 0;
+            this.lblAdjustRiskNotExceedMaxLoss.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblAdjustRiskNotExceedMaxLoss.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblAdjustRiskNotExceedMaxLoss.Location = new System.Drawing.Point(12, 21);
+            this.lblAdjustRiskNotExceedMaxLoss.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblAdjustRiskNotExceedMaxLoss.Name = "lblAdjustRiskNotExceedMaxLoss";
+            this.lblAdjustRiskNotExceedMaxLoss.Size = new System.Drawing.Size(241, 19);
+            this.lblAdjustRiskNotExceedMaxLoss.TabIndex = 2;
+            this.lblAdjustRiskNotExceedMaxLoss.Text = "Adjust risk to not exceed max loss";
+            this.lblAdjustRiskNotExceedMaxLoss.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard9
+            // 
+            this.materialCard9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard9.Controls.Add(this.chkPreventExceedMaxLoss);
+            this.materialCard9.Controls.Add(this.lblPreventRiskExceedMaxLoss);
+            this.materialCard9.Depth = 0;
+            this.materialCard9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard9.Location = new System.Drawing.Point(21, 508);
+            this.materialCard9.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard9.Name = "materialCard9";
+            this.materialCard9.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard9.Size = new System.Drawing.Size(415, 60);
+            this.materialCard9.TabIndex = 23;
+            // 
+            // chkPreventExceedMaxLoss
+            // 
+            this.chkPreventExceedMaxLoss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkPreventExceedMaxLoss.AutoSize = true;
+            this.chkPreventExceedMaxLoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkPreventExceedMaxLoss.Depth = 0;
+            this.chkPreventExceedMaxLoss.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkPreventExceedMaxLoss.Location = new System.Drawing.Point(340, 12);
+            this.chkPreventExceedMaxLoss.Margin = new System.Windows.Forms.Padding(0);
+            this.chkPreventExceedMaxLoss.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkPreventExceedMaxLoss.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkPreventExceedMaxLoss.Name = "chkPreventExceedMaxLoss";
+            this.chkPreventExceedMaxLoss.Ripple = true;
+            this.chkPreventExceedMaxLoss.Size = new System.Drawing.Size(58, 37);
+            this.chkPreventExceedMaxLoss.TabIndex = 3;
+            this.chkPreventExceedMaxLoss.UseVisualStyleBackColor = false;
+            // 
+            // lblPreventRiskExceedMaxLoss
+            // 
+            this.lblPreventRiskExceedMaxLoss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblPreventRiskExceedMaxLoss.AutoSize = true;
+            this.lblPreventRiskExceedMaxLoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblPreventRiskExceedMaxLoss.Depth = 0;
+            this.lblPreventRiskExceedMaxLoss.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblPreventRiskExceedMaxLoss.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblPreventRiskExceedMaxLoss.Location = new System.Drawing.Point(12, 21);
+            this.lblPreventRiskExceedMaxLoss.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblPreventRiskExceedMaxLoss.Name = "lblPreventRiskExceedMaxLoss";
+            this.lblPreventRiskExceedMaxLoss.Size = new System.Drawing.Size(226, 19);
+            this.lblPreventRiskExceedMaxLoss.TabIndex = 2;
+            this.lblPreventRiskExceedMaxLoss.Text = "Prevent risk exceeding max loss";
+            this.lblPreventRiskExceedMaxLoss.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMiscellaneous
+            // 
+            this.lblMiscellaneous.AutoSize = true;
+            this.lblMiscellaneous.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblMiscellaneous.Depth = 0;
+            this.lblMiscellaneous.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMiscellaneous.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMiscellaneous.Location = new System.Drawing.Point(468, 410);
+            this.lblMiscellaneous.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMiscellaneous.Name = "lblMiscellaneous";
+            this.lblMiscellaneous.Size = new System.Drawing.Size(103, 19);
+            this.lblMiscellaneous.TabIndex = 22;
+            this.lblMiscellaneous.Text = "Miscellaneous";
+            // 
+            // lblMaxLossProtection
+            // 
+            this.lblMaxLossProtection.AutoSize = true;
+            this.lblMaxLossProtection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblMaxLossProtection.Depth = 0;
+            this.lblMaxLossProtection.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMaxLossProtection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMaxLossProtection.Location = new System.Drawing.Point(21, 410);
+            this.lblMaxLossProtection.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMaxLossProtection.Name = "lblMaxLossProtection";
+            this.lblMaxLossProtection.Size = new System.Drawing.Size(140, 19);
+            this.lblMaxLossProtection.TabIndex = 21;
+            this.lblMaxLossProtection.Text = "Max loss protection";
+            // 
+            // materialCard8
+            // 
+            this.materialCard8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard8.Controls.Add(this.txtMaxLossLimit);
+            this.materialCard8.Controls.Add(this.chkMaxLossLimit);
+            this.materialCard8.Controls.Add(this.lblEnableMaxLossLimit);
+            this.materialCard8.Depth = 0;
+            this.materialCard8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard8.Location = new System.Drawing.Point(21, 443);
+            this.materialCard8.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard8.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard8.Name = "materialCard8";
+            this.materialCard8.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard8.Size = new System.Drawing.Size(415, 60);
+            this.materialCard8.TabIndex = 20;
+            // 
+            // txtMaxLossLimit
+            // 
+            this.txtMaxLossLimit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMaxLossLimit.AnimateReadOnly = false;
+            this.txtMaxLossLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtMaxLossLimit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtMaxLossLimit.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaxLossLimit.Depth = 0;
+            this.txtMaxLossLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtMaxLossLimit.HideSelection = true;
+            this.txtMaxLossLimit.Hint = "R value";
+            this.txtMaxLossLimit.LeadingIcon = null;
+            this.txtMaxLossLimit.Location = new System.Drawing.Point(291, 13);
+            this.txtMaxLossLimit.MaxLength = 32767;
+            this.txtMaxLossLimit.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtMaxLossLimit.Name = "txtMaxLossLimit";
+            this.txtMaxLossLimit.PasswordChar = '\0';
+            this.txtMaxLossLimit.PrefixSuffixText = null;
+            this.txtMaxLossLimit.ReadOnly = false;
+            this.txtMaxLossLimit.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMaxLossLimit.SelectedText = "";
+            this.txtMaxLossLimit.SelectionLength = 0;
+            this.txtMaxLossLimit.SelectionStart = 0;
+            this.txtMaxLossLimit.ShortcutsEnabled = true;
+            this.txtMaxLossLimit.Size = new System.Drawing.Size(108, 36);
+            this.txtMaxLossLimit.TabIndex = 5;
+            this.txtMaxLossLimit.TabStop = false;
+            this.txtMaxLossLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMaxLossLimit.TrailingIcon = null;
+            this.txtMaxLossLimit.UseAccent = false;
+            this.txtMaxLossLimit.UseSystemPasswordChar = false;
+            this.txtMaxLossLimit.UseTallSize = false;
+            // 
+            // chkMaxLossLimit
+            // 
+            this.chkMaxLossLimit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkMaxLossLimit.AutoSize = true;
+            this.chkMaxLossLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkMaxLossLimit.Depth = 0;
+            this.chkMaxLossLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkMaxLossLimit.Location = new System.Drawing.Point(225, 12);
+            this.chkMaxLossLimit.Margin = new System.Windows.Forms.Padding(0);
+            this.chkMaxLossLimit.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkMaxLossLimit.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkMaxLossLimit.Name = "chkMaxLossLimit";
+            this.chkMaxLossLimit.Ripple = true;
+            this.chkMaxLossLimit.Size = new System.Drawing.Size(58, 37);
+            this.chkMaxLossLimit.TabIndex = 4;
+            this.chkMaxLossLimit.UseVisualStyleBackColor = false;
+            // 
+            // lblEnableMaxLossLimit
+            // 
+            this.lblEnableMaxLossLimit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblEnableMaxLossLimit.AutoSize = true;
+            this.lblEnableMaxLossLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblEnableMaxLossLimit.Depth = 0;
+            this.lblEnableMaxLossLimit.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblEnableMaxLossLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblEnableMaxLossLimit.Location = new System.Drawing.Point(12, 21);
+            this.lblEnableMaxLossLimit.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblEnableMaxLossLimit.Name = "lblEnableMaxLossLimit";
+            this.lblEnableMaxLossLimit.Size = new System.Drawing.Size(208, 19);
+            this.lblEnableMaxLossLimit.TabIndex = 3;
+            this.lblEnableMaxLossLimit.Text = "Maximum loss limit (R) value";
+            this.lblEnableMaxLossLimit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard7
+            // 
+            this.materialCard7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard7.Controls.Add(this.txtMinRisk);
+            this.materialCard7.Controls.Add(this.lblMinRiskPerShare);
+            this.materialCard7.Depth = 0;
+            this.materialCard7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard7.Location = new System.Drawing.Point(21, 319);
+            this.materialCard7.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard7.Name = "materialCard7";
+            this.materialCard7.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard7.Size = new System.Drawing.Size(415, 60);
+            this.materialCard7.TabIndex = 18;
+            // 
+            // txtMinRisk
+            // 
+            this.txtMinRisk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMinRisk.AnimateReadOnly = false;
+            this.txtMinRisk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtMinRisk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtMinRisk.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMinRisk.Depth = 0;
+            this.txtMinRisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtMinRisk.HideSelection = true;
+            this.txtMinRisk.Hint = "Risk";
+            this.txtMinRisk.LeadingIcon = null;
+            this.txtMinRisk.Location = new System.Drawing.Point(291, 12);
+            this.txtMinRisk.MaxLength = 32767;
+            this.txtMinRisk.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtMinRisk.Name = "txtMinRisk";
+            this.txtMinRisk.PasswordChar = '\0';
+            this.txtMinRisk.PrefixSuffixText = null;
+            this.txtMinRisk.ReadOnly = false;
+            this.txtMinRisk.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMinRisk.SelectedText = "";
+            this.txtMinRisk.SelectionLength = 0;
+            this.txtMinRisk.SelectionStart = 0;
+            this.txtMinRisk.ShortcutsEnabled = true;
+            this.txtMinRisk.Size = new System.Drawing.Size(108, 36);
+            this.txtMinRisk.TabIndex = 3;
+            this.txtMinRisk.TabStop = false;
+            this.txtMinRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMinRisk.TrailingIcon = null;
+            this.txtMinRisk.UseAccent = false;
+            this.txtMinRisk.UseSystemPasswordChar = false;
+            this.txtMinRisk.UseTallSize = false;
+            // 
+            // lblMinRiskPerShare
+            // 
+            this.lblMinRiskPerShare.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblMinRiskPerShare.AutoSize = true;
+            this.lblMinRiskPerShare.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblMinRiskPerShare.Depth = 0;
+            this.lblMinRiskPerShare.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMinRiskPerShare.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMinRiskPerShare.Location = new System.Drawing.Point(12, 21);
+            this.lblMinRiskPerShare.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMinRiskPerShare.Name = "lblMinRiskPerShare";
+            this.lblMinRiskPerShare.Size = new System.Drawing.Size(167, 19);
+            this.lblMinRiskPerShare.TabIndex = 2;
+            this.lblMinRiskPerShare.Text = "Minimum risk per share";
+            this.lblMinRiskPerShare.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard6
+            // 
+            this.materialCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard6.Controls.Add(this.chkUseBidAskOcoCalc);
+            this.materialCard6.Controls.Add(this.lblBidAskCalc);
+            this.materialCard6.Depth = 0;
+            this.materialCard6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard6.Location = new System.Drawing.Point(21, 254);
+            this.materialCard6.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard6.Name = "materialCard6";
+            this.materialCard6.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard6.Size = new System.Drawing.Size(415, 60);
+            this.materialCard6.TabIndex = 19;
+            // 
+            // chkUseBidAskOcoCalc
+            // 
+            this.chkUseBidAskOcoCalc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkUseBidAskOcoCalc.AutoSize = true;
+            this.chkUseBidAskOcoCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkUseBidAskOcoCalc.Depth = 0;
+            this.chkUseBidAskOcoCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkUseBidAskOcoCalc.Location = new System.Drawing.Point(343, 12);
+            this.chkUseBidAskOcoCalc.Margin = new System.Windows.Forms.Padding(0);
+            this.chkUseBidAskOcoCalc.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkUseBidAskOcoCalc.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkUseBidAskOcoCalc.Name = "chkUseBidAskOcoCalc";
+            this.chkUseBidAskOcoCalc.Ripple = true;
+            this.chkUseBidAskOcoCalc.Size = new System.Drawing.Size(58, 37);
+            this.chkUseBidAskOcoCalc.TabIndex = 3;
+            this.chkUseBidAskOcoCalc.UseVisualStyleBackColor = false;
+            // 
+            // lblBidAskCalc
+            // 
+            this.lblBidAskCalc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblBidAskCalc.AutoSize = true;
+            this.lblBidAskCalc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblBidAskCalc.Depth = 0;
+            this.lblBidAskCalc.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblBidAskCalc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblBidAskCalc.Location = new System.Drawing.Point(12, 21);
+            this.lblBidAskCalc.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblBidAskCalc.Name = "lblBidAskCalc";
+            this.lblBidAskCalc.Size = new System.Drawing.Size(266, 19);
+            this.lblBidAskCalc.TabIndex = 2;
+            this.lblBidAskCalc.Text = "Use Bid/Ask OCO for risk calculations";
+            this.lblBidAskCalc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // materialCard5
+            // 
+            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard5.Controls.Add(this.lblTradeShares);
+            this.materialCard5.Controls.Add(this.txtMaxShares);
+            this.materialCard5.Controls.Add(this.chkTradeShares);
+            this.materialCard5.Depth = 0;
+            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard5.Location = new System.Drawing.Point(21, 189);
+            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard5.Name = "materialCard5";
+            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard5.Size = new System.Drawing.Size(415, 60);
+            this.materialCard5.TabIndex = 18;
+            // 
+            // lblTradeShares
+            // 
+            this.lblTradeShares.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTradeShares.AutoSize = true;
+            this.lblTradeShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblTradeShares.Depth = 0;
+            this.lblTradeShares.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTradeShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTradeShares.Location = new System.Drawing.Point(12, 20);
+            this.lblTradeShares.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblTradeShares.Name = "lblTradeShares";
+            this.lblTradeShares.Size = new System.Drawing.Size(156, 19);
+            this.lblTradeShares.TabIndex = 14;
+            this.lblTradeShares.Text = "Trade fixed share size";
+            this.lblTradeShares.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtMaxShares
+            // 
+            this.txtMaxShares.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMaxShares.AnimateReadOnly = false;
+            this.txtMaxShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtMaxShares.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtMaxShares.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaxShares.Depth = 0;
+            this.txtMaxShares.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtMaxShares.HideSelection = true;
+            this.txtMaxShares.Hint = "Shares";
+            this.txtMaxShares.LeadingIcon = null;
+            this.txtMaxShares.Location = new System.Drawing.Point(290, 12);
+            this.txtMaxShares.MaxLength = 32767;
+            this.txtMaxShares.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtMaxShares.Name = "txtMaxShares";
+            this.txtMaxShares.PasswordChar = '\0';
+            this.txtMaxShares.PrefixSuffixText = null;
+            this.txtMaxShares.ReadOnly = false;
+            this.txtMaxShares.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMaxShares.SelectedText = "";
+            this.txtMaxShares.SelectionLength = 0;
+            this.txtMaxShares.SelectionStart = 0;
+            this.txtMaxShares.ShortcutsEnabled = true;
+            this.txtMaxShares.Size = new System.Drawing.Size(108, 36);
+            this.txtMaxShares.TabIndex = 16;
+            this.txtMaxShares.TabStop = false;
+            this.txtMaxShares.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMaxShares.TrailingIcon = null;
+            this.txtMaxShares.UseAccent = false;
+            this.txtMaxShares.UseSystemPasswordChar = false;
+            this.txtMaxShares.UseTallSize = false;
+            // 
+            // chkTradeShares
+            // 
+            this.chkTradeShares.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkTradeShares.AutoSize = true;
+            this.chkTradeShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkTradeShares.Depth = 0;
+            this.chkTradeShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkTradeShares.Location = new System.Drawing.Point(224, 12);
+            this.chkTradeShares.Margin = new System.Windows.Forms.Padding(0);
+            this.chkTradeShares.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkTradeShares.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkTradeShares.Name = "chkTradeShares";
+            this.chkTradeShares.Ripple = true;
+            this.chkTradeShares.Size = new System.Drawing.Size(58, 37);
+            this.chkTradeShares.TabIndex = 15;
+            this.chkTradeShares.UseVisualStyleBackColor = false;
+            // 
+            // materialCard4
+            // 
+            this.materialCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard4.Controls.Add(this.chkMoveLimitOnFill);
+            this.materialCard4.Controls.Add(this.lblMoveLimitOnFill);
+            this.materialCard4.Depth = 0;
+            this.materialCard4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard4.Location = new System.Drawing.Point(464, 189);
+            this.materialCard4.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard4.Name = "materialCard4";
+            this.materialCard4.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard4.Size = new System.Drawing.Size(415, 60);
+            this.materialCard4.TabIndex = 17;
+            // 
+            // chkMoveLimitOnFill
+            // 
+            this.chkMoveLimitOnFill.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkMoveLimitOnFill.AutoSize = true;
+            this.chkMoveLimitOnFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.chkMoveLimitOnFill.Depth = 0;
+            this.chkMoveLimitOnFill.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.chkMoveLimitOnFill.Location = new System.Drawing.Point(341, 12);
+            this.chkMoveLimitOnFill.Margin = new System.Windows.Forms.Padding(0);
+            this.chkMoveLimitOnFill.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.chkMoveLimitOnFill.MouseState = MaterialSkin.MouseState.HOVER;
+            this.chkMoveLimitOnFill.Name = "chkMoveLimitOnFill";
+            this.chkMoveLimitOnFill.Ripple = true;
+            this.chkMoveLimitOnFill.Size = new System.Drawing.Size(58, 37);
+            this.chkMoveLimitOnFill.TabIndex = 3;
+            this.chkMoveLimitOnFill.UseVisualStyleBackColor = false;
+            // 
+            // lblMoveLimitOnFill
+            // 
+            this.lblMoveLimitOnFill.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblMoveLimitOnFill.AutoSize = true;
+            this.lblMoveLimitOnFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblMoveLimitOnFill.Depth = 0;
+            this.lblMoveLimitOnFill.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMoveLimitOnFill.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMoveLimitOnFill.Location = new System.Drawing.Point(12, 21);
+            this.lblMoveLimitOnFill.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMoveLimitOnFill.Name = "lblMoveLimitOnFill";
+            this.lblMoveLimitOnFill.Size = new System.Drawing.Size(119, 19);
+            this.lblMoveLimitOnFill.TabIndex = 2;
+            this.lblMoveLimitOnFill.Text = "Move limit on fill";
+            this.lblMoveLimitOnFill.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblPositionManagement
+            // 
+            this.lblPositionManagement.AutoSize = true;
+            this.lblPositionManagement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblPositionManagement.Depth = 0;
+            this.lblPositionManagement.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblPositionManagement.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblPositionManagement.Location = new System.Drawing.Point(464, 91);
+            this.lblPositionManagement.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblPositionManagement.Name = "lblPositionManagement";
+            this.lblPositionManagement.Size = new System.Drawing.Size(157, 19);
+            this.lblPositionManagement.TabIndex = 13;
+            this.lblPositionManagement.Text = "Position management";
+            // 
+            // lblSettings
+            // 
+            this.lblSettings.AutoSize = true;
+            this.lblSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblSettings.Depth = 0;
+            this.lblSettings.Font = new System.Drawing.Font("Roboto", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblSettings.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
+            this.lblSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSettings.Location = new System.Drawing.Point(21, 21);
+            this.lblSettings.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblSettings.Name = "lblSettings";
+            this.lblSettings.Size = new System.Drawing.Size(176, 58);
+            this.lblSettings.TabIndex = 11;
+            this.lblSettings.Text = "Settings";
+            // 
+            // materialLabel10
+            // 
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel10.Location = new System.Drawing.Point(21, 91);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(31, 19);
+            this.materialLabel10.TabIndex = 12;
+            this.materialLabel10.Text = "Risk";
+            // 
+            // materialCard3
+            // 
+            this.materialCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard3.Controls.Add(this.txtMaxRisk);
+            this.materialCard3.Controls.Add(this.lblMaxRisk);
+            this.materialCard3.Depth = 0;
+            this.materialCard3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard3.Location = new System.Drawing.Point(21, 124);
+            this.materialCard3.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard3.Name = "materialCard3";
+            this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard3.Size = new System.Drawing.Size(415, 60);
+            this.materialCard3.TabIndex = 3;
+            // 
+            // txtMaxRisk
+            // 
+            this.txtMaxRisk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMaxRisk.AnimateReadOnly = false;
+            this.txtMaxRisk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtMaxRisk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtMaxRisk.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaxRisk.Depth = 0;
+            this.txtMaxRisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtMaxRisk.HideSelection = true;
+            this.txtMaxRisk.Hint = "Risk";
+            this.txtMaxRisk.LeadingIcon = null;
+            this.txtMaxRisk.Location = new System.Drawing.Point(290, 12);
+            this.txtMaxRisk.MaxLength = 32767;
+            this.txtMaxRisk.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtMaxRisk.Name = "txtMaxRisk";
+            this.txtMaxRisk.PasswordChar = '\0';
+            this.txtMaxRisk.PrefixSuffixText = null;
+            this.txtMaxRisk.ReadOnly = false;
+            this.txtMaxRisk.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMaxRisk.SelectedText = "";
+            this.txtMaxRisk.SelectionLength = 0;
+            this.txtMaxRisk.SelectionStart = 0;
+            this.txtMaxRisk.ShortcutsEnabled = true;
+            this.txtMaxRisk.Size = new System.Drawing.Size(108, 36);
+            this.txtMaxRisk.TabIndex = 1;
+            this.txtMaxRisk.TabStop = false;
+            this.txtMaxRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMaxRisk.TrailingIcon = null;
+            this.txtMaxRisk.UseAccent = false;
+            this.txtMaxRisk.UseSystemPasswordChar = false;
+            this.txtMaxRisk.UseTallSize = false;
+            // 
+            // lblMaxRisk
+            // 
+            this.lblMaxRisk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblMaxRisk.AutoSize = true;
+            this.lblMaxRisk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblMaxRisk.Depth = 0;
+            this.lblMaxRisk.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMaxRisk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMaxRisk.Location = new System.Drawing.Point(12, 20);
+            this.lblMaxRisk.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMaxRisk.Name = "lblMaxRisk";
+            this.lblMaxRisk.Size = new System.Drawing.Size(148, 19);
+            this.lblMaxRisk.TabIndex = 0;
+            this.lblMaxRisk.Text = "Default risk per trade";
+            this.lblMaxRisk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tpAccountSettings
             // 
@@ -436,9 +1515,10 @@
             this.tpAccountSettings.Controls.Add(this.materialLabel3);
             this.tpAccountSettings.Controls.Add(this.materialCard1);
             this.tpAccountSettings.Controls.Add(this.lblAccountSettings);
-            this.tpAccountSettings.Location = new System.Drawing.Point(4, 28);
+            this.tpAccountSettings.ImageKey = "account-24.png";
+            this.tpAccountSettings.Location = new System.Drawing.Point(4, 31);
             this.tpAccountSettings.Name = "tpAccountSettings";
-            this.tpAccountSettings.Size = new System.Drawing.Size(946, 861);
+            this.tpAccountSettings.Size = new System.Drawing.Size(946, 858);
             this.tpAccountSettings.TabIndex = 3;
             this.tpAccountSettings.Text = "Account Settings";
             this.tpAccountSettings.Enter += new System.EventHandler(this.tpAccountSettings_Enter);
@@ -452,7 +1532,7 @@
             this.btnClearCreds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnClearCreds.HighEmphasis = true;
             this.btnClearCreds.Icon = null;
-            this.btnClearCreds.Location = new System.Drawing.Point(20, 784);
+            this.btnClearCreds.Location = new System.Drawing.Point(641, 34);
             this.btnClearCreds.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnClearCreds.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnClearCreds.Name = "btnClearCreds";
@@ -474,7 +1554,7 @@
             this.btnSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSave.HighEmphasis = true;
             this.btnSave.Icon = null;
-            this.btnSave.Location = new System.Drawing.Point(868, 784);
+            this.btnSave.Location = new System.Drawing.Point(815, 34);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSave.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSave.Name = "btnSave";
@@ -505,7 +1585,7 @@
             this.materialCard2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
             this.materialCard2.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard2.Size = new System.Drawing.Size(911, 275);
+            this.materialCard2.Size = new System.Drawing.Size(858, 275);
             this.materialCard2.TabIndex = 22;
             // 
             // materialLabel9
@@ -517,7 +1597,7 @@
             this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel9.HighEmphasis = true;
-            this.materialLabel9.Location = new System.Drawing.Point(344, 240);
+            this.materialLabel9.Location = new System.Drawing.Point(298, 247);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
             this.materialLabel9.Size = new System.Drawing.Size(545, 14);
@@ -532,7 +1612,7 @@
             this.chkUseSimAccount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chkUseSimAccount.Depth = 0;
             this.chkUseSimAccount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.chkUseSimAccount.Location = new System.Drawing.Point(12, 228);
+            this.chkUseSimAccount.Location = new System.Drawing.Point(20, 224);
             this.chkUseSimAccount.Margin = new System.Windows.Forms.Padding(0);
             this.chkUseSimAccount.MouseLocation = new System.Drawing.Point(-1, -1);
             this.chkUseSimAccount.MouseState = MaterialSkin.MouseState.HOVER;
@@ -550,6 +1630,7 @@
             this.txtClientSecret.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.txtClientSecret.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtClientSecret.Depth = 0;
+            this.txtClientSecret.Enabled = false;
             this.txtClientSecret.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtClientSecret.HideSelection = true;
             this.txtClientSecret.LeadingIcon = null;
@@ -557,7 +1638,7 @@
             this.txtClientSecret.MaxLength = 32767;
             this.txtClientSecret.MouseState = MaterialSkin.MouseState.OUT;
             this.txtClientSecret.Name = "txtClientSecret";
-            this.txtClientSecret.PasswordChar = '*';
+            this.txtClientSecret.PasswordChar = '●';
             this.txtClientSecret.PrefixSuffixText = null;
             this.txtClientSecret.ReadOnly = false;
             this.txtClientSecret.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -565,12 +1646,13 @@
             this.txtClientSecret.SelectionLength = 0;
             this.txtClientSecret.SelectionStart = 0;
             this.txtClientSecret.ShortcutsEnabled = true;
-            this.txtClientSecret.Size = new System.Drawing.Size(865, 48);
+            this.txtClientSecret.Size = new System.Drawing.Size(819, 48);
             this.txtClientSecret.TabIndex = 23;
             this.txtClientSecret.TabStop = false;
             this.txtClientSecret.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtClientSecret.TrailingIcon = null;
-            this.txtClientSecret.UseSystemPasswordChar = false;
+            this.txtClientSecret.UseAccent = false;
+            this.txtClientSecret.UseSystemPasswordChar = true;
             // 
             // materialLabel8
             // 
@@ -593,6 +1675,7 @@
             this.txtClientId.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.txtClientId.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtClientId.Depth = 0;
+            this.txtClientId.Enabled = false;
             this.txtClientId.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtClientId.HideSelection = true;
             this.txtClientId.LeadingIcon = null;
@@ -600,7 +1683,7 @@
             this.txtClientId.MaxLength = 32767;
             this.txtClientId.MouseState = MaterialSkin.MouseState.OUT;
             this.txtClientId.Name = "txtClientId";
-            this.txtClientId.PasswordChar = '*';
+            this.txtClientId.PasswordChar = '●';
             this.txtClientId.PrefixSuffixText = null;
             this.txtClientId.ReadOnly = false;
             this.txtClientId.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -608,12 +1691,13 @@
             this.txtClientId.SelectionLength = 0;
             this.txtClientId.SelectionStart = 0;
             this.txtClientId.ShortcutsEnabled = true;
-            this.txtClientId.Size = new System.Drawing.Size(865, 48);
+            this.txtClientId.Size = new System.Drawing.Size(819, 48);
             this.txtClientId.TabIndex = 25;
             this.txtClientId.TabStop = false;
             this.txtClientId.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtClientId.TrailingIcon = null;
-            this.txtClientId.UseSystemPasswordChar = false;
+            this.txtClientId.UseAccent = false;
+            this.txtClientId.UseSystemPasswordChar = true;
             // 
             // chkTsEnableEquity
             // 
@@ -622,7 +1706,7 @@
             this.chkTsEnableEquity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chkTsEnableEquity.Depth = 0;
             this.chkTsEnableEquity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.chkTsEnableEquity.Location = new System.Drawing.Point(831, 14);
+            this.chkTsEnableEquity.Location = new System.Drawing.Point(783, 14);
             this.chkTsEnableEquity.Margin = new System.Windows.Forms.Padding(0);
             this.chkTsEnableEquity.MouseLocation = new System.Drawing.Point(-1, -1);
             this.chkTsEnableEquity.MouseState = MaterialSkin.MouseState.HOVER;
@@ -654,7 +1738,7 @@
             this.pictureBox2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pictureBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pictureBox2.Image = global::TdInterface.Properties.Resources.Logo_TS;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 16);
+            this.pictureBox2.Location = new System.Drawing.Point(0, 14);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(248, 29);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -704,7 +1788,7 @@
             this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard1.Size = new System.Drawing.Size(911, 180);
+            this.materialCard1.Size = new System.Drawing.Size(858, 180);
             this.materialCard1.TabIndex = 18;
             // 
             // materialLabel6
@@ -716,7 +1800,7 @@
             this.materialLabel6.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel6.HighEmphasis = true;
-            this.materialLabel6.Location = new System.Drawing.Point(305, 151);
+            this.materialLabel6.Location = new System.Drawing.Point(272, 152);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
             this.materialLabel6.Size = new System.Drawing.Size(569, 14);
@@ -732,7 +1816,7 @@
             this.chkTdaEnableEquity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chkTdaEnableEquity.Depth = 0;
             this.chkTdaEnableEquity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.chkTdaEnableEquity.Location = new System.Drawing.Point(831, 14);
+            this.chkTdaEnableEquity.Location = new System.Drawing.Point(783, 14);
             this.chkTdaEnableEquity.Margin = new System.Windows.Forms.Padding(0);
             this.chkTdaEnableEquity.MouseLocation = new System.Drawing.Point(-1, -1);
             this.chkTdaEnableEquity.MouseState = MaterialSkin.MouseState.HOVER;
@@ -750,7 +1834,7 @@
             this.pictureBox1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pictureBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pictureBox1.Image = global::TdInterface.Properties.Resources.Logo_TDA;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(0, -1);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(182, 62);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -778,6 +1862,7 @@
             this.txtConsumerKey.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.txtConsumerKey.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtConsumerKey.Depth = 0;
+            this.txtConsumerKey.Enabled = false;
             this.txtConsumerKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtConsumerKey.HideSelection = true;
             this.txtConsumerKey.Hint = "Consumer Key";
@@ -786,7 +1871,7 @@
             this.txtConsumerKey.MaxLength = 32767;
             this.txtConsumerKey.MouseState = MaterialSkin.MouseState.OUT;
             this.txtConsumerKey.Name = "txtConsumerKey";
-            this.txtConsumerKey.PasswordChar = '*';
+            this.txtConsumerKey.PasswordChar = '●';
             this.txtConsumerKey.PrefixSuffixText = null;
             this.txtConsumerKey.ReadOnly = false;
             this.txtConsumerKey.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -794,12 +1879,13 @@
             this.txtConsumerKey.SelectionLength = 0;
             this.txtConsumerKey.SelectionStart = 0;
             this.txtConsumerKey.ShortcutsEnabled = true;
-            this.txtConsumerKey.Size = new System.Drawing.Size(869, 48);
+            this.txtConsumerKey.Size = new System.Drawing.Size(823, 48);
             this.txtConsumerKey.TabIndex = 17;
             this.txtConsumerKey.TabStop = false;
             this.txtConsumerKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtConsumerKey.TrailingIcon = null;
-            this.txtConsumerKey.UseSystemPasswordChar = false;
+            this.txtConsumerKey.UseAccent = false;
+            this.txtConsumerKey.UseSystemPasswordChar = true;
             // 
             // lblAccountSettings
             // 
@@ -825,14 +1911,16 @@
             this.tpAbout.Controls.Add(this.materialLabel1);
             this.tpAbout.Controls.Add(this.lblVersion);
             this.tpAbout.Controls.Add(this.pbAppLogo);
-            this.tpAbout.Location = new System.Drawing.Point(4, 28);
+            this.tpAbout.ImageKey = "about-24.png";
+            this.tpAbout.Location = new System.Drawing.Point(4, 31);
             this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Size = new System.Drawing.Size(946, 836);
+            this.tpAbout.Size = new System.Drawing.Size(946, 858);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
             // 
             // btnCheckForUpdates
             // 
+            this.btnCheckForUpdates.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnCheckForUpdates.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnCheckForUpdates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnCheckForUpdates.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
@@ -840,7 +1928,7 @@
             this.btnCheckForUpdates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCheckForUpdates.HighEmphasis = true;
             this.btnCheckForUpdates.Icon = null;
-            this.btnCheckForUpdates.Location = new System.Drawing.Point(394, 313);
+            this.btnCheckForUpdates.Location = new System.Drawing.Point(389, 400);
             this.btnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnCheckForUpdates.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCheckForUpdates.Name = "btnCheckForUpdates";
@@ -856,16 +1944,17 @@
             // materialLabel2
             // 
             this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.materialLabel2.AutoSize = true;
             this.materialLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(358, 262);
+            this.materialLabel2.Location = new System.Drawing.Point(296, 500);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(231, 45);
+            this.materialLabel2.Size = new System.Drawing.Size(354, 19);
             this.materialLabel2.TabIndex = 14;
-            this.materialLabel2.Text = "Copyright 2022 - 2023, EZTM\r\nAll Rights Reserved.";
+            this.materialLabel2.Text = "Copyright 2022 - 2023, EZTM. All Rights Reserved.";
             this.materialLabel2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // mbtnGitHub
@@ -878,7 +1967,7 @@
             this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.mbtnGitHub.HighEmphasis = false;
             this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
-            this.mbtnGitHub.Location = new System.Drawing.Point(429, 195);
+            this.mbtnGitHub.Location = new System.Drawing.Point(429, 300);
             this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
             this.mbtnGitHub.Name = "mbtnGitHub";
@@ -897,13 +1986,13 @@
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H4;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(333, 99);
+            this.materialLabel1.Location = new System.Drawing.Point(277, 100);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(280, 41);
+            this.materialLabel1.Size = new System.Drawing.Size(392, 58);
             this.materialLabel1.TabIndex = 12;
             this.materialLabel1.Text = "EZ Trade Manager";
             // 
@@ -913,12 +2002,13 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblVersion.Depth = 0;
-            this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblVersion.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblVersion.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(422, 150);
+            this.lblVersion.Location = new System.Drawing.Point(410, 200);
             this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(100, 19);
+            this.lblVersion.Size = new System.Drawing.Size(127, 24);
             this.lblVersion.TabIndex = 11;
             this.lblVersion.Text = "Version: #.#.#";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -937,22 +2027,93 @@
             this.pbAppLogo.TabIndex = 5;
             this.pbAppLogo.TabStop = false;
             // 
+            // tpScreenshots
+            // 
+            this.tpScreenshots.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpScreenshots.ImageKey = "screenshot-24.png";
+            this.tpScreenshots.Location = new System.Drawing.Point(4, 31);
+            this.tpScreenshots.Name = "tpScreenshots";
+            this.tpScreenshots.Size = new System.Drawing.Size(946, 858);
+            this.tpScreenshots.TabIndex = 4;
+            this.tpScreenshots.Text = "Screenshots";
+            this.tpScreenshots.Enter += new System.EventHandler(this.tpScreenshots_Enter);
+            // 
+            // tpLogs
+            // 
+            this.tpLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpLogs.ImageKey = "logs-24.png";
+            this.tpLogs.Location = new System.Drawing.Point(4, 31);
+            this.tpLogs.Name = "tpLogs";
+            this.tpLogs.Size = new System.Drawing.Size(946, 858);
+            this.tpLogs.TabIndex = 5;
+            this.tpLogs.Text = "Logs";
+            this.tpLogs.Enter += new System.EventHandler(this.tpLogs_Enter);
+            // 
+            // ilMenuIcons
+            // 
+            this.ilMenuIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ilMenuIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilMenuIcons.ImageStream")));
+            this.ilMenuIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilMenuIcons.Images.SetKeyName(0, "update_available-24.png");
+            this.ilMenuIcons.Images.SetKeyName(1, "update-24.png");
+            this.ilMenuIcons.Images.SetKeyName(2, "about-24.png");
+            this.ilMenuIcons.Images.SetKeyName(3, "settings-24.png");
+            this.ilMenuIcons.Images.SetKeyName(4, "account-24.png");
+            this.ilMenuIcons.Images.SetKeyName(5, "home-24.png");
+            this.ilMenuIcons.Images.SetKeyName(6, "screenshot-24.png");
+            this.ilMenuIcons.Images.SetKeyName(7, "logs-24.png");
+            // 
             // MasterForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(960, 960);
             this.Controls.Add(this.mtcMasterForm);
+            this.DrawerAutoShow = true;
+            this.DrawerHighlightWithAccent = false;
+            this.DrawerShowIconsWhenHidden = true;
             this.DrawerTabControl = this.mtcMasterForm;
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.MaximumSize = new System.Drawing.Size(960, 960);
             this.Name = "MasterForm";
             this.Sizable = false;
-            this.Text = "EZTM";
+            this.Text = "EZ Trade Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MasterForm_FormClosing);
             this.Load += new System.EventHandler(this.MasterForm_Load);
             this.mtcMasterForm.ResumeLayout(false);
             this.tpHome.ResumeLayout(false);
             this.tpHome.PerformLayout();
+            this.tpSettings.ResumeLayout(false);
+            this.tpSettings.PerformLayout();
+            this.materialCard17.ResumeLayout(false);
+            this.materialCard17.PerformLayout();
+            this.materialCard16.ResumeLayout(false);
+            this.materialCard16.PerformLayout();
+            this.materialCard15.ResumeLayout(false);
+            this.materialCard15.PerformLayout();
+            this.materialCard14.ResumeLayout(false);
+            this.materialCard14.PerformLayout();
+            this.materialCard13.ResumeLayout(false);
+            this.materialCard13.PerformLayout();
+            this.materialCard12.ResumeLayout(false);
+            this.materialCard12.PerformLayout();
+            this.materialCard11.ResumeLayout(false);
+            this.materialCard11.PerformLayout();
+            this.materialCard10.ResumeLayout(false);
+            this.materialCard10.PerformLayout();
+            this.materialCard9.ResumeLayout(false);
+            this.materialCard9.PerformLayout();
+            this.materialCard8.ResumeLayout(false);
+            this.materialCard8.PerformLayout();
+            this.materialCard7.ResumeLayout(false);
+            this.materialCard7.PerformLayout();
+            this.materialCard6.ResumeLayout(false);
+            this.materialCard6.PerformLayout();
+            this.materialCard5.ResumeLayout(false);
+            this.materialCard5.PerformLayout();
+            this.materialCard4.ResumeLayout(false);
+            this.materialCard4.PerformLayout();
+            this.materialCard3.ResumeLayout(false);
+            this.materialCard3.PerformLayout();
             this.tpAccountSettings.ResumeLayout(false);
             this.tpAccountSettings.PerformLayout();
             this.materialCard2.ResumeLayout(false);
@@ -990,7 +2151,6 @@
         private System.Windows.Forms.Label lblTools;
         private System.Windows.Forms.Label lblTradeLine;
         private System.Windows.Forms.Label lblTrade;
-        private System.Windows.Forms.Button btnScreenshots;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
         private System.Windows.Forms.TabPage tpHome;
         private System.Windows.Forms.TabPage tpSettings;
@@ -1022,5 +2182,62 @@
         private MaterialSkin.Controls.MaterialButton btnClearCreds;
         private MaterialSkin.Controls.MaterialButton btnSave;
         private MaterialSkin.Controls.MaterialButton btnCheckForUpdates;
+        private System.Windows.Forms.ImageList ilMenuIcons;
+        private MaterialSkin.Controls.MaterialCard materialCard3;
+        private MaterialSkin.Controls.MaterialTextBox2 txtMaxRisk;
+        private MaterialSkin.Controls.MaterialLabel lblMaxRisk;
+        private MaterialSkin.Controls.MaterialLabel lblPositionManagement;
+        private MaterialSkin.Controls.MaterialLabel lblSettings;
+        private MaterialSkin.Controls.MaterialLabel materialLabel10;
+        private MaterialSkin.Controls.MaterialCard materialCard5;
+        private MaterialSkin.Controls.MaterialLabel lblTradeShares;
+        private MaterialSkin.Controls.MaterialTextBox2 txtMaxShares;
+        private MaterialSkin.Controls.MaterialSwitch chkTradeShares;
+        private MaterialSkin.Controls.MaterialCard materialCard4;
+        private MaterialSkin.Controls.MaterialCard materialCard8;
+        private MaterialSkin.Controls.MaterialCard materialCard7;
+        private MaterialSkin.Controls.MaterialCard materialCard6;
+        private MaterialSkin.Controls.MaterialCard materialCard9;
+        private MaterialSkin.Controls.MaterialLabel lblMiscellaneous;
+        private MaterialSkin.Controls.MaterialLabel lblMaxLossProtection;
+        private MaterialSkin.Controls.MaterialCard materialCard17;
+        private MaterialSkin.Controls.MaterialCard materialCard16;
+        private MaterialSkin.Controls.MaterialCard materialCard15;
+        private MaterialSkin.Controls.MaterialCard materialCard14;
+        private MaterialSkin.Controls.MaterialCard materialCard13;
+        private MaterialSkin.Controls.MaterialCard materialCard12;
+        private MaterialSkin.Controls.MaterialCard materialCard11;
+        private MaterialSkin.Controls.MaterialCard materialCard10;
+        private MaterialSkin.Controls.MaterialSwitch chkUseBidAskOcoCalc;
+        private MaterialSkin.Controls.MaterialLabel lblBidAskCalc;
+        private MaterialSkin.Controls.MaterialTextBox2 txtMinRisk;
+        private MaterialSkin.Controls.MaterialLabel lblMinRiskPerShare;
+        private MaterialSkin.Controls.MaterialTextBox2 txtMaxLossLimit;
+        private MaterialSkin.Controls.MaterialSwitch chkMaxLossLimit;
+        private MaterialSkin.Controls.MaterialLabel lblEnableMaxLossLimit;
+        private MaterialSkin.Controls.MaterialSwitch chkPreventExceedMaxLoss;
+        private MaterialSkin.Controls.MaterialLabel lblPreventRiskExceedMaxLoss;
+        private MaterialSkin.Controls.MaterialSwitch chkAdjustRiskForMaxLoss;
+        private MaterialSkin.Controls.MaterialLabel lblAdjustRiskNotExceedMaxLoss;
+        private MaterialSkin.Controls.MaterialTextBox2 txtOneRSharePct;
+        private MaterialSkin.Controls.MaterialSwitch chkDisableFirstTarget;
+        private MaterialSkin.Controls.MaterialLabel lblDisableFirstTarget;
+        private MaterialSkin.Controls.MaterialSwitch chkMoveLimitOnFill;
+        private MaterialSkin.Controls.MaterialLabel lblMoveLimitOnFill;
+        private MaterialSkin.Controls.MaterialSwitch chkReduceStopOnClose;
+        private MaterialSkin.Controls.MaterialLabel lblReduceStopOnClose;
+        private MaterialSkin.Controls.MaterialTextBox2 txtDefaultLimitOffset;
+        private MaterialSkin.Controls.MaterialLabel lblDefaultLimitOffset;
+        private MaterialSkin.Controls.MaterialSwitch chkShowPnL;
+        private MaterialSkin.Controls.MaterialLabel lblShowPnL;
+        private MaterialSkin.Controls.MaterialSwitch chkSendPrtScrOnOpen;
+        private MaterialSkin.Controls.MaterialLabel lblSendAltPrtSc;
+        private MaterialSkin.Controls.MaterialSwitch chkCaptureSSOnOpen;
+        private MaterialSkin.Controls.MaterialLabel lblCaptureFullScreenOnOpen;
+        private MaterialSkin.Controls.MaterialSwitch chkAlwaysOnTop;
+        private MaterialSkin.Controls.MaterialLabel lblAlwaysOnTop;
+        private MaterialSkin.Controls.MaterialButton btnSettingsSave;
+        private System.Windows.Forms.TabPage tpScreenshots;
+        private System.Windows.Forms.TabPage tpLogs;
     }
 }

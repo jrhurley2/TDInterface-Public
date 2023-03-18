@@ -72,8 +72,7 @@ namespace TdInterface.Tda
         {
             _userPrincipal = userPrincipals;
 
-            string currentPath = Directory.GetCurrentDirectory();
-            string replayFolder = Path.Combine(currentPath, "replays");
+            string replayFolder = Program.ReplayFolder;
             if (!Directory.Exists(replayFolder))
                 Directory.CreateDirectory(replayFolder);
 

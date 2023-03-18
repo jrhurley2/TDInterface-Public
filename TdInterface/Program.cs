@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -36,11 +37,28 @@ namespace TdInterface
             services.AddSingleton<MasterForm>();
         }
 
-        public static string GetAppVersion()
+        public static string AppVersion
         {
-            var versionInfo = Assembly.GetExecutingAssembly().GetName().Version;
-            return $"{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}";
+            get
+            {
+                var versionInfo = Assembly.GetExecutingAssembly().GetName().Version;
+                return $"{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}";
+            }
         }
 
+        public static string LogFolder
+        {
+            get
+            {
+                return Path.Combine(Directory.GetCurrentDirectory(), "logs");
+            }
+        }
+        public static string ReplayFolder
+        {
+            get
+            {
+                return Path.Combine(Directory.GetCurrentDirectory(), "replays");
+            }
+        }
     }
 }

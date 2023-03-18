@@ -229,7 +229,7 @@ namespace TdInterface
                     if (tagName != null)
                     {
                         var latestVersion = new Version(jsonNode["tag_name"].ToString());
-                        var currentVersion = new Version(Program.GetAppVersion());
+                        var currentVersion = new Version(Program.AppVersion);
                         return latestVersion > currentVersion;
                     }
                 }
@@ -244,15 +244,15 @@ namespace TdInterface
 
         public static void OpenAppOnGitHub()
         {
-            openWebUrl(Resources.githubProjectURL);
+            OpenWebUrl(Resources.githubProjectURL);
         }
 
         public static void OpenAppLatestReleaseOnGitHub()
         {
-            openWebUrl(Resources.githubProjectLatestReleaseURL);
+            OpenWebUrl(Resources.githubProjectLatestReleaseURL);
         }
 
-        private static void openWebUrl(string url)
+        public static void OpenWebUrl(string url)
         {
             if (!String.IsNullOrEmpty(url))
             {

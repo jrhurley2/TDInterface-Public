@@ -79,7 +79,7 @@ namespace TdInterface
             // Handle always on top setting
             this.TopMost = settings.AlwaysOnTop;
 
-            lblVersion.Text = $"v {Program.GetAppVersion()}";
+            lblVersion.Text = $"v {Program.AppVersion}";
         }
 
 
