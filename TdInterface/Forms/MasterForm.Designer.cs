@@ -30,11 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFuturesCalc = new System.Windows.Forms.Button();
             this.btnAMZN = new System.Windows.Forms.Button();
             this.btnMSFT = new System.Windows.Forms.Button();
@@ -80,12 +75,12 @@
             this.txtConsumerKey = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblAccountSettings = new MaterialSkin.Controls.MaterialLabel();
             this.tpAbout = new System.Windows.Forms.TabPage();
+            this.btnCheckForUpdates = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.mbtnGitHub = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
             this.pbAppLogo = new System.Windows.Forms.PictureBox();
-            this.menuStrip1.SuspendLayout();
             this.mtcMasterForm.SuspendLayout();
             this.tpHome.SuspendLayout();
             this.tpAccountSettings.SuspendLayout();
@@ -101,51 +96,6 @@
             // 
             this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.menuStrip1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.menuStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(3, 64);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(954, 25);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem,
-            this.accountSettingsToolStripMenuItem,
-            this.checkForUpdateToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(69, 21);
-            this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // accountSettingsToolStripMenuItem
-            // 
-            this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.accountSettingsToolStripMenuItem.Text = "Account Settings";
-            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
-            // 
-            // checkForUpdateToolStripMenuItem
-            // 
-            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
-            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
             // 
             // btnFuturesCalc
             // 
@@ -427,12 +377,12 @@
             this.mtcMasterForm.Depth = 0;
             this.mtcMasterForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mtcMasterForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.mtcMasterForm.Location = new System.Drawing.Point(3, 89);
+            this.mtcMasterForm.Location = new System.Drawing.Point(3, 64);
             this.mtcMasterForm.MouseState = MaterialSkin.MouseState.HOVER;
             this.mtcMasterForm.Multiline = true;
             this.mtcMasterForm.Name = "mtcMasterForm";
             this.mtcMasterForm.SelectedIndex = 0;
-            this.mtcMasterForm.Size = new System.Drawing.Size(954, 868);
+            this.mtcMasterForm.Size = new System.Drawing.Size(954, 893);
             this.mtcMasterForm.TabIndex = 22;
             // 
             // tpHome
@@ -488,7 +438,7 @@
             this.tpAccountSettings.Controls.Add(this.lblAccountSettings);
             this.tpAccountSettings.Location = new System.Drawing.Point(4, 28);
             this.tpAccountSettings.Name = "tpAccountSettings";
-            this.tpAccountSettings.Size = new System.Drawing.Size(946, 836);
+            this.tpAccountSettings.Size = new System.Drawing.Size(946, 861);
             this.tpAccountSettings.TabIndex = 3;
             this.tpAccountSettings.Text = "Account Settings";
             this.tpAccountSettings.Enter += new System.EventHandler(this.tpAccountSettings_Enter);
@@ -869,6 +819,7 @@
             // tpAbout
             // 
             this.tpAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpAbout.Controls.Add(this.btnCheckForUpdates);
             this.tpAbout.Controls.Add(this.materialLabel2);
             this.tpAbout.Controls.Add(this.mbtnGitHub);
             this.tpAbout.Controls.Add(this.materialLabel1);
@@ -879,6 +830,28 @@
             this.tpAbout.Size = new System.Drawing.Size(946, 836);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
+            // 
+            // btnCheckForUpdates
+            // 
+            this.btnCheckForUpdates.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCheckForUpdates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnCheckForUpdates.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCheckForUpdates.Depth = 0;
+            this.btnCheckForUpdates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCheckForUpdates.HighEmphasis = true;
+            this.btnCheckForUpdates.Icon = null;
+            this.btnCheckForUpdates.Location = new System.Drawing.Point(394, 313);
+            this.btnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCheckForUpdates.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCheckForUpdates.Name = "btnCheckForUpdates";
+            this.btnCheckForUpdates.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCheckForUpdates.Size = new System.Drawing.Size(168, 36);
+            this.btnCheckForUpdates.TabIndex = 15;
+            this.btnCheckForUpdates.Text = "Check For Updates";
+            this.btnCheckForUpdates.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCheckForUpdates.UseAccentColor = false;
+            this.btnCheckForUpdates.UseVisualStyleBackColor = false;
+            this.btnCheckForUpdates.Click += new System.EventHandler(this.btnCheckForUpdates_Click);
             // 
             // materialLabel2
             // 
@@ -969,9 +942,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(960, 960);
             this.Controls.Add(this.mtcMasterForm);
-            this.Controls.Add(this.menuStrip1);
             this.DrawerTabControl = this.mtcMasterForm;
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.MaximumSize = new System.Drawing.Size(960, 960);
             this.Name = "MasterForm";
@@ -979,8 +950,6 @@
             this.Text = "EZTM";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MasterForm_FormClosing);
             this.Load += new System.EventHandler(this.MasterForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.mtcMasterForm.ResumeLayout(false);
             this.tpHome.ResumeLayout(false);
             this.tpHome.PerformLayout();
@@ -996,16 +965,12 @@
             this.tpAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btnFuturesCalc;
         private System.Windows.Forms.Button btnAMZN;
         private System.Windows.Forms.Button btnMSFT;
@@ -1025,9 +990,7 @@
         private System.Windows.Forms.Label lblTools;
         private System.Windows.Forms.Label lblTradeLine;
         private System.Windows.Forms.Label lblTrade;
-        private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
         private System.Windows.Forms.Button btnScreenshots;
-        private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
         private System.Windows.Forms.TabPage tpHome;
         private System.Windows.Forms.TabPage tpSettings;
@@ -1058,5 +1021,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel9;
         private MaterialSkin.Controls.MaterialButton btnClearCreds;
         private MaterialSkin.Controls.MaterialButton btnSave;
+        private MaterialSkin.Controls.MaterialButton btnCheckForUpdates;
     }
 }

@@ -6,10 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
@@ -26,7 +24,7 @@ namespace TdInterface
         private IStreamer _streamer;
         private string _equityAccountId;
 
-        private Settings _settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
+        private Settings _settings = Utility.GetSettings();
         private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
@@ -169,14 +167,6 @@ namespace TdInterface
             }
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new UserOptionsForm();
-            frm.ShowDialog();
-            _settings = Utility.GetSettings();
-            //ApplySettings();
-        }
-
         private void MasterForm_Load(object sender, EventArgs e)
         {
             var settings = Utility.GetSettings();
@@ -295,12 +285,6 @@ namespace TdInterface
             futureCalcFrom.Show();
         }
 
-        private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var accountInfoForm = new AccountInfoForm();
-            accountInfoForm.Show();
-        }
-
         private void btnLogon_Click(object sender, EventArgs e)
         {
             Login();
@@ -315,21 +299,6 @@ namespace TdInterface
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-            }
-        }
-
-        private async void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (await Utility.IsAppUpdateAvailable())
-            {
-                if (MessageBox.Show("Updated version is available on GitHub.\nWould you like to download it?", "New Version Available", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
-                {
-                    Utility.OpenAppLatestReleaseOnGitHub();
-                };
-            }
-            else
-            {
-                MessageBox.Show("You have the latest version.");
             }
         }
 
@@ -385,6 +354,8 @@ namespace TdInterface
         private void btnClearCreds_Click(object sender, EventArgs e)
         {
             Utility.ClearAccessTokenContainerFile();
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("All credentials have been cleared. Please restart the app.", "OK", true);
+            SnackBarMessage.Show(this);
         }
         #endregion
 
@@ -399,6 +370,24 @@ namespace TdInterface
             txtClientId.Text = _accountInfo.TradeStationClientId;
             txtClientSecret.Text = _accountInfo.TradeStationClientSecret;
             chkUseSimAccount.Checked = _accountInfo.TradeStationUseSimAccount;
+        }
+
+        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
+        {
+            if (await Utility.IsAppUpdateAvailable())
+            {
+                MaterialDialog materialDialog = new MaterialDialog(this, "New Version Available", "An updated version is available on GitHub. Would you like to see the latest version on GitHub for download?", "Yes", true, "No");
+                DialogResult result= materialDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Utility.OpenAppLatestReleaseOnGitHub();
+                };
+            }
+            else
+            {
+                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("You have the latest available version.", "OK", true);
+                SnackBarMessage.Show(this);
+            }
         }
     }
 }
