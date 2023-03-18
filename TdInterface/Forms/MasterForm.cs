@@ -451,6 +451,8 @@ namespace TdInterface
                     pbCurrentAccountLogo.Image = Properties.Resources.Logo_TDA;
                 }
             }
+            rpbAAPL.LoadAsync($"https://universal.hellopublic.com/companyLogos/AAPL@1x.png");
+            rpbAMD.LoadAsync($"https://universal.hellopublic.com/companyLogos/AMD@1x.png");
         }
 
         private void btnScreenshots_Click_1(object sender, EventArgs e)
