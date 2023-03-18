@@ -133,4 +133,10 @@
   <data name="logo-96" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo-96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Logo_TDA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo_TDA.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_TS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo_TS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialSkin.Controls;
+using System;
 using System.Windows.Forms;
 using TdInterface.Forms;
 
@@ -34,7 +35,8 @@ namespace TdInterface
             _settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
 
             Utility.SaveSettings(_settings);
-            this.Close();
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Settings have been saved.", "OK", true);
+            SnackBarMessage.Show(this);
         }
 
         private void UserOptionsForm_Load(object sender, EventArgs e)
@@ -60,12 +62,6 @@ namespace TdInterface
             chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
             chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
             chkCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
-
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

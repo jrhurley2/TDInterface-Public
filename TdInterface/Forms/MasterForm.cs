@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialSkin.Controls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
@@ -29,6 +31,7 @@ namespace TdInterface
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
+        private AccountInfo _accountInfo = new AccountInfo();
 
         public MasterForm()
         {
@@ -185,6 +188,18 @@ namespace TdInterface
 
         }
 
+        private void tpSettings_Enter(object sender, EventArgs e)
+        {
+            UserOptionsForm uof = new UserOptionsForm();
+            uof.FormBorderStyle = FormBorderStyle.None;
+            uof.ControlBox = false;
+            uof.TopLevel = false;
+            uof.Dock = DockStyle.Fill;
+            tpSettings.Controls.Add(uof);
+            uof.BringToFront();
+            uof.Show();
+        }
+
         private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
@@ -318,9 +333,72 @@ namespace TdInterface
             }
         }
 
+        #region About
         private void mbtnGitHub_Click(object sender, EventArgs e)
         {
             Utility.OpenAppOnGitHub();
+        }
+        #endregion
+
+        #region Account Settings
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            _accountInfo.UseTdaEquity = chkTdaEnableEquity.Checked;
+            _accountInfo.TdaConsumerKey = txtConsumerKey.Text;
+
+            _accountInfo.UseTSEquity = chkTsEnableEquity.Checked;
+            _accountInfo.TradeStationClientId = txtClientId.Text;
+            _accountInfo.TradeStationClientSecret = txtClientSecret.Text;
+            _accountInfo.TradeStationUseSimAccount = chkUseSimAccount.Checked;
+            Utility.SaveAccountInfo(_accountInfo);
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Account settings have been saved.", "OK", true);
+            SnackBarMessage.Show(this);
+
+        }
+
+        private void chkTdaEnableEquity_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTdaEnableEquity.Checked)
+            {
+                chkTsEnableEquity.Checked = false;
+                toggleBrokerControls();
+            }
+        }
+
+        private void chkTsEnableEquity_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTsEnableEquity.Checked)
+            {
+                chkTdaEnableEquity.Checked = false;
+                toggleBrokerControls();
+            }
+        }
+
+        private void toggleBrokerControls()
+        {
+            txtConsumerKey.Enabled = chkTdaEnableEquity.Checked;
+            txtClientId.Enabled = chkTsEnableEquity.Checked;
+            txtClientSecret.Enabled = chkTsEnableEquity.Checked;
+            chkUseSimAccount.Enabled = chkTsEnableEquity.Checked;
+        }
+
+        private void btnClearCreds_Click(object sender, EventArgs e)
+        {
+            Utility.ClearAccessTokenContainerFile();
+        }
+        #endregion
+
+        private void tpAccountSettings_Enter(object sender, EventArgs e)
+        {
+            _accountInfo = Utility.GetAccountInfo();
+            if (_accountInfo == null) _accountInfo = new AccountInfo();
+            chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
+            txtConsumerKey.Text = _accountInfo.TdaConsumerKey;
+
+            chkTsEnableEquity.Checked = _accountInfo.UseTSEquity;
+            txtClientId.Text = _accountInfo.TradeStationClientId;
+            txtClientSecret.Text = _accountInfo.TradeStationClientSecret;
+            chkUseSimAccount.Checked = _accountInfo.TradeStationUseSimAccount;
         }
     }
 }

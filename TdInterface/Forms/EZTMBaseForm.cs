@@ -14,10 +14,10 @@ namespace TdInterface.Forms
             msm.AddFormToManage(this);
             msm.Theme = MaterialSkinManager.Themes.LIGHT;
             msm.ColorScheme = new ColorScheme(
-                Primary.BlueGrey800,
-                Primary.BlueGrey900,
-                Primary.BlueGrey500,
-                Accent.LightBlue200,
+                Primary.Green800,
+                Primary.Green900,
+                Primary.Green400,
+                Accent.Red700,
                 TextShade.WHITE);
 
 
