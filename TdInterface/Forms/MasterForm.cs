@@ -1,4 +1,5 @@
 ﻿using MaterialSkin.Controls;
+using MaterialSkin.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -451,6 +452,11 @@ namespace TdInterface
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
             SnackBarMessage.Show(this);
             mtcMasterForm.SelectedTab = tpHome;
+        }
+
+        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
         }
     }
 }

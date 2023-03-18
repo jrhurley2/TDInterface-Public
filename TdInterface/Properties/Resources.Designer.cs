@@ -80,11 +80,30 @@ namespace TdInterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/jrhurley2/TDInterface-Public#options-screen.
+        /// </summary>
+        internal static string githubProjectOptionsUrl {
+            get {
+                return ResourceManager.GetString("githubProjectOptionsUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/jrhurley2/TDInterface-Public.
         /// </summary>
         internal static string githubProjectURL {
             get {
                 return ResourceManager.GetString("githubProjectURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap help_48 {
+            get {
+                object obj = ResourceManager.GetObject("help_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

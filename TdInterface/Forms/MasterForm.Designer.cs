@@ -53,6 +53,7 @@
             this.mtcMasterForm = new MaterialSkin.Controls.MaterialTabControl();
             this.tpHome = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.materialFloatingActionButton1 = new MaterialSkin.Controls.MaterialFloatingActionButton();
             this.btnSettingsSave = new MaterialSkin.Controls.MaterialButton();
             this.materialCard17 = new MaterialSkin.Controls.MaterialCard();
             this.txtDefaultLimitOffset = new MaterialSkin.Controls.MaterialTextBox2();
@@ -445,7 +446,7 @@
             this.mtcMasterForm.Multiline = true;
             this.mtcMasterForm.Name = "mtcMasterForm";
             this.mtcMasterForm.SelectedIndex = 0;
-            this.mtcMasterForm.Size = new System.Drawing.Size(954, 893);
+            this.mtcMasterForm.Size = new System.Drawing.Size(954, 853);
             this.mtcMasterForm.TabIndex = 22;
             // 
             // tpHome
@@ -473,13 +474,14 @@
             this.tpHome.ImageKey = "home-24.png";
             this.tpHome.Location = new System.Drawing.Point(4, 31);
             this.tpHome.Name = "tpHome";
-            this.tpHome.Size = new System.Drawing.Size(946, 858);
+            this.tpHome.Size = new System.Drawing.Size(946, 818);
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             // 
             // tpSettings
             // 
             this.tpSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpSettings.Controls.Add(this.materialFloatingActionButton1);
             this.tpSettings.Controls.Add(this.btnSettingsSave);
             this.tpSettings.Controls.Add(this.materialCard17);
             this.tpSettings.Controls.Add(this.materialCard16);
@@ -504,10 +506,25 @@
             this.tpSettings.ImageKey = "settings-24.png";
             this.tpSettings.Location = new System.Drawing.Point(4, 31);
             this.tpSettings.Name = "tpSettings";
-            this.tpSettings.Size = new System.Drawing.Size(946, 858);
+            this.tpSettings.Size = new System.Drawing.Size(946, 818);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             this.tpSettings.Enter += new System.EventHandler(this.tpSettings_Enter);
+            // 
+            // materialFloatingActionButton1
+            // 
+            this.materialFloatingActionButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialFloatingActionButton1.Depth = 0;
+            this.materialFloatingActionButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialFloatingActionButton1.Icon = global::TdInterface.Properties.Resources.help_48;
+            this.materialFloatingActionButton1.Location = new System.Drawing.Point(823, 739);
+            this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
+            this.materialFloatingActionButton1.Size = new System.Drawing.Size(56, 56);
+            this.materialFloatingActionButton1.TabIndex = 30;
+            this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
+            this.materialFloatingActionButton1.UseVisualStyleBackColor = false;
+            this.materialFloatingActionButton1.Click += new System.EventHandler(this.materialFloatingActionButton1_Click);
             // 
             // btnSettingsSave
             // 
@@ -739,7 +756,7 @@
             this.materialCard14.Controls.Add(this.lblAlwaysOnTop);
             this.materialCard14.Depth = 0;
             this.materialCard14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard14.Location = new System.Drawing.Point(468, 638);
+            this.materialCard14.Location = new System.Drawing.Point(464, 638);
             this.materialCard14.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard14.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard14.Name = "materialCard14";
@@ -789,7 +806,7 @@
             this.materialCard13.Controls.Add(this.lblCaptureFullScreenOnOpen);
             this.materialCard13.Depth = 0;
             this.materialCard13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard13.Location = new System.Drawing.Point(468, 573);
+            this.materialCard13.Location = new System.Drawing.Point(464, 573);
             this.materialCard13.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard13.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard13.Name = "materialCard13";
@@ -839,7 +856,7 @@
             this.materialCard12.Controls.Add(this.lblSendAltPrtSc);
             this.materialCard12.Depth = 0;
             this.materialCard12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard12.Location = new System.Drawing.Point(468, 508);
+            this.materialCard12.Location = new System.Drawing.Point(464, 508);
             this.materialCard12.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard12.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard12.Name = "materialCard12";
@@ -889,7 +906,7 @@
             this.materialCard11.Controls.Add(this.lblShowPnL);
             this.materialCard11.Depth = 0;
             this.materialCard11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard11.Location = new System.Drawing.Point(468, 443);
+            this.materialCard11.Location = new System.Drawing.Point(464, 443);
             this.materialCard11.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard11.Name = "materialCard11";
@@ -1518,7 +1535,7 @@
             this.tpAccountSettings.ImageKey = "account-24.png";
             this.tpAccountSettings.Location = new System.Drawing.Point(4, 31);
             this.tpAccountSettings.Name = "tpAccountSettings";
-            this.tpAccountSettings.Size = new System.Drawing.Size(946, 858);
+            this.tpAccountSettings.Size = new System.Drawing.Size(946, 818);
             this.tpAccountSettings.TabIndex = 3;
             this.tpAccountSettings.Text = "Account Settings";
             this.tpAccountSettings.Enter += new System.EventHandler(this.tpAccountSettings_Enter);
@@ -1914,7 +1931,7 @@
             this.tpAbout.ImageKey = "about-24.png";
             this.tpAbout.Location = new System.Drawing.Point(4, 31);
             this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Size = new System.Drawing.Size(946, 858);
+            this.tpAbout.Size = new System.Drawing.Size(946, 818);
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
             // 
@@ -2033,7 +2050,7 @@
             this.tpScreenshots.ImageKey = "screenshot-24.png";
             this.tpScreenshots.Location = new System.Drawing.Point(4, 31);
             this.tpScreenshots.Name = "tpScreenshots";
-            this.tpScreenshots.Size = new System.Drawing.Size(946, 858);
+            this.tpScreenshots.Size = new System.Drawing.Size(946, 818);
             this.tpScreenshots.TabIndex = 4;
             this.tpScreenshots.Text = "Screenshots";
             this.tpScreenshots.Enter += new System.EventHandler(this.tpScreenshots_Enter);
@@ -2044,7 +2061,7 @@
             this.tpLogs.ImageKey = "logs-24.png";
             this.tpLogs.Location = new System.Drawing.Point(4, 31);
             this.tpLogs.Name = "tpLogs";
-            this.tpLogs.Size = new System.Drawing.Size(946, 858);
+            this.tpLogs.Size = new System.Drawing.Size(946, 818);
             this.tpLogs.TabIndex = 5;
             this.tpLogs.Text = "Logs";
             this.tpLogs.Enter += new System.EventHandler(this.tpLogs_Enter);
@@ -2062,18 +2079,20 @@
             this.ilMenuIcons.Images.SetKeyName(5, "home-24.png");
             this.ilMenuIcons.Images.SetKeyName(6, "screenshot-24.png");
             this.ilMenuIcons.Images.SetKeyName(7, "logs-24.png");
+            this.ilMenuIcons.Images.SetKeyName(8, "futures-24.png");
             // 
             // MasterForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(960, 960);
+            this.ClientSize = new System.Drawing.Size(960, 920);
             this.Controls.Add(this.mtcMasterForm);
             this.DrawerAutoShow = true;
             this.DrawerHighlightWithAccent = false;
             this.DrawerShowIconsWhenHidden = true;
             this.DrawerTabControl = this.mtcMasterForm;
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.MaximumSize = new System.Drawing.Size(960, 960);
+            this.MaximumSize = new System.Drawing.Size(960, 920);
+            this.MinimumSize = new System.Drawing.Size(960, 920);
             this.Name = "MasterForm";
             this.Sizable = false;
             this.Text = "EZ Trade Manager";
@@ -2239,5 +2258,6 @@
         private MaterialSkin.Controls.MaterialButton btnSettingsSave;
         private System.Windows.Forms.TabPage tpScreenshots;
         private System.Windows.Forms.TabPage tpLogs;
+        private MaterialSkin.Controls.MaterialFloatingActionButton materialFloatingActionButton1;
     }
 }
