@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
@@ -59,9 +60,8 @@ namespace TdInterface
         {
             try
             {
-
-                var accountInfo = Utility.GetAccountInfo();
-                if (accountInfo == null)
+                _accountInfo = Utility.GetAccountInfo();
+                if (_accountInfo == null)
                 {
                     mtcMasterForm.SelectedTab = tpAccountSettings;
                 }
@@ -74,9 +74,9 @@ namespace TdInterface
                     {
                         string loginUri = string.Empty;
 
-                        if (accountInfo.UseTdaEquity)
+                        if (_accountInfo.UseTdaEquity)
                         {
-                            Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+                            Utility.SplitTdaConsumerKey(_accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
                             loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
                             var oAuthLoginForm = new OAuthLoginForm(loginUri);
@@ -86,12 +86,12 @@ namespace TdInterface
                             Utility.SaveAccessTokenContainer(accessTokenContainer);
                             Utility.AccessTokenContainer = accessTokenContainer;
                         }
-                        else if (accountInfo.UseTSEquity)
+                        else if (_accountInfo.UseTSEquity)
                         {
-                            _tradeStationHelper = new TradeStationHelper(accountInfo.TradeStationClientId, accountInfo.TradeStationClientSecret);
+                            _tradeStationHelper = new TradeStationHelper(_accountInfo.TradeStationClientId, _accountInfo.TradeStationClientSecret);
 
-                            var clientid = accountInfo.TradeStationClientId;
-                            var clientSecret = accountInfo.TradeStationClientSecret;
+                            var clientid = _accountInfo.TradeStationClientId;
+                            var clientSecret = _accountInfo.TradeStationClientSecret;
                             loginUri = $"https://signin.tradestation.com/authorize?response_type=code&client_id={clientid}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
 
                             var oAuthLoginForm = new OAuthLoginForm(loginUri);
@@ -107,7 +107,7 @@ namespace TdInterface
                         }
                     }
 
-                    if (accountInfo.UseTdaEquity)
+                    if (_accountInfo.UseTdaEquity)
                     {
                         Utility.AccessTokenContainer = await _tdHelper.RefreshAccessToken(Utility.AccessTokenContainer);
                         Utility.UserPrincipal = await _tdHelper.GetUserPrincipals(Utility.AccessTokenContainer);
@@ -115,13 +115,13 @@ namespace TdInterface
                         _streamer = new TDStreamer(Utility.UserPrincipal);
                         _tradeHelper = new TdHelper();
                     }
-                    else if (accountInfo.UseTSEquity)
+                    else if (_accountInfo.UseTSEquity)
                     {
 
-                        var clientid = accountInfo.TradeStationClientId;
-                        var clientSecret = accountInfo.TradeStationClientSecret;
+                        var clientid = _accountInfo.TradeStationClientId;
+                        var clientSecret = _accountInfo.TradeStationClientSecret;
 
-                        if (accountInfo.TradeStationUseSimAccount)
+                        if (_accountInfo.TradeStationUseSimAccount)
                         {
                             //_tradeHelper = new TradeStationHelper("https://sim-api.tradestation.com/");
                             _tradeStationHelper = new TradeStationHelper("https://sim-api.tradestation.com/", clientid, clientSecret);
@@ -255,8 +255,6 @@ namespace TdInterface
                 frm.FormClosing += MainForm_FormClosing;
                 frm.Show();
             }
-
-            frm.Focus();
         }
 
         private void btnTicker_Click(object sender, EventArgs e)
@@ -431,7 +429,31 @@ namespace TdInterface
             }
         }
 
-        private void tpScreenshots_Enter(object sender, EventArgs e)
+        private void tpLogs_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
+        }
+
+        private void tpHome_Enter(object sender, EventArgs e)
+        {
+            if (_accountInfo != null)
+            {
+                if (_accountInfo.UseTSEquity)
+                {
+                    pbCurrentAccountLogo.Image = Properties.Resources.Logo_TS;
+                }
+                else if (_accountInfo.UseTdaEquity)
+                {
+                    pbCurrentAccountLogo.Image = Properties.Resources.Logo_TDA;
+                }
+            }
+        }
+
+        private void btnScreenshots_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -443,20 +465,20 @@ namespace TdInterface
             {
                 Debug.WriteLine(ex.Message);
             }
-            mtcMasterForm.SelectedTab = tpHome;
         }
 
-        private void tpLogs_Enter(object sender, EventArgs e)
+        private void btnLogs_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", Program.LogFolder);
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
             SnackBarMessage.Show(this);
-            mtcMasterForm.SelectedTab = tpHome;
         }
 
-        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
+        private void btnReplays_Click(object sender, EventArgs e)
         {
-            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
+            Process.Start("explorer.exe", Program.ReplayFolder);
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
+            SnackBarMessage.Show(this);
         }
     }
 }
