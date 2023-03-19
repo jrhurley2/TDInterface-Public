@@ -6,6 +6,7 @@
         public virtual double bidPrice { get; set; }
         public virtual double askPrice { get; set; }
         public virtual double lastPrice { get; set; }
+        public virtual string description { get; set; }
 
 
         public virtual StockQuote Update(StockQuote stockQuote)
@@ -14,6 +15,7 @@
             bidPrice = stockQuote.bidPrice != 0.0 ? stockQuote.bidPrice : bidPrice;
             askPrice = stockQuote.askPrice != 0.0 ? stockQuote.askPrice : askPrice;
             lastPrice = stockQuote.lastPrice != 0.0 ? stockQuote.lastPrice : lastPrice;
+            description = stockQuote.description;
             return this;
         }
 

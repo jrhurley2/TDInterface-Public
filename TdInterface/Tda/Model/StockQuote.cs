@@ -8,18 +8,11 @@ namespace TdInterface.Tda.Model
 {
     public class StockQuote : TdInterface.Model.StockQuote
     {
-
-        //public string symbol { get; set; }
-        //public string description { get; set; }
-        //public double bidPrice { get; set; }
-        //public double askPrice { get; set; }
-        //public double lastPrice { get; set; }
-
-
         public const string FIELD_QUOTE_SYMBOL = "key";
         public const string FIELD_QUOTE_BID_PRICE = "1";
         public const string FIELD_QUOTE_ASK_PRICE = "2";
-        public const string FIELD_QUOTE_lAST_PRICE = "3";
+        public const string FIELD_QUOTE_LAST_PRICE = "3";
+        public const string FIELD_QUOTE_DESCRIPTION = "25";
 
 
         public StockQuote() { }
@@ -49,9 +42,17 @@ namespace TdInterface.Tda.Model
                 {
                     askPrice = float.Parse(keyValuePairs[key]);
                 }
-                else if (key.Equals(FIELD_QUOTE_lAST_PRICE))
+                else if (key.Equals(FIELD_QUOTE_LAST_PRICE))
                 {
                     lastPrice = float.Parse(keyValuePairs[key]);
+                }
+                else if (key.Equals(FIELD_QUOTE_DESCRIPTION))
+                {
+                    description = keyValuePairs[key];
+                    if (!String.IsNullOrEmpty(description))
+                    {
+                        description = description.Split('-')[0];
+                    }
                 }
             }
         }
