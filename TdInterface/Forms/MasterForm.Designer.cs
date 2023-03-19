@@ -136,7 +136,7 @@
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.btnMSFT = new MaterialSkin.Controls.MaterialButton();
             this.materialCard21 = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
+            this.lblSimAccount = new MaterialSkin.Controls.MaterialLabel();
             this.pbCurrentAccountLogo = new System.Windows.Forms.PictureBox();
             this.btnMETA = new MaterialSkin.Controls.MaterialButton();
             this.btnAMD = new MaterialSkin.Controls.MaterialButton();
@@ -451,9 +451,9 @@
             this.pictureBox2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pictureBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pictureBox2.Image = global::TdInterface.Properties.Resources.Logo_TS;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 14);
+            this.pictureBox2.Location = new System.Drawing.Point(24, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(248, 29);
+            this.pictureBox2.Size = new System.Drawing.Size(182, 62);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 23;
             this.pictureBox2.TabStop = false;
@@ -547,7 +547,7 @@
             this.pictureBox1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pictureBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pictureBox1.Image = global::TdInterface.Properties.Resources.Logo_TDA;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(17, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(182, 62);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2137,7 +2137,7 @@
             // materialCard21
             // 
             this.materialCard21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard21.Controls.Add(this.materialLabel11);
+            this.materialCard21.Controls.Add(this.lblSimAccount);
             this.materialCard21.Controls.Add(this.pbCurrentAccountLogo);
             this.materialCard21.Depth = 0;
             this.materialCard21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -2149,28 +2149,32 @@
             this.materialCard21.Size = new System.Drawing.Size(460, 100);
             this.materialCard21.TabIndex = 27;
             // 
-            // materialLabel11
+            // lblSimAccount
             // 
-            this.materialLabel11.AutoSize = true;
-            this.materialLabel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.materialLabel11.Depth = 0;
-            this.materialLabel11.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel11.Location = new System.Drawing.Point(17, 16);
-            this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(165, 19);
-            this.materialLabel11.TabIndex = 22;
-            this.materialLabel11.Text = "Active Trading Account";
+            this.lblSimAccount.AutoSize = true;
+            this.lblSimAccount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblSimAccount.Depth = 0;
+            this.lblSimAccount.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.lblSimAccount.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
+            this.lblSimAccount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSimAccount.HighEmphasis = true;
+            this.lblSimAccount.Location = new System.Drawing.Point(289, 83);
+            this.lblSimAccount.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblSimAccount.Name = "lblSimAccount";
+            this.lblSimAccount.Size = new System.Drawing.Size(117, 14);
+            this.lblSimAccount.TabIndex = 23;
+            this.lblSimAccount.Text = "Sim Account Enabled";
+            this.lblSimAccount.UseAccent = true;
+            this.lblSimAccount.Visible = false;
             // 
             // pbCurrentAccountLogo
             // 
             this.pbCurrentAccountLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.pbCurrentAccountLogo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pbCurrentAccountLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pbCurrentAccountLogo.Location = new System.Drawing.Point(218, 17);
+            this.pbCurrentAccountLogo.Location = new System.Drawing.Point(247, 20);
             this.pbCurrentAccountLogo.Name = "pbCurrentAccountLogo";
-            this.pbCurrentAccountLogo.Size = new System.Drawing.Size(225, 61);
+            this.pbCurrentAccountLogo.Size = new System.Drawing.Size(200, 61);
             this.pbCurrentAccountLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCurrentAccountLogo.TabIndex = 21;
             this.pbCurrentAccountLogo.TabStop = false;
@@ -2749,7 +2753,6 @@
         private MaterialSkin.Controls.MaterialButton btnNewTrade;
         private MaterialSkin.Controls.MaterialTextBox2 txtSymbol;
         private MaterialSkin.Controls.MaterialLabel lblTrade;
-        private MaterialSkin.Controls.MaterialLabel materialLabel11;
         private System.Windows.Forms.PictureBox pbCurrentAccountLogo;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
         private System.Windows.Forms.TabPage tpTools;
@@ -2779,5 +2782,6 @@
         private CustomControls.RoundedPictureBox rpbSPY;
         private CustomControls.RoundedPictureBox rpbTSLA;
         private MaterialSkin.Controls.MaterialLabel materialLabel16;
+        private MaterialSkin.Controls.MaterialLabel lblSimAccount;
     }
 }

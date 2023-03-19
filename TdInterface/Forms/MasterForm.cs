@@ -140,7 +140,10 @@ namespace TdInterface
                         var accounts = await _tradeStationHelper.GetAccounts(Utility.AccessTokenContainer);
                         //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
                         var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                        _equityAccountId = equitiyAccount.AccountID;
+                        if (equitiyAccount != null)
+                        {
+                            _equityAccountId = equitiyAccount.AccountID;
+                        }
 
                         _streamer = new TradeStationStreamer(_tradeStationHelper, _equityAccountId);
                         ((TradeStationStreamer)_streamer).StartAccountStream();
@@ -419,10 +422,12 @@ namespace TdInterface
                 if (_accountInfo.UseTSEquity)
                 {
                     pbCurrentAccountLogo.Image = Properties.Resources.Logo_TS;
+                    lblSimAccount.Visible = _accountInfo.TradeStationUseSimAccount;
                 }
                 else if (_accountInfo.UseTdaEquity)
                 {
                     pbCurrentAccountLogo.Image = Properties.Resources.Logo_TDA;
+                    lblSimAccount.Visible = false;
                 }
             }
             rpbAAPL.LoadAsync(Utility.GetTickerImage("AAPL"));
