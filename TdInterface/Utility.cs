@@ -276,7 +276,7 @@ namespace TdInterface
             }
         }
 
-        public static string GetTickerImage(string ticker)
+        public static string GetTickerImageURL(string ticker)
         {
             return $"https://universal.hellopublic.com/companyLogos/{ticker}@1x.png";
         }

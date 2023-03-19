@@ -49,17 +49,17 @@ namespace TdInterface
                 lblVersion.Text = $"Version: {Program.AppVersion}";
 
                 // Grab Ticker Logos
-                rpbAAPL.LoadAsync(Utility.GetTickerImage("AAPL"));
-                rpbAMD.LoadAsync(Utility.GetTickerImage("AMD"));
-                rpbAMZN.LoadAsync(Utility.GetTickerImage("AMZN"));
-                rpbGOOG.LoadAsync(Utility.GetTickerImage("GOOG"));
-                rpbMETA.LoadAsync(Utility.GetTickerImage("META"));
-                rpbMSFT.LoadAsync(Utility.GetTickerImage("MSFT"));
-                rpbNVDA.LoadAsync(Utility.GetTickerImage("NVDA"));
-                rpbPYPL.LoadAsync(Utility.GetTickerImage("PYPL"));
-                rpbTSLA.LoadAsync(Utility.GetTickerImage("TSLA"));
-                rpbSPY.LoadAsync(Utility.GetTickerImage("SPY"));
-                rpbQQQ.LoadAsync(Utility.GetTickerImage("QQQ"));
+                rpbAAPL.LoadAsync(Utility.GetTickerImageURL("AAPL"));
+                rpbAMD.LoadAsync(Utility.GetTickerImageURL("AMD"));
+                rpbAMZN.LoadAsync(Utility.GetTickerImageURL("AMZN"));
+                rpbGOOG.LoadAsync(Utility.GetTickerImageURL("GOOG"));
+                rpbMETA.LoadAsync(Utility.GetTickerImageURL("META"));
+                rpbMSFT.LoadAsync(Utility.GetTickerImageURL("MSFT"));
+                rpbNVDA.LoadAsync(Utility.GetTickerImageURL("NVDA"));
+                rpbPYPL.LoadAsync(Utility.GetTickerImageURL("PYPL"));
+                rpbTSLA.LoadAsync(Utility.GetTickerImageURL("TSLA"));
+                rpbSPY.LoadAsync(Utility.GetTickerImageURL("SPY"));
+                rpbQQQ.LoadAsync(Utility.GetTickerImageURL("QQQ"));
 
                 Login().ConfigureAwait(false);
             }
@@ -318,7 +318,7 @@ namespace TdInterface
 
         private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
-            rpbTicker.LoadAsync(Utility.GetTickerImage(txtSymbol.Text));
+            rpbTicker.LoadAsync(Utility.GetTickerImageURL(txtSymbol.Text));
         }
 
         private void rpbTicker_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)

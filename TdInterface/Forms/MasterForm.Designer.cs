@@ -2393,7 +2393,7 @@
             this.txtSymbol.Hint = "Symbol";
             this.txtSymbol.LeadingIcon = null;
             this.txtSymbol.LeaveOnEnterKey = true;
-            this.txtSymbol.Location = new System.Drawing.Point(88, 20);
+            this.txtSymbol.Location = new System.Drawing.Point(82, 20);
             this.txtSymbol.MaxLength = 32767;
             this.txtSymbol.MouseState = MaterialSkin.MouseState.OUT;
             this.txtSymbol.Name = "txtSymbol";
@@ -2408,7 +2408,7 @@
             this.txtSymbol.Size = new System.Drawing.Size(87, 36);
             this.txtSymbol.TabIndex = 25;
             this.txtSymbol.TabStop = false;
-            this.txtSymbol.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSymbol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtSymbol.TrailingIcon = null;
             this.txtSymbol.UseAccent = false;
             this.txtSymbol.UseSystemPasswordChar = false;
