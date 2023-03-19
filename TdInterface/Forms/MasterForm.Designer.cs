@@ -1781,7 +1781,7 @@
             this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.mbtnGitHub.HighEmphasis = false;
             this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
-            this.mbtnGitHub.Location = new System.Drawing.Point(263, 35);
+            this.mbtnGitHub.Location = new System.Drawing.Point(263, 38);
             this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
             this.mbtnGitHub.Name = "mbtnGitHub";
@@ -1804,7 +1804,7 @@
             this.btnCheckForUpdates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCheckForUpdates.HighEmphasis = true;
             this.btnCheckForUpdates.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnCheckForUpdates.Location = new System.Drawing.Point(261, 4);
+            this.btnCheckForUpdates.Location = new System.Drawing.Point(261, 1);
             this.btnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnCheckForUpdates.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCheckForUpdates.Name = "btnCheckForUpdates";
@@ -1913,6 +1913,7 @@
             this.btnGOOG.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGOOG.UseAccentColor = false;
             this.btnGOOG.UseVisualStyleBackColor = false;
+            this.btnGOOG.Click += new System.EventHandler(this.btnTicker_Click);
             // 
             // rpbPYPL
             // 
@@ -1948,6 +1949,7 @@
             this.btnPYPL.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnPYPL.UseAccentColor = false;
             this.btnPYPL.UseVisualStyleBackColor = false;
+            this.btnPYPL.Click += new System.EventHandler(this.btnTicker_Click);
             // 
             // materialLabel16
             // 
