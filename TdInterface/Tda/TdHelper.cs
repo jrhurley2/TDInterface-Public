@@ -267,14 +267,14 @@ namespace TdInterface.Tda
             };
         }
 
-        public async Task<UserPrincipal> GetUserPrincipals(AccessTokenContainer accessTokenContainer)
+        public async Task<UserPrincipal> GetUserPrincipals()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetUserPrincipals))
             {
                 Method = HttpMethod.Get
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)

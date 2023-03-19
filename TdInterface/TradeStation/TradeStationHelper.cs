@@ -310,8 +310,6 @@ namespace TdInterface.TradeStation
 
         }
 
-
-
         public async Task<GetOrderResponse> GetOrders(string accountId)
         {
 
