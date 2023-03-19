@@ -84,6 +84,7 @@ namespace TdInterface
             this.btnExit10 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.txtDesc = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -782,10 +783,21 @@ namespace TdInterface
             this.lblVersion.Text = "Version";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // txtDesc
+            // 
+            this.txtDesc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.txtDesc.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtDesc.Location = new System.Drawing.Point(284, 633);
+            this.txtDesc.Name = "txtDesc";
+            this.txtDesc.Size = new System.Drawing.Size(220, 24);
+            this.txtDesc.TabIndex = 40;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.ClientSize = new System.Drawing.Size(732, 648);
+            this.ClientSize = new System.Drawing.Size(1166, 980);
+            this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
@@ -826,7 +838,6 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.txtSymbol);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(700, 570);
             this.Name = "MainForm";
@@ -896,6 +907,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExit10;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.TextBox txtDesc;
     }
 }
 

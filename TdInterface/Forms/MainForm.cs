@@ -512,7 +512,7 @@ namespace TdInterface
             SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
             SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
-
+            SafeUpdateTextBox(txtDesc, stockQuote.description);
 
             try
             {
