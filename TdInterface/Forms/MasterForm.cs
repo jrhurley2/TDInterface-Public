@@ -1,5 +1,4 @@
 ﻿using MaterialSkin.Controls;
-using MaterialSkin.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Encodings.Web;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
@@ -32,6 +30,7 @@ namespace TdInterface
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
         private AccountInfo _accountInfo = new AccountInfo();
+        private static Dictionary<string, MainForm> _mainForms = new Dictionary<string, MainForm>();
 
         public MasterForm()
         {
@@ -191,8 +190,6 @@ namespace TdInterface
             }
 
         }
-
-        private static Dictionary<string, MainForm> _mainForms = new Dictionary<string, MainForm>();
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
