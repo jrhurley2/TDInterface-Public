@@ -193,10 +193,6 @@ namespace TdInterface
         }
 
         private static Dictionary<string, MainForm> _mainForms = new Dictionary<string, MainForm>();
-        private void btnNewTrade_Click(object sender, EventArgs e)
-        {
-            launchMainForm(txtSymbol.Text);
-        }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -210,8 +206,6 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
             }
         }
-
-
 
         private void MasterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -273,161 +267,6 @@ namespace TdInterface
             }
         }
 
-        private async void btnTicker_Click(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-            launchMainForm(btn.Tag != null ? btn.Tag.ToString() : String.Empty);
-        }
-
-        private void btnFuturesCalc_Click(object sender, EventArgs e)
-        {
-            var futureCalcFrom = new FurtureCalcForm(_streamer);
-            futureCalcFrom.Show();
-        }
-
-         #region Settings
-        private void btnSettingsSave_Click(object sender, EventArgs e)
-        {
-            _settings.TradeShares = chkTradeShares.Checked;
-            _settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : decimal.Parse(txtMaxRisk.Text);
-            _settings.MaxShares = int.Parse(txtMaxShares.Text);
-            _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
-            _settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
-            _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
-            _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
-            _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
-            _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : decimal.Parse(txtDefaultLimitOffset.Text);
-            _settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
-            _settings.MaxLossLimitInR = _settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
-            _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
-            _settings.SendAltPrtScrOnOpen = chkSendPrtScrOnOpen.Checked;
-            _settings.ShowPnL = chkShowPnL.Checked;
-            _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
-            _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
-            _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
-            _settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
-
-            Utility.SaveSettings(_settings);
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Settings have been saved.", "OK", true);
-            SnackBarMessage.Show(this);
-            mtcMasterForm.SelectedTab = tpHome;
-        }
-
-        private void tpSettings_Enter(object sender, EventArgs e)
-        {
-            _settings = Utility.GetSettings();
-            if (_settings == null) _settings = new Settings();
-
-            chkTradeShares.Checked = _settings.TradeShares;
-            txtMaxRisk.Text = _settings.MaxRisk.ToString("#.##");
-            txtMaxShares.Text = _settings.MaxShares.ToString();
-            chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
-            chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
-            txtOneRSharePct.Text = _settings.OneRProfitPercenatage.ToString();
-            chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
-            chkReduceStopOnClose.Checked = _settings.ReduceStopOnClose;
-            txtDefaultLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
-            chkMaxLossLimit.Checked = _settings.EnableMaxLossLimit;
-            txtMaxLossLimit.Text = _settings.MaxLossLimitInR.ToString("#.##");
-            txtMinRisk.Text = _settings.MinimumRisk.ToString("#.##");
-            chkSendPrtScrOnOpen.Checked = _settings.SendAltPrtScrOnOpen;
-            chkShowPnL.Checked = _settings.ShowPnL;
-            chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
-            chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
-            chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
-            chkCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
-        }
-        #endregion
-
-        #region About
-        private void mbtnGitHub_Click(object sender, EventArgs e)
-        {
-            Utility.OpenAppOnGitHub();
-        }
-        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
-        {
-            if (await Utility.IsAppUpdateAvailable())
-            {
-                MaterialDialog materialDialog = new MaterialDialog(this, "New Version Available", "An updated version is available on GitHub. Would you like to see the latest version on GitHub for download?", "Yes", true, "No");
-                DialogResult result = materialDialog.ShowDialog(this);
-                if (result == DialogResult.OK)
-                {
-                    Utility.OpenAppLatestReleaseOnGitHub();
-                };
-            }
-            else
-            {
-                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("You have the latest available version.", "OK", true);
-                SnackBarMessage.Show(this);
-            }
-        }
-        #endregion
-
-        #region Account Settings
-        private async void btnSave_Click(object sender, EventArgs e)
-        {
-            _accountInfo.UseTdaEquity = chkTdaEnableEquity.Checked;
-            _accountInfo.TdaConsumerKey = txtConsumerKey.Text;
-
-            _accountInfo.UseTSEquity = chkTsEnableEquity.Checked;
-            _accountInfo.TradeStationClientId = txtClientId.Text;
-            _accountInfo.TradeStationClientSecret = txtClientSecret.Text;
-            _accountInfo.TradeStationUseSimAccount = chkUseSimAccount.Checked;
-            Utility.SaveAccountInfo(_accountInfo);
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Account settings have been saved.", "OK", true);
-            SnackBarMessage.Show(this);
-            await Login();
-            mtcMasterForm.SelectedTab = tpHome;
-        }
-
-        private void chkTdaEnableEquity_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTdaEnableEquity.Checked)
-            {
-                chkTsEnableEquity.Checked = false;
-                toggleBrokerControls();
-            }
-        }
-
-        private void chkTsEnableEquity_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTsEnableEquity.Checked)
-            {
-                chkTdaEnableEquity.Checked = false;
-                toggleBrokerControls();
-            }
-        }
-
-        private void toggleBrokerControls()
-        {
-            txtConsumerKey.Enabled = chkTdaEnableEquity.Checked;
-            txtClientId.Enabled = chkTsEnableEquity.Checked;
-            txtClientSecret.Enabled = chkTsEnableEquity.Checked;
-            chkUseSimAccount.Enabled = chkTsEnableEquity.Checked;
-        }
-
-        private void btnClearCreds_Click(object sender, EventArgs e)
-        {
-            Utility.ClearAccessTokenContainerFile();
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("All credentials have been cleared. Please restart the app.", "OK", true);
-            SnackBarMessage.Show(this);
-        }
-        private void tpAccountSettings_Enter(object sender, EventArgs e)
-        {
-            _accountInfo = Utility.GetAccountInfo();
-            if (_accountInfo == null) _accountInfo = new AccountInfo();
-            chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
-            txtConsumerKey.Text = _accountInfo.TdaConsumerKey;
-
-            chkTsEnableEquity.Checked = _accountInfo.UseTSEquity;
-            txtClientId.Text = _accountInfo.TradeStationClientId;
-            txtClientSecret.Text = _accountInfo.TradeStationClientSecret;
-            chkUseSimAccount.Checked = _accountInfo.TradeStationUseSimAccount;
-        }
-        #endregion
-
-
-
         private void tpHome_Enter(object sender, EventArgs e)
         {
             if (_accountInfo != null)
@@ -445,57 +284,40 @@ namespace TdInterface
             }
         }
 
-        #region Tools
-        private void btnScreenshots_Click(object sender, EventArgs e)
+        #region UX Event Handlers
+        private void btnNewTrade_Click(object sender, EventArgs e)
         {
-            try
+            launchMainForm(txtSymbol.Text);
+        }
+
+        private async void btnTicker_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            launchMainForm(btn.Tag != null ? btn.Tag.ToString() : String.Empty);
+        }
+
+        private void mbtnGitHub_Click(object sender, EventArgs e)
+        {
+            Utility.OpenAppOnGitHub();
+        }
+
+        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
+        {
+            if (await Utility.IsAppUpdateAvailable())
             {
-                Process.Start("explorer.exe", Utility.ScreenshotPath());
-                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening screenshot folder.", "OK", true);
+                MaterialDialog materialDialog = new MaterialDialog(this, "New Version Available", "An updated version is available on GitHub. Would you like to see the latest version on GitHub for download?", "Yes", true, "No");
+                DialogResult result = materialDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Utility.OpenAppLatestReleaseOnGitHub();
+                };
+            }
+            else
+            {
+                MaterialSnackBar SnackBarMessage = new MaterialSnackBar("You have the latest available version.", "OK", true);
                 SnackBarMessage.Show(this);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
         }
-
-        private void btnLogs_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer.exe", Program.LogFolder);
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
-            SnackBarMessage.Show(this);
-        }
-
-        private void btnReplays_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer.exe", Program.ReplayFolder);
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Opening logs folder.", "OK", true);
-            SnackBarMessage.Show(this);
-        }
-        #endregion
-
-        #region Settings
-        private void chkDisableFirstTarget_CheckedChanged(object sender, EventArgs e)
-        {
-            txtOneRSharePct.Enabled = !chkDisableFirstTarget.Checked;
-        }
-
-        private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
-        {
-            txtMaxShares.Enabled = chkTradeShares.Checked;
-        }
-
-        private void chkMaxLossLimit_CheckedChanged(object sender, EventArgs e)
-        {
-            txtMaxLossLimit.Enabled= chkMaxLossLimit.Checked;
-        }
-
-        private void btnSettingsHelp_Click(object sender, EventArgs e)
-        {
-            Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
-        }
-        #endregion
 
         private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
@@ -509,5 +331,6 @@ namespace TdInterface
                 rpbTicker.Image = Properties.Resources.abc_24;
             }
         }
+        #endregion
     }
 }

@@ -21,6 +21,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Forms\MainForm.cs" />
+    <Compile Update="Forms\MasterForm_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\MasterForm_AccountSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\OAuthLoginForm.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
