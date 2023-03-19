@@ -15,8 +15,12 @@ namespace TdInterface.Tda
 {
     public class TdHelper : IHelper
     {
+        public const string ACCESSTOKENCONTAINER = "tda-accesstokencontainer.json";
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tdameritrade.com");
+        public Utility _utility = new Utility();
+
+
         public const string routeGetToken = "v1/oauth2/token";
         public const string routeGetAccount = "v1/accounts/{0}?fields=positions,orders";
         public const string routeGetAccounts = "v1/accounts";
@@ -30,8 +34,15 @@ namespace TdInterface.Tda
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
 
         private static Securitiesaccount _securitiesaccount;
-
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
+
+        public TdHelper() { }
+        public TdHelper(HttpClient httpClient, Utility utility) 
+        { 
+            _httpClient = httpClient; 
+            _utility = utility;
+        }
+
 
         public Securitiesaccount Securitiesaccount
         {
@@ -45,11 +56,18 @@ namespace TdInterface.Tda
             }
         }
 
+        public AccessTokenContainer AccessTokenContainer { get; set; }
 
+
+        /// <summary>
+        /// Get access token.  This call is called only when a refresh token is needed.  TS should never expire and TDA expires once every 90 days.
+        /// </summary>
+        /// <param name="authToken"></param>
+        /// <returns></returns>
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
 
-            var accountInfo = Utility.GetAccountInfo();
+            var accountInfo = _utility.GetAccountInfo();
 
             Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
@@ -70,25 +88,27 @@ namespace TdInterface.Tda
 
             var response = await _httpClient.SendAsync(request);
 
-            var accessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
-            accessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
-            return accessTokenContainer;
+            var AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
+            
+            //Write the access token container, this should ahve the refresh token
+            Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
+
+            return AccessTokenContainer;
         }
 
-        public async Task<AccessTokenContainer> RefreshAccessToken(AccessTokenContainer accessTokenContainer)
+        public async Task<AccessTokenContainer> RefreshAccessToken()
         {
             try
             {
-                var accountInfo = Utility.GetAccountInfo();
+                var accountInfo = _utility.GetAccountInfo();
 
                 Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
-                //postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
-                postData.Add(new KeyValuePair<string, string>("refresh_token", accessTokenContainer.RefreshToken));
+                postData.Add(new KeyValuePair<string, string>("refresh_token", AccessTokenContainer.RefreshToken));
                 postData.Add(new KeyValuePair<string, string>("client_id", $"{consumerKey}@AMER.OAUTHTD"));
-                //postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
                 var rawSTring = await content.ReadAsStringAsync();
@@ -101,11 +121,13 @@ namespace TdInterface.Tda
                 var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
                 var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+
                 //Add the refresh token back as it doesn't come back with the payload.
-                newAccessTokenContainer.RefreshToken = accessTokenContainer.RefreshToken;
+                newAccessTokenContainer.RefreshToken = AccessTokenContainer.RefreshToken;
                 newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
 
-                return newAccessTokenContainer;
+                AccessTokenContainer = newAccessTokenContainer;
+                return AccessTokenContainer;
             }
             catch(Exception ex)
             {
@@ -114,14 +136,14 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<Securitiesaccount> GetAccount(AccessTokenContainer accessTokenContainer, string accountId)
+        public async Task<Securitiesaccount> GetAccount(string accountId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
             {
                 Method = HttpMethod.Get,
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
@@ -137,14 +159,14 @@ namespace TdInterface.Tda
             return securitiesaccount;
         }
 
-        public async Task<List<Account>> GetAccounts(AccessTokenContainer accessTokenContainer)
+        public async Task<List<Account>> GetAccounts()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetAccounts))
             {
                 Method = HttpMethod.Get,
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
             var account = Utility.DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
@@ -152,22 +174,7 @@ namespace TdInterface.Tda
             return account;
         }
 
-        //public async Task<StockQuote> GetStockQuote(AccessTokenContainer accessTokenContainer, string symbol)
-        //{
-        //    var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetQuote, symbol)))
-        //    {
-        //        Method = HttpMethod.Get,
-        //    };
-
-        //    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
-
-        //    var response = await _httpClient.SendAsync(request);
-        //    var stockQuote = Utility.DeserializeJsonFromStream<Dictionary<string, StockQuote>>(await response.Content.ReadAsStreamAsync());
-
-        //    return stockQuote[symbol.ToUpper()];
-        //}
-
-        public async Task<CandleList> GetPriceHistoryAsync(AccessTokenContainer accessTokenContainer, string symbol)
+        public async Task<CandleList> GetPriceHistoryAsync(string symbol)
         {
             var today = DateTimeOffset.Now;
             var startDate = new DateTimeOffset(today.Year, today.Month, today.Day, 4, 00, 00, new TimeSpan(-4, 0, 0));
@@ -177,7 +184,7 @@ namespace TdInterface.Tda
                 Method = HttpMethod.Get,
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
             var candleList = Utility.DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
@@ -190,8 +197,7 @@ namespace TdInterface.Tda
             return candleList;
         }
 
-        //public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal, Order order)
-        public async Task<ulong> PlaceOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
+        public async Task<ulong> PlaceOrder(string accountId, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, accountId)))
             {
@@ -199,7 +205,7 @@ namespace TdInterface.Tda
                 Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
              };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
             if(response.StatusCode != System.Net.HttpStatusCode.Created)
@@ -215,7 +221,7 @@ namespace TdInterface.Tda
             return orderNumber;
         }
 
-        public async Task<ulong> ReplaceOrder(AccessTokenContainer accessTokenContainer, string accountId, string orderId, Order newOrder)
+        public async Task<ulong> ReplaceOrder(string accountId, string orderId, Order newOrder)
         {
             var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
 
@@ -225,7 +231,7 @@ namespace TdInterface.Tda
                 Content = new StringContent(JsonConvert.SerializeObject(newOrder), Encoding.UTF8, "application/json")
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
             
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
@@ -244,14 +250,14 @@ namespace TdInterface.Tda
 
         }
 
-        public async Task CancelOrder(AccessTokenContainer accessTokenContainer, string accountId, Order order)
+        public async Task CancelOrder(string accountId, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, accountId, order.orderId)))
             {
                 Method = HttpMethod.Delete,
             };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessTokenContainer.AccessToken);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
@@ -336,9 +342,9 @@ namespace TdInterface.Tda
             return _stockQuotes[symbol];
         }
 
-        public async Task CancelAll(AccessTokenContainer accessTokenContainer, string accountId, string symbol)
+        public async Task CancelAll(string accountId, string symbol)
         {
-            var securitiesaccount = await this.GetAccount(Utility.AccessTokenContainer, accountId);
+            var securitiesaccount = await this.GetAccount(accountId);
 
             if (securitiesaccount != null)
             {
@@ -347,7 +353,7 @@ namespace TdInterface.Tda
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)
                 {
-                    var task = this.CancelOrder(Utility.AccessTokenContainer, accountId, order);
+                    var task = this.CancelOrder(accountId, order);
                     tasks.Add(task);
                 }
 

@@ -101,7 +101,7 @@ namespace TdInterface.TradeStation
             {
                 try
                 {
-                    var securitiesaccount = await _tradeStationHelper.GetAccount(Utility.AccessTokenContainer, _equityAccountId).ConfigureAwait(false);
+                    var securitiesaccount = await _tradeStationHelper.GetAccount(_equityAccountId).ConfigureAwait(false);
                     _tradeStationHelper.Securitiesaccount = securitiesaccount;
                     if (lastSecuritiesaccount != null)
                     {
@@ -133,12 +133,12 @@ namespace TdInterface.TradeStation
             }
         }
 
-        private async void ProcessStreamQuotes() //AccessTokenContainer accessTokenContainer)
+        private async void ProcessStreamQuotes() 
         {
 
             while (true)
             {
-                var accessTokenContainer = Utility.AccessTokenContainer;
+                var accessTokenContainer = _tradeStationHelper.AccessTokenContainer;
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
