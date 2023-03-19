@@ -68,7 +68,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAASBcAAAJNU0Z0AUkBTAIBAQUB
-        AAEwAQUBMAEFARgBAAEYAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABYAMAATADAAEBAQABIAYAAUj/
+        AAEYAQYBGAEGARgBAAEYAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABYAMAATADAAEBAQABIAYAAUj/
         AP8A/wAhAAM6AWADAAH/AzoBYDAAAzoBYAMAAf8DOgFg/wA1AAM6AWADAAH/AwAB/wMAAf8DOgFgKAAD
         OgFgAwAB/wMAAf8DAAH/AzoBYP8AMQADXgHwAwAB/wMAAf8DAAH/AwAB/wM6AWAgAAM6AWADAAH/AwAB
         /wMAAf8DAAH/A1kB7/8AMQADOgFgAwAB/wMAAf8DAAH/AwAB/wMAAf8DOgFgGAADOgFgAwAB/wMAAf8D
@@ -169,6 +169,9 @@
         +AEAAR8B/wGBAf8B4AEAAQcB/wH4Af8B/AEAAT8B/wGBAf8B+AEAAR8B/wH4Av8BAAL/AYEB/wH+AQAB
         fwr/AcMQ/ws=
 </value>
+  </data>
+  <data name="materialLabel2.Text" xml:space="preserve">
+    <value>Please note that our trading application is provided as is and we cannot be held responsible for any bugs or issues that may arise. We do our best to ensure that our application is free of errors, but we cannot guarantee that it will always work as intended. Please use our application at your own risk, have your brokerage application available, and always double-check your trades before executing them.</value>
   </data>
   <data name="materialLabel13.Text" xml:space="preserve">
     <value>Logs and replays are captured to help with debugging and stored on your local file system, and can be useful for debugging purposes.

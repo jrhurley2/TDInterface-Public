@@ -49,6 +49,19 @@ namespace TdInterface
 
                 lblVersion.Text = $"Version: {Program.AppVersion}";
 
+                // Grab Ticker Logos
+                rpbAAPL.LoadAsync(Utility.GetTickerImage("AAPL"));
+                rpbAMD.LoadAsync(Utility.GetTickerImage("AMD"));
+                rpbAMZN.LoadAsync(Utility.GetTickerImage("AMZN"));
+                rpbGOOG.LoadAsync(Utility.GetTickerImage("GOOG"));
+                rpbMETA.LoadAsync(Utility.GetTickerImage("META"));
+                rpbMSFT.LoadAsync(Utility.GetTickerImage("MSFT"));
+                rpbNVDA.LoadAsync(Utility.GetTickerImage("NVDA"));
+                rpbPYPL.LoadAsync(Utility.GetTickerImage("PYPL"));
+                rpbTSLA.LoadAsync(Utility.GetTickerImage("TSLA"));
+                rpbSPY.LoadAsync(Utility.GetTickerImage("SPY"));
+                rpbQQQ.LoadAsync(Utility.GetTickerImage("QQQ"));
+
                 Login().ConfigureAwait(false);
             }
             catch (Exception)
@@ -430,15 +443,6 @@ namespace TdInterface
                     lblSimAccount.Visible = false;
                 }
             }
-            rpbAAPL.LoadAsync(Utility.GetTickerImage("AAPL"));
-            rpbAMD.LoadAsync(Utility.GetTickerImage("AMD"));
-            rpbAMZN.LoadAsync(Utility.GetTickerImage("AMZN"));
-            rpbMETA.LoadAsync(Utility.GetTickerImage("META"));
-            rpbMSFT.LoadAsync(Utility.GetTickerImage("MSFT"));
-            rpbNVDA.LoadAsync(Utility.GetTickerImage("NVDA"));
-            rpbTSLA.LoadAsync(Utility.GetTickerImage("TSLA"));
-            rpbSPY.LoadAsync(Utility.GetTickerImage("SPY"));
-            rpbQQQ.LoadAsync(Utility.GetTickerImage("QQQ"));
         }
 
         #region Tools
@@ -492,5 +496,18 @@ namespace TdInterface
             Utility.OpenWebUrl(Properties.Resources.githubProjectOptionsUrl);
         }
         #endregion
+
+        private void txtSymbol_TextChanged(object sender, EventArgs e)
+        {
+            rpbTicker.LoadAsync(Utility.GetTickerImage(txtSymbol.Text));
+        }
+
+        private void rpbTicker_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                rpbTicker.Image = Properties.Resources.abc_24;
+            }
+        }
     }
 }

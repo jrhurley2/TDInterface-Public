@@ -112,6 +112,17 @@
             this.txtMaxRisk = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblMaxRisk = new MaterialSkin.Controls.MaterialLabel();
             this.tpHome = new System.Windows.Forms.TabPage();
+            this.materialCard18 = new MaterialSkin.Controls.MaterialCard();
+            this.mbtnGitHub = new MaterialSkin.Controls.MaterialButton();
+            this.btnCheckForUpdates = new MaterialSkin.Controls.MaterialButton();
+            this.pbAppLogo = new System.Windows.Forms.PictureBox();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.rpbGOOG = new TdInterface.CustomControls.RoundedPictureBox();
+            this.btnGOOG = new MaterialSkin.Controls.MaterialButton();
+            this.rpbPYPL = new TdInterface.CustomControls.RoundedPictureBox();
+            this.btnPYPL = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel16 = new MaterialSkin.Controls.MaterialLabel();
             this.rpbQQQ = new TdInterface.CustomControls.RoundedPictureBox();
             this.rpbSPY = new TdInterface.CustomControls.RoundedPictureBox();
@@ -127,23 +138,17 @@
             this.btnAMZN = new MaterialSkin.Controls.MaterialButton();
             this.rpbAAPL = new TdInterface.CustomControls.RoundedPictureBox();
             this.btnNVDA = new MaterialSkin.Controls.MaterialButton();
-            this.materialCard18 = new MaterialSkin.Controls.MaterialCard();
-            this.pbAppLogo = new System.Windows.Forms.PictureBox();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnCheckForUpdates = new MaterialSkin.Controls.MaterialButton();
-            this.lblVersion = new MaterialSkin.Controls.MaterialLabel();
-            this.mbtnGitHub = new MaterialSkin.Controls.MaterialButton();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.btnMSFT = new MaterialSkin.Controls.MaterialButton();
             this.materialCard21 = new MaterialSkin.Controls.MaterialCard();
+            this.lblActiveBroker = new MaterialSkin.Controls.MaterialLabel();
             this.lblSimAccount = new MaterialSkin.Controls.MaterialLabel();
             this.pbCurrentAccountLogo = new System.Windows.Forms.PictureBox();
             this.btnMETA = new MaterialSkin.Controls.MaterialButton();
             this.btnAMD = new MaterialSkin.Controls.MaterialButton();
             this.materialCard19 = new MaterialSkin.Controls.MaterialCard();
+            this.rpbTicker = new TdInterface.CustomControls.RoundedPictureBox();
             this.btnNewTrade = new MaterialSkin.Controls.MaterialButton();
             this.txtSymbol = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblTrade = new MaterialSkin.Controls.MaterialLabel();
             this.btnAAPL = new MaterialSkin.Controls.MaterialButton();
             this.mtcMasterForm = new MaterialSkin.Controls.MaterialTabControl();
             this.tpTools = new System.Windows.Forms.TabPage();
@@ -181,6 +186,10 @@
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.tpHome.SuspendLayout();
+            this.materialCard18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbGOOG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbPYPL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbQQQ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbSPY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTSLA)).BeginInit();
@@ -190,11 +199,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.rpbAMZN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAAPL)).BeginInit();
-            this.materialCard18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).BeginInit();
             this.materialCard21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentAccountLogo)).BeginInit();
             this.materialCard19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbTicker)).BeginInit();
             this.mtcMasterForm.SuspendLayout();
             this.tpTools.SuspendLayout();
             this.materialCard24.SuspendLayout();
@@ -1708,6 +1716,12 @@
             // tpHome
             // 
             this.tpHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.tpHome.Controls.Add(this.materialCard18);
+            this.tpHome.Controls.Add(this.materialLabel2);
+            this.tpHome.Controls.Add(this.rpbGOOG);
+            this.tpHome.Controls.Add(this.btnGOOG);
+            this.tpHome.Controls.Add(this.rpbPYPL);
+            this.tpHome.Controls.Add(this.btnPYPL);
             this.tpHome.Controls.Add(this.materialLabel16);
             this.tpHome.Controls.Add(this.rpbQQQ);
             this.tpHome.Controls.Add(this.rpbSPY);
@@ -1723,7 +1737,6 @@
             this.tpHome.Controls.Add(this.btnAMZN);
             this.tpHome.Controls.Add(this.rpbAAPL);
             this.tpHome.Controls.Add(this.btnNVDA);
-            this.tpHome.Controls.Add(this.materialCard18);
             this.tpHome.Controls.Add(this.btnMSFT);
             this.tpHome.Controls.Add(this.materialCard21);
             this.tpHome.Controls.Add(this.btnMETA);
@@ -1737,6 +1750,204 @@
             this.tpHome.TabIndex = 0;
             this.tpHome.Text = "Home";
             this.tpHome.Enter += new System.EventHandler(this.tpHome_Enter);
+            // 
+            // materialCard18
+            // 
+            this.materialCard18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.materialCard18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard18.Controls.Add(this.mbtnGitHub);
+            this.materialCard18.Controls.Add(this.btnCheckForUpdates);
+            this.materialCard18.Controls.Add(this.pbAppLogo);
+            this.materialCard18.Controls.Add(this.materialLabel1);
+            this.materialCard18.Controls.Add(this.lblVersion);
+            this.materialCard18.Depth = 0;
+            this.materialCard18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard18.Location = new System.Drawing.Point(21, 611);
+            this.materialCard18.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard18.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard18.Name = "materialCard18";
+            this.materialCard18.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard18.Size = new System.Drawing.Size(460, 75);
+            this.materialCard18.TabIndex = 56;
+            // 
+            // mbtnGitHub
+            // 
+            this.mbtnGitHub.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.mbtnGitHub.AutoSize = false;
+            this.mbtnGitHub.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.mbtnGitHub.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.mbtnGitHub.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.mbtnGitHub.Depth = 0;
+            this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mbtnGitHub.HighEmphasis = false;
+            this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
+            this.mbtnGitHub.Location = new System.Drawing.Point(263, 35);
+            this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
+            this.mbtnGitHub.Name = "mbtnGitHub";
+            this.mbtnGitHub.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.mbtnGitHub.Size = new System.Drawing.Size(194, 36);
+            this.mbtnGitHub.TabIndex = 30;
+            this.mbtnGitHub.Text = "View on GitHub";
+            this.mbtnGitHub.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.mbtnGitHub.UseAccentColor = false;
+            this.mbtnGitHub.UseVisualStyleBackColor = false;
+            this.mbtnGitHub.Click += new System.EventHandler(this.mbtnGitHub_Click);
+            // 
+            // btnCheckForUpdates
+            // 
+            this.btnCheckForUpdates.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnCheckForUpdates.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCheckForUpdates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnCheckForUpdates.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCheckForUpdates.Depth = 0;
+            this.btnCheckForUpdates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCheckForUpdates.HighEmphasis = true;
+            this.btnCheckForUpdates.Icon = global::TdInterface.Properties.Resources.update_24;
+            this.btnCheckForUpdates.Location = new System.Drawing.Point(261, 4);
+            this.btnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCheckForUpdates.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCheckForUpdates.Name = "btnCheckForUpdates";
+            this.btnCheckForUpdates.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCheckForUpdates.Size = new System.Drawing.Size(196, 36);
+            this.btnCheckForUpdates.TabIndex = 32;
+            this.btnCheckForUpdates.Text = "Check For Updates";
+            this.btnCheckForUpdates.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.btnCheckForUpdates.UseAccentColor = false;
+            this.btnCheckForUpdates.UseVisualStyleBackColor = false;
+            this.btnCheckForUpdates.Click += new System.EventHandler(this.btnCheckForUpdates_Click);
+            // 
+            // pbAppLogo
+            // 
+            this.pbAppLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.pbAppLogo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.pbAppLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pbAppLogo.Image = global::TdInterface.Properties.Resources.logo_96;
+            this.pbAppLogo.Location = new System.Drawing.Point(6, 6);
+            this.pbAppLogo.Name = "pbAppLogo";
+            this.pbAppLogo.Size = new System.Drawing.Size(64, 64);
+            this.pbAppLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbAppLogo.TabIndex = 34;
+            this.pbAppLogo.TabStop = false;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(76, 12);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(166, 24);
+            this.materialLabel1.TabIndex = 29;
+            this.materialLabel1.Text = "EZ Trade Manager";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblVersion.Depth = 0;
+            this.lblVersion.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblVersion.FontType = MaterialSkin.MaterialSkinManager.fontType.Subtitle2;
+            this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblVersion.Location = new System.Drawing.Point(76, 46);
+            this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(92, 17);
+            this.lblVersion.TabIndex = 28;
+            this.lblVersion.Text = "Version: #.#.#";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.materialLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(23, 533);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(693, 59);
+            this.materialLabel2.TabIndex = 31;
+            this.materialLabel2.Text = resources.GetString("materialLabel2.Text");
+            this.materialLabel2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // rpbGOOG
+            // 
+            this.rpbGOOG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.rpbGOOG.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rpbGOOG.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpbGOOG.Location = new System.Drawing.Point(31, 278);
+            this.rpbGOOG.Name = "rpbGOOG";
+            this.rpbGOOG.Size = new System.Drawing.Size(48, 48);
+            this.rpbGOOG.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbGOOG.TabIndex = 55;
+            this.rpbGOOG.TabStop = false;
+            // 
+            // btnGOOG
+            // 
+            this.btnGOOG.AutoSize = false;
+            this.btnGOOG.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGOOG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnGOOG.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGOOG.Depth = 0;
+            this.btnGOOG.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnGOOG.HighEmphasis = false;
+            this.btnGOOG.Icon = global::TdInterface.Properties.Resources.update_24;
+            this.btnGOOG.Location = new System.Drawing.Point(21, 265);
+            this.btnGOOG.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGOOG.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGOOG.Name = "btnGOOG";
+            this.btnGOOG.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGOOG.Size = new System.Drawing.Size(225, 75);
+            this.btnGOOG.TabIndex = 54;
+            this.btnGOOG.Tag = "GOOG";
+            this.btnGOOG.Text = "GOOG";
+            this.btnGOOG.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGOOG.UseAccentColor = false;
+            this.btnGOOG.UseVisualStyleBackColor = false;
+            // 
+            // rpbPYPL
+            // 
+            this.rpbPYPL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.rpbPYPL.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rpbPYPL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpbPYPL.Location = new System.Drawing.Point(266, 365);
+            this.rpbPYPL.Name = "rpbPYPL";
+            this.rpbPYPL.Size = new System.Drawing.Size(48, 48);
+            this.rpbPYPL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbPYPL.TabIndex = 53;
+            this.rpbPYPL.TabStop = false;
+            // 
+            // btnPYPL
+            // 
+            this.btnPYPL.AutoSize = false;
+            this.btnPYPL.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPYPL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnPYPL.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnPYPL.Depth = 0;
+            this.btnPYPL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnPYPL.HighEmphasis = false;
+            this.btnPYPL.Icon = global::TdInterface.Properties.Resources.update_24;
+            this.btnPYPL.Location = new System.Drawing.Point(256, 352);
+            this.btnPYPL.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnPYPL.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnPYPL.Name = "btnPYPL";
+            this.btnPYPL.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnPYPL.Size = new System.Drawing.Size(225, 75);
+            this.btnPYPL.TabIndex = 52;
+            this.btnPYPL.Tag = "PYPL";
+            this.btnPYPL.Text = "PYPL";
+            this.btnPYPL.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnPYPL.UseAccentColor = false;
+            this.btnPYPL.UseVisualStyleBackColor = false;
             // 
             // materialLabel16
             // 
@@ -1758,7 +1969,7 @@
             this.rpbQQQ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbQQQ.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbQQQ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbQQQ.Location = new System.Drawing.Point(499, 403);
+            this.rpbQQQ.Location = new System.Drawing.Point(499, 106);
             this.rpbQQQ.Name = "rpbQQQ";
             this.rpbQQQ.Size = new System.Drawing.Size(48, 48);
             this.rpbQQQ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1770,7 +1981,7 @@
             this.rpbSPY.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbSPY.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbSPY.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbSPY.Location = new System.Drawing.Point(265, 403);
+            this.rpbSPY.Location = new System.Drawing.Point(265, 106);
             this.rpbSPY.Name = "rpbSPY";
             this.rpbSPY.Size = new System.Drawing.Size(48, 48);
             this.rpbSPY.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1782,7 +1993,7 @@
             this.rpbTSLA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbTSLA.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbTSLA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbTSLA.Location = new System.Drawing.Point(31, 403);
+            this.rpbTSLA.Location = new System.Drawing.Point(499, 365);
             this.rpbTSLA.Name = "rpbTSLA";
             this.rpbTSLA.Size = new System.Drawing.Size(48, 48);
             this.rpbTSLA.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1799,7 +2010,7 @@
             this.btnQQQ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnQQQ.HighEmphasis = false;
             this.btnQQQ.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnQQQ.Location = new System.Drawing.Point(491, 387);
+            this.btnQQQ.Location = new System.Drawing.Point(491, 93);
             this.btnQQQ.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnQQQ.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnQQQ.Name = "btnQQQ";
@@ -1818,7 +2029,7 @@
             this.rpbNVDA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbNVDA.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbNVDA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbNVDA.Location = new System.Drawing.Point(499, 312);
+            this.rpbNVDA.Location = new System.Drawing.Point(31, 364);
             this.rpbNVDA.Name = "rpbNVDA";
             this.rpbNVDA.Size = new System.Drawing.Size(48, 48);
             this.rpbNVDA.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1835,7 +2046,7 @@
             this.btnSPY.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnSPY.HighEmphasis = false;
             this.btnSPY.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnSPY.Location = new System.Drawing.Point(256, 387);
+            this.btnSPY.Location = new System.Drawing.Point(256, 94);
             this.btnSPY.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSPY.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSPY.Name = "btnSPY";
@@ -1854,7 +2065,7 @@
             this.rpbMSFT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbMSFT.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbMSFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbMSFT.Location = new System.Drawing.Point(265, 312);
+            this.rpbMSFT.Location = new System.Drawing.Point(498, 277);
             this.rpbMSFT.Name = "rpbMSFT";
             this.rpbMSFT.Size = new System.Drawing.Size(48, 48);
             this.rpbMSFT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1871,7 +2082,7 @@
             this.btnTSLA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnTSLA.HighEmphasis = false;
             this.btnTSLA.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnTSLA.Location = new System.Drawing.Point(21, 387);
+            this.btnTSLA.Location = new System.Drawing.Point(489, 352);
             this.btnTSLA.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnTSLA.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnTSLA.Name = "btnTSLA";
@@ -1890,7 +2101,7 @@
             this.rpbMETA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbMETA.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbMETA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbMETA.Location = new System.Drawing.Point(31, 312);
+            this.rpbMETA.Location = new System.Drawing.Point(264, 277);
             this.rpbMETA.Name = "rpbMETA";
             this.rpbMETA.Size = new System.Drawing.Size(48, 48);
             this.rpbMETA.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1902,7 +2113,7 @@
             this.rpbAMZN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbAMZN.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbAMZN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbAMZN.Location = new System.Drawing.Point(499, 226);
+            this.rpbAMZN.Location = new System.Drawing.Point(499, 191);
             this.rpbAMZN.Name = "rpbAMZN";
             this.rpbAMZN.Size = new System.Drawing.Size(48, 48);
             this.rpbAMZN.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1914,7 +2125,7 @@
             this.rpbAMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbAMD.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbAMD.Location = new System.Drawing.Point(265, 226);
+            this.rpbAMD.Location = new System.Drawing.Point(265, 191);
             this.rpbAMD.Name = "rpbAMD";
             this.rpbAMD.Size = new System.Drawing.Size(48, 48);
             this.rpbAMD.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1931,7 +2142,7 @@
             this.btnAMZN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAMZN.HighEmphasis = false;
             this.btnAMZN.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnAMZN.Location = new System.Drawing.Point(491, 213);
+            this.btnAMZN.Location = new System.Drawing.Point(491, 178);
             this.btnAMZN.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAMZN.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAMZN.Name = "btnAMZN";
@@ -1950,7 +2161,7 @@
             this.rpbAAPL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.rpbAAPL.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rpbAAPL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpbAAPL.Location = new System.Drawing.Point(31, 226);
+            this.rpbAAPL.Location = new System.Drawing.Point(31, 191);
             this.rpbAAPL.Name = "rpbAAPL";
             this.rpbAAPL.Size = new System.Drawing.Size(48, 48);
             this.rpbAAPL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1967,7 +2178,7 @@
             this.btnNVDA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnNVDA.HighEmphasis = false;
             this.btnNVDA.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnNVDA.Location = new System.Drawing.Point(489, 300);
+            this.btnNVDA.Location = new System.Drawing.Point(21, 352);
             this.btnNVDA.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnNVDA.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnNVDA.Name = "btnNVDA";
@@ -1981,135 +2192,6 @@
             this.btnNVDA.UseVisualStyleBackColor = false;
             this.btnNVDA.Click += new System.EventHandler(this.btnTicker_Click);
             // 
-            // materialCard18
-            // 
-            this.materialCard18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.materialCard18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard18.Controls.Add(this.pbAppLogo);
-            this.materialCard18.Controls.Add(this.materialLabel1);
-            this.materialCard18.Controls.Add(this.btnCheckForUpdates);
-            this.materialCard18.Controls.Add(this.lblVersion);
-            this.materialCard18.Controls.Add(this.mbtnGitHub);
-            this.materialCard18.Controls.Add(this.materialLabel2);
-            this.materialCard18.Depth = 0;
-            this.materialCard18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard18.Location = new System.Drawing.Point(21, 554);
-            this.materialCard18.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard18.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard18.Name = "materialCard18";
-            this.materialCard18.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard18.Size = new System.Drawing.Size(695, 130);
-            this.materialCard18.TabIndex = 33;
-            // 
-            // pbAppLogo
-            // 
-            this.pbAppLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.pbAppLogo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.pbAppLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pbAppLogo.Image = global::TdInterface.Properties.Resources.logo_96;
-            this.pbAppLogo.Location = new System.Drawing.Point(17, 24);
-            this.pbAppLogo.Name = "pbAppLogo";
-            this.pbAppLogo.Size = new System.Drawing.Size(125, 89);
-            this.pbAppLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbAppLogo.TabIndex = 34;
-            this.pbAppLogo.TabStop = false;
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(150, 29);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(166, 24);
-            this.materialLabel1.TabIndex = 29;
-            this.materialLabel1.Text = "EZ Trade Manager";
-            // 
-            // btnCheckForUpdates
-            // 
-            this.btnCheckForUpdates.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnCheckForUpdates.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCheckForUpdates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnCheckForUpdates.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCheckForUpdates.Depth = 0;
-            this.btnCheckForUpdates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnCheckForUpdates.HighEmphasis = true;
-            this.btnCheckForUpdates.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnCheckForUpdates.Location = new System.Drawing.Point(481, 29);
-            this.btnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCheckForUpdates.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCheckForUpdates.Name = "btnCheckForUpdates";
-            this.btnCheckForUpdates.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCheckForUpdates.Size = new System.Drawing.Size(196, 36);
-            this.btnCheckForUpdates.TabIndex = 32;
-            this.btnCheckForUpdates.Text = "Check For Updates";
-            this.btnCheckForUpdates.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.btnCheckForUpdates.UseAccentColor = false;
-            this.btnCheckForUpdates.UseVisualStyleBackColor = false;
-            this.btnCheckForUpdates.Click += new System.EventHandler(this.btnCheckForUpdates_Click);
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblVersion.Depth = 0;
-            this.lblVersion.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblVersion.FontType = MaterialSkin.MaterialSkinManager.fontType.Subtitle1;
-            this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(150, 61);
-            this.lblVersion.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(100, 19);
-            this.lblVersion.TabIndex = 28;
-            this.lblVersion.Text = "Version: #.#.#";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // mbtnGitHub
-            // 
-            this.mbtnGitHub.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.mbtnGitHub.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.mbtnGitHub.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.mbtnGitHub.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.mbtnGitHub.Depth = 0;
-            this.mbtnGitHub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.mbtnGitHub.HighEmphasis = false;
-            this.mbtnGitHub.Icon = global::TdInterface.Properties.Resources.github_24;
-            this.mbtnGitHub.Location = new System.Drawing.Point(512, 68);
-            this.mbtnGitHub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.mbtnGitHub.MouseState = MaterialSkin.MouseState.HOVER;
-            this.mbtnGitHub.Name = "mbtnGitHub";
-            this.mbtnGitHub.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.mbtnGitHub.Size = new System.Drawing.Size(165, 36);
-            this.mbtnGitHub.TabIndex = 30;
-            this.mbtnGitHub.Text = "View on GitHub";
-            this.mbtnGitHub.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.mbtnGitHub.UseAccentColor = false;
-            this.mbtnGitHub.UseVisualStyleBackColor = false;
-            this.mbtnGitHub.Click += new System.EventHandler(this.mbtnGitHub_Click);
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(150, 90);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(269, 14);
-            this.materialLabel2.TabIndex = 31;
-            this.materialLabel2.Text = "Copyright 2022 - 2023, EZTM. All Rights Reserved.";
-            this.materialLabel2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // btnMSFT
             // 
             this.btnMSFT.AutoSize = false;
@@ -2120,7 +2202,7 @@
             this.btnMSFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnMSFT.HighEmphasis = false;
             this.btnMSFT.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnMSFT.Location = new System.Drawing.Point(256, 300);
+            this.btnMSFT.Location = new System.Drawing.Point(489, 265);
             this.btnMSFT.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnMSFT.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnMSFT.Name = "btnMSFT";
@@ -2136,18 +2218,35 @@
             // 
             // materialCard21
             // 
+            this.materialCard21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.materialCard21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard21.Controls.Add(this.lblActiveBroker);
             this.materialCard21.Controls.Add(this.lblSimAccount);
             this.materialCard21.Controls.Add(this.pbCurrentAccountLogo);
             this.materialCard21.Depth = 0;
             this.materialCard21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard21.Location = new System.Drawing.Point(256, 93);
+            this.materialCard21.Location = new System.Drawing.Point(491, 611);
             this.materialCard21.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard21.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard21.Name = "materialCard21";
             this.materialCard21.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard21.Size = new System.Drawing.Size(460, 100);
+            this.materialCard21.Size = new System.Drawing.Size(225, 75);
             this.materialCard21.TabIndex = 27;
+            // 
+            // lblActiveBroker
+            // 
+            this.lblActiveBroker.AutoSize = true;
+            this.lblActiveBroker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.lblActiveBroker.Depth = 0;
+            this.lblActiveBroker.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblActiveBroker.FontType = MaterialSkin.MaterialSkinManager.fontType.Caption;
+            this.lblActiveBroker.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblActiveBroker.Location = new System.Drawing.Point(76, 4);
+            this.lblActiveBroker.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblActiveBroker.Name = "lblActiveBroker";
+            this.lblActiveBroker.Size = new System.Drawing.Size(71, 14);
+            this.lblActiveBroker.TabIndex = 56;
+            this.lblActiveBroker.Text = "Active Broker";
             // 
             // lblSimAccount
             // 
@@ -2158,7 +2257,7 @@
             this.lblSimAccount.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
             this.lblSimAccount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblSimAccount.HighEmphasis = true;
-            this.lblSimAccount.Location = new System.Drawing.Point(289, 83);
+            this.lblSimAccount.Location = new System.Drawing.Point(53, 57);
             this.lblSimAccount.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblSimAccount.Name = "lblSimAccount";
             this.lblSimAccount.Size = new System.Drawing.Size(117, 14);
@@ -2172,7 +2271,7 @@
             this.pbCurrentAccountLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.pbCurrentAccountLogo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.pbCurrentAccountLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pbCurrentAccountLogo.Location = new System.Drawing.Point(247, 20);
+            this.pbCurrentAccountLogo.Location = new System.Drawing.Point(11, 8);
             this.pbCurrentAccountLogo.Name = "pbCurrentAccountLogo";
             this.pbCurrentAccountLogo.Size = new System.Drawing.Size(200, 61);
             this.pbCurrentAccountLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2189,7 +2288,7 @@
             this.btnMETA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnMETA.HighEmphasis = false;
             this.btnMETA.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnMETA.Location = new System.Drawing.Point(21, 300);
+            this.btnMETA.Location = new System.Drawing.Point(254, 265);
             this.btnMETA.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnMETA.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnMETA.Name = "btnMETA";
@@ -2213,7 +2312,7 @@
             this.btnAMD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAMD.HighEmphasis = false;
             this.btnAMD.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnAMD.Location = new System.Drawing.Point(256, 213);
+            this.btnAMD.Location = new System.Drawing.Point(256, 178);
             this.btnAMD.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAMD.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAMD.Name = "btnAMD";
@@ -2230,9 +2329,9 @@
             // materialCard19
             // 
             this.materialCard19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard19.Controls.Add(this.rpbTicker);
             this.materialCard19.Controls.Add(this.btnNewTrade);
             this.materialCard19.Controls.Add(this.txtSymbol);
-            this.materialCard19.Controls.Add(this.lblTrade);
             this.materialCard19.Depth = 0;
             this.materialCard19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard19.Location = new System.Drawing.Point(21, 93);
@@ -2240,11 +2339,26 @@
             this.materialCard19.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard19.Name = "materialCard19";
             this.materialCard19.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard19.Size = new System.Drawing.Size(225, 100);
+            this.materialCard19.Size = new System.Drawing.Size(225, 75);
             this.materialCard19.TabIndex = 24;
+            // 
+            // rpbTicker
+            // 
+            this.rpbTicker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.rpbTicker.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rpbTicker.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpbTicker.Image = global::TdInterface.Properties.Resources.abc_24;
+            this.rpbTicker.Location = new System.Drawing.Point(10, 13);
+            this.rpbTicker.Name = "rpbTicker";
+            this.rpbTicker.Size = new System.Drawing.Size(48, 48);
+            this.rpbTicker.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbTicker.TabIndex = 52;
+            this.rpbTicker.TabStop = false;
+            this.rpbTicker.LoadCompleted += new System.ComponentModel.AsyncCompletedEventHandler(this.rpbTicker_LoadCompleted);
             // 
             // btnNewTrade
             // 
+            this.btnNewTrade.AutoSize = false;
             this.btnNewTrade.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnNewTrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnNewTrade.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
@@ -2252,14 +2366,14 @@
             this.btnNewTrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnNewTrade.HighEmphasis = true;
             this.btnNewTrade.Icon = null;
-            this.btnNewTrade.Location = new System.Drawing.Point(140, 46);
+            this.btnNewTrade.Location = new System.Drawing.Point(182, 20);
             this.btnNewTrade.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnNewTrade.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnNewTrade.Name = "btnNewTrade";
             this.btnNewTrade.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnNewTrade.Size = new System.Drawing.Size(67, 36);
+            this.btnNewTrade.Size = new System.Drawing.Size(32, 36);
             this.btnNewTrade.TabIndex = 25;
-            this.btnNewTrade.Text = "Trade";
+            this.btnNewTrade.Text = "Go";
             this.btnNewTrade.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnNewTrade.UseAccentColor = false;
             this.btnNewTrade.UseVisualStyleBackColor = false;
@@ -2277,7 +2391,7 @@
             this.txtSymbol.Hint = "Symbol";
             this.txtSymbol.LeadingIcon = null;
             this.txtSymbol.LeaveOnEnterKey = true;
-            this.txtSymbol.Location = new System.Drawing.Point(17, 46);
+            this.txtSymbol.Location = new System.Drawing.Point(88, 20);
             this.txtSymbol.MaxLength = 32767;
             this.txtSymbol.MouseState = MaterialSkin.MouseState.OUT;
             this.txtSymbol.Name = "txtSymbol";
@@ -2289,7 +2403,7 @@
             this.txtSymbol.SelectionLength = 0;
             this.txtSymbol.SelectionStart = 0;
             this.txtSymbol.ShortcutsEnabled = true;
-            this.txtSymbol.Size = new System.Drawing.Size(112, 36);
+            this.txtSymbol.Size = new System.Drawing.Size(87, 36);
             this.txtSymbol.TabIndex = 25;
             this.txtSymbol.TabStop = false;
             this.txtSymbol.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -2297,20 +2411,7 @@
             this.txtSymbol.UseAccent = false;
             this.txtSymbol.UseSystemPasswordChar = false;
             this.txtSymbol.UseTallSize = false;
-            // 
-            // lblTrade
-            // 
-            this.lblTrade.AutoSize = true;
-            this.lblTrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.lblTrade.Depth = 0;
-            this.lblTrade.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblTrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTrade.Location = new System.Drawing.Point(17, 14);
-            this.lblTrade.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblTrade.Name = "lblTrade";
-            this.lblTrade.Size = new System.Drawing.Size(42, 19);
-            this.lblTrade.TabIndex = 25;
-            this.lblTrade.Text = "Trade";
+            this.txtSymbol.TextChanged += new System.EventHandler(this.txtSymbol_TextChanged);
             // 
             // btnAAPL
             // 
@@ -2322,7 +2423,7 @@
             this.btnAAPL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAAPL.HighEmphasis = false;
             this.btnAAPL.Icon = global::TdInterface.Properties.Resources.update_24;
-            this.btnAAPL.Location = new System.Drawing.Point(21, 213);
+            this.btnAAPL.Location = new System.Drawing.Point(21, 178);
             this.btnAAPL.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAAPL.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAAPL.Name = "btnAAPL";
@@ -2625,6 +2726,11 @@
             this.materialCard3.PerformLayout();
             this.tpHome.ResumeLayout(false);
             this.tpHome.PerformLayout();
+            this.materialCard18.ResumeLayout(false);
+            this.materialCard18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbGOOG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbPYPL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbQQQ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbSPY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTSLA)).EndInit();
@@ -2634,14 +2740,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.rpbAMZN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAMD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbAAPL)).EndInit();
-            this.materialCard18.ResumeLayout(false);
-            this.materialCard18.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAppLogo)).EndInit();
             this.materialCard21.ResumeLayout(false);
             this.materialCard21.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentAccountLogo)).EndInit();
             this.materialCard19.ResumeLayout(false);
-            this.materialCard19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbTicker)).EndInit();
             this.mtcMasterForm.ResumeLayout(false);
             this.tpTools.ResumeLayout(false);
             this.tpTools.PerformLayout();
@@ -2752,7 +2855,6 @@
         private MaterialSkin.Controls.MaterialCard materialCard19;
         private MaterialSkin.Controls.MaterialButton btnNewTrade;
         private MaterialSkin.Controls.MaterialTextBox2 txtSymbol;
-        private MaterialSkin.Controls.MaterialLabel lblTrade;
         private System.Windows.Forms.PictureBox pbCurrentAccountLogo;
         private MaterialSkin.Controls.MaterialTabControl mtcMasterForm;
         private System.Windows.Forms.TabPage tpTools;
@@ -2761,7 +2863,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel15;
         private MaterialSkin.Controls.MaterialButton btnFuturesCalc;
         private MaterialSkin.Controls.MaterialCard materialCard24;
-        private MaterialSkin.Controls.MaterialCard materialCard18;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialButton btnCheckForUpdates;
         private MaterialSkin.Controls.MaterialLabel lblVersion;
@@ -2783,5 +2884,12 @@
         private CustomControls.RoundedPictureBox rpbTSLA;
         private MaterialSkin.Controls.MaterialLabel materialLabel16;
         private MaterialSkin.Controls.MaterialLabel lblSimAccount;
+        private CustomControls.RoundedPictureBox rpbTicker;
+        private CustomControls.RoundedPictureBox rpbGOOG;
+        private MaterialSkin.Controls.MaterialButton btnGOOG;
+        private CustomControls.RoundedPictureBox rpbPYPL;
+        private MaterialSkin.Controls.MaterialButton btnPYPL;
+        private MaterialSkin.Controls.MaterialLabel lblActiveBroker;
+        private MaterialSkin.Controls.MaterialCard materialCard18;
     }
 }

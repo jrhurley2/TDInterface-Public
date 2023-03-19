@@ -63,6 +63,16 @@ namespace TdInterface.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap abc_24 {
+            get {
+                object obj = ResourceManager.GetObject("abc_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap github_24 {
             get {
                 object obj = ResourceManager.GetObject("github_24", resourceCulture);
