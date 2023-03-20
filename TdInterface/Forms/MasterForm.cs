@@ -23,7 +23,6 @@ namespace TdInterface
         private IStreamer _streamer;
         private string _equityAccountId;
 
-        private Settings _settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
@@ -149,7 +148,7 @@ namespace TdInterface
         {
             var frm = new UserOptionsForm();
             frm.ShowDialog();
-            _settings = Utility.GetSettings();
+            Program.Settings = Utility.GetSettings();
             //ApplySettings();
         }
 
@@ -158,8 +157,8 @@ namespace TdInterface
             var settings = Utility.GetSettings();
             if (settings != null)
             {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;    
-                _settings = settings;
+                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? Program.Settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
+                Program.Settings = settings;
             }
 
         }
@@ -227,13 +226,13 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, name, _equityAccountId, _tradeHelper);
                     frm.Tag = name;
                     _mainForms.Add(nameAsKey, frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, "Enter a symbol...", _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, "Enter a symbol...", _equityAccountId, _tradeHelper);
                     _mainForms.Add(nameAsKey, frm);
 
                 }
