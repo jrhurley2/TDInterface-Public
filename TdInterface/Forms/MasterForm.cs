@@ -148,19 +148,6 @@ namespace TdInterface
         {
             var frm = new UserOptionsForm();
             frm.ShowDialog();
-            Program.Settings = Utility.GetSettings();
-            //ApplySettings();
-        }
-
-        private void MasterForm_Load(object sender, EventArgs e)
-        {
-            var settings = Utility.GetSettings();
-            if (settings != null)
-            {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? Program.Settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
-                Program.Settings = settings;
-            }
-
         }
 
         private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();

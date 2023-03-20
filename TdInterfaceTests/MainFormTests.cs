@@ -42,7 +42,7 @@ namespace TdInterface.Tests
             var currentBalances = new Currentbalances { liquidationValue = 2484 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, false, settings);
+            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, false);
         }
 
         [TestMethod()]
@@ -61,7 +61,7 @@ namespace TdInterface.Tests
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, false, settings);
+            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, 149.92, false, 5, securitiesAccount.DailyPnL, false);
         }
 
         [TestMethod()]
@@ -87,7 +87,7 @@ namespace TdInterface.Tests
 
             var expectedShares = Convert.ToInt32(((settings.MaxLossLimitInR * settings.MaxRisk) + Convert.ToDecimal(securitiesAccount.DailyPnL)) / Convert.ToDecimal(expectedRiskPerShare));
 
-            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, stop, false, 5, securitiesAccount.DailyPnL, false, settings);
+            var actual = MainForm.CreateGenericTriggerOcoOrder(quote, "MARKET", "AAPL", TDAOrderHelper.BUY, 0.0, stop, false, 5, securitiesAccount.DailyPnL, false);
 
             Assert.AreEqual(expectedShares, actual.orderLegCollection[0].quantity);
         }
@@ -104,7 +104,7 @@ namespace TdInterface.Tests
                 MaxLossLimitInR = 3,
                 AdjustRiskNotExceedMaxLoss = false,
             };
-            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
+            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl);
 
             Assert.AreEqual(expectedMaxRisk, actual);
         }
@@ -122,7 +122,7 @@ namespace TdInterface.Tests
                 MaxLossLimitInR = 3,
                 AdjustRiskNotExceedMaxLoss = false,
             };
-            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
+            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl);
         }
 
         [TestMethod()]

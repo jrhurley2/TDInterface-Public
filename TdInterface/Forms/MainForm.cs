@@ -31,7 +31,6 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private bool _tradeShares = false;
 
         public string MainFormName{ get; private set; }
 
@@ -80,14 +79,14 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget)
         {
-            maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
+            maxRisk = CheckMaxRisk(maxRisk, dailyPnl);
 
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
-            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var ocoCalcPrice = orderType == "MARKET" ? Program.Settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
@@ -96,9 +95,9 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, Program.Settings.MinimumRisk, tradeShares);
 
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(Program.Settings.OneRProfitPercenatage, 100)));
 
             Order triggerOrder = null;
 
@@ -114,22 +113,22 @@ namespace TdInterface
             return triggerOrder;
         }
 
-        public static double CheckMaxRisk(double maxRisk, double dailyPnl, Settings settings)
+        public static double CheckMaxRisk(double maxRisk, double dailyPnl)
         {
-            if (!settings.TradeShares && settings.EnableMaxLossLimit)
+            if (!Program.Settings.TradeShares && Program.Settings.EnableMaxLossLimit)
             {
-                var maxLoss = Convert.ToDouble(settings.MaxLossLimitInR * settings.MaxRisk) * -1;
+                var maxLoss = Convert.ToDouble(Program.Settings.MaxLossLimitInR * Program.Settings.MaxRisk) * -1;
 
                 if (dailyPnl < maxLoss)
                 {
                     throw new DailyLossExceededException("You have exceeded your daily loss limit");
                 }
 
-                if (settings.PreventRiskExceedMaxLoss)
+                if (Program.Settings.PreventRiskExceedMaxLoss)
                 {
                     if ((Convert.ToDouble(dailyPnl) - maxRisk) < maxLoss)
                     {
-                        if (settings.AdjustRiskNotExceedMaxLoss)
+                        if (Program.Settings.AdjustRiskNotExceedMaxLoss)
                         {
                             maxRisk = Math.Abs(maxLoss - dailyPnl);
                         }
@@ -158,12 +157,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  Program.Settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, Program.Settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
 
@@ -663,7 +662,7 @@ namespace TdInterface
                     if (Program.Settings.MoveLimitPriceOnFill)
                     {
 
-                        Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {Program.Settings.MoveLimitPriceOnFill}");
+                        Debug.WriteLine($"Settings.MoveLimitPriceOnFill: {Program.Settings.MoveLimitPriceOnFill}");
                         //var symbol = orderFillMessage.Order.Security.Symbol;
                         if (_initialOrders.ContainsKey(symbol.ToUpper()))
                         {
@@ -917,12 +916,6 @@ namespace TdInterface
         
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var settings = Utility.GetSettings();
-            if (settings != null)
-            {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? Program.Settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
-                Program.Settings = settings;
-            }
             ApplySettings();
         }
 
@@ -982,8 +975,6 @@ namespace TdInterface
 
         private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            _tradeShares = chkTradeShares.Checked;
-            Program.Settings.TradeShares = _tradeShares;
             ApplySettings();
         }
         
