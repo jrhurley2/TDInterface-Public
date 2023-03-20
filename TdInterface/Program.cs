@@ -15,6 +15,17 @@ namespace TdInterface
         /// </summary>
         private static TextWriterTraceListener _textWriterTraceListener = null;
 
+        private const string LOG_FOLDER = "logs";
+        private static string LOG_FILE = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log";
+
+        public static string DebugLogFile
+        {
+            get
+            {
+                return Path.Combine(Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), LOG_FOLDER)).FullName, LOG_FILE);
+            }
+        }
+
         /// <summary>
         /// AppVersion with Major.Minor.Build for display within the application and used to compare versions
         /// </summary>
@@ -44,12 +55,7 @@ namespace TdInterface
             ConfigureServices(services);
 
             // Setup debug trace listener for the application
-            string currentPath = Directory.GetCurrentDirectory();
-            string logFolder = Path.Combine(currentPath, "logs");
-            if (!Directory.Exists(logFolder))
-                Directory.CreateDirectory(logFolder);
-
-            _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
+            _textWriterTraceListener = new TextWriterTraceListener(DebugLogFile);
             Trace.Listeners.Add(_textWriterTraceListener);
 
 
