@@ -10,7 +10,7 @@ namespace TdInterface.Forms
         public AboutForm()
         {
             InitializeComponent();
-            lblVersion.Text = $"Version: {Program.GetAppVersion()}";
+            lblVersion.Text = $"Version: {Program.AppVersion}";
         }
     }
 }

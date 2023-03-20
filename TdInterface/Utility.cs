@@ -223,7 +223,7 @@ namespace TdInterface
                     if (tagName != null)
                     {
                         var latestVersion = new Version(jsonNode["tag_name"].ToString());
-                        var currentVersion = new Version(Program.GetAppVersion());
+                        var currentVersion = new Version(Program.AppVersion);
                         return latestVersion > currentVersion;
                     }
                 }
