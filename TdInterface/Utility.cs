@@ -21,7 +21,6 @@ namespace TdInterface
 {
     public class Utility
     {
-        private static string TokenFile = "AccessToken.json";
         private static string SettingsFile = "Settings.json";
         private static string AccountInfoFile = "AccountInfo.json";
 
@@ -31,11 +30,11 @@ namespace TdInterface
 
         public static UserPrincipal UserPrincipal { get; set; }
 
-        public static AccessTokenContainer GetAccessTokenContainer()
+        public static AccessTokenContainer GetAccessTokenContainer(string tokenFile)
         {
             try
             {
-                var bytesToDecrypt = File.ReadAllBytes(TokenFile);
+                var bytesToDecrypt = File.ReadAllBytes(tokenFile);
                 var decrypted = ProtectedData.Unprotect(bytesToDecrypt, GetEntropy(), DataProtectionScope.CurrentUser);
 
                 var accessTokenContainerSTring = UnicodeEncoding.ASCII.GetString(decrypted);
@@ -47,13 +46,13 @@ namespace TdInterface
             }
         }
 
-        public static void SaveAccessTokenContainer(AccessTokenContainer accessTokenContainer)
+        public static void SaveAccessTokenContainer(string tokenFileName , AccessTokenContainer accessTokenContainer)
         {
             var accessTokenAsString = JsonConvert.SerializeObject(accessTokenContainer);
 
             var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accessTokenAsString);
             var encrypted = ProtectedData.Protect(bytesToEncrypt, GetEntropy(), DataProtectionScope.CurrentUser);
-            File.WriteAllBytes(TokenFile, encrypted);
+            File.WriteAllBytes(tokenFileName, encrypted);
         }
 
         public static void SaveSettings(Settings settings)
@@ -83,12 +82,9 @@ namespace TdInterface
             var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accountInfoAsString);
             var encrypted = ProtectedData.Protect(bytesToEncrypt, null, DataProtectionScope.CurrentUser);
             File.WriteAllBytes(AccountInfoFile, encrypted);
-            //var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
-
-            //File.WriteAllText(AccountInfoFile, accountInfoAsString);
         }
 
-        public static AccountInfo GetAccountInfo()
+        public virtual AccountInfo GetAccountInfo()
         {
             try
             {
@@ -97,8 +93,6 @@ namespace TdInterface
 
                 var accountInfoString = UnicodeEncoding.ASCII.GetString(decrypted);
                 return JsonConvert.DeserializeObject<AccountInfo>(accountInfoString);
-                //var accountInfoAsString = File.ReadAllText(AccountInfoFile);
-                //return JsonConvert.DeserializeObject<AccountInfo>(accountInfoAsString);
             }
             catch
             {
@@ -112,9 +106,9 @@ namespace TdInterface
             return UnicodeEncoding.ASCII.GetBytes("TDInterface");
         }
 
-        public static void ClearAccessTokenContainerFile()
+        public static void ClearAccessTokenContainerFile(string fileName)
         {
-            File.Delete(TokenFile);
+            File.Delete(fileName);
         }
 
 

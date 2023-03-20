@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TdInterface.Model;
+using TdInterface.Tda;
+using TdInterface.TradeStation;
 
 namespace TdInterface.Forms
 {
@@ -30,7 +32,7 @@ namespace TdInterface.Forms
 
         private void AccountInfoForm_Load(object sender, EventArgs e)
         {
-            _accountInfo = Utility.GetAccountInfo();
+            _accountInfo = new Utility().GetAccountInfo();
             if (_accountInfo == null) _accountInfo = new AccountInfo();
             chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
             txtConsumerKey.Text = _accountInfo.TdaConsumerKey;
@@ -64,7 +66,8 @@ namespace TdInterface.Forms
 
         private void btnClearCreds_Click(object sender, EventArgs e)
         {
-            Utility.ClearAccessTokenContainerFile();
+            Utility.ClearAccessTokenContainerFile(TdHelper.ACCESSTOKENCONTAINER);
+            Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
         }
     }
 }
