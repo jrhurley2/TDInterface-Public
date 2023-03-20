@@ -19,7 +19,7 @@ using TdInterface.Properties;
 
 namespace TdInterface
 {
-    public class Utility
+    public static class Utility
     {
         private static string SettingsFile = "Settings.json";
         private static string AccountInfoFile = "AccountInfo.json";
@@ -84,7 +84,7 @@ namespace TdInterface
             File.WriteAllBytes(AccountInfoFile, encrypted);
         }
 
-        public virtual AccountInfo GetAccountInfo()
+        public static AccountInfo GetAccountInfo()
         {
             try
             {

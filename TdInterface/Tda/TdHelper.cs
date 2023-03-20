@@ -18,7 +18,6 @@ namespace TdInterface.Tda
         public const string ACCESSTOKENCONTAINER = "tda-accesstokencontainer.json";
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tdameritrade.com");
-        public Utility _utility = new Utility();
 
 
         public const string routeGetToken = "v1/oauth2/token";
@@ -37,10 +36,9 @@ namespace TdInterface.Tda
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
 
         public TdHelper() { }
-        public TdHelper(HttpClient httpClient, Utility utility) 
+        public TdHelper(HttpClient httpClient) 
         { 
             _httpClient = httpClient; 
-            _utility = utility;
         }
 
 
@@ -67,7 +65,7 @@ namespace TdInterface.Tda
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
 
-            var accountInfo = _utility.GetAccountInfo();
+            var accountInfo = Utility.GetAccountInfo();
 
             Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
@@ -101,7 +99,7 @@ namespace TdInterface.Tda
         {
             try
             {
-                var accountInfo = _utility.GetAccountInfo();
+                var accountInfo = Utility.GetAccountInfo();
 
                 Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 

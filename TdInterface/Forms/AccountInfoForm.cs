@@ -32,7 +32,7 @@ namespace TdInterface.Forms
 
         private void AccountInfoForm_Load(object sender, EventArgs e)
         {
-            _accountInfo = new Utility().GetAccountInfo();
+            _accountInfo = Utility.GetAccountInfo();
             if (_accountInfo == null) _accountInfo = new AccountInfo();
             chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
             txtConsumerKey.Text = _accountInfo.TdaConsumerKey;

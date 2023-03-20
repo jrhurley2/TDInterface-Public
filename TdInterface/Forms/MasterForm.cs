@@ -26,7 +26,6 @@ namespace TdInterface
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
-        private Utility _utility = new Utility();
 
         public MasterForm()
         {
@@ -47,12 +46,12 @@ namespace TdInterface
             try
             {
 
-                var accountInfo = _utility.GetAccountInfo();
+                var accountInfo = Utility.GetAccountInfo();
                 if (accountInfo == null)
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
-                    accountInfo = _utility.GetAccountInfo();
+                    accountInfo = Utility.GetAccountInfo();
                 }
 
                 string loginUri = string.Empty;
@@ -122,7 +121,7 @@ namespace TdInterface
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
-                    accountInfo = _utility.GetAccountInfo();
+                    accountInfo = Utility.GetAccountInfo();
                 }
 
                 timer1.Start();

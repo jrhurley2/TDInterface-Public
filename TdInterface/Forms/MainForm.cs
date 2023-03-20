@@ -79,14 +79,14 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget)
+        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
-            maxRisk = CheckMaxRisk(maxRisk, dailyPnl);
+            maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
-            var ocoCalcPrice = orderType == "MARKET" ? Program.Settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
@@ -95,9 +95,9 @@ namespace TdInterface
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, Program.Settings.MinimumRisk, tradeShares);
+            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
 
-            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(Program.Settings.OneRProfitPercenatage, 100)));
+            var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
             Order triggerOrder = null;
 
@@ -111,36 +111,6 @@ namespace TdInterface
             }
 
             return triggerOrder;
-        }
-
-        public static double CheckMaxRisk(double maxRisk, double dailyPnl)
-        {
-            if (!Program.Settings.TradeShares && Program.Settings.EnableMaxLossLimit)
-            {
-                var maxLoss = Convert.ToDouble(Program.Settings.MaxLossLimitInR * Program.Settings.MaxRisk) * -1;
-
-                if (dailyPnl < maxLoss)
-                {
-                    throw new DailyLossExceededException("You have exceeded your daily loss limit");
-                }
-
-                if (Program.Settings.PreventRiskExceedMaxLoss)
-                {
-                    if ((Convert.ToDouble(dailyPnl) - maxRisk) < maxLoss)
-                    {
-                        if (Program.Settings.AdjustRiskNotExceedMaxLoss)
-                        {
-                            maxRisk = Math.Abs(maxLoss - dailyPnl);
-                        }
-                        else
-                        {
-                            throw new DailyLossExceededException("This trade will put you over your daily loss limit");
-                        }
-                    }
-                }
-            }
-
-            return maxRisk;
         }
 
         public async Task GenericTriggerOco(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
@@ -157,12 +127,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
 
