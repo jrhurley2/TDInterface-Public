@@ -22,7 +22,7 @@ namespace TdInterface.Tda.Model
             symbol = stockQuote.symbol;
             bidPrice = stockQuote.bidPrice != 0.0 ? stockQuote.bidPrice : bidPrice;
             askPrice = stockQuote.askPrice != 0.0 ? stockQuote.askPrice : askPrice;
-            lastPrice = stockQuote.lastPrice != 0.0 ? stockQuote.lastPrice : lastPrice;
+            LastPrice = stockQuote.LastPrice != 0.0 ? stockQuote.LastPrice : LastPrice;
             return this;
         }
 
@@ -44,7 +44,7 @@ namespace TdInterface.Tda.Model
                 }
                 else if (key.Equals(FIELD_QUOTE_LAST_PRICE))
                 {
-                    lastPrice = float.Parse(keyValuePairs[key]);
+                    LastPrice = float.Parse(keyValuePairs[key]);
                 }
                 else if (key.Equals(FIELD_QUOTE_DESCRIPTION))
                 {

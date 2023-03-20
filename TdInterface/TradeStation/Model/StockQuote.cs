@@ -35,7 +35,7 @@ namespace TdInterface.TradeStation.Model
                 Ask = value.ToString();
             }
         }
-        public override double lastPrice {
+        public override double LastPrice {
             get
             {
                 return Last != null ? double.Parse(Last) : 0.0;

@@ -93,13 +93,13 @@ namespace TdInterface
             this.txtLastError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtLastError.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtLastError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtLastError.Location = new System.Drawing.Point(810, 292);
+            this.txtLastError.Location = new System.Drawing.Point(384, 357);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
             this.txtLastError.ReadOnly = true;
             this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLastError.Size = new System.Drawing.Size(291, 108);
+            this.txtLastError.Size = new System.Drawing.Size(189, 264);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;
             this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
@@ -141,7 +141,7 @@ namespace TdInterface
             this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnCancelAll.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnCancelAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(88, 727);
+            this.btnCancelAll.Location = new System.Drawing.Point(16, 679);
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
             this.btnCancelAll.TabIndex = 31;
@@ -155,7 +155,7 @@ namespace TdInterface
             this.txtStopToClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtStopToClose.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtStopToClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtStopToClose.Location = new System.Drawing.Point(206, 547);
+            this.txtStopToClose.Location = new System.Drawing.Point(193, 490);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.Size = new System.Drawing.Size(172, 24);
             this.txtStopToClose.TabIndex = 6;
@@ -167,9 +167,9 @@ namespace TdInterface
             this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnBreakEven.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnBreakEven.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnBreakEven.Location = new System.Drawing.Point(26, 513);
+            this.btnBreakEven.Location = new System.Drawing.Point(17, 456);
             this.btnBreakEven.Name = "btnBreakEven";
-            this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
+            this.btnBreakEven.Size = new System.Drawing.Size(170, 58);
             this.btnBreakEven.TabIndex = 30;
             this.btnBreakEven.TabStop = false;
             this.btnBreakEven.Text = "Stop/BE";
@@ -233,7 +233,7 @@ namespace TdInterface
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.label5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(475, 382);
+            this.label5.Location = new System.Drawing.Point(490, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(28, 17);
             this.label5.TabIndex = 11;
@@ -244,7 +244,7 @@ namespace TdInterface
             this.txtBid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtBid.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtBid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtBid.Location = new System.Drawing.Point(475, 403);
+            this.txtBid.Location = new System.Drawing.Point(388, 38);
             this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBid.Name = "txtBid";
             this.txtBid.ReadOnly = true;
@@ -259,7 +259,7 @@ namespace TdInterface
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.label6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label6.Location = new System.Drawing.Point(568, 382);
+            this.label6.Location = new System.Drawing.Point(490, 73);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 17);
             this.label6.TabIndex = 13;
@@ -270,7 +270,7 @@ namespace TdInterface
             this.txtAsk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtAsk.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtAsk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtAsk.Location = new System.Drawing.Point(568, 403);
+            this.txtAsk.Location = new System.Drawing.Point(388, 70);
             this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAsk.Name = "txtAsk";
             this.txtAsk.ReadOnly = true;
@@ -285,7 +285,7 @@ namespace TdInterface
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.label7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label7.Location = new System.Drawing.Point(380, 447);
+            this.label7.Location = new System.Drawing.Point(473, 285);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 17);
             this.label7.TabIndex = 22;
@@ -296,7 +296,7 @@ namespace TdInterface
             this.txtLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtLimit.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtLimit.Location = new System.Drawing.Point(380, 467);
+            this.txtLimit.Location = new System.Drawing.Point(377, 278);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 24);
             this.txtLimit.TabIndex = 2;
@@ -309,7 +309,7 @@ namespace TdInterface
             this.chkTradeShares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chkTradeShares.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.chkTradeShares.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.chkTradeShares.Location = new System.Drawing.Point(410, 201);
+            this.chkTradeShares.Location = new System.Drawing.Point(377, 174);
             this.chkTradeShares.Name = "chkTradeShares";
             this.chkTradeShares.Size = new System.Drawing.Size(70, 21);
             this.chkTradeShares.TabIndex = 5;
@@ -322,7 +322,7 @@ namespace TdInterface
             this.txtHeartBeat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtHeartBeat.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtHeartBeat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtHeartBeat.Location = new System.Drawing.Point(673, 866);
+            this.txtHeartBeat.Location = new System.Drawing.Point(194, 713);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
             this.txtHeartBeat.Size = new System.Drawing.Size(285, 24);
@@ -336,7 +336,7 @@ namespace TdInterface
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.label8.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label8.Location = new System.Drawing.Point(673, 846);
+            this.label8.Location = new System.Drawing.Point(194, 679);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 17);
             this.label8.TabIndex = 35;
@@ -347,7 +347,7 @@ namespace TdInterface
             this.txtConnectionStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtConnectionStatus.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtConnectionStatus.Location = new System.Drawing.Point(297, 866);
+            this.txtConnectionStatus.Location = new System.Drawing.Point(161, 754);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
             this.txtConnectionStatus.Size = new System.Drawing.Size(318, 24);
@@ -360,7 +360,7 @@ namespace TdInterface
             this.lblConnectionStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblConnectionStatus.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblConnectionStatus.Location = new System.Drawing.Point(297, 846);
+            this.lblConnectionStatus.Location = new System.Drawing.Point(30, 761);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
             this.lblConnectionStatus.Size = new System.Drawing.Size(123, 17);
             this.lblConnectionStatus.TabIndex = 37;
@@ -371,7 +371,7 @@ namespace TdInterface
             this.txtLimitOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtLimitOffset.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtLimitOffset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtLimitOffset.Location = new System.Drawing.Point(475, 467);
+            this.txtLimitOffset.Location = new System.Drawing.Point(380, 308);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 24);
             this.txtLimitOffset.TabIndex = 3;
@@ -464,7 +464,7 @@ namespace TdInterface
             this.chkDisableFirstTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chkDisableFirstTarget.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.chkDisableFirstTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(394, 246);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(380, 231);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(146, 21);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -477,7 +477,7 @@ namespace TdInterface
             this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.label11.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label11.Location = new System.Drawing.Point(475, 448);
+            this.label11.Location = new System.Drawing.Point(473, 311);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(81, 17);
             this.label11.TabIndex = 23;
@@ -598,7 +598,7 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnExit33);
             this.groupBox2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.groupBox2.Location = new System.Drawing.Point(34, 577);
+            this.groupBox2.Location = new System.Drawing.Point(17, 529);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(291, 144);
             this.groupBox2.TabIndex = 33;
@@ -611,7 +611,7 @@ namespace TdInterface
             this.lblVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.lblVersion.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblVersion.Location = new System.Drawing.Point(988, 788);
+            this.lblVersion.Location = new System.Drawing.Point(384, 636);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(55, 17);
             this.lblVersion.TabIndex = 39;
@@ -740,6 +740,7 @@ namespace TdInterface
             this.txtStop.HideSelection = true;
             this.txtStop.Hint = "Stop";
             this.txtStop.LeadingIcon = null;
+            this.txtStop.LeaveOnEnterKey = true;
             this.txtStop.Location = new System.Drawing.Point(17, 174);
             this.txtStop.MaxLength = 32767;
             this.txtStop.MouseState = MaterialSkin.MouseState.OUT;
@@ -846,7 +847,7 @@ namespace TdInterface
             this.txtMoveStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.txtMoveStop.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtMoveStop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtMoveStop.Location = new System.Drawing.Point(206, 513);
+            this.txtMoveStop.Location = new System.Drawing.Point(193, 456);
             this.txtMoveStop.Name = "txtMoveStop";
             this.txtMoveStop.Size = new System.Drawing.Size(92, 17);
             this.txtMoveStop.TabIndex = 32;
@@ -855,7 +856,7 @@ namespace TdInterface
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.ClientSize = new System.Drawing.Size(1166, 980);
+            this.ClientSize = new System.Drawing.Size(597, 800);
             this.Controls.Add(this.btnSellLmtTriggerOco);
             this.Controls.Add(this.btnSellMrkTriggerOco);
             this.Controls.Add(this.btnBuyLmtTriggerOco);
@@ -897,9 +898,9 @@ namespace TdInterface
             this.Controls.Add(this.txtLastError);
             this.FormStyle = MaterialSkin.Controls.MaterialForm.FormStyles.ActionBar_None;
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(700, 570);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3, 24, 3, 3);
+            this.Sizable = false;
             this.Text = "EZTM - EZ Trade Manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);

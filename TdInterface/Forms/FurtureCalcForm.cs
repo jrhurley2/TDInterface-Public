@@ -52,7 +52,7 @@ namespace TdInterface
             {
                 if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
                 _stockQuote = _stockQuote.Update(stockQuote);
-                SafeUpdateTextBox(txtLastPrice, _stockQuote.lastPrice.ToString("0.00"));
+                SafeUpdateTextBox(txtLastPrice, _stockQuote.LastPrice.ToString("0.00"));
                 SafeUpdateTextBox(txtBid, _stockQuote.bidPrice.ToString("0.00"));
                 SafeUpdateTextBox(txtAsk, _stockQuote.askPrice.ToString("0.00"));
 
@@ -61,7 +61,7 @@ namespace TdInterface
                 var tickValuePerContract = Double.Parse(txtTickValue.Text);
                 var ticksPerPoint = Double.Parse(txtTicksPerPoint.Text);
 
-                var shares = risk / (((Math.Abs(_stockQuote.lastPrice - stop) * ticksPerPoint) * tickValuePerContract));
+                var shares = risk / (((Math.Abs(_stockQuote.LastPrice - stop) * ticksPerPoint) * tickValuePerContract));
 
                 SafeUpdateTextBox(txtShares, shares.ToString("0.00"));
 

@@ -37,7 +37,7 @@ namespace TdInterface.Tests
             settings.MaxRisk = 5;
             settings.EnableMaxLossLimit = true;
 
-            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, LastPrice = 150.01, askPrice = 150.02 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2484 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
@@ -56,7 +56,7 @@ namespace TdInterface.Tests
             settings.EnableMaxLossLimit = true;
             settings.PreventRiskExceedMaxLoss = true;
 
-            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, lastPrice = 150.01, askPrice = 150.02 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 150, LastPrice = 150.01, askPrice = 150.02 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
@@ -77,13 +77,13 @@ namespace TdInterface.Tests
             settings.UseBidAskOcoCalc = false;
 
 
-            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 149.99, lastPrice = 150.0, askPrice = 150.01 };
+            var quote = new Model.StockQuote { symbol = "AAPL", bidPrice = 149.99, LastPrice = 150.0, askPrice = 150.01 };
             var initialBalances = new Initialbalances { liquidationValue = 2500 };
             var currentBalances = new Currentbalances { liquidationValue = 2489 };
             var securitiesAccount = new Securitiesaccount { currentBalances = currentBalances, initialBalances = initialBalances };
 
             var expectedRiskPerShare = .20;
-            var stop = quote.lastPrice - expectedRiskPerShare;
+            var stop = quote.LastPrice - expectedRiskPerShare;
 
             var expectedShares = Convert.ToInt32(((settings.MaxLossLimitInR * settings.MaxRisk) + Convert.ToDecimal(securitiesAccount.DailyPnL)) / Convert.ToDecimal(expectedRiskPerShare));
 

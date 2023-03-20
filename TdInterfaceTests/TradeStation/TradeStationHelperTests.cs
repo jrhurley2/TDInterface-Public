@@ -20,13 +20,13 @@ namespace TdInterface.TradeStation.Tests
                 symbol = "AAPL",
                 askPrice = 140.0,
                 bidPrice = 139.95,
-                lastPrice = 139.98
+                LastPrice = 139.98
             };
 
             var helper = new TradeStationHelper("", "");
             var actual = helper.SetStockQuote(expectedAaplQuote);
 
-            Assert.AreEqual(expectedAaplQuote.lastPrice, actual.lastPrice);
+            Assert.AreEqual(expectedAaplQuote.LastPrice, actual.LastPrice);
             Assert.AreEqual(expectedAaplQuote.askPrice, actual.askPrice);
             Assert.AreEqual(expectedAaplQuote.bidPrice, actual.bidPrice);
             Assert.AreEqual(expectedAaplQuote.symbol, actual.symbol);
@@ -40,7 +40,7 @@ namespace TdInterface.TradeStation.Tests
                 symbol = "AAPL",
                 askPrice = 140.0,
                 bidPrice = 139.95,
-                lastPrice = 139.98
+                LastPrice = 139.98
             };
 
             var helper = new TradeStationHelper("", "");
@@ -54,7 +54,7 @@ namespace TdInterface.TradeStation.Tests
 
             var actual = helper.SetStockQuote(incrementalQuote);
 
-            Assert.AreEqual(initialAaplQuote.lastPrice, actual.lastPrice);
+            Assert.AreEqual(initialAaplQuote.LastPrice, actual.LastPrice);
             Assert.AreEqual(initialAaplQuote.askPrice, actual.askPrice);
             Assert.AreEqual(incrementalQuote.bidPrice, actual.bidPrice);
             Assert.AreEqual(initialAaplQuote.symbol, actual.symbol);
@@ -69,7 +69,7 @@ namespace TdInterface.TradeStation.Tests
                 symbol = "AAPL",
                 askPrice = 140.0,
                 bidPrice = 139.95,
-                lastPrice = 139.98
+                LastPrice = 139.98
             };
 
             var helper = new TradeStationHelper("", "");
@@ -78,7 +78,7 @@ namespace TdInterface.TradeStation.Tests
 
             var actual = helper.GetStockQuote(expectedAaplQuote.symbol);
 
-            Assert.AreEqual(expectedAaplQuote.lastPrice, actual.lastPrice);
+            Assert.AreEqual(expectedAaplQuote.LastPrice, actual.LastPrice);
             Assert.AreEqual(expectedAaplQuote.askPrice, actual.askPrice);
             Assert.AreEqual(expectedAaplQuote.bidPrice, actual.bidPrice);
             Assert.AreEqual(expectedAaplQuote.symbol, actual.symbol);

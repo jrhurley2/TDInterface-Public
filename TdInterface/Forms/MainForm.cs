@@ -27,6 +27,8 @@ namespace TdInterface
       
         private string curSymbol = String.Empty;
 
+        private TdInterface.Model.StockQuote _stockQuote = null;
+
       
         // Made Public for testing.
         public bool isTda = false;
@@ -80,6 +82,10 @@ namespace TdInterface
             this.TopMost = settings.AlwaysOnTop;
 
             lblVersion.Text = $"v {Program.AppVersion}";
+
+            _stockQuote = new StockQuote();
+
+            lblLastPrice.DataBindings.Add("Text", _stockQuote, "LastPrice", true, DataSourceUpdateMode.OnPropertyChanged, "NaN", "0.00");
         }
 
 
@@ -90,7 +96,7 @@ namespace TdInterface
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
-            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
+            var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.LastPrice : triggerLimit;
             var riskPerShare = isShort ? stopPrice - ocoCalcPrice : ocoCalcPrice - stopPrice;
             var firstTargetlimtPrice = isShort ? ocoCalcPrice - riskPerShare : ocoCalcPrice + riskPerShare;
 
@@ -513,7 +519,9 @@ namespace TdInterface
             SafeUpdateControl(txtAsk, stockQuote.askPrice.ToString("0.00"));
             SafeUpdateControl(lblSymbol, stockQuote.symbol);
             SafeUpdateControl(lblDescription, stockQuote.description);
-            SafeUpdateControl(lblLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            //SafeUpdateControl(lblLastPrice, stockQuote.LastPrice.ToString("0.00"));
+
+            this.Invoke(new Action(() => _stockQuote.Update(stockQuote)));
 
             rpbTickerLogo.LoadAsync(Utility.GetTickerImageURL(stockQuote.symbol));
 
@@ -525,7 +533,7 @@ namespace TdInterface
                     var initialStop = float.Parse(txtStop.Text);
 
                     float risk = Math.Abs(avgPrice - initialStop);
-                    float reward = (float)stockQuote.lastPrice - avgPrice;
+                    float reward = (float)stockQuote.LastPrice - avgPrice;
                     reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
@@ -549,13 +557,13 @@ namespace TdInterface
                     if (double.TryParse(txtStop.Text, out stop))
                     {
                         double oneToOne;
-                        if (stop < stockQuote.lastPrice)
+                        if (stop < stockQuote.LastPrice)
                         {
-                            oneToOne = (stockQuote.lastPrice - stop) + stockQuote.lastPrice;
+                            oneToOne = (stockQuote.LastPrice - stop) + stockQuote.LastPrice;
                         }
                         else
                         {
-                            oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
+                            oneToOne = stockQuote.LastPrice - (stop - stockQuote.LastPrice);
                         }
                         SafeUpdateControl(txtOneToOne, oneToOne.ToString("0.00"));
                     }
