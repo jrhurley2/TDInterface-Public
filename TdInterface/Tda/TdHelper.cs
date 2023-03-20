@@ -88,7 +88,7 @@ namespace TdInterface.Tda
 
             var response = await _httpClient.SendAsync(request);
 
-            var AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
             AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
             
             //Write the access token container, this should ahve the refresh token
