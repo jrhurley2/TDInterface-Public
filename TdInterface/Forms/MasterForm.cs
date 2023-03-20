@@ -24,7 +24,6 @@ namespace TdInterface
         private string _equityAccountId;
 
         private Settings _settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
@@ -34,14 +33,6 @@ namespace TdInterface
         {
             try
             {
-                string currentPath = Directory.GetCurrentDirectory();
-                string logFolder = Path.Combine(currentPath, "logs");
-                if (!Directory.Exists(logFolder))
-                    Directory.CreateDirectory(logFolder);
-
-                _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
-                Trace.Listeners.Add(_textWriterTraceListener);
-
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
 
@@ -148,7 +139,7 @@ namespace TdInterface
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-            if (_tradeStationHelper.AccessTokenContainer.ExpiresIn < 100)
+            if (_tradeHelper.AccessTokenContainer.ExpiresIn < 100)
             {
                 _ = await _tradeHelper.RefreshAccessToken();
             }
@@ -198,10 +189,7 @@ namespace TdInterface
         {
             try
             {
-                _textWriterTraceListener.Flush();
-                _textWriterTraceListener.Close();
                 if(_streamer != null) _streamer.Dispose();
-                _textWriterTraceListener.Dispose();
 
                 foreach(var frm in _mainForms)
                 {
