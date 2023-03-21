@@ -64,6 +64,7 @@ namespace TdInterface
             _textWriterTraceListener = new TextWriterTraceListener(DebugLogFile);
             Trace.Listeners.Add(_textWriterTraceListener);
 
+            Settings = Utility.GetSettings();
 
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
