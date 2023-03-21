@@ -13,6 +13,7 @@ using System.Diagnostics;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TdInterface.Tests
 {
@@ -104,7 +105,7 @@ namespace TdInterface.Tests
                 MaxLossLimitInR = 3,
                 AdjustRiskNotExceedMaxLoss = false,
             };
-            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
+            var actual = TDAOrderHelper.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
 
             Assert.AreEqual(expectedMaxRisk, actual);
         }
@@ -122,7 +123,7 @@ namespace TdInterface.Tests
                 MaxLossLimitInR = 3,
                 AdjustRiskNotExceedMaxLoss = false,
             };
-            var actual = MainForm.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
+           var actual = TDAOrderHelper.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
         }
 
         [TestMethod()]

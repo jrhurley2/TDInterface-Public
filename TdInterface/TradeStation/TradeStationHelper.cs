@@ -17,6 +17,7 @@ namespace TdInterface.TradeStation
     public class TradeStationHelper : IHelper
     {
         public const string ACCESSTOKENCONTAINER = "ts-accesstokencontainer.json";
+        private const string BASE_SIM_URI = "https://sim-api.tradestation.com/";
 
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tradestation.com/");
@@ -35,6 +36,8 @@ namespace TdInterface.TradeStation
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
 
         private static Securitiesaccount _securitiesaccount;
+        private AccessTokenContainer accessTokenContainer;
+
 
         public Securitiesaccount Securitiesaccount
         {
@@ -48,16 +51,29 @@ namespace TdInterface.TradeStation
             }
         }
 
-        public AccessTokenContainer AccessTokenContainer { get; set; }
-
-        public TradeStationHelper(string clientId, string clientSecret) 
+        public AccessTokenContainer AccessTokenContainer
         { 
+            get
+            {
+                if (accessTokenContainer == null)
+                {
+                    accessTokenContainer = Utility.GetAccessTokenContainer(ACCESSTOKENCONTAINER);
+                }
+                return accessTokenContainer;
+            }
+            set
+            {
+                Debug.WriteLine("***********************ACCESSTOKENCONTAINER BEING SET");
+                accessTokenContainer = value;
+            }
+        }
+
+        public TradeStationHelper(string clientId, string clientSecret, bool useSim)
+        {
+            if (useSim)
+                BaseUri = new Uri(BASE_SIM_URI);
             _clientId = clientId;
             _clientSecret = clientSecret;
-        }
-        public TradeStationHelper(string baseUri, string clientId, string clientSecret) : this(clientId, clientSecret)
-        {
-            BaseUri = new Uri(baseUri);
         }
 
         /// <summary>
@@ -287,7 +303,7 @@ namespace TdInterface.TradeStation
 
             //var orderNumber = ulong.Parse(o.OrderID);
 
-            ulong orderNumber = 0l;
+            ulong orderNumber = 0L;
             return orderNumber;
         }
 
@@ -435,7 +451,7 @@ namespace TdInterface.TradeStation
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine();
+                    Debug.WriteLine(ex.Message);
                 }
             }
 

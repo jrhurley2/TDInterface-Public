@@ -14,19 +14,18 @@ namespace TdInterface.Tda.Tests
     [TestClass()]
     public class TdHelperTests
     {
-        private static Mock<Utility> _mockUtility;
 
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            var expectedAccountInfo = new AccountInfo
-            {
-                TdaConsumerKey = "tdakey",
-                UseTdaEquity = true
-            };
+            //var expectedAccountInfo = new AccountInfo
+            //{
+            //    TdaConsumerKey = "tdakey",
+            //    UseTdaEquity = true
+            //};
 
-            var _mockUtility = new Mock<Utility>();
-            _mockUtility.Setup(s => s.GetAccountInfo()).Returns(expectedAccountInfo);
+            //var _mockUtility = new Mock<Utility>();
+            //_mockUtility.Setup(s => s.GetAccountInfo()).Returns(expectedAccountInfo);
 
         }
 

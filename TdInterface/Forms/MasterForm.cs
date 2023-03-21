@@ -23,25 +23,14 @@ namespace TdInterface
         private IStreamer _streamer;
         private string _equityAccountId;
 
-        private Settings _settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
-        private TextWriterTraceListener _textWriterTraceListener = null;
         private TdHelper _tdHelper = new TdHelper();
         private TradeStationHelper _tradeStationHelper;
         private IHelper _tradeHelper;
-        private Utility _utility = new Utility();
 
         public MasterForm()
         {
             try
             {
-                string currentPath = Directory.GetCurrentDirectory();
-                string logFolder = Path.Combine(currentPath, "logs");
-                if (!Directory.Exists(logFolder))
-                    Directory.CreateDirectory(logFolder);
-
-                _textWriterTraceListener = new TextWriterTraceListener($"{logFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log");
-                Trace.Listeners.Add(_textWriterTraceListener);
-
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
 
@@ -57,19 +46,18 @@ namespace TdInterface
             try
             {
 
-                var accountInfo = _utility.GetAccountInfo();
+                var accountInfo = Utility.GetAccountInfo();
                 if (accountInfo == null)
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
-                    accountInfo = _utility.GetAccountInfo();
+                    accountInfo = Utility.GetAccountInfo();
                 }
 
                 string loginUri = string.Empty;
 
                 if (accountInfo.UseTdaEquity)
                 {
-                    _tdHelper.AccessTokenContainer = Utility.GetAccessTokenContainer(TdHelper.ACCESSTOKENCONTAINER);
                     if (_tdHelper.AccessTokenContainer == null || (_tdHelper.AccessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (_tdHelper.AccessTokenContainer.IsRefreshTokenExpired || _tdHelper.AccessTokenContainer.RefreshTokenExpiresInDays < 5)))
                     {
                         Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
@@ -93,17 +81,7 @@ namespace TdInterface
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;
 
-
-                    if (accountInfo.TradeStationUseSimAccount)
-                    {
-                        _tradeStationHelper = new TradeStationHelper("https://sim-api.tradestation.com/", clientid, clientSecret);
-                    }
-                    else
-                    {
-                        _tradeStationHelper = new TradeStationHelper(clientid, clientSecret);
-                    }
-
-                    _tradeStationHelper.AccessTokenContainer = Utility.GetAccessTokenContainer(TradeStationHelper.ACCESSTOKENCONTAINER);
+                    _tradeStationHelper = new TradeStationHelper(clientid, clientSecret, accountInfo.TradeStationUseSimAccount);
 
                     if (_tradeStationHelper.AccessTokenContainer == null)
                     {
@@ -132,7 +110,7 @@ namespace TdInterface
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
-                    accountInfo = _utility.GetAccountInfo();
+                    accountInfo = Utility.GetAccountInfo();
                 }
 
                 timer1.Start();
@@ -148,7 +126,7 @@ namespace TdInterface
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-            if (_tradeStationHelper.AccessTokenContainer.ExpiresIn < 100)
+            if (_tradeHelper.AccessTokenContainer.ExpiresIn < 100)
             {
                 _ = await _tradeHelper.RefreshAccessToken();
             }
@@ -158,19 +136,6 @@ namespace TdInterface
         {
             var frm = new UserOptionsForm();
             frm.ShowDialog();
-            _settings = Utility.GetSettings();
-            //ApplySettings();
-        }
-
-        private void MasterForm_Load(object sender, EventArgs e)
-        {
-            var settings = Utility.GetSettings();
-            if (settings != null)
-            {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;    
-                _settings = settings;
-            }
-
         }
 
         private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
@@ -198,10 +163,7 @@ namespace TdInterface
         {
             try
             {
-                _textWriterTraceListener.Flush();
-                _textWriterTraceListener.Close();
                 if(_streamer != null) _streamer.Dispose();
-                _textWriterTraceListener.Dispose();
 
                 foreach(var frm in _mainForms)
                 {
@@ -239,13 +201,13 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    frm = new MainForm(_streamer, _settings, name, _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, name, _equityAccountId, _tradeHelper);
                     frm.Tag = name;
                     _mainForms.Add(nameAsKey, frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, _settings, "Enter a symbol...", _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, "Enter a symbol...", _equityAccountId, _tradeHelper);
                     _mainForms.Add(nameAsKey, frm);
 
                 }

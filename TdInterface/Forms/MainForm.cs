@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
-using TdInterface.TradeStation;
 using Websocket.Client;
 using Websocket.Client.Models;
 
@@ -34,12 +31,10 @@ namespace TdInterface
 
         public Securitiesaccount _securitiesaccount;
         private Position _activePosition;
-        private bool _tradeShares = false;
-        private Settings _settings = new Settings() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
 
         public string MainFormName{ get; private set; }
 
-        public MainForm(IStreamer streamer, Settings settings, string name, string accountId, IHelper helper)
+        public MainForm(IStreamer streamer, string name, string accountId, IHelper helper)
         {
             InitializeComponent();
 
@@ -50,11 +45,10 @@ namespace TdInterface
             MainFormName = name;
             this.Text = name;
 
-            _settings = settings;
             _accountId = accountId;
 
-            txtPnL.Visible = _settings.ShowPnL;
-            lblPnL.Visible = _settings.ShowPnL;
+            txtPnL.Visible = Program.Settings.ShowPnL;
+            lblPnL.Visible = Program.Settings.ShowPnL;
 
             _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
@@ -79,15 +73,15 @@ namespace TdInterface
             var securitiesaccount = _tradeHelper.GetAccount(_accountId).Result;
 
             // Handle always on top setting
-            this.TopMost = settings.AlwaysOnTop;
+            this.TopMost = Program.Settings.AlwaysOnTop;
 
-            lblVersion.Text = $"v {Program.GetAppVersion()}";
+            lblVersion.Text = $"v {Program.AppVersion}";
         }
 
 
         public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
-            maxRisk = CheckMaxRisk(maxRisk, dailyPnl, settings);
+            maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
 
@@ -119,36 +113,6 @@ namespace TdInterface
             return triggerOrder;
         }
 
-        public static double CheckMaxRisk(double maxRisk, double dailyPnl, Settings settings)
-        {
-            if (!settings.TradeShares && settings.EnableMaxLossLimit)
-            {
-                var maxLoss = Convert.ToDouble(settings.MaxLossLimitInR * settings.MaxRisk) * -1;
-
-                if (dailyPnl < maxLoss)
-                {
-                    throw new DailyLossExceededException("You have exceeded your daily loss limit");
-                }
-
-                if (settings.PreventRiskExceedMaxLoss)
-                {
-                    if ((Convert.ToDouble(dailyPnl) - maxRisk) < maxLoss)
-                    {
-                        if (settings.AdjustRiskNotExceedMaxLoss)
-                        {
-                            maxRisk = Math.Abs(maxLoss - dailyPnl);
-                        }
-                        else
-                        {
-                            throw new DailyLossExceededException("This trade will put you over your daily loss limit");
-                        }
-                    }
-                }
-            }
-
-            return maxRisk;
-        }
-
         public async Task GenericTriggerOco(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
 
@@ -163,12 +127,12 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked,  _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, _settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
                 }
 
@@ -177,8 +141,8 @@ namespace TdInterface
                 AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
-                if (_settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
-                if (_settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
+                if (Program.Settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
+                if (Program.Settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
             }
             catch (Exception ex)
             {
@@ -394,7 +358,7 @@ namespace TdInterface
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
 
-            if (stopOrder != null  && _settings.ReduceStopOnClose)
+            if (stopOrder != null  && Program.Settings.ReduceStopOnClose)
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
@@ -416,7 +380,7 @@ namespace TdInterface
             //TODO:  THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
             var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
 
-            if (stopOrder != null && _settings.ReduceStopOnClose)
+            if (stopOrder != null && Program.Settings.ReduceStopOnClose)
             {
                 if (parent != null && parent.orderStrategyType.Equals("OCO"))
                 {
@@ -665,10 +629,10 @@ namespace TdInterface
                         }
                     }
 
-                    if (_settings.MoveLimitPriceOnFill)
+                    if (Program.Settings.MoveLimitPriceOnFill)
                     {
 
-                        Debug.WriteLine($"_settings.MoveLimitPriceOnFill: {_settings.MoveLimitPriceOnFill}");
+                        Debug.WriteLine($"Settings.MoveLimitPriceOnFill: {Program.Settings.MoveLimitPriceOnFill}");
                         //var symbol = orderFillMessage.Order.Security.Symbol;
                         if (_initialOrders.ContainsKey(symbol.ToUpper()))
                         {
@@ -922,31 +886,25 @@ namespace TdInterface
         
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var settings = Utility.GetSettings();
-            if (settings != null)
-            {
-                settings.OneRProfitPercenatage = settings.OneRProfitPercenatage == 0 ? _settings.OneRProfitPercenatage : settings.OneRProfitPercenatage;
-                _settings = settings;
-            }
             ApplySettings();
         }
 
         private void ApplySettings()
         {
-            chkTradeShares.Checked = _settings.TradeShares;
-            chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
+            chkTradeShares.Checked = Program.Settings.TradeShares;
+            chkDisableFirstTarget.Checked = Program.Settings.DisableFirstTargetProfitDefault;
 
-            if (_settings.TradeShares)
+            if (Program.Settings.TradeShares)
             {
-                txtRisk.Text = _settings.MaxShares.ToString("#");
+                txtRisk.Text = Program.Settings.MaxShares.ToString("#");
             }
             else
             {
-                txtRisk.Text = _settings.MaxRisk.ToString("#.##");
+                txtRisk.Text = Program.Settings.MaxRisk.ToString("#.##");
             }
-            if (_settings.DefaultLimitOffset != 0)
+            if (Program.Settings.DefaultLimitOffset != 0)
             {
-                txtLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
+                txtLimitOffset.Text = Program.Settings.DefaultLimitOffset.ToString("#.##");
             }
         }
 
@@ -963,8 +921,6 @@ namespace TdInterface
                 {
                     curSymbol = txtSymbol.Text;
                     _streamer.SubscribeQuote(txtSymbol.Text.ToUpper());
-                    //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
-                    //await UpdatePriceHistory();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;
@@ -987,8 +943,6 @@ namespace TdInterface
 
         private void chkTradeShares_CheckedChanged(object sender, EventArgs e)
         {
-            _tradeShares = chkTradeShares.Checked;
-            _settings.TradeShares = _tradeShares;
             ApplySettings();
         }
         

@@ -176,6 +176,36 @@ namespace TdInterface.Tda
             return quantity;
         }
 
+        public static double CheckMaxRisk(double maxRisk, double dailyPnl, Settings settings)
+        {
+            if (!settings.TradeShares && settings.EnableMaxLossLimit)
+            {
+                var maxLoss = Convert.ToDouble(settings.MaxLossLimitInR * settings.MaxRisk) * -1;
+
+                if (dailyPnl < maxLoss)
+                {
+                    throw new DailyLossExceededException("You have exceeded your daily loss limit");
+                }
+
+                if (settings.PreventRiskExceedMaxLoss)
+                {
+                    if ((Convert.ToDouble(dailyPnl) - maxRisk) < maxLoss)
+                    {
+                        if (settings.AdjustRiskNotExceedMaxLoss)
+                        {
+                            maxRisk = Math.Abs(maxLoss - dailyPnl);
+                        }
+                        else
+                        {
+                            throw new DailyLossExceededException("This trade will put you over your daily loss limit");
+                        }
+                    }
+                }
+            }
+
+            return maxRisk;
+        }
+
         private static Order GetParentOrder(Order order, Order child)
         {
             if (order == child)

@@ -6,7 +6,6 @@ namespace TdInterface
 {
     public partial class UserOptionsForm : EZTMBaseForm
     {
-        public Settings _settings;
         public UserOptionsForm()
         {
             InitializeComponent();
@@ -14,52 +13,52 @@ namespace TdInterface
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _settings.TradeShares = chkTradeShares.Checked;
-            _settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : decimal.Parse(txtMaxRisk.Text);
-            _settings.MaxShares = int.Parse(txtMaxShares.Text);
-            _settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
-            _settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
-            _settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
-            _settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
-            _settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
-            _settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : decimal.Parse(txtDefaultLimitOffset.Text);
-            _settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
-            _settings.MaxLossLimitInR = _settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
-            _settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
-            _settings.SendAltPrtScrOnOpen = chkSendPrtScrOnOpen.Checked;
-            _settings.ShowPnL = chkShowPnL.Checked;
-            _settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
-            _settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
-            _settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
-            _settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
+            Program.Settings.TradeShares = chkTradeShares.Checked;
+            Program.Settings.MaxRisk = string.IsNullOrEmpty(txtMaxRisk.Text) ? 0 : decimal.Parse(txtMaxRisk.Text);
+            Program.Settings.MaxShares = int.Parse(txtMaxShares.Text);
+            Program.Settings.UseBidAskOcoCalc = chkUseBidAskOcoCalc.Checked;
+            Program.Settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
+            Program.Settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
+            Program.Settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
+            Program.Settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
+            Program.Settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : decimal.Parse(txtDefaultLimitOffset.Text);
+            Program.Settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
+            Program.Settings.MaxLossLimitInR = Program.Settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
+            Program.Settings.MinimumRisk = string.IsNullOrEmpty(txtMinRisk.Text) ? 0 : double.Parse(txtMinRisk.Text);
+            Program.Settings.SendAltPrtScrOnOpen = chkSendPrtScrOnOpen.Checked;
+            Program.Settings.ShowPnL = chkShowPnL.Checked;
+            Program.Settings.PreventRiskExceedMaxLoss = chkPreventExceedMaxLoss.Checked;
+            Program.Settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
+            Program.Settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
+            Program.Settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
 
-            Utility.SaveSettings(_settings);
+            Utility.SaveSettings(Program.Settings);
             this.Close();
         }
 
         private void UserOptionsForm_Load(object sender, EventArgs e)
         {
-            _settings = Utility.GetSettings();
-            if(_settings == null) _settings = new Settings();
+            Program.Settings = Utility.GetSettings();
+            if(Program.Settings == null) Program.Settings = new Settings();
 
-            chkTradeShares.Checked = _settings.TradeShares;
-            txtMaxRisk.Text = _settings.MaxRisk.ToString("#.##");
-            txtMaxShares.Text = _settings.MaxShares.ToString();
-            chkUseBidAskOcoCalc.Checked = _settings.UseBidAskOcoCalc;
-            chkDisableFirstTarget.Checked = _settings.DisableFirstTargetProfitDefault;
-            txtOneRSharePct.Text = _settings.OneRProfitPercenatage.ToString();
-            chkMoveLimitOnFill.Checked = _settings.MoveLimitPriceOnFill;
-            chkReduceStopOnClose.Checked = _settings.ReduceStopOnClose;
-            txtDefaultLimitOffset.Text = _settings.DefaultLimitOffset.ToString("#.##");
-            chkMaxLossLimit.Checked = _settings.EnableMaxLossLimit;
-            txtMaxLossLimit.Text = _settings.MaxLossLimitInR.ToString("#.##");
-            txtMinRisk.Text = _settings.MinimumRisk.ToString("#.##");
-            chkSendPrtScrOnOpen.Checked = _settings.SendAltPrtScrOnOpen;
-            chkShowPnL.Checked = _settings.ShowPnL;
-            chkPreventExceedMaxLoss.Checked = _settings.PreventRiskExceedMaxLoss;
-            chkAdjustRiskForMaxLoss.Checked = _settings.AdjustRiskNotExceedMaxLoss;
-            chkAlwaysOnTop.Checked = _settings.AlwaysOnTop;
-            chkCaptureSSOnOpen.Checked = _settings.CaptureScreenshotOnOpen;
+            chkTradeShares.Checked = Program.Settings.TradeShares;
+            txtMaxRisk.Text = Program.Settings.MaxRisk.ToString("#.##");
+            txtMaxShares.Text = Program.Settings.MaxShares.ToString();
+            chkUseBidAskOcoCalc.Checked = Program.Settings.UseBidAskOcoCalc;
+            chkDisableFirstTarget.Checked = Program.Settings.DisableFirstTargetProfitDefault;
+            txtOneRSharePct.Text = Program.Settings.OneRProfitPercenatage.ToString();
+            chkMoveLimitOnFill.Checked = Program.Settings.MoveLimitPriceOnFill;
+            chkReduceStopOnClose.Checked = Program.Settings.ReduceStopOnClose;
+            txtDefaultLimitOffset.Text = Program.Settings.DefaultLimitOffset.ToString("#.##");
+            chkMaxLossLimit.Checked = Program.Settings.EnableMaxLossLimit;
+            txtMaxLossLimit.Text = Program.Settings.MaxLossLimitInR.ToString("#.##");
+            txtMinRisk.Text = Program.Settings.MinimumRisk.ToString("#.##");
+            chkSendPrtScrOnOpen.Checked = Program.Settings.SendAltPrtScrOnOpen;
+            chkShowPnL.Checked = Program.Settings.ShowPnL;
+            chkPreventExceedMaxLoss.Checked = Program.Settings.PreventRiskExceedMaxLoss;
+            chkAdjustRiskForMaxLoss.Checked = Program.Settings.AdjustRiskNotExceedMaxLoss;
+            chkAlwaysOnTop.Checked = Program.Settings.AlwaysOnTop;
+            chkCaptureSSOnOpen.Checked = Program.Settings.CaptureScreenshotOnOpen;
 
         }
 

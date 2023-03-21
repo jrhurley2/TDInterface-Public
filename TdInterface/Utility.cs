@@ -19,7 +19,7 @@ using TdInterface.Properties;
 
 namespace TdInterface
 {
-    public class Utility
+    public static class Utility
     {
         private static string SettingsFile = "Settings.json";
         private static string AccountInfoFile = "AccountInfo.json";
@@ -84,7 +84,7 @@ namespace TdInterface
             File.WriteAllBytes(AccountInfoFile, encrypted);
         }
 
-        public virtual AccountInfo GetAccountInfo()
+        public static AccountInfo GetAccountInfo()
         {
             try
             {
@@ -223,7 +223,7 @@ namespace TdInterface
                     if (tagName != null)
                     {
                         var latestVersion = new Version(jsonNode["tag_name"].ToString());
-                        var currentVersion = new Version(Program.GetAppVersion());
+                        var currentVersion = new Version(Program.AppVersion);
                         return latestVersion > currentVersion;
                     }
                 }
