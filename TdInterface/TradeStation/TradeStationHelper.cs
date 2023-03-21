@@ -451,7 +451,7 @@ namespace TdInterface.TradeStation
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine();
+                    Debug.WriteLine(ex.Message);
                 }
             }
 
