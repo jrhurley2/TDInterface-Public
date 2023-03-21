@@ -23,7 +23,7 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "");
+            var helper = new TradeStationHelper("", "", false);
             var actual = helper.SetStockQuote(expectedAaplQuote);
 
             Assert.AreEqual(expectedAaplQuote.lastPrice, actual.lastPrice);
@@ -43,7 +43,7 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "");
+            var helper = new TradeStationHelper("", "", false);
             var _ = helper.SetStockQuote(initialAaplQuote);
 
             var incrementalQuote = new TdInterface.Model.StockQuote
@@ -72,7 +72,7 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "");
+            var helper = new TradeStationHelper("", "", false);
 
             var _ = helper.SetStockQuote(expectedAaplQuote);
 

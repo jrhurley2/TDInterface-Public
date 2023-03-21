@@ -58,7 +58,6 @@ namespace TdInterface
 
                 if (accountInfo.UseTdaEquity)
                 {
-                    _tdHelper.AccessTokenContainer = Utility.GetAccessTokenContainer(TdHelper.ACCESSTOKENCONTAINER);
                     if (_tdHelper.AccessTokenContainer == null || (_tdHelper.AccessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (_tdHelper.AccessTokenContainer.IsRefreshTokenExpired || _tdHelper.AccessTokenContainer.RefreshTokenExpiresInDays < 5)))
                     {
                         Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
@@ -82,17 +81,7 @@ namespace TdInterface
                     var clientid = accountInfo.TradeStationClientId;
                     var clientSecret = accountInfo.TradeStationClientSecret;
 
-
-                    if (accountInfo.TradeStationUseSimAccount)
-                    {
-                        _tradeStationHelper = new TradeStationHelper("https://sim-api.tradestation.com/", clientid, clientSecret);
-                    }
-                    else
-                    {
-                        _tradeStationHelper = new TradeStationHelper(clientid, clientSecret);
-                    }
-
-                    _tradeStationHelper.AccessTokenContainer = Utility.GetAccessTokenContainer(TradeStationHelper.ACCESSTOKENCONTAINER);
+                    _tradeStationHelper = new TradeStationHelper(clientid, clientSecret, accountInfo.TradeStationUseSimAccount);
 
                     if (_tradeStationHelper.AccessTokenContainer == null)
                     {

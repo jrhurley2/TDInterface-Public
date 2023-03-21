@@ -921,8 +921,6 @@ namespace TdInterface
                 {
                     curSymbol = txtSymbol.Text;
                     _streamer.SubscribeQuote(txtSymbol.Text.ToUpper());
-                    //_streamer.SubscribeChartData(Utility.UserPrincipal, txtSymbol.Text.ToUpper());
-                    //await UpdatePriceHistory();
                     txtStop.Text = String.Empty;
                     txtLimit.Text = String.Empty;
                     txtStopToClose.Text = String.Empty;

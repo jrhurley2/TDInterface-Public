@@ -34,11 +34,12 @@ namespace TdInterface.Tda
 
         private static Securitiesaccount _securitiesaccount;
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
+        private AccessTokenContainer accessTokenContainer;
 
         public TdHelper() { }
-        public TdHelper(HttpClient httpClient) 
-        { 
-            _httpClient = httpClient; 
+        public TdHelper(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
         }
 
 
@@ -54,7 +55,22 @@ namespace TdInterface.Tda
             }
         }
 
-        public AccessTokenContainer AccessTokenContainer { get; set; }
+        public AccessTokenContainer AccessTokenContainer
+        {
+            get
+            {
+                if (accessTokenContainer== null)
+                {
+                    accessTokenContainer = Utility.GetAccessTokenContainer(ACCESSTOKENCONTAINER);
+                }
+                return accessTokenContainer;
+            }
+            set
+            {
+                Debug.WriteLine("***********************ACCESSTOKENCONTAINER BEING SET");
+                accessTokenContainer = value;
+            }
+        }
 
 
         /// <summary>
@@ -88,7 +104,7 @@ namespace TdInterface.Tda
 
             AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
             AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
-            
+
             //Write the access token container, this should ahve the refresh token
             Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
 
@@ -127,7 +143,7 @@ namespace TdInterface.Tda
                 AccessTokenContainer = newAccessTokenContainer;
                 return AccessTokenContainer;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 throw;
@@ -187,7 +203,7 @@ namespace TdInterface.Tda
             var response = await _httpClient.SendAsync(request);
             var candleList = Utility.DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
 
-            foreach(var candle in candleList.candles)
+            foreach (var candle in candleList.candles)
             {
                 Debug.WriteLine($"{candle.DateTime},{candle.open},{candle.close},{candle.high},{candle.low},{candle.volume}");
             }
@@ -201,15 +217,15 @@ namespace TdInterface.Tda
             {
                 Method = HttpMethod.Post,
                 Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
-             };
+            };
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
-            if(response.StatusCode != System.Net.HttpStatusCode.Created)
+            if (response.StatusCode != System.Net.HttpStatusCode.Created)
             {
                 Debug.Write(order);
-                throw new Exception($"Error Creating Order { await response.Content.ReadAsStringAsync()} ");
+                throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
             };
 
             var orderNumberString = response.Headers.Location.PathAndQuery.Substring(response.Headers.Location.PathAndQuery.LastIndexOf("/") + 1);
@@ -231,7 +247,7 @@ namespace TdInterface.Tda
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-            
+
             var response = await _httpClient.SendAsync(request).ConfigureAwait(true);
             if (response.StatusCode != System.Net.HttpStatusCode.Created)
             {
@@ -335,7 +351,7 @@ namespace TdInterface.Tda
 
         public TdInterface.Model.StockQuote GetStockQuote(string symbol)
         {
-            if(!_stockQuotes.ContainsKey(symbol)) { return null; }
+            if (!_stockQuotes.ContainsKey(symbol)) { return null; }
 
             return _stockQuotes[symbol];
         }
