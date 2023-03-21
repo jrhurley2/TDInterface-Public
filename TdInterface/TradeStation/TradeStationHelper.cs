@@ -303,7 +303,7 @@ namespace TdInterface.TradeStation
 
             //var orderNumber = ulong.Parse(o.OrderID);
 
-            ulong orderNumber = 0l;
+            ulong orderNumber = 0L;
             return orderNumber;
         }
 
