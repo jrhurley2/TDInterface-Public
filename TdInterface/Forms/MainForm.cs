@@ -142,7 +142,7 @@ namespace TdInterface
 
                 // Capture Screenshots if requested
                 if (Program.Settings.SendAltPrtScrOnOpen) { InputSender.PrintScreen(); }
-                if (Program.Settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen(txtSymbol.Text)); }
+                if (Program.Settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => Utility.CaptureScreen($"{txtSymbol.Text}_createOrder")); }
             }
             catch (Exception ex)
             {
@@ -617,6 +617,8 @@ namespace TdInterface
                     Debug.WriteLine($"HandleOrderFilled: symbol {symbol}");
                     Debug.WriteLine($"HandleOrderFilled: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
 
+                    // Capture a screenshot after 1 second, as it takes time for ToS to actually show the orders on the screen.... may need to tweak this.
+                    if (Program.Settings.CaptureScreenshotOnOpen) { _ = Task.Run(() => { Task.Delay(1000); Utility.CaptureScreen($"{txtSymbol.Text}_OrderFilled"); }) ; }
 
                     //check to see if this is the initial Limit order, if it is, set the stop to BE.
                     if (_initialLimitOrder != null)

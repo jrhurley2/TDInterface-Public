@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 
@@ -60,6 +61,9 @@ namespace TdInterface
             var services = new ServiceCollection();
             ConfigureServices(services);
 
+            // Setup exit handler
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnExit);
+
             // Setup debug trace listener for the application
             _textWriterTraceListener = new TextWriterTraceListener(DebugLogFile);
             Trace.Listeners.Add(_textWriterTraceListener);
@@ -77,6 +81,7 @@ namespace TdInterface
         {
             services.AddSingleton<MasterForm>();
         }
+
         /// <summary>
         /// Exit handler for the application
         /// </summary>
@@ -84,6 +89,17 @@ namespace TdInterface
         /// <param name="e"></param>
         private static void OnExit(object sender, EventArgs e)
         {
+            // Clean up logs older than 7 days
+            string[] logFiles = Directory.GetFiles(LOG_FOLDER);
+            DateTime cutoff = DateTime.Now.AddDays(-7);
+            foreach (string file in logFiles)
+            {
+                FileInfo fi = new FileInfo(file);
+                if (fi.LastWriteTime < cutoff)
+                {
+                    fi.Delete();
+                }
+            }
             _textWriterTraceListener.Flush();
             _textWriterTraceListener.Close();
             _textWriterTraceListener.Dispose();
