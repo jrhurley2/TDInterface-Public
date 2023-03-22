@@ -53,10 +53,9 @@ namespace TdInterface
         static void Main()
         {
             // Set application configuration
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             
             var services = new ServiceCollection();
             ConfigureServices(services);
