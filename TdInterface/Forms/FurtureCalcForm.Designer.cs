@@ -243,6 +243,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.txtSymbol);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FurtureCalcForm";
             this.Text = "Futures Calculator";
             this.ResumeLayout(false);

@@ -113,7 +113,7 @@ namespace TdInterface
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(888, 417);
+            this.btnSave.Location = new System.Drawing.Point(862, 394);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(94, 28);
             this.btnSave.TabIndex = 7;
@@ -123,7 +123,7 @@ namespace TdInterface
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(788, 417);
+            this.btnCancel.Location = new System.Drawing.Point(758, 394);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 28);
             this.btnCancel.TabIndex = 8;
@@ -367,7 +367,9 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.chkTradeShares);
             this.Controls.Add(this.lblTradeShares);
-            this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3);
+            this.MaximizeBox = false;
             this.Name = "UserOptionsForm";
             this.Text = "EZTM Settings";
             this.Load += new System.EventHandler(this.UserOptionsForm_Load);

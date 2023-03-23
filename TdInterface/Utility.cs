@@ -66,8 +66,16 @@ namespace TdInterface
         {
             try
             {
-                var settinngsAsString = File.ReadAllText(SettingsFile);
-                return JsonConvert.DeserializeObject<Settings>(settinngsAsString);
+                if (File.Exists(SettingsFile))
+                {
+                    var settinngsAsString = File.ReadAllText(SettingsFile);
+                    return JsonConvert.DeserializeObject<Settings>(settinngsAsString);
+                }
+                else
+                {
+                    return new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
+
+                }
             }
             catch
             {
@@ -139,10 +147,10 @@ namespace TdInterface
 
                 //Creating a New Graphics Object pointing to bitmap to capture to
                 Graphics captureGraphics = Graphics.FromImage(captureBitmap);
-                
+
                 //Copying Image from The Screen
                 captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
-                
+
                 //Save the screenshot
                 captureBitmap.Save(Path.Combine(ScreenshotPath(ticker), $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}_{ticker}.png"), ImageFormat.Png);
             }

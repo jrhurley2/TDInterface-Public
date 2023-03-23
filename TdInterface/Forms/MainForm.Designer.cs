@@ -85,6 +85,7 @@ namespace TdInterface
             this.btnExit10 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.btnScreenshot = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -648,9 +649,20 @@ namespace TdInterface
             this.lblVersion.Text = "Version";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btnScreenshot
+            // 
+            this.btnScreenshot.Location = new System.Drawing.Point(344, 453);
+            this.btnScreenshot.Name = "btnScreenshot";
+            this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
+            this.btnScreenshot.TabIndex = 40;
+            this.btnScreenshot.Text = "🖼️";
+            this.btnScreenshot.UseVisualStyleBackColor = true;
+            this.btnScreenshot.Click += new System.EventHandler(this.btnScreenshot_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(694, 496);
+            this.Controls.Add(this.btnScreenshot);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
@@ -691,12 +703,9 @@ namespace TdInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.txtSymbol);
-            this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(710, 535);
             this.Name = "MainForm";
             this.Text = "EZTM - EZ Trade Manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -765,6 +774,7 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExit10;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Button btnScreenshot;
     }
 }
 

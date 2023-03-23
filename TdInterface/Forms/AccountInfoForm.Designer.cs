@@ -206,14 +206,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 484);
+            this.ClientSize = new System.Drawing.Size(304, 499);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnClearCreds);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3);
+            this.MaximizeBox = false;
             this.Name = "AccountInfoForm";
             this.Text = "EZTM Account Settings";
             this.Load += new System.EventHandler(this.AccountInfoForm_Load);
