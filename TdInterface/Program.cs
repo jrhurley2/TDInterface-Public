@@ -20,7 +20,7 @@ namespace TdInterface
         private const string LOG_FOLDER = "logs";
         private static string LOG_FILE = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log";
 
-        public static Settings Settings = new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
+        public static Settings Settings;
 
         /// <summary>
         /// Path to the debug log file

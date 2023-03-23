@@ -66,8 +66,16 @@ namespace TdInterface
         {
             try
             {
-                var settinngsAsString = File.ReadAllText(SettingsFile);
-                return JsonConvert.DeserializeObject<Settings>(settinngsAsString);
+                if (File.Exists(SettingsFile))
+                {
+                    var settinngsAsString = File.ReadAllText(SettingsFile);
+                    return JsonConvert.DeserializeObject<Settings>(settinngsAsString);
+                }
+                else
+                {
+                    return new() { TradeShares = false, MaxRisk = 5M, MaxShares = 4, OneRProfitPercenatage = 25 };
+
+                }
             }
             catch
             {
