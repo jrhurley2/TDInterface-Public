@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Tda;
+using TdInterface.Model;
 
 namespace TdInterface.TradeStation.Tests
 {
@@ -15,7 +16,7 @@ namespace TdInterface.TradeStation.Tests
         [TestMethod()]
         public void SetStockQuoteTest()
         {
-            var expectedAaplQuote = new TdInterface.Model.StockQuote
+            var expectedAaplQuote = new StockQuote
             {
                 symbol = "AAPL",
                 askPrice = 140.0,
@@ -23,7 +24,7 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "", false);
+            var helper = new TradeStationHelper(new AccountInfo());
             var actual = helper.SetStockQuote(expectedAaplQuote);
 
             Assert.AreEqual(expectedAaplQuote.lastPrice, actual.lastPrice);
@@ -35,7 +36,7 @@ namespace TdInterface.TradeStation.Tests
         [TestMethod()]
         public void SetStockQuoteTest_Incremental()
         {
-            var initialAaplQuote = new TdInterface.Model.StockQuote
+            var initialAaplQuote = new StockQuote
             {
                 symbol = "AAPL",
                 askPrice = 140.0,
@@ -43,10 +44,10 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "", false);
+            var helper = new TradeStationHelper(new AccountInfo());
             var _ = helper.SetStockQuote(initialAaplQuote);
 
-            var incrementalQuote = new TdInterface.Model.StockQuote
+            var incrementalQuote = new StockQuote
             {
                 symbol = "AAPL",
                 bidPrice = 139.96
@@ -64,7 +65,7 @@ namespace TdInterface.TradeStation.Tests
         [TestMethod()]
         public void GetStockQuoteTest()
         {
-            var expectedAaplQuote = new TdInterface.Model.StockQuote
+            var expectedAaplQuote = new StockQuote
             {
                 symbol = "AAPL",
                 askPrice = 140.0,
@@ -72,7 +73,7 @@ namespace TdInterface.TradeStation.Tests
                 lastPrice = 139.98
             };
 
-            var helper = new TradeStationHelper("", "", false);
+            var helper = new TradeStationHelper(new AccountInfo());
 
             var _ = helper.SetStockQuote(expectedAaplQuote);
 

@@ -21,11 +21,8 @@ namespace TdInterface
     public partial class MasterForm : EZTMBaseForm
     {
         private IStreamer _streamer;
-        private string _equityAccountId;
 
-        private TdHelper _tdHelper = new TdHelper();
-        private TradeStationHelper _tradeStationHelper;
-        private IHelper _tradeHelper;
+        private IBrokerage _broker;
 
         public MasterForm()
         {
@@ -33,6 +30,19 @@ namespace TdInterface
             {
                 Debug.WriteLine("Start Master Form");
                 InitializeComponent();
+
+                // TODO: Move Getting AccountInfo logic to a function - maybe this happens in Program before MainForm even exists?
+                var accountInfo = Utility.GetAccountInfo();
+                if (accountInfo == null )
+                {
+                    var frmAccountInfo = new AccountInfoForm();
+                    frmAccountInfo.ShowDialog();
+                    accountInfo = Utility.GetAccountInfo();
+                }
+                if (accountInfo != null)
+                {
+                    _broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                }
 
                 Login().ConfigureAwait(false);
             }
@@ -45,73 +55,17 @@ namespace TdInterface
         {
             try
             {
-
-                var accountInfo = Utility.GetAccountInfo();
-                if (accountInfo == null)
+                if (_broker.NeedTokenRefreshed)
                 {
-                    var frmAccountInfo = new AccountInfoForm();
-                    frmAccountInfo.ShowDialog();
-                    accountInfo = Utility.GetAccountInfo();
+                    var oAuthLoginForm = new OAuthLoginForm(_broker.LoginUri);
+                    int num2 = (int)oAuthLoginForm.ShowDialog(this);
+                    Utility.AuthToken = oAuthLoginForm.Code;
+                    _ = await _broker.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
                 }
 
-                string loginUri = string.Empty;
+                _ = await _broker.RefreshAccessToken();
 
-                if (accountInfo.UseTdaEquity)
-                {
-                    if (_tdHelper.AccessTokenContainer == null || (_tdHelper.AccessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (_tdHelper.AccessTokenContainer.IsRefreshTokenExpired || _tdHelper.AccessTokenContainer.RefreshTokenExpiresInDays < 5)))
-                    {
-                        Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
-
-                        loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
-                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
-                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                        Utility.AuthToken = oAuthLoginForm.Code;
-                        _ = await _tdHelper.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
-                    }
-                    _ = await _tdHelper.RefreshAccessToken();
-
-                    Utility.UserPrincipal = await _tdHelper.GetUserPrincipals();
-                    _equityAccountId = Utility.UserPrincipal.accounts[0].accountId;
-                    _streamer = new TDStreamer(Utility.UserPrincipal);
-                    _tradeHelper = _tdHelper;
-
-                }
-                else if (accountInfo.UseTSEquity)
-                {
-                    var clientid = accountInfo.TradeStationClientId;
-                    var clientSecret = accountInfo.TradeStationClientSecret;
-
-                    _tradeStationHelper = new TradeStationHelper(clientid, clientSecret, accountInfo.TradeStationUseSimAccount);
-
-                    if (_tradeStationHelper.AccessTokenContainer == null)
-                    {
-                        loginUri = $"https://signin.tradestation.com/authorize?response_type=code&client_id={clientid}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
-
-                        var oAuthLoginForm = new OAuthLoginForm(loginUri);
-                        int num2 = (int)oAuthLoginForm.ShowDialog((System.Windows.Forms.IWin32Window)this);
-                        Utility.AuthToken = oAuthLoginForm.Code;
-                        _ = await _tradeStationHelper.GetAccessToken(Utility.AuthToken);
-                    }
-
-                    _tradeHelper = _tradeStationHelper;
-
-
-                    _ = await _tradeStationHelper.RefreshAccessToken();
-
-                    var accounts = await _tradeStationHelper.GetAccounts();
-                    //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
-                    var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                    _equityAccountId = equitiyAccount.AccountID;
-
-                    _streamer = new TradeStationStreamer(_tradeStationHelper, _equityAccountId);
-                    ((TradeStationStreamer)_streamer).StartAccountStream();
-                }
-                else
-                {
-                    var frmAccountInfo = new AccountInfoForm();
-                    frmAccountInfo.ShowDialog();
-                    accountInfo = Utility.GetAccountInfo();
-                }
+                _streamer = await _broker.GetStreamer();
 
                 timer1.Start();
             }
@@ -126,9 +80,9 @@ namespace TdInterface
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-            if (_tradeHelper.AccessTokenContainer.ExpiresIn < 100)
+            if (_broker.AccessTokenContainer.ExpiresIn < 100)
             {
-                _ = await _tradeHelper.RefreshAccessToken();
+                _ = await _broker.RefreshAccessToken();
             }
         }
 
@@ -201,13 +155,13 @@ namespace TdInterface
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    frm = new MainForm(_streamer, name, _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, name, _broker);
                     frm.Tag = name;
                     _mainForms.Add(nameAsKey, frm);
                 }
                 else
                 {
-                    frm = new MainForm(_streamer, "Enter a symbol...", _equityAccountId, _tradeHelper);
+                    frm = new MainForm(_streamer, "Enter a symbol...", _broker);
                     _mainForms.Add(nameAsKey, frm);
 
                 }
@@ -234,11 +188,6 @@ namespace TdInterface
         {
             var accountInfoForm = new AccountInfoForm();
             accountInfoForm.Show();
-        }
-
-        private void btnLogon_Click(object sender, EventArgs e)
-        {
-            Login();
         }
 
         private void btnScreenshots_Click(object sender, EventArgs e)

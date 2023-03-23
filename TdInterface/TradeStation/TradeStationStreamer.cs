@@ -19,8 +19,7 @@ namespace TdInterface.TradeStation
     {
         private HttpClient _httpClient = new HttpClient();
         private List<string> _quoteSymbols = new List<string>();
-        private TradeStationHelper _tradeStationHelper = null;
-        private string _equityAccountId = string.Empty;
+        private IBrokerage _broker = null;
 
         private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
         public IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
@@ -49,10 +48,9 @@ namespace TdInterface.TradeStation
         private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
         public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
-        public TradeStationStreamer(TradeStationHelper tradeStationHelper, string equityAccountId)
+        public TradeStationStreamer(IBrokerage tradeStationHelper)
         {
-            _tradeStationHelper = tradeStationHelper;
-            _equityAccountId = equityAccountId;
+            _broker = tradeStationHelper;
         }
 
         public void StartAccountStream()
@@ -101,8 +99,8 @@ namespace TdInterface.TradeStation
             {
                 try
                 {
-                    var securitiesaccount = await _tradeStationHelper.GetAccount(_equityAccountId).ConfigureAwait(false);
-                    _tradeStationHelper.Securitiesaccount = securitiesaccount;
+                    var securitiesaccount = await _broker.GetAccount(_broker.AccountId).ConfigureAwait(false);
+                    _broker.Securitiesaccount = securitiesaccount;
                     if (lastSecuritiesaccount != null)
                     {
 
@@ -120,7 +118,7 @@ namespace TdInterface.TradeStation
                     _acctActivity.OnNext(new Tda.Model.AcctActivity());
 
                     lastSecuritiesaccount = securitiesaccount;
-                    _tradeStationHelper.Securitiesaccount = securitiesaccount;
+                    _broker.Securitiesaccount = securitiesaccount;
                 }
                 catch(Exception ex)
                 {
@@ -138,7 +136,7 @@ namespace TdInterface.TradeStation
 
             while (true)
             {
-                var accessTokenContainer = _tradeStationHelper.AccessTokenContainer;
+                var accessTokenContainer = _broker.AccessTokenContainer;
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,

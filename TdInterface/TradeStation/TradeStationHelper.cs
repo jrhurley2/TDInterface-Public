@@ -9,21 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
 using TdInterface.Model;
+using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
 
 namespace TdInterface.TradeStation
 {
-    public class TradeStationHelper : IHelper
+    public class TradeStationHelper : IBrokerage
     {
+        private string accountId;
+
         public const string ACCESSTOKENCONTAINER = "ts-accesstokencontainer.json";
-        private const string BASE_SIM_URI = "https://sim-api.tradestation.com/";
 
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tradestation.com/");
+        public static Uri BaseUriSim = new Uri("https://sim-api.tradestation.com/");
         public static Uri TokenUri = new Uri("https://signin.tradestation.com/oauth/token");
-        public string _clientId;
-        public string _clientSecret;
 
         public const string routeGetToken = "v1/oauth2/token";
         public const string routePlaceOrder = "v3/orderexecution/orders";
@@ -34,6 +35,8 @@ namespace TdInterface.TradeStation
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
 
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
+        
+        public AccountInfo AccountInfo { get; set; }
 
         private static Securitiesaccount _securitiesaccount;
         private AccessTokenContainer accessTokenContainer;
@@ -68,12 +71,35 @@ namespace TdInterface.TradeStation
             }
         }
 
-        public TradeStationHelper(string clientId, string clientSecret, bool useSim)
+        public string LoginUri
         {
-            if (useSim)
-                BaseUri = new Uri(BASE_SIM_URI);
-            _clientId = clientId;
-            _clientSecret = clientSecret;
+            get
+            {
+                return $"https://signin.tradestation.com/authorize?response_type=code&client_id={AccountInfo.TradeStationClientId}&redirect_uri=http%3A%2F%2Flocalhost&t&audience=https://api.tradestation.com&scope=openid offline_access MarketData ReadAccount Trade Matrix";
+
+            }
+        }
+
+        public bool NeedTokenRefreshed
+        {
+            get
+            {
+                return AccessTokenContainer == null;
+            }
+        }
+
+        public string AccountId
+        {
+            get
+            {
+                return accountId;
+            }
+        }
+
+        public TradeStationHelper(AccountInfo ai)
+        {
+            AccountInfo = ai;
+            BaseUri = ai.TradeStationUseSimAccount ? BaseUriSim: BaseUri;
         }
 
         /// <summary>
@@ -87,8 +113,8 @@ namespace TdInterface.TradeStation
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
             postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
             postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
-            postData.Add(new KeyValuePair<string, string>("client_id", _clientId));
-            postData.Add(new KeyValuePair<string, string>("client_secret", _clientSecret));
+            postData.Add(new KeyValuePair<string, string>("client_id", AccountInfo.TradeStationClientId));
+            postData.Add(new KeyValuePair<string, string>("client_secret", AccountInfo.TradeStationClientSecret));
             postData.Add(new KeyValuePair<string, string>("redirect_uri", "http://localhost"));
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
@@ -116,8 +142,8 @@ namespace TdInterface.TradeStation
             {
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
-                postData.Add(new KeyValuePair<string, string>("client_id", _clientId));
-                postData.Add(new KeyValuePair<string, string>("client_secret", _clientSecret));
+                postData.Add(new KeyValuePair<string, string>("client_id", AccountInfo.TradeStationClientId));
+                postData.Add(new KeyValuePair<string, string>("client_secret", AccountInfo.TradeStationClientSecret));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", AccessTokenContainer.RefreshToken));
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
@@ -497,6 +523,18 @@ namespace TdInterface.TradeStation
             }
 
             await Task.WhenAll(tasks).ConfigureAwait(true);
+        }
+
+        public async Task<IStreamer> GetStreamer()
+        {
+            var accounts = await GetAccounts();
+            //Lets get the first Margin account for equity trading.  Might need to change later, but see how this goes.
+            var equitiyAccount = accounts.Where(a => a.AccountType.Equals("Margin", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            accountId = equitiyAccount.AccountID;
+
+            var _streamer = new TradeStationStreamer(this);
+            ((TradeStationStreamer)_streamer).StartAccountStream();
+            return _streamer;
         }
     }
 }

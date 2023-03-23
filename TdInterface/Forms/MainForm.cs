@@ -18,9 +18,8 @@ namespace TdInterface
     public partial class MainForm : EZTMBaseForm
     {
         private IStreamer _streamer;
-        private string _accountId;
 
-        private IHelper _tradeHelper;
+        private IBrokerage _broker;
       
         private string curSymbol = String.Empty;
 
@@ -34,18 +33,16 @@ namespace TdInterface
 
         public string MainFormName{ get; private set; }
 
-        public MainForm(IStreamer streamer, string name, string accountId, IHelper helper)
+        public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
             InitializeComponent();
 
             this.AutoScaleMode = AutoScaleMode.Font;
 
-            _tradeHelper = helper;
+            _broker = helper;
 
             MainFormName = name;
             this.Text = name;
-
-            _accountId = accountId;
 
             txtPnL.Visible = Program.Settings.ShowPnL;
             lblPnL.Visible = Program.Settings.ShowPnL;
@@ -70,7 +67,7 @@ namespace TdInterface
             btnExit100.Enabled = false;
             btnBreakEven.Enabled = false;
 
-            var securitiesaccount = _tradeHelper.GetAccount(_accountId).Result;
+            var securitiesaccount = _broker.GetAccount(_broker.AccountId).Result;
 
             // Handle always on top setting
             this.TopMost = Program.Settings.AlwaysOnTop;
@@ -128,12 +125,12 @@ namespace TdInterface
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
-                    orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
+                    orderKey = await _broker.PlaceOrder(_broker.AccountId, triggerOrder);
                 }
                 else if (isTradeStation)
                 {
                     triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, Program.Settings);
-                    orderKey = await _tradeHelper.PlaceOrder(_accountId, triggerOrder);
+                    orderKey = await _broker.PlaceOrder(_broker.AccountId, triggerOrder);
                 }
 
                 ResetInitialOrder();
@@ -168,7 +165,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
+                var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
@@ -187,7 +184,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
+                var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.SELL_SHORT;
@@ -216,7 +213,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
+                var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -234,7 +231,7 @@ namespace TdInterface
         {
             try
             {
-                var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
+                var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
                 var instruction = TDAOrderHelper.BUY;
@@ -344,7 +341,7 @@ namespace TdInterface
 
         private async Task ExitBidOrAsk(int quantity)
         {
-            var stockQuote = _tradeHelper.GetStockQuote(txtSymbol.Text);
+            var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
             if (exitInstruction == TDAOrderHelper.SELL)
@@ -362,9 +359,9 @@ namespace TdInterface
             {
                 //Change the stop order to a Limit order to take profit and repladce
                 var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
-                await _tradeHelper.ReplaceOrder(_accountId, stopOrder.orderId, newOrder);
+                await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                 var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _tradeHelper.PlaceOrder(_accountId, newStopOrder);
+                await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
             }
             else
             {
@@ -377,7 +374,7 @@ namespace TdInterface
             string exitInstruction = GetExitInstruction(_activePosition);
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
-            //TODO:  THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
+            // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
             var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null && Program.Settings.ReduceStopOnClose)
@@ -391,9 +388,9 @@ namespace TdInterface
                 {
                     //Change the stop order to a Limit order to take profit and repladce
                     var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
-                    await _tradeHelper.ReplaceOrder(_accountId, stopOrder.orderId, newOrder);
+                    await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                    await _tradeHelper.PlaceOrder(_accountId, newStopOrder);
+                    await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                 }
             }
             else
@@ -432,20 +429,20 @@ namespace TdInterface
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
             var stopOrder = TDAOrderHelper.CreateMarketOrder(instruction, symbol, quantity);
-            var orderKey = await _tradeHelper.PlaceOrder(_accountId, stopOrder);
+            var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
 
         private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
         {
             var stopOrder = TDAOrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
-            var orderKey = await _tradeHelper.PlaceOrder(_accountId, stopOrder);
+            var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
 
 
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
             var stopOrder = TDAOrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
-            var orderKey = await _tradeHelper.PlaceOrder(_accountId, stopOrder);
+            var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
         #endregion
 
@@ -466,7 +463,7 @@ namespace TdInterface
 
         private async Task CancelAll()
         {
-            await _tradeHelper.CancelAll(_accountId, txtSymbol.Text);
+            await _broker.CancelAll(_broker.AccountId, txtSymbol.Text);
         }
         #endregion
 
@@ -474,7 +471,7 @@ namespace TdInterface
         private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
-            stockQuote = _tradeHelper.SetStockQuote(stockQuote);
+            stockQuote = _broker.SetStockQuote(stockQuote);
             SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
             SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
             SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
@@ -536,11 +533,11 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = _tradeHelper.Securitiesaccount;
+                _securitiesaccount = _broker.Securitiesaccount;
                 await SetPosition();
                 _securitiesaccount = await GetSecuritiesaccountAsync();
 
-                if (typeof(TdHelper) == _tradeHelper.GetType() && _securitiesaccount != null)
+                if (typeof(TdHelper) == _broker.GetType() && _securitiesaccount != null)
                 {
                     txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
                 }
@@ -555,13 +552,13 @@ namespace TdInterface
         private async Task<Securitiesaccount> GetSecuritiesaccountAsync()
         {
             var securitiesaccount = new Securitiesaccount();
-            if (typeof(TdHelper) == _tradeHelper.GetType())
+            if (typeof(TdHelper) == _broker.GetType())
             {
-                securitiesaccount = await _tradeHelper.GetAccount(_accountId);
+                securitiesaccount = await _broker.GetAccount(_broker.AccountId);
             }
             else
             {
-                securitiesaccount = _tradeHelper.Securitiesaccount;
+                securitiesaccount = _broker.Securitiesaccount;
             }
 
             return securitiesaccount;
@@ -674,14 +671,14 @@ namespace TdInterface
                                         Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
                                         var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                        await _tradeHelper.ReplaceOrder(_accountId, lmitOrder.orderId, newLimitOrder);
+                                        await _broker.ReplaceOrder(_broker.AccountId, lmitOrder.orderId, newLimitOrder);
                                     }
                                 }
                             }
                         }
                     }
 
-                    //TODO:  IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
+                    // TODO: IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
                     //if (_initialOrders.ContainsKey(symbol.ToUpper()))
                     //{
                     //    Debug.WriteLine("HandleOrderFilled: Found Initial Order by symbol");
@@ -764,7 +761,7 @@ namespace TdInterface
 
         private async Task SetPosition()
         {
-            Position position = await GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _accountId);
+            Position position = await GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _broker.AccountId);
 
             if (position != null)
             {
@@ -1073,7 +1070,7 @@ namespace TdInterface
 
             try
             {
-                if (_tradeHelper.GetType() == typeof(TdHelper) && _securitiesaccount != null)
+                if (_broker.GetType() == typeof(TdHelper) && _securitiesaccount != null)
                 {
                     SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                 }
