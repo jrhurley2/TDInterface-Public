@@ -40,7 +40,7 @@ namespace TdInterface.Tda.Tests
                 lastPrice = 139.98
             };
 
-            TdHelper helper = new TdHelper();
+            TdHelper helper = new TdHelper(new AccountInfo());
             var actual = helper.SetStockQuote(expectedAaplQuote);
 
             Assert.AreEqual(expectedAaplQuote.lastPrice, actual.lastPrice);
@@ -60,7 +60,7 @@ namespace TdInterface.Tda.Tests
                 lastPrice = 139.98
             };
 
-            TdHelper helper = new TdHelper();
+            TdHelper helper = new TdHelper(new AccountInfo());
             var _ = helper.SetStockQuote(initialAaplQuote);
 
             var incrementalQuote = new TdInterface.Model.StockQuote
@@ -91,7 +91,7 @@ namespace TdInterface.Tda.Tests
                 lastPrice = 139.98
             };
 
-            TdHelper helper = new TdHelper();
+            TdHelper helper = new TdHelper(new AccountInfo());
             var _ = helper.SetStockQuote(expectedAaplQuote);
 
             var actual = helper.GetStockQuote(expectedAaplQuote.symbol);

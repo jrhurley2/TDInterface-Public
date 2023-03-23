@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
 using TdInterface.Model;
@@ -13,8 +14,10 @@ using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
 {
-    public class TdHelper : IHelper
+    public class TdHelper : IBrokerage
     {
+        private string accountId;
+
         public const string ACCESSTOKENCONTAINER = "tda-accesstokencontainer.json";
         public static HttpClient _httpClient = new HttpClient();
         public static Uri BaseUri = new Uri("https://api.tdameritrade.com");
@@ -32,16 +35,13 @@ namespace TdInterface.Tda
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
 
+        public AccountInfo AccountInfo { get;  set; }
+
         private static Securitiesaccount _securitiesaccount;
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
-        public TdHelper() { }
-        public TdHelper(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
+        public TdHelper(AccountInfo ai) { AccountInfo = ai; }
 
         public Securitiesaccount Securitiesaccount
         {
@@ -69,6 +69,35 @@ namespace TdInterface.Tda
             {
                 Debug.WriteLine("***********************ACCESSTOKENCONTAINER BEING SET");
                 accessTokenContainer = value;
+            }
+        }
+
+        //Utility.SplitTdaConsumerKey(_broker.AccountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+
+        //loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
+
+        public string LoginUri
+        {
+            get
+            {
+                Utility.SplitTdaConsumerKey(AccountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+                return $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
+            }
+        }
+
+        public bool NeedTokenRefreshed
+        {
+            get
+            {
+                return (AccessTokenContainer == null || (AccessTokenContainer.TokenSystem == AccessTokenContainer.EnumTokenSystem.TDA && (AccessTokenContainer.IsRefreshTokenExpired || AccessTokenContainer.RefreshTokenExpiresInDays < 5)));
+            }
+        }
+
+        public string AccountId
+        {
+            get
+            {
+                return accountId;
             }
         }
 
@@ -377,6 +406,13 @@ namespace TdInterface.Tda
             {
                 Debug.WriteLine("CancelAll - securitiesAccount is null");
             }
+        }
+
+        public async Task<IStreamer> GetStreamer()
+        {
+            UserPrincipal up = await GetUserPrincipals();
+            accountId = up.accounts[0].accountId;
+            return new TDStreamer(up);
         }
     }
 }
