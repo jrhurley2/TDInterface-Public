@@ -358,7 +358,7 @@ namespace TdInterface.Tda
 
         List<string> _futureSymbols = new List<string>();
 
-        public void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeFuture(string tickerSymbol)
         {
             if (!_futureSymbols.Contains(tickerSymbol.ToUpper()))
             {
@@ -375,8 +375,8 @@ namespace TdInterface.Tda
                 service = "LEVELONE_FUTURES",
                 command = "SUBS",
                 requestid = "1", //_quoteRequestId.ToString(),
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
                     keys = symbols,
@@ -436,7 +436,7 @@ namespace TdInterface.Tda
         //    _ws.Send(req);
         //}
 
-        public void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeChartData(string tickerSymbol)
         {
             var _reqs = new List<StreamerSettings.Request>();
             var chartRequest = new StreamerSettings.Request
@@ -444,8 +444,8 @@ namespace TdInterface.Tda
                 service = "CHART_EQUITY",
                 command = "SUBS",
                 requestid = "1",
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
                     keys = tickerSymbol,

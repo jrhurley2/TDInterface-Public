@@ -35,7 +35,7 @@ namespace TdInterface
 
         private void txtSymbol_Leave(object sender, EventArgs e)
         {
-            _streamer.SubscribeFuture(Utility.UserPrincipal, txtSymbol.Text);
+            _streamer.SubscribeFuture(txtSymbol.Text);
 
             var futureInfo = _futureInfos.Where(f => f.Symbol.ToLower() == txtSymbol.Text.ToLower()).FirstOrDefault();
             if (futureInfo!=null)
