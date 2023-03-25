@@ -18,8 +18,8 @@ namespace TdInterface.Interfaces
         WebsocketClient WebsocketClient { get; }
 
         void Dispose();
-        void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol);
-        void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol);
+        void SubscribeChartData(string tickerSymbol);
+        void SubscribeFuture(string tickerSymbol);
         void SubscribeQuote(string tickerSymbol);
     }
 }

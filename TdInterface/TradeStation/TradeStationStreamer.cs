@@ -64,12 +64,12 @@ namespace TdInterface.TradeStation
             throw new NotImplementedException();
         }
 
-        public void SubscribeChartData(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeChartData(string tickerSymbol)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol)
+        public void SubscribeFuture(string tickerSymbol)
         {
             throw new NotImplementedException();
         }
