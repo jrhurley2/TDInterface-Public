@@ -23,7 +23,8 @@ namespace TdInterface
       
         private string curSymbol = String.Empty;
 
-      
+        private Order _initialLimitOrder;
+
         // Made Public for testing.
         public bool isTda = false;
         public bool isTradeStation = true;
@@ -470,9 +471,9 @@ namespace TdInterface
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);
-            SafeUpdateTextBox(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtBid, stockQuote.bidPrice.ToString("0.00"));
-            SafeUpdateTextBox(txtAsk, stockQuote.askPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(txtBid, stockQuote.bidPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(txtAsk, stockQuote.askPrice.ToString("0.00"));
 
 
             try
@@ -487,7 +488,7 @@ namespace TdInterface
                     reward = reward * (_activePosition.shortQuantity > 0 ? -1 : 1);
 
                     var rValue = reward / risk;
-                    SafeUpdateTextBox(txtRValue, rValue.ToString("0.00"));
+                    Extensions.SafeUpdateControl(txtRValue, rValue.ToString("0.00"));
 
                     double oneToOne;
                     if (_activePosition.longQuantity > 0)
@@ -497,11 +498,11 @@ namespace TdInterface
                         oneToOne = avgPrice - risk;
                     }
 
-                    SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                    Extensions.SafeUpdateControl(txtOneToOne, oneToOne.ToString("0.00"));
                 }
                 else
                 {
-                    SafeUpdateTextBox(txtRValue, "0");
+                    Extensions.SafeUpdateControl(txtRValue, "0");
                     double stop;
 
                     if (double.TryParse(txtStop.Text, out stop))
@@ -515,7 +516,7 @@ namespace TdInterface
                         {
                             oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
-                       SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                        Extensions.SafeUpdateControl(txtOneToOne, oneToOne.ToString("0.00"));
                     }
                 }
             }
@@ -697,65 +698,37 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                SafeUpdateTextBox(txtLastError, ex.Message);
+                Extensions.SafeUpdateControl(txtLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
             }
         }
 
         private async void HandleHeartBeat(SocketNotify notify)
         {
-            SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
+            Extensions.SafeUpdateControl(txtHeartBeat, DateTime.Now.ToString());
         }
 
         private async void HandleDisconnect(DisconnectionInfo disconnectionInfo)
         {
             try
             {
-                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - Attemptinng to Reconnect");
+                Extensions.SafeUpdateControl(txtConnectionStatus, "Disconnected - Attemptinng to Reconnect");
                 await _streamer.WebsocketClient.ReconnectOrFail();
             }
             catch (Exception ex)
             {
-                SafeUpdateTextBox(txtLastError, ex.Message);
+                Extensions.SafeUpdateControl(txtLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
-                SafeUpdateTextBox(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
+                Extensions.SafeUpdateControl(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
 
             }
         }
 
         private async void HandleReconnection(ReconnectionInfo reconnectionInfo)
         {
-            SafeUpdateTextBox(txtConnectionStatus, reconnectionInfo.Type.ToString());
+            Extensions.SafeUpdateControl(txtConnectionStatus, reconnectionInfo.Type.ToString());
         }
         #endregion
-
-        #region Thread Safe UI Helpers
-        private delegate void SafeCallDelegate(TextBox textBox, string text);
-
-        private void SafeUpdateTextBox(TextBox textBox, string text)
-        {
-            try
-            {
-                if (textBox.InvokeRequired)
-                {
-                    var d = new SafeCallDelegate(SafeUpdateTextBox);
-                    textBox.Invoke(d, new object[] { textBox, text });
-                }
-                else
-                {
-                    textBox.Text = text;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
-        }
-        #endregion
-
-        private Order _initialLimitOrder;
-
 
         private async Task SetPosition()
         {
@@ -764,14 +737,14 @@ namespace TdInterface
             if (position != null)
             {
                 _activePosition = position;
-                SafeUpdateTextBox(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
-                SafeUpdateTextBox(txtShares, _activePosition.DisplayQuantity.ToString());
+                Extensions.SafeUpdateControl(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
+                Extensions.SafeUpdateControl(txtShares, _activePosition.DisplayQuantity.ToString());
             }
             else
             {
                 _activePosition = null;
-                SafeUpdateTextBox(txtAveragePrice, string.Empty);
-                SafeUpdateTextBox(txtShares, string.Empty);
+                Extensions.SafeUpdateControl(txtAveragePrice, string.Empty);
+                Extensions.SafeUpdateControl(txtShares, string.Empty);
                 Debug.WriteLine($"No position found for txtSymbol:{txtSymbol.Text.ToUpper()} | curSymbol: {curSymbol}");
             }
         }
@@ -788,7 +761,7 @@ namespace TdInterface
                 {
                     try
                     {
-                        SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                        Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                     }
                     catch (Exception ex)
                     {
@@ -1070,7 +1043,7 @@ namespace TdInterface
             {
                 if (_broker.GetType() == typeof(TdHelper) && _securitiesaccount != null)
                 {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                    Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                 }
             }
             catch (Exception ex)
