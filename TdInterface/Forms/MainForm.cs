@@ -37,8 +37,6 @@ namespace TdInterface
         {
             InitializeComponent();
 
-            this.AutoScaleMode = AutoScaleMode.Font;
-
             _broker = helper;
 
             MainFormName = name;
@@ -1090,6 +1088,11 @@ namespace TdInterface
         private void btnScreenshot_Click(object sender, EventArgs e)
         {
             Utility.CaptureScreen(txtSymbol.Text);
+        }
+
+        private void txtSymbol_TextChanged(object sender, EventArgs e)
+        {
+            rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@2x.png");
         }
     }
 }

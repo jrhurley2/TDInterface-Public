@@ -20,6 +20,7 @@ namespace TdInterface.Tda.Model
         public const string FIELD_QUOTE_BID_PRICE = "1";
         public const string FIELD_QUOTE_ASK_PRICE = "2";
         public const string FIELD_QUOTE_lAST_PRICE = "3";
+        public const string FIELD_QUOTE_DESCRIPTION = "25";
 
 
         public StockQuote() { }
@@ -30,6 +31,7 @@ namespace TdInterface.Tda.Model
             bidPrice = stockQuote.bidPrice != 0.0 ? stockQuote.bidPrice : bidPrice;
             askPrice = stockQuote.askPrice != 0.0 ? stockQuote.askPrice : askPrice;
             lastPrice = stockQuote.lastPrice != 0.0 ? stockQuote.lastPrice : lastPrice;
+            description = stockQuote.description;
             return this;
         }
 
@@ -52,6 +54,10 @@ namespace TdInterface.Tda.Model
                 else if (key.Equals(FIELD_QUOTE_lAST_PRICE))
                 {
                     lastPrice = float.Parse(keyValuePairs[key]);
+                }
+                else if (key.Equals(FIELD_QUOTE_DESCRIPTION))
+                {
+                    description = keyValuePairs[key];
                 }
             }
         }

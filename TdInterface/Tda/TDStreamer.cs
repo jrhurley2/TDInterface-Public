@@ -342,7 +342,7 @@ namespace TdInterface.Tda
                 parameters = new StreamerSettings.Parameters
                 {
                     keys = symbols,
-                    fields = "0,1,2,3"
+                    fields = "0,1,2,3,25"
                 }
             };
             _reqs.Add(quoteRequest);

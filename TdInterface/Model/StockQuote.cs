@@ -6,7 +6,7 @@
         public virtual double bidPrice { get; set; }
         public virtual double askPrice { get; set; }
         public virtual double lastPrice { get; set; }
-
+        public virtual string description { get; set; }
 
         public virtual StockQuote Update(StockQuote stockQuote)
         {

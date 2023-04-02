@@ -86,8 +86,13 @@ namespace TdInterface
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.btnScreenshot = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTickerDesc = new System.Windows.Forms.Label();
+            this.rpbTickerLogo = new TdInterface.CustomControls.RoundedPictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuyMrkTriggerOco
@@ -107,11 +112,12 @@ namespace TdInterface
             // txtSymbol
             // 
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtSymbol.Location = new System.Drawing.Point(12, 28);
+            this.txtSymbol.Location = new System.Drawing.Point(540, 318);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(87, 26);
             this.txtSymbol.TabIndex = 0;
+            this.txtSymbol.TextChanged += new System.EventHandler(this.txtSymbol_TextChanged);
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
             this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
@@ -120,7 +126,7 @@ namespace TdInterface
             // lblSymbol
             // 
             this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Location = new System.Drawing.Point(12, 9);
+            this.lblSymbol.Location = new System.Drawing.Point(540, 299);
             this.lblSymbol.Name = "lblSymbol";
             this.lblSymbol.Size = new System.Drawing.Size(54, 19);
             this.lblSymbol.TabIndex = 8;
@@ -129,7 +135,7 @@ namespace TdInterface
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(291, 74);
+            this.label1.Location = new System.Drawing.Point(819, 364);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 19);
             this.label1.TabIndex = 24;
@@ -138,7 +144,7 @@ namespace TdInterface
             // txtRisk
             // 
             this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRisk.Location = new System.Drawing.Point(291, 93);
+            this.txtRisk.Location = new System.Drawing.Point(819, 383);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
             this.txtRisk.Size = new System.Drawing.Size(87, 34);
@@ -162,7 +168,7 @@ namespace TdInterface
             // 
             // txtLastPrice
             // 
-            this.txtLastPrice.Location = new System.Drawing.Point(105, 28);
+            this.txtLastPrice.Location = new System.Drawing.Point(633, 318);
             this.txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastPrice.Name = "txtLastPrice";
             this.txtLastPrice.ReadOnly = true;
@@ -174,7 +180,7 @@ namespace TdInterface
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 74);
+            this.label2.Location = new System.Drawing.Point(542, 364);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 19);
             this.label2.TabIndex = 21;
@@ -183,7 +189,7 @@ namespace TdInterface
             // txtStop
             // 
             this.txtStop.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtStop.Location = new System.Drawing.Point(12, 93);
+            this.txtStop.Location = new System.Drawing.Point(540, 383);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
             this.txtStop.Size = new System.Drawing.Size(85, 34);
@@ -194,7 +200,7 @@ namespace TdInterface
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(390, 315);
+            this.txtLastError.Location = new System.Drawing.Point(918, 605);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
@@ -211,7 +217,7 @@ namespace TdInterface
             this.groupBox1.Controls.Add(this.btnBuyLmtTriggerOco);
             this.groupBox1.Controls.Add(this.btnSellMrkTriggerOco);
             this.groupBox1.Controls.Add(this.btnBuyMrkTriggerOco);
-            this.groupBox1.Location = new System.Drawing.Point(12, 164);
+            this.groupBox1.Location = new System.Drawing.Point(540, 454);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(362, 144);
             this.groupBox1.TabIndex = 29;
@@ -249,7 +255,7 @@ namespace TdInterface
             // btnCancelAll
             // 
             this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(201, 314);
+            this.btnCancelAll.Location = new System.Drawing.Point(729, 604);
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
             this.btnCancelAll.TabIndex = 31;
@@ -260,7 +266,7 @@ namespace TdInterface
             // 
             // txtStopToClose
             // 
-            this.txtStopToClose.Location = new System.Drawing.Point(18, 397);
+            this.txtStopToClose.Location = new System.Drawing.Point(546, 687);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.Size = new System.Drawing.Size(172, 26);
             this.txtStopToClose.TabIndex = 6;
@@ -270,7 +276,7 @@ namespace TdInterface
             // btnBreakEven
             // 
             this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnBreakEven.Location = new System.Drawing.Point(18, 314);
+            this.btnBreakEven.Location = new System.Drawing.Point(546, 604);
             this.btnBreakEven.Name = "btnBreakEven";
             this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
             this.btnBreakEven.TabIndex = 30;
@@ -281,7 +287,7 @@ namespace TdInterface
             // 
             // txtAveragePrice
             // 
-            this.txtAveragePrice.Location = new System.Drawing.Point(390, 28);
+            this.txtAveragePrice.Location = new System.Drawing.Point(918, 318);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.ReadOnly = true;
             this.txtAveragePrice.Size = new System.Drawing.Size(104, 26);
@@ -292,7 +298,7 @@ namespace TdInterface
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(390, 9);
+            this.label3.Location = new System.Drawing.Point(918, 299);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 19);
             this.label3.TabIndex = 15;
@@ -300,7 +306,7 @@ namespace TdInterface
             // 
             // txtShares
             // 
-            this.txtShares.Location = new System.Drawing.Point(500, 28);
+            this.txtShares.Location = new System.Drawing.Point(1028, 318);
             this.txtShares.Name = "txtShares";
             this.txtShares.ReadOnly = true;
             this.txtShares.Size = new System.Drawing.Size(87, 26);
@@ -312,7 +318,7 @@ namespace TdInterface
             // lblShares
             // 
             this.lblShares.AutoSize = true;
-            this.lblShares.Location = new System.Drawing.Point(505, 9);
+            this.lblShares.Location = new System.Drawing.Point(1033, 299);
             this.lblShares.Name = "lblShares";
             this.lblShares.Size = new System.Drawing.Size(49, 19);
             this.lblShares.TabIndex = 17;
@@ -321,7 +327,7 @@ namespace TdInterface
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(107, 9);
+            this.label4.Location = new System.Drawing.Point(635, 299);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(34, 19);
             this.label4.TabIndex = 9;
@@ -330,7 +336,7 @@ namespace TdInterface
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(198, 9);
+            this.label5.Location = new System.Drawing.Point(726, 299);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(28, 19);
             this.label5.TabIndex = 11;
@@ -338,7 +344,7 @@ namespace TdInterface
             // 
             // txtBid
             // 
-            this.txtBid.Location = new System.Drawing.Point(198, 28);
+            this.txtBid.Location = new System.Drawing.Point(726, 318);
             this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBid.Name = "txtBid";
             this.txtBid.ReadOnly = true;
@@ -350,7 +356,7 @@ namespace TdInterface
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(291, 9);
+            this.label6.Location = new System.Drawing.Point(819, 299);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 19);
             this.label6.TabIndex = 13;
@@ -358,7 +364,7 @@ namespace TdInterface
             // 
             // txtAsk
             // 
-            this.txtAsk.Location = new System.Drawing.Point(291, 28);
+            this.txtAsk.Location = new System.Drawing.Point(819, 318);
             this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAsk.Name = "txtAsk";
             this.txtAsk.ReadOnly = true;
@@ -370,7 +376,7 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(103, 74);
+            this.label7.Location = new System.Drawing.Point(631, 364);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 19);
             this.label7.TabIndex = 22;
@@ -379,7 +385,7 @@ namespace TdInterface
             // txtLimit
             // 
             this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(103, 93);
+            this.txtLimit.Location = new System.Drawing.Point(631, 383);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 34);
             this.txtLimit.TabIndex = 2;
@@ -389,7 +395,7 @@ namespace TdInterface
             // chkTradeShares
             // 
             this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(310, 129);
+            this.chkTradeShares.Location = new System.Drawing.Point(838, 419);
             this.chkTradeShares.Name = "chkTradeShares";
             this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
             this.chkTradeShares.TabIndex = 5;
@@ -399,7 +405,7 @@ namespace TdInterface
             // 
             // txtHeartBeat
             // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(396, 453);
+            this.txtHeartBeat.Location = new System.Drawing.Point(918, 888);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
             this.txtHeartBeat.Size = new System.Drawing.Size(285, 26);
@@ -410,7 +416,7 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(396, 430);
+            this.label8.Location = new System.Drawing.Point(918, 866);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 19);
             this.label8.TabIndex = 35;
@@ -418,7 +424,7 @@ namespace TdInterface
             // 
             // txtConnectionStatus
             // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(20, 453);
+            this.txtConnectionStatus.Location = new System.Drawing.Point(548, 888);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
             this.txtConnectionStatus.Size = new System.Drawing.Size(318, 26);
@@ -428,7 +434,7 @@ namespace TdInterface
             // lblConnectionStatus
             // 
             this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(20, 430);
+            this.lblConnectionStatus.Location = new System.Drawing.Point(549, 866);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
             this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
             this.lblConnectionStatus.TabIndex = 37;
@@ -437,7 +443,7 @@ namespace TdInterface
             // txtLimitOffset
             // 
             this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(198, 93);
+            this.txtLimitOffset.Location = new System.Drawing.Point(726, 383);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
             this.txtLimitOffset.TabIndex = 3;
@@ -446,7 +452,7 @@ namespace TdInterface
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(594, 74);
+            this.label9.Location = new System.Drawing.Point(1122, 364);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(17, 19);
             this.label9.TabIndex = 27;
@@ -455,7 +461,7 @@ namespace TdInterface
             // txtRValue
             // 
             this.txtRValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRValue.Location = new System.Drawing.Point(594, 93);
+            this.txtRValue.Location = new System.Drawing.Point(1122, 383);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
             this.txtRValue.Size = new System.Drawing.Size(87, 34);
@@ -466,7 +472,7 @@ namespace TdInterface
             // txtPnL
             // 
             this.txtPnL.Enabled = false;
-            this.txtPnL.Location = new System.Drawing.Point(594, 27);
+            this.txtPnL.Location = new System.Drawing.Point(1122, 317);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.ReadOnly = true;
             this.txtPnL.Size = new System.Drawing.Size(87, 26);
@@ -476,7 +482,7 @@ namespace TdInterface
             // lblPnL
             // 
             this.lblPnL.AutoSize = true;
-            this.lblPnL.Location = new System.Drawing.Point(594, 9);
+            this.lblPnL.Location = new System.Drawing.Point(1122, 299);
             this.lblPnL.Name = "lblPnL";
             this.lblPnL.Size = new System.Drawing.Size(32, 19);
             this.lblPnL.TabIndex = 19;
@@ -491,7 +497,7 @@ namespace TdInterface
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(390, 74);
+            this.label10.Location = new System.Drawing.Point(918, 364);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(28, 19);
             this.label10.TabIndex = 25;
@@ -500,7 +506,7 @@ namespace TdInterface
             // txtOneToOne
             // 
             this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtOneToOne.Location = new System.Drawing.Point(390, 93);
+            this.txtOneToOne.Location = new System.Drawing.Point(918, 383);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
@@ -511,7 +517,7 @@ namespace TdInterface
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(205, 374);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(733, 664);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -521,7 +527,7 @@ namespace TdInterface
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(198, 74);
+            this.label11.Location = new System.Drawing.Point(726, 364);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(80, 19);
             this.label11.TabIndex = 23;
@@ -530,7 +536,7 @@ namespace TdInterface
             // txtMoveStop
             // 
             this.txtMoveStop.AutoSize = true;
-            this.txtMoveStop.Location = new System.Drawing.Point(20, 375);
+            this.txtMoveStop.Location = new System.Drawing.Point(548, 665);
             this.txtMoveStop.Name = "txtMoveStop";
             this.txtMoveStop.Size = new System.Drawing.Size(94, 19);
             this.txtMoveStop.TabIndex = 32;
@@ -632,7 +638,7 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnExit50);
             this.groupBox2.Controls.Add(this.btnExit25);
             this.groupBox2.Controls.Add(this.btnExit33);
-            this.groupBox2.Location = new System.Drawing.Point(390, 164);
+            this.groupBox2.Location = new System.Drawing.Point(918, 454);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(291, 144);
             this.groupBox2.TabIndex = 33;
@@ -642,7 +648,7 @@ namespace TdInterface
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(280, 430);
+            this.lblVersion.Location = new System.Drawing.Point(812, 866);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(54, 19);
             this.lblVersion.TabIndex = 39;
@@ -651,7 +657,7 @@ namespace TdInterface
             // 
             // btnScreenshot
             // 
-            this.btnScreenshot.Location = new System.Drawing.Point(344, 453);
+            this.btnScreenshot.Location = new System.Drawing.Point(868, 887);
             this.btnScreenshot.Name = "btnScreenshot";
             this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
             this.btnScreenshot.TabIndex = 40;
@@ -659,9 +665,43 @@ namespace TdInterface
             this.btnScreenshot.UseVisualStyleBackColor = true;
             this.btnScreenshot.Click += new System.EventHandler(this.btnScreenshot_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.lblTickerDesc);
+            this.panel1.Controls.Add(this.rpbTickerLogo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1284, 150);
+            this.panel1.TabIndex = 41;
+            // 
+            // lblTickerDesc
+            // 
+            this.lblTickerDesc.AutoSize = true;
+            this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTickerDesc.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTickerDesc.Location = new System.Drawing.Point(92, 12);
+            this.lblTickerDesc.Name = "lblTickerDesc";
+            this.lblTickerDesc.Size = new System.Drawing.Size(185, 28);
+            this.lblTickerDesc.TabIndex = 42;
+            this.lblTickerDesc.Text = "Ticker Description";
+            // 
+            // rpbTickerLogo
+            // 
+            this.rpbTickerLogo.BackColor = System.Drawing.Color.DimGray;
+            this.rpbTickerLogo.Location = new System.Drawing.Point(12, 12);
+            this.rpbTickerLogo.Name = "rpbTickerLogo";
+            this.rpbTickerLogo.Size = new System.Drawing.Size(64, 64);
+            this.rpbTickerLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbTickerLogo.TabIndex = 42;
+            this.rpbTickerLogo.TabStop = false;
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(694, 496);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.ClientSize = new System.Drawing.Size(1284, 956);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnScreenshot);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
@@ -715,6 +755,9 @@ namespace TdInterface
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -775,6 +818,9 @@ namespace TdInterface
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnScreenshot;
+        private System.Windows.Forms.Panel panel1;
+        private CustomControls.RoundedPictureBox rpbTickerLogo;
+        private System.Windows.Forms.Label lblTickerDesc;
     }
 }
 
