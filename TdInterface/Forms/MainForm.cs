@@ -475,7 +475,6 @@ namespace TdInterface
             Extensions.SafeUpdateControl(txtBid, stockQuote.bidPrice.ToString("0.00"));
             Extensions.SafeUpdateControl(txtAsk, stockQuote.askPrice.ToString("0.00"));
 
-
             try
             {
                 if (_activePosition != null && txtStop.Text != String.Empty)
