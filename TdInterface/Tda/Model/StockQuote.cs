@@ -57,7 +57,10 @@ namespace TdInterface.Tda.Model
                 }
                 else if (key.Equals(FIELD_QUOTE_DESCRIPTION))
                 {
-                    description = keyValuePairs[key];
+                    StringBuilder sb = new StringBuilder(keyValuePairs[key]);
+                    sb.Replace("Common Stock", String.Empty);
+                    sb.Replace("Common Shares", String.Empty);
+                    description = sb.ToString().Split('-')[0];
                 }
             }
         }

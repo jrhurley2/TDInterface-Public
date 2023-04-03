@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -474,6 +475,7 @@ namespace TdInterface
             Extensions.SafeUpdateControl(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
             Extensions.SafeUpdateControl(txtBid, stockQuote.bidPrice.ToString("0.00"));
             Extensions.SafeUpdateControl(txtAsk, stockQuote.askPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(lblTickerDesc, stockQuote.description.ToString());
 
             try
             {
@@ -896,6 +898,7 @@ namespace TdInterface
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
                     this.Text = txtSymbol.Text;
+                    lblTickerSymbol.Text = txtSymbol.Text;
                     await SetPosition();
                 }
             }
@@ -1065,6 +1068,8 @@ namespace TdInterface
         private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
             rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@2x.png");
+            lblTickerSymbol.Text = txtSymbol.Text;
+            lblTickerDesc.Text = "Loading...";
         }
     }
 }

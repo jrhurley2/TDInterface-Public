@@ -87,6 +87,7 @@ namespace TdInterface
             this.lblVersion = new System.Windows.Forms.Label();
             this.btnScreenshot = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTickerSymbol = new System.Windows.Forms.Label();
             this.lblTickerDesc = new System.Windows.Forms.Label();
             this.rpbTickerLogo = new TdInterface.CustomControls.RoundedPictureBox();
             this.groupBox1.SuspendLayout();
@@ -668,6 +669,7 @@ namespace TdInterface
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.lblTickerSymbol);
             this.panel1.Controls.Add(this.lblTickerDesc);
             this.panel1.Controls.Add(this.rpbTickerLogo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -676,14 +678,25 @@ namespace TdInterface
             this.panel1.Size = new System.Drawing.Size(1284, 150);
             this.panel1.TabIndex = 41;
             // 
+            // lblTickerSymbol
+            // 
+            this.lblTickerSymbol.AutoSize = true;
+            this.lblTickerSymbol.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTickerSymbol.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTickerSymbol.Location = new System.Drawing.Point(84, 49);
+            this.lblTickerSymbol.Name = "lblTickerSymbol";
+            this.lblTickerSymbol.Size = new System.Drawing.Size(117, 19);
+            this.lblTickerSymbol.TabIndex = 43;
+            this.lblTickerSymbol.Text = "Ticker Description";
+            // 
             // lblTickerDesc
             // 
             this.lblTickerDesc.AutoSize = true;
-            this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblTickerDesc.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTickerDesc.Location = new System.Drawing.Point(92, 12);
+            this.lblTickerDesc.Location = new System.Drawing.Point(84, 20);
             this.lblTickerDesc.Name = "lblTickerDesc";
-            this.lblTickerDesc.Size = new System.Drawing.Size(185, 28);
+            this.lblTickerDesc.Size = new System.Drawing.Size(166, 25);
             this.lblTickerDesc.TabIndex = 42;
             this.lblTickerDesc.Text = "Ticker Description";
             // 
@@ -821,6 +834,7 @@ namespace TdInterface
         private System.Windows.Forms.Panel panel1;
         private CustomControls.RoundedPictureBox rpbTickerLogo;
         private System.Windows.Forms.Label lblTickerDesc;
+        private System.Windows.Forms.Label lblTickerSymbol;
     }
 }
 
