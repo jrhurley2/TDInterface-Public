@@ -488,7 +488,7 @@ namespace TdInterface
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(369, 30);
+            this.pnlTop.Size = new System.Drawing.Size(364, 30);
             this.pnlTop.TabIndex = 44;
             this.pnlTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseDown);
             // 
@@ -500,7 +500,7 @@ namespace TdInterface
             this.btnMinimizeForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimizeForm.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnMinimizeForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.btnMinimizeForm.Location = new System.Drawing.Point(293, 0);
+            this.btnMinimizeForm.Location = new System.Drawing.Point(288, 0);
             this.btnMinimizeForm.Name = "btnMinimizeForm";
             this.btnMinimizeForm.Size = new System.Drawing.Size(38, 30);
             this.btnMinimizeForm.TabIndex = 47;
@@ -516,7 +516,7 @@ namespace TdInterface
             this.btnExitForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExitForm.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnExitForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.btnExitForm.Location = new System.Drawing.Point(331, 0);
+            this.btnExitForm.Location = new System.Drawing.Point(326, 0);
             this.btnExitForm.Name = "btnExitForm";
             this.btnExitForm.Size = new System.Drawing.Size(38, 30);
             this.btnExitForm.TabIndex = 46;
@@ -845,9 +845,9 @@ namespace TdInterface
             this.btnCancelAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelAll.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancelAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(12, 715);
+            this.btnCancelAll.Location = new System.Drawing.Point(17, 715);
             this.btnCancelAll.Name = "btnCancelAll";
-            this.btnCancelAll.Size = new System.Drawing.Size(346, 36);
+            this.btnCancelAll.Size = new System.Drawing.Size(336, 36);
             this.btnCancelAll.TabIndex = 57;
             this.btnCancelAll.Text = "CANCEL ALL ORDERS";
             this.btnCancelAll.UseVisualStyleBackColor = false;
@@ -998,15 +998,15 @@ namespace TdInterface
             this.pnlBottom.Controls.Add(this.lblHeartbeat);
             this.pnlBottom.Controls.Add(this.txtConnectionStatus);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 759);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 761);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(369, 30);
+            this.pnlBottom.Size = new System.Drawing.Size(364, 30);
             this.pnlBottom.TabIndex = 47;
             // 
             // lblLastError
             // 
             this.lblLastError.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblLastError.Location = new System.Drawing.Point(313, 0);
+            this.lblLastError.Location = new System.Drawing.Point(308, 0);
             this.lblLastError.Name = "lblLastError";
             this.lblLastError.Size = new System.Drawing.Size(28, 30);
             this.lblLastError.TabIndex = 60;
@@ -1017,7 +1017,7 @@ namespace TdInterface
             // lblHeartbeat
             // 
             this.lblHeartbeat.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblHeartbeat.Location = new System.Drawing.Point(341, 0);
+            this.lblHeartbeat.Location = new System.Drawing.Point(336, 0);
             this.lblHeartbeat.Name = "lblHeartbeat";
             this.lblHeartbeat.Size = new System.Drawing.Size(28, 30);
             this.lblHeartbeat.TabIndex = 59;
@@ -1028,7 +1028,7 @@ namespace TdInterface
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(369, 789);
+            this.ClientSize = new System.Drawing.Size(364, 791);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.roundedPanel9);
             this.Controls.Add(this.btnCancelAll);
@@ -1046,8 +1046,7 @@ namespace TdInterface
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(385, 828);
+            this.MinimumSize = new System.Drawing.Size(380, 830);
             this.Name = "MainForm";
             this.Text = "JrHurley\'s TDInterface";
             this.Load += new System.EventHandler(this.MainForm_Load);
