@@ -34,7 +34,6 @@ namespace TdInterface
             this.components = new System.ComponentModel.Container();
             this.btnBuyMrkTriggerOco = new System.Windows.Forms.Button();
             this.txtSymbol = new System.Windows.Forms.TextBox();
-            this.lblSymbol = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRisk = new System.Windows.Forms.TextBox();
             this.btnSellMrkTriggerOco = new System.Windows.Forms.Button();
@@ -87,12 +86,15 @@ namespace TdInterface
             this.lblVersion = new System.Windows.Forms.Label();
             this.btnScreenshot = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTickerSymbol = new System.Windows.Forms.Label();
+            this.roundedPanel1 = new TdInterface.CustomControls.RoundedPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTickerDesc = new System.Windows.Forms.Label();
             this.rpbTickerLogo = new TdInterface.CustomControls.RoundedPictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.roundedPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,26 +114,22 @@ namespace TdInterface
             // 
             // txtSymbol
             // 
+            this.txtSymbol.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.txtSymbol.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtSymbol.Location = new System.Drawing.Point(540, 318);
+            this.txtSymbol.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtSymbol.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txtSymbol.Location = new System.Drawing.Point(42, 12);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(87, 26);
-            this.txtSymbol.TabIndex = 0;
+            this.txtSymbol.PlaceholderText = "Symbol";
+            this.txtSymbol.Size = new System.Drawing.Size(88, 24);
+            this.txtSymbol.TabIndex = 1;
             this.txtSymbol.TextChanged += new System.EventHandler(this.txtSymbol_TextChanged);
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
             this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
             this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
             this.txtSymbol.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtSymbol_Enter);
-            // 
-            // lblSymbol
-            // 
-            this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Location = new System.Drawing.Point(540, 299);
-            this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new System.Drawing.Size(54, 19);
-            this.lblSymbol.TabIndex = 8;
-            this.lblSymbol.Text = "Symbol";
             // 
             // label1
             // 
@@ -149,7 +147,7 @@ namespace TdInterface
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
             this.txtRisk.Size = new System.Drawing.Size(87, 34);
-            this.txtRisk.TabIndex = 4;
+            this.txtRisk.TabIndex = 5;
             this.txtRisk.Text = "5";
             this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -194,7 +192,7 @@ namespace TdInterface
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
             this.txtStop.Size = new System.Drawing.Size(85, 34);
-            this.txtStop.TabIndex = 1;
+            this.txtStop.TabIndex = 2;
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtStop.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
@@ -389,7 +387,7 @@ namespace TdInterface
             this.txtLimit.Location = new System.Drawing.Point(631, 383);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 34);
-            this.txtLimit.TabIndex = 2;
+            this.txtLimit.TabIndex = 3;
             this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLimit.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
@@ -447,7 +445,7 @@ namespace TdInterface
             this.txtLimitOffset.Location = new System.Drawing.Point(726, 383);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
-            this.txtLimitOffset.TabIndex = 3;
+            this.txtLimitOffset.TabIndex = 4;
             this.txtLimitOffset.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
             // label9
@@ -669,35 +667,44 @@ namespace TdInterface
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Controls.Add(this.lblTickerSymbol);
+            this.panel1.Controls.Add(this.roundedPanel1);
             this.panel1.Controls.Add(this.lblTickerDesc);
             this.panel1.Controls.Add(this.rpbTickerLogo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1284, 150);
-            this.panel1.TabIndex = 41;
+            this.panel1.Size = new System.Drawing.Size(1284, 72);
+            this.panel1.TabIndex = 0;
             // 
-            // lblTickerSymbol
+            // roundedPanel1
             // 
-            this.lblTickerSymbol.AutoSize = true;
-            this.lblTickerSymbol.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblTickerSymbol.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTickerSymbol.Location = new System.Drawing.Point(84, 49);
-            this.lblTickerSymbol.Name = "lblTickerSymbol";
-            this.lblTickerSymbol.Size = new System.Drawing.Size(117, 19);
-            this.lblTickerSymbol.TabIndex = 43;
-            this.lblTickerSymbol.Text = "Ticker Description";
+            this.roundedPanel1.Controls.Add(this.pictureBox1);
+            this.roundedPanel1.Controls.Add(this.txtSymbol);
+            this.roundedPanel1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.roundedPanel1.Location = new System.Drawing.Point(314, 12);
+            this.roundedPanel1.Name = "roundedPanel1";
+            this.roundedPanel1.Size = new System.Drawing.Size(150, 48);
+            this.roundedPanel1.TabIndex = 41;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::TdInterface.Properties.Resources.magnify_24;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.TabIndex = 41;
+            this.pictureBox1.TabStop = false;
             // 
             // lblTickerDesc
             // 
             this.lblTickerDesc.AutoSize = true;
             this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblTickerDesc.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTickerDesc.Location = new System.Drawing.Point(84, 20);
+            this.lblTickerDesc.Location = new System.Drawing.Point(66, 22);
             this.lblTickerDesc.Name = "lblTickerDesc";
             this.lblTickerDesc.Size = new System.Drawing.Size(166, 25);
-            this.lblTickerDesc.TabIndex = 42;
+            this.lblTickerDesc.TabIndex = 2;
             this.lblTickerDesc.Text = "Ticker Description";
             // 
             // rpbTickerLogo
@@ -705,7 +712,7 @@ namespace TdInterface
             this.rpbTickerLogo.BackColor = System.Drawing.Color.DimGray;
             this.rpbTickerLogo.Location = new System.Drawing.Point(12, 12);
             this.rpbTickerLogo.Name = "rpbTickerLogo";
-            this.rpbTickerLogo.Size = new System.Drawing.Size(64, 64);
+            this.rpbTickerLogo.Size = new System.Drawing.Size(48, 48);
             this.rpbTickerLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.rpbTickerLogo.TabIndex = 42;
             this.rpbTickerLogo.TabStop = false;
@@ -754,8 +761,6 @@ namespace TdInterface
             this.Controls.Add(this.txtLastPrice);
             this.Controls.Add(this.txtRisk);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblSymbol);
-            this.Controls.Add(this.txtSymbol);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -770,6 +775,9 @@ namespace TdInterface
             this.groupBox2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.roundedPanel1.ResumeLayout(false);
+            this.roundedPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -779,7 +787,6 @@ namespace TdInterface
         #endregion
         private System.Windows.Forms.Button btnBuyMrkTriggerOco;
         private System.Windows.Forms.TextBox txtSymbol;
-        private System.Windows.Forms.Label lblSymbol;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRisk;
         private System.Windows.Forms.Button btnSellMrkTriggerOco;
@@ -834,7 +841,8 @@ namespace TdInterface
         private System.Windows.Forms.Panel panel1;
         private CustomControls.RoundedPictureBox rpbTickerLogo;
         private System.Windows.Forms.Label lblTickerDesc;
-        private System.Windows.Forms.Label lblTickerSymbol;
+        private CustomControls.RoundedPanel roundedPanel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

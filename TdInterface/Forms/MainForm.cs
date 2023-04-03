@@ -898,7 +898,6 @@ namespace TdInterface
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
                     this.Text = txtSymbol.Text;
-                    lblTickerSymbol.Text = txtSymbol.Text;
                     await SetPosition();
                 }
             }
@@ -1067,9 +1066,8 @@ namespace TdInterface
 
         private void txtSymbol_TextChanged(object sender, EventArgs e)
         {
-            rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@2x.png");
-            lblTickerSymbol.Text = txtSymbol.Text;
-            lblTickerDesc.Text = "Loading...";
+            rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@1x.png");
+            lblTickerDesc.Text = String.Empty;
         }
     }
 }
