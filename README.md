@@ -1,8 +1,5 @@
 # TDInterface-Public
 
-This app was inspired by Steve over at https://largecapdaytrader.com/   If you are tired of losing money and want to learn to read price action, go check it out.
-
-
 > ⚠️ **TDA is working on their migration with Schwab. At this time you can NOT get an API key. ** ⚠️
 > 
 >  ℹ️ We will update this page and update the app with any changes required when the migration to Schwab is complete.
