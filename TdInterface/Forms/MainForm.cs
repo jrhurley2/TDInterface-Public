@@ -472,9 +472,7 @@ namespace TdInterface
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);
-            Extensions.SafeUpdateControl(txtLastPrice, stockQuote.lastPrice.ToString("0.00"));
-            Extensions.SafeUpdateControl(txtBid, stockQuote.bidPrice.ToString("0.00"));
-            Extensions.SafeUpdateControl(txtAsk, stockQuote.askPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(lblLastPrice, stockQuote.lastPrice.ToString("0.00"));
             Extensions.SafeUpdateControl(lblTickerDesc, stockQuote.description.ToString());
 
             try
@@ -1068,6 +1066,16 @@ namespace TdInterface
         {
             rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@1x.png");
             lblTickerDesc.Text = String.Empty;
+        }
+
+        private void lblStop_Click(object sender, EventArgs e)
+        {
+            txtStop.Focus();
+        }
+
+        private void lblRisk_Click(object sender, EventArgs e)
+        {
+            txtRisk.Focus();
         }
     }
 }
