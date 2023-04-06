@@ -111,11 +111,11 @@ namespace TdInterface
             // 
             // txtSymbol
             // 
-            this.txtSymbol.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.txtSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(248)))), ((int)(((byte)(249)))));
             this.txtSymbol.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSymbol.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtSymbol.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txtSymbol.ForeColor = System.Drawing.Color.Black;
             this.txtSymbol.Location = new System.Drawing.Point(42, 12);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
@@ -587,7 +587,7 @@ namespace TdInterface
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.lblLastPrice);
             this.panel1.Controls.Add(this.roundedPanel1);
             this.panel1.Controls.Add(this.lblTickerDesc);
@@ -602,7 +602,7 @@ namespace TdInterface
             // 
             this.lblLastPrice.AutoSize = true;
             this.lblLastPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblLastPrice.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblLastPrice.ForeColor = System.Drawing.Color.Black;
             this.lblLastPrice.Location = new System.Drawing.Point(66, 37);
             this.lblLastPrice.Name = "lblLastPrice";
             this.lblLastPrice.Size = new System.Drawing.Size(22, 25);
@@ -613,7 +613,7 @@ namespace TdInterface
             // 
             this.roundedPanel1.Controls.Add(this.pictureBox1);
             this.roundedPanel1.Controls.Add(this.txtSymbol);
-            this.roundedPanel1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.roundedPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(248)))), ((int)(((byte)(249)))));
             this.roundedPanel1.Location = new System.Drawing.Point(540, 12);
             this.roundedPanel1.Name = "roundedPanel1";
             this.roundedPanel1.Size = new System.Drawing.Size(150, 48);
@@ -633,7 +633,7 @@ namespace TdInterface
             // 
             this.lblTickerDesc.AutoSize = true;
             this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblTickerDesc.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTickerDesc.ForeColor = System.Drawing.Color.Black;
             this.lblTickerDesc.Location = new System.Drawing.Point(66, 12);
             this.lblTickerDesc.Name = "lblTickerDesc";
             this.lblTickerDesc.Size = new System.Drawing.Size(166, 25);
@@ -686,7 +686,7 @@ namespace TdInterface
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.ClientSize = new System.Drawing.Size(702, 579);
+            this.ClientSize = new System.Drawing.Size(702, 779);
             this.Controls.Add(this.btnSellLmtTriggerOco);
             this.Controls.Add(this.btnBuyLmtTriggerOco);
             this.Controls.Add(this.roundedPanel3);

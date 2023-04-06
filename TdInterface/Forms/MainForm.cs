@@ -472,7 +472,7 @@ namespace TdInterface
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);
-            Extensions.SafeUpdateControl(lblLastPrice, stockQuote.lastPrice.ToString("0.00"));
+            Extensions.SafeUpdateControl(lblLastPrice, stockQuote.lastPrice.ToString("$0.00"));
             Extensions.SafeUpdateControl(lblTickerDesc, stockQuote.description.ToString());
 
             try
