@@ -157,7 +157,7 @@ namespace TdInterface
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(393, 401);
+            this.txtLastError.Location = new System.Drawing.Point(368, 643);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
@@ -172,10 +172,10 @@ namespace TdInterface
             // 
             this.btnSellLmtTriggerOco.AutoSize = true;
             this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(430, 666);
+            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(211, 497);
             this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
-            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(170, 51);
+            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(135, 51);
             this.btnSellLmtTriggerOco.TabIndex = 3;
             this.btnSellLmtTriggerOco.TabStop = false;
             this.btnSellLmtTriggerOco.Text = "Sell Limit";
@@ -186,10 +186,10 @@ namespace TdInterface
             // 
             this.btnBuyLmtTriggerOco.AutoSize = true;
             this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(430, 606);
+            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(15, 496);
             this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
-            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(170, 52);
+            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(135, 52);
             this.btnBuyLmtTriggerOco.TabIndex = 1;
             this.btnBuyLmtTriggerOco.TabStop = false;
             this.btnBuyLmtTriggerOco.Text = "Buy Limit";
@@ -199,9 +199,9 @@ namespace TdInterface
             // btnCancelAll
             // 
             this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(26, 622);
+            this.btnCancelAll.Location = new System.Drawing.Point(211, 374);
             this.btnCancelAll.Name = "btnCancelAll";
-            this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
+            this.btnCancelAll.Size = new System.Drawing.Size(135, 58);
             this.btnCancelAll.TabIndex = 31;
             this.btnCancelAll.TabStop = false;
             this.btnCancelAll.Text = "Cancel All";
@@ -210,7 +210,7 @@ namespace TdInterface
             // 
             // txtStopToClose
             // 
-            this.txtStopToClose.Location = new System.Drawing.Point(19, 535);
+            this.txtStopToClose.Location = new System.Drawing.Point(19, 458);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.Size = new System.Drawing.Size(172, 26);
             this.txtStopToClose.TabIndex = 5;
@@ -220,9 +220,9 @@ namespace TdInterface
             // btnBreakEven
             // 
             this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnBreakEven.Location = new System.Drawing.Point(19, 452);
+            this.btnBreakEven.Location = new System.Drawing.Point(15, 375);
             this.btnBreakEven.Name = "btnBreakEven";
-            this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
+            this.btnBreakEven.Size = new System.Drawing.Size(135, 58);
             this.btnBreakEven.TabIndex = 30;
             this.btnBreakEven.TabStop = false;
             this.btnBreakEven.Text = "Stop/BE";
@@ -271,7 +271,7 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(454, 723);
+            this.label7.Location = new System.Drawing.Point(25, 551);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 19);
             this.label7.TabIndex = 22;
@@ -280,7 +280,7 @@ namespace TdInterface
             // txtLimit
             // 
             this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(454, 742);
+            this.txtLimit.Location = new System.Drawing.Point(25, 570);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 34);
             this.txtLimit.TabIndex = 3;
@@ -290,7 +290,7 @@ namespace TdInterface
             // chkTradeShares
             // 
             this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(199, 657);
+            this.chkTradeShares.Location = new System.Drawing.Point(203, 464);
             this.chkTradeShares.Name = "chkTradeShares";
             this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
             this.chkTradeShares.TabIndex = 5;
@@ -300,10 +300,10 @@ namespace TdInterface
             // 
             // txtHeartBeat
             // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(393, 535);
+            this.txtHeartBeat.Location = new System.Drawing.Point(29, 665);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(285, 26);
+            this.txtHeartBeat.Size = new System.Drawing.Size(317, 26);
             this.txtHeartBeat.TabIndex = 36;
             this.txtHeartBeat.TabStop = false;
             this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -311,7 +311,7 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(393, 513);
+            this.label8.Location = new System.Drawing.Point(28, 643);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 19);
             this.label8.TabIndex = 35;
@@ -338,7 +338,7 @@ namespace TdInterface
             // txtLimitOffset
             // 
             this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(549, 742);
+            this.txtLimitOffset.Location = new System.Drawing.Point(120, 570);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
             this.txtLimitOffset.TabIndex = 4;
@@ -412,7 +412,7 @@ namespace TdInterface
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(199, 628);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(203, 435);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -422,7 +422,7 @@ namespace TdInterface
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(549, 723);
+            this.label11.Location = new System.Drawing.Point(120, 551);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(80, 19);
             this.label11.TabIndex = 23;
@@ -431,7 +431,7 @@ namespace TdInterface
             // txtMoveStop
             // 
             this.txtMoveStop.AutoSize = true;
-            this.txtMoveStop.Location = new System.Drawing.Point(21, 513);
+            this.txtMoveStop.Location = new System.Drawing.Point(19, 436);
             this.txtMoveStop.Name = "txtMoveStop";
             this.txtMoveStop.Size = new System.Drawing.Size(94, 19);
             this.txtMoveStop.TabIndex = 32;
@@ -552,7 +552,7 @@ namespace TdInterface
             // 
             // btnScreenshot
             // 
-            this.btnScreenshot.Location = new System.Drawing.Point(348, 723);
+            this.btnScreenshot.Location = new System.Drawing.Point(156, 390);
             this.btnScreenshot.Name = "btnScreenshot";
             this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
             this.btnScreenshot.TabIndex = 40;
@@ -671,9 +671,9 @@ namespace TdInterface
             this.btnBuyMrkTriggerOco.FlatAppearance.BorderSize = 0;
             this.btnBuyMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuyMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(15, 204);
+            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(18, 185);
             this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
-            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(156, 40);
+            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(153, 40);
             this.btnBuyMrkTriggerOco.TabIndex = 45;
             this.btnBuyMrkTriggerOco.Text = "Buy Market";
             this.btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
@@ -685,9 +685,9 @@ namespace TdInterface
             this.btnSellMrkTriggerOco.FlatAppearance.BorderSize = 0;
             this.btnSellMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSellMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(189, 204);
+            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(189, 185);
             this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
-            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(159, 40);
+            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(156, 40);
             this.btnSellMrkTriggerOco.TabIndex = 46;
             this.btnSellMrkTriggerOco.Text = "Sell Market";
             this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
