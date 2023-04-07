@@ -32,10 +32,8 @@ namespace TdInterface
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnBuyMrkTriggerOco = new System.Windows.Forms.Button();
             this.txtSymbol = new System.Windows.Forms.TextBox();
             this.txtRisk = new System.Windows.Forms.TextBox();
-            this.btnSellMrkTriggerOco = new System.Windows.Forms.Button();
             this.lblStop = new System.Windows.Forms.Label();
             this.txtStop = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -77,43 +75,29 @@ namespace TdInterface
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.btnScreenshot = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.lblLastPrice = new System.Windows.Forms.Label();
             this.roundedPanel1 = new TdInterface.CustomControls.RoundedPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTickerDesc = new System.Windows.Forms.Label();
             this.rpbTickerLogo = new TdInterface.CustomControls.RoundedPictureBox();
-            this.roundedPanel2 = new TdInterface.CustomControls.RoundedPanel();
             this.lblPerShare = new System.Windows.Forms.Label();
-            this.roundedPanel3 = new TdInterface.CustomControls.RoundedPanel();
             this.lblSharesRisk = new System.Windows.Forms.Label();
             this.lblRisk = new System.Windows.Forms.Label();
+            this.roundedPanel4 = new TdInterface.CustomControls.RoundedPanel();
+            this.roundedPanel5 = new TdInterface.CustomControls.RoundedPanel();
+            this.btnBuyMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
+            this.btnSellMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
             this.groupBox2.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.roundedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).BeginInit();
-            this.roundedPanel2.SuspendLayout();
-            this.roundedPanel3.SuspendLayout();
+            this.roundedPanel4.SuspendLayout();
+            this.roundedPanel5.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnBuyMrkTriggerOco
-            // 
-            this.btnBuyMrkTriggerOco.AutoSize = true;
-            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(19, 332);
-            this.btnBuyMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
-            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(174, 52);
-            this.btnBuyMrkTriggerOco.TabIndex = 0;
-            this.btnBuyMrkTriggerOco.TabStop = false;
-            this.btnBuyMrkTriggerOco.Text = "Buy Market";
-            this.btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
-            this.btnBuyMrkTriggerOco.Click += new System.EventHandler(this.btnBuyMrkTriggerOco_Click);
             // 
             // txtSymbol
             // 
-            this.txtSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
+            this.txtSymbol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
             this.txtSymbol.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSymbol.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -121,8 +105,8 @@ namespace TdInterface
             this.txtSymbol.Location = new System.Drawing.Point(42, 11);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.PlaceholderText = "SYMBOL";
-            this.txtSymbol.Size = new System.Drawing.Size(88, 24);
+            this.txtSymbol.PlaceholderText = "Search by ticker";
+            this.txtSymbol.Size = new System.Drawing.Size(292, 24);
             this.txtSymbol.TabIndex = 0;
             this.txtSymbol.TextChanged += new System.EventHandler(this.txtSymbol_TextChanged);
             this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
@@ -132,55 +116,42 @@ namespace TdInterface
             // 
             // txtRisk
             // 
-            this.txtRisk.BackColor = System.Drawing.Color.White;
+            this.txtRisk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
             this.txtRisk.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRisk.Location = new System.Drawing.Point(18, 38);
+            this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtRisk.Location = new System.Drawing.Point(12, 8);
             this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(87, 24);
+            this.txtRisk.Size = new System.Drawing.Size(140, 27);
             this.txtRisk.TabIndex = 0;
             this.txtRisk.Text = "5";
-            // 
-            // btnSellMrkTriggerOco
-            // 
-            this.btnSellMrkTriggerOco.AutoSize = true;
-            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(19, 394);
-            this.btnSellMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
-            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(174, 51);
-            this.btnSellMrkTriggerOco.TabIndex = 2;
-            this.btnSellMrkTriggerOco.TabStop = false;
-            this.btnSellMrkTriggerOco.Text = "Sell Market";
-            this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
-            this.btnSellMrkTriggerOco.Click += new System.EventHandler(this.btnSellMrkTriggerOco_Click);
+            this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblStop
             // 
             this.lblStop.AutoSize = true;
             this.lblStop.BackColor = System.Drawing.Color.Transparent;
-            this.lblStop.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblStop.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblStop.Location = new System.Drawing.Point(12, 12);
+            this.lblStop.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblStop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(164)))), ((int)(((byte)(174)))));
+            this.lblStop.Location = new System.Drawing.Point(15, 109);
             this.lblStop.Name = "lblStop";
-            this.lblStop.Size = new System.Drawing.Size(41, 21);
+            this.lblStop.Size = new System.Drawing.Size(40, 19);
             this.lblStop.TabIndex = 21;
             this.lblStop.Text = "Stop";
             this.lblStop.Click += new System.EventHandler(this.lblStop_Click);
             // 
             // txtStop
             // 
-            this.txtStop.BackColor = System.Drawing.Color.White;
+            this.txtStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
             this.txtStop.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtStop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtStop.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtStop.ForeColor = System.Drawing.Color.Black;
-            this.txtStop.Location = new System.Drawing.Point(17, 38);
+            this.txtStop.Location = new System.Drawing.Point(12, 8);
             this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStop.Name = "txtStop";
-            this.txtStop.PlaceholderText = "$ Stop Price";
-            this.txtStop.Size = new System.Drawing.Size(126, 24);
+            this.txtStop.Size = new System.Drawing.Size(140, 27);
             this.txtStop.TabIndex = 0;
+            this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStop.Leave += new System.EventHandler(this.txtWithValidation_Leave);
             // 
             // txtLastError
@@ -201,7 +172,7 @@ namespace TdInterface
             // 
             this.btnSellLmtTriggerOco.AutoSize = true;
             this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(199, 392);
+            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(430, 666);
             this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
             this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(170, 51);
@@ -215,7 +186,7 @@ namespace TdInterface
             // 
             this.btnBuyLmtTriggerOco.AutoSize = true;
             this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(199, 332);
+            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(430, 606);
             this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
             this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(170, 52);
@@ -228,7 +199,7 @@ namespace TdInterface
             // btnCancelAll
             // 
             this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(202, 452);
+            this.btnCancelAll.Location = new System.Drawing.Point(26, 622);
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
             this.btnCancelAll.TabIndex = 31;
@@ -260,7 +231,7 @@ namespace TdInterface
             // 
             // txtAveragePrice
             // 
-            this.txtAveragePrice.Location = new System.Drawing.Point(393, 114);
+            this.txtAveragePrice.Location = new System.Drawing.Point(15, 279);
             this.txtAveragePrice.Name = "txtAveragePrice";
             this.txtAveragePrice.ReadOnly = true;
             this.txtAveragePrice.Size = new System.Drawing.Size(104, 26);
@@ -271,7 +242,7 @@ namespace TdInterface
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(393, 95);
+            this.label3.Location = new System.Drawing.Point(15, 260);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 19);
             this.label3.TabIndex = 15;
@@ -279,7 +250,7 @@ namespace TdInterface
             // 
             // txtShares
             // 
-            this.txtShares.Location = new System.Drawing.Point(503, 114);
+            this.txtShares.Location = new System.Drawing.Point(125, 279);
             this.txtShares.Name = "txtShares";
             this.txtShares.ReadOnly = true;
             this.txtShares.Size = new System.Drawing.Size(87, 26);
@@ -291,7 +262,7 @@ namespace TdInterface
             // lblShares
             // 
             this.lblShares.AutoSize = true;
-            this.lblShares.Location = new System.Drawing.Point(508, 95);
+            this.lblShares.Location = new System.Drawing.Point(130, 260);
             this.lblShares.Name = "lblShares";
             this.lblShares.Size = new System.Drawing.Size(49, 19);
             this.lblShares.TabIndex = 17;
@@ -300,7 +271,7 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(81, 593);
+            this.label7.Location = new System.Drawing.Point(454, 723);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 19);
             this.label7.TabIndex = 22;
@@ -309,7 +280,7 @@ namespace TdInterface
             // txtLimit
             // 
             this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(81, 612);
+            this.txtLimit.Location = new System.Drawing.Point(454, 742);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 34);
             this.txtLimit.TabIndex = 3;
@@ -319,7 +290,7 @@ namespace TdInterface
             // chkTradeShares
             // 
             this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(210, 542);
+            this.chkTradeShares.Location = new System.Drawing.Point(199, 657);
             this.chkTradeShares.Name = "chkTradeShares";
             this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
             this.chkTradeShares.TabIndex = 5;
@@ -367,7 +338,7 @@ namespace TdInterface
             // txtLimitOffset
             // 
             this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(176, 612);
+            this.txtLimitOffset.Location = new System.Drawing.Point(549, 742);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
             this.txtLimitOffset.TabIndex = 4;
@@ -376,7 +347,7 @@ namespace TdInterface
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(597, 160);
+            this.label9.Location = new System.Drawing.Point(219, 315);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(17, 19);
             this.label9.TabIndex = 27;
@@ -385,7 +356,7 @@ namespace TdInterface
             // txtRValue
             // 
             this.txtRValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRValue.Location = new System.Drawing.Point(597, 179);
+            this.txtRValue.Location = new System.Drawing.Point(219, 334);
             this.txtRValue.Name = "txtRValue";
             this.txtRValue.ReadOnly = true;
             this.txtRValue.Size = new System.Drawing.Size(87, 34);
@@ -396,7 +367,7 @@ namespace TdInterface
             // txtPnL
             // 
             this.txtPnL.Enabled = false;
-            this.txtPnL.Location = new System.Drawing.Point(597, 113);
+            this.txtPnL.Location = new System.Drawing.Point(219, 278);
             this.txtPnL.Name = "txtPnL";
             this.txtPnL.ReadOnly = true;
             this.txtPnL.Size = new System.Drawing.Size(87, 26);
@@ -406,7 +377,7 @@ namespace TdInterface
             // lblPnL
             // 
             this.lblPnL.AutoSize = true;
-            this.lblPnL.Location = new System.Drawing.Point(597, 95);
+            this.lblPnL.Location = new System.Drawing.Point(219, 260);
             this.lblPnL.Name = "lblPnL";
             this.lblPnL.Size = new System.Drawing.Size(32, 19);
             this.lblPnL.TabIndex = 19;
@@ -421,7 +392,7 @@ namespace TdInterface
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(393, 160);
+            this.label10.Location = new System.Drawing.Point(15, 315);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(28, 19);
             this.label10.TabIndex = 25;
@@ -430,7 +401,7 @@ namespace TdInterface
             // txtOneToOne
             // 
             this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtOneToOne.Location = new System.Drawing.Point(393, 179);
+            this.txtOneToOne.Location = new System.Drawing.Point(15, 334);
             this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOneToOne.Name = "txtOneToOne";
             this.txtOneToOne.ReadOnly = true;
@@ -441,7 +412,7 @@ namespace TdInterface
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(210, 513);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(199, 628);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -451,7 +422,7 @@ namespace TdInterface
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(176, 593);
+            this.label11.Location = new System.Drawing.Point(549, 723);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(80, 19);
             this.label11.TabIndex = 23;
@@ -589,38 +560,25 @@ namespace TdInterface
             this.btnScreenshot.UseVisualStyleBackColor = true;
             this.btnScreenshot.Click += new System.EventHandler(this.btnScreenshot_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.lblLastPrice);
-            this.panel1.Controls.Add(this.roundedPanel1);
-            this.panel1.Controls.Add(this.lblTickerDesc);
-            this.panel1.Controls.Add(this.rpbTickerLogo);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(702, 72);
-            this.panel1.TabIndex = 0;
-            // 
             // lblLastPrice
             // 
-            this.lblLastPrice.AutoSize = true;
-            this.lblLastPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblLastPrice.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblLastPrice.ForeColor = System.Drawing.Color.Black;
-            this.lblLastPrice.Location = new System.Drawing.Point(66, 37);
+            this.lblLastPrice.Location = new System.Drawing.Point(257, 69);
             this.lblLastPrice.Name = "lblLastPrice";
-            this.lblLastPrice.Size = new System.Drawing.Size(22, 25);
+            this.lblLastPrice.Size = new System.Drawing.Size(91, 28);
             this.lblLastPrice.TabIndex = 41;
             this.lblLastPrice.Text = "$";
+            this.lblLastPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // roundedPanel1
             // 
             this.roundedPanel1.Controls.Add(this.pictureBox1);
             this.roundedPanel1.Controls.Add(this.txtSymbol);
-            this.roundedPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
-            this.roundedPanel1.Location = new System.Drawing.Point(540, 12);
+            this.roundedPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
+            this.roundedPanel1.Location = new System.Drawing.Point(12, 12);
             this.roundedPanel1.Name = "roundedPanel1";
-            this.roundedPanel1.Size = new System.Drawing.Size(150, 48);
+            this.roundedPanel1.Size = new System.Drawing.Size(336, 48);
             this.roundedPanel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -635,64 +593,42 @@ namespace TdInterface
             // 
             // lblTickerDesc
             // 
-            this.lblTickerDesc.AutoSize = true;
-            this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTickerDesc.AutoEllipsis = true;
+            this.lblTickerDesc.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblTickerDesc.ForeColor = System.Drawing.Color.Black;
-            this.lblTickerDesc.Location = new System.Drawing.Point(66, 12);
+            this.lblTickerDesc.Location = new System.Drawing.Point(54, 74);
             this.lblTickerDesc.Name = "lblTickerDesc";
-            this.lblTickerDesc.Size = new System.Drawing.Size(166, 25);
+            this.lblTickerDesc.Size = new System.Drawing.Size(225, 25);
             this.lblTickerDesc.TabIndex = 2;
             this.lblTickerDesc.Text = "Ticker Description";
             // 
             // rpbTickerLogo
             // 
             this.rpbTickerLogo.BackColor = System.Drawing.Color.DimGray;
-            this.rpbTickerLogo.Location = new System.Drawing.Point(12, 12);
+            this.rpbTickerLogo.Location = new System.Drawing.Point(12, 66);
             this.rpbTickerLogo.Name = "rpbTickerLogo";
-            this.rpbTickerLogo.Size = new System.Drawing.Size(48, 48);
-            this.rpbTickerLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rpbTickerLogo.Size = new System.Drawing.Size(36, 36);
+            this.rpbTickerLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.rpbTickerLogo.TabIndex = 42;
             this.rpbTickerLogo.TabStop = false;
-            // 
-            // roundedPanel2
-            // 
-            this.roundedPanel2.Controls.Add(this.lblPerShare);
-            this.roundedPanel2.Controls.Add(this.txtStop);
-            this.roundedPanel2.Controls.Add(this.lblStop);
-            this.roundedPanel2.ForeColor = System.Drawing.Color.White;
-            this.roundedPanel2.Location = new System.Drawing.Point(12, 78);
-            this.roundedPanel2.Name = "roundedPanel2";
-            this.roundedPanel2.Size = new System.Drawing.Size(183, 101);
-            this.roundedPanel2.TabIndex = 1;
             // 
             // lblPerShare
             // 
             this.lblPerShare.AutoSize = true;
             this.lblPerShare.BackColor = System.Drawing.Color.Transparent;
             this.lblPerShare.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblPerShare.Location = new System.Drawing.Point(17, 71);
+            this.lblPerShare.Location = new System.Drawing.Point(120, 109);
             this.lblPerShare.Name = "lblPerShare";
             this.lblPerShare.Size = new System.Drawing.Size(51, 19);
             this.lblPerShare.TabIndex = 41;
             this.lblPerShare.Text = "/ share";
-            // 
-            // roundedPanel3
-            // 
-            this.roundedPanel3.Controls.Add(this.lblSharesRisk);
-            this.roundedPanel3.Controls.Add(this.lblRisk);
-            this.roundedPanel3.Controls.Add(this.txtRisk);
-            this.roundedPanel3.ForeColor = System.Drawing.Color.White;
-            this.roundedPanel3.Location = new System.Drawing.Point(201, 78);
-            this.roundedPanel3.Name = "roundedPanel3";
-            this.roundedPanel3.Size = new System.Drawing.Size(183, 101);
-            this.roundedPanel3.TabIndex = 2;
             // 
             // lblSharesRisk
             // 
             this.lblSharesRisk.AutoSize = true;
             this.lblSharesRisk.BackColor = System.Drawing.Color.Transparent;
             this.lblSharesRisk.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblSharesRisk.Location = new System.Drawing.Point(18, 71);
+            this.lblSharesRisk.Location = new System.Drawing.Point(298, 109);
             this.lblSharesRisk.Name = "lblSharesRisk";
             this.lblSharesRisk.Size = new System.Drawing.Size(48, 19);
             this.lblSharesRisk.TabIndex = 42;
@@ -702,27 +638,80 @@ namespace TdInterface
             // 
             this.lblRisk.AutoSize = true;
             this.lblRisk.BackColor = System.Drawing.Color.Transparent;
-            this.lblRisk.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblRisk.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblRisk.Location = new System.Drawing.Point(12, 12);
+            this.lblRisk.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblRisk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(164)))), ((int)(((byte)(174)))));
+            this.lblRisk.Location = new System.Drawing.Point(189, 109);
             this.lblRisk.Name = "lblRisk";
-            this.lblRisk.Size = new System.Drawing.Size(39, 21);
+            this.lblRisk.Size = new System.Drawing.Size(36, 19);
             this.lblRisk.TabIndex = 43;
             this.lblRisk.Text = "Risk";
             this.lblRisk.Click += new System.EventHandler(this.lblRisk_Click);
             // 
+            // roundedPanel4
+            // 
+            this.roundedPanel4.Controls.Add(this.txtStop);
+            this.roundedPanel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
+            this.roundedPanel4.Location = new System.Drawing.Point(12, 131);
+            this.roundedPanel4.Name = "roundedPanel4";
+            this.roundedPanel4.Size = new System.Drawing.Size(162, 48);
+            this.roundedPanel4.TabIndex = 43;
+            // 
+            // roundedPanel5
+            // 
+            this.roundedPanel5.Controls.Add(this.txtRisk);
+            this.roundedPanel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
+            this.roundedPanel5.Location = new System.Drawing.Point(186, 131);
+            this.roundedPanel5.Name = "roundedPanel5";
+            this.roundedPanel5.Size = new System.Drawing.Size(162, 48);
+            this.roundedPanel5.TabIndex = 44;
+            // 
+            // btnBuyMrkTriggerOco
+            // 
+            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
+            this.btnBuyMrkTriggerOco.FlatAppearance.BorderSize = 0;
+            this.btnBuyMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuyMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(15, 204);
+            this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
+            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(156, 40);
+            this.btnBuyMrkTriggerOco.TabIndex = 45;
+            this.btnBuyMrkTriggerOco.Text = "Buy Market";
+            this.btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
+            this.btnBuyMrkTriggerOco.Click += new System.EventHandler(this.btnBuyMrkTriggerOco_Click);
+            // 
+            // btnSellMrkTriggerOco
+            // 
+            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(238)))));
+            this.btnSellMrkTriggerOco.FlatAppearance.BorderSize = 0;
+            this.btnSellMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSellMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(189, 204);
+            this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
+            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(159, 40);
+            this.btnSellMrkTriggerOco.TabIndex = 46;
+            this.btnSellMrkTriggerOco.Text = "Sell Market";
+            this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
+            this.btnSellMrkTriggerOco.Click += new System.EventHandler(this.btnSellMrkTriggerOco_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(702, 779);
+            this.Controls.Add(this.btnSellMrkTriggerOco);
+            this.Controls.Add(this.btnBuyMrkTriggerOco);
+            this.Controls.Add(this.lblSharesRisk);
+            this.Controls.Add(this.roundedPanel5);
+            this.Controls.Add(this.lblPerShare);
+            this.Controls.Add(this.lblRisk);
+            this.Controls.Add(this.roundedPanel4);
+            this.Controls.Add(this.roundedPanel1);
+            this.Controls.Add(this.lblLastPrice);
+            this.Controls.Add(this.lblStop);
+            this.Controls.Add(this.lblTickerDesc);
             this.Controls.Add(this.btnSellLmtTriggerOco);
             this.Controls.Add(this.btnBuyLmtTriggerOco);
-            this.Controls.Add(this.roundedPanel3);
-            this.Controls.Add(this.btnSellMrkTriggerOco);
-            this.Controls.Add(this.roundedPanel2);
-            this.Controls.Add(this.btnBuyMrkTriggerOco);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.rpbTickerLogo);
             this.Controls.Add(this.btnScreenshot);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
@@ -762,26 +751,22 @@ namespace TdInterface
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.roundedPanel1.ResumeLayout(false);
             this.roundedPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).EndInit();
-            this.roundedPanel2.ResumeLayout(false);
-            this.roundedPanel2.PerformLayout();
-            this.roundedPanel3.ResumeLayout(false);
-            this.roundedPanel3.PerformLayout();
+            this.roundedPanel4.ResumeLayout(false);
+            this.roundedPanel4.PerformLayout();
+            this.roundedPanel5.ResumeLayout(false);
+            this.roundedPanel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnBuyMrkTriggerOco;
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.TextBox txtRisk;
-        private System.Windows.Forms.Button btnSellMrkTriggerOco;
         private System.Windows.Forms.Label lblStop;
         private System.Windows.Forms.TextBox txtStop;
         private System.Windows.Forms.Timer timer1;
@@ -823,17 +808,19 @@ namespace TdInterface
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnScreenshot;
-        private System.Windows.Forms.Panel panel1;
         private CustomControls.RoundedPictureBox rpbTickerLogo;
         private System.Windows.Forms.Label lblTickerDesc;
         private CustomControls.RoundedPanel roundedPanel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblLastPrice;
         private CustomControls.RoundedPanel roundedPanel2;
-        private CustomControls.RoundedPanel roundedPanel3;
         private System.Windows.Forms.Label lblRisk;
         private System.Windows.Forms.Label lblPerShare;
         private System.Windows.Forms.Label lblSharesRisk;
+        private CustomControls.RoundedPanel roundedPanel4;
+        private CustomControls.RoundedPanel roundedPanel5;
+        private CustomControls.RoundedButton btnBuyMrkTriggerOco;
+        private CustomControls.RoundedButton btnSellMrkTriggerOco;
     }
 }
 
