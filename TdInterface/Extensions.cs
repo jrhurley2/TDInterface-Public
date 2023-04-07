@@ -13,14 +13,21 @@ namespace TdInterface
     {
         public static void InvokeIfRequired(this ISynchronizeInvoke obj, MethodInvoker action)
         {
-            if (obj.InvokeRequired)
+            try
             {
-                var args = new object[0];
-                obj.Invoke(action, args);
+                if (obj != null && obj.InvokeRequired)
+                {
+                    var args = new object[0];
+                    obj.Invoke(action, args);
+                }
+                else
+                {
+                    action();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                action();
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -32,6 +39,22 @@ namespace TdInterface
                 {
                     // Do anything you want with the control here
                     sender.Text = text;
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public static void SafeUpdateControlTag(Control sender, string tag)
+        {
+            try
+            {
+                sender.InvokeIfRequired(() =>
+                {
+                    // Do anything you want with the control here
+                    sender.Tag = tag;
                 });
             }
             catch (Exception ex)

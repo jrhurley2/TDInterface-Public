@@ -72,7 +72,7 @@ namespace TdInterface
             // Handle always on top setting
             this.TopMost = Program.Settings.AlwaysOnTop;
 
-            lblVersion.Text = $"v {Program.AppVersion}";
+            tssVersion.Text = $"v {Program.AppVersion}";
             GlobalHotKey.RegisterHotKey("Alt + OemQuestion", () => txtSymbol.Focus());
             GlobalHotKey.RegisterHotKey("Alt + OemPeriod", () => txtStop.Focus());
         }
@@ -709,7 +709,13 @@ namespace TdInterface
 
         private async void HandleHeartBeat(SocketNotify notify)
         {
-            Extensions.SafeUpdateControl(txtHeartBeat, DateTime.Now.ToString());
+            //Extensions.SafeUpdateControl(txtHeartBeat, DateTime.Now.ToString());
+            tssHeartbeat.GetCurrentParent().InvokeIfRequired(() =>
+            {
+                // Do anything you want with the control here
+                tssHeartbeat.Tag = DateTime.Now.ToString();
+                tssHeartbeat.ForeColor = Color.FromArgb(27, 94, 32);
+            });
         }
 
         private async void HandleDisconnect(DisconnectionInfo disconnectionInfo)
@@ -1049,6 +1055,11 @@ namespace TdInterface
                 {
                     Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                 }
+
+                if (DateTime.Now.AddSeconds(-20) >= DateTime.Parse(tssHeartbeat.Tag.ToString()))
+                {
+                    tssHeartbeat.ForeColor = Color.FromArgb(183, 28, 28);
+                }
             }
             catch (Exception ex)
             {
@@ -1086,6 +1097,11 @@ namespace TdInterface
         private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             txtConnectionStatus.Text = "testing";
+        }
+
+        private void tssHeartbeat_MouseHover(object sender, EventArgs e)
+        {
+            ttInfo.SetToolTip(tssHeartbeat.GetCurrentParent(), tssHeartbeat.Tag.ToString());
         }
     }
 }

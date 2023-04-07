@@ -36,7 +36,6 @@ namespace TdInterface
             this.txtRisk = new System.Windows.Forms.TextBox();
             this.lblStop = new System.Windows.Forms.Label();
             this.txtStop = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLastError = new System.Windows.Forms.TextBox();
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
             this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
@@ -49,8 +48,6 @@ namespace TdInterface
             this.label7 = new System.Windows.Forms.Label();
             this.txtLimit = new System.Windows.Forms.TextBox();
             this.chkTradeShares = new System.Windows.Forms.CheckBox();
-            this.txtHeartBeat = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtConnectionStatus = new System.Windows.Forms.TextBox();
             this.lblConnectionStatus = new System.Windows.Forms.Label();
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
@@ -72,7 +69,6 @@ namespace TdInterface
             this.btnExit100 = new System.Windows.Forms.Button();
             this.btnExit10 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblVersion = new System.Windows.Forms.Label();
             this.btnScreenshot = new System.Windows.Forms.Button();
             this.lblLastPrice = new System.Windows.Forms.Label();
             this.roundedPanel1 = new TdInterface.CustomControls.RoundedPanel();
@@ -87,12 +83,17 @@ namespace TdInterface
             this.btnBuyMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
             this.btnSellMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
             this.btnCancelAll = new TdInterface.CustomControls.RoundedButton();
+            this.ssStatus = new System.Windows.Forms.StatusStrip();
+            this.tssVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssHeartbeat = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2.SuspendLayout();
             this.roundedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpbTickerLogo)).BeginInit();
             this.roundedPanel4.SuspendLayout();
             this.roundedPanel5.SuspendLayout();
+            this.ssStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtSymbol
@@ -285,25 +286,6 @@ namespace TdInterface
             this.chkTradeShares.Text = "Shares";
             this.chkTradeShares.UseVisualStyleBackColor = true;
             this.chkTradeShares.CheckedChanged += new System.EventHandler(this.chkTradeShares_CheckedChanged);
-            // 
-            // txtHeartBeat
-            // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(139, 741);
-            this.txtHeartBeat.Name = "txtHeartBeat";
-            this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(140, 26);
-            this.txtHeartBeat.TabIndex = 36;
-            this.txtHeartBeat.TabStop = false;
-            this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(139, 719);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 19);
-            this.label8.TabIndex = 35;
-            this.label8.Text = "HeartBeat";
             // 
             // txtConnectionStatus
             // 
@@ -528,16 +510,6 @@ namespace TdInterface
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "To Close";
             // 
-            // lblVersion
-            // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(292, 748);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(54, 19);
-            this.lblVersion.TabIndex = 39;
-            this.lblVersion.Text = "Version";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // btnScreenshot
             // 
             this.btnScreenshot.Location = new System.Drawing.Point(302, 719);
@@ -696,11 +668,43 @@ namespace TdInterface
             this.btnCancelAll.UseVisualStyleBackColor = false;
             this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
             // 
+            // ssStatus
+            // 
+            this.ssStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
+            this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tssVersion,
+            this.tssHeartbeat});
+            this.ssStatus.Location = new System.Drawing.Point(0, 777);
+            this.ssStatus.Name = "ssStatus";
+            this.ssStatus.Size = new System.Drawing.Size(360, 24);
+            this.ssStatus.SizingGrip = false;
+            this.ssStatus.TabIndex = 48;
+            // 
+            // tssVersion
+            // 
+            this.tssVersion.BackColor = System.Drawing.Color.Transparent;
+            this.tssVersion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tssVersion.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tssVersion.Name = "tssVersion";
+            this.tssVersion.Size = new System.Drawing.Size(50, 19);
+            this.tssVersion.Text = "v 0.0.0";
+            // 
+            // tssHeartbeat
+            // 
+            this.tssHeartbeat.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tssHeartbeat.Name = "tssHeartbeat";
+            this.tssHeartbeat.Size = new System.Drawing.Size(295, 19);
+            this.tssHeartbeat.Spring = true;
+            this.tssHeartbeat.Text = "💓";
+            this.tssHeartbeat.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tssHeartbeat.MouseHover += new System.EventHandler(this.tssHeartbeat_MouseHover);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(360, 779);
+            this.ClientSize = new System.Drawing.Size(360, 801);
+            this.Controls.Add(this.ssStatus);
             this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.btnSellMrkTriggerOco);
             this.Controls.Add(this.btnBuyMrkTriggerOco);
@@ -717,7 +721,6 @@ namespace TdInterface
             this.Controls.Add(this.btnBuyLmtTriggerOco);
             this.Controls.Add(this.rpbTickerLogo);
             this.Controls.Add(this.btnScreenshot);
-            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtMoveStop);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
@@ -732,8 +735,6 @@ namespace TdInterface
             this.Controls.Add(this.txtStopToClose);
             this.Controls.Add(this.lblConnectionStatus);
             this.Controls.Add(this.txtConnectionStatus);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtHeartBeat);
             this.Controls.Add(this.chkTradeShares);
             this.Controls.Add(this.txtLimit);
             this.Controls.Add(this.label7);
@@ -762,6 +763,8 @@ namespace TdInterface
             this.roundedPanel4.PerformLayout();
             this.roundedPanel5.ResumeLayout(false);
             this.roundedPanel5.PerformLayout();
+            this.ssStatus.ResumeLayout(false);
+            this.ssStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -772,7 +775,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtRisk;
         private System.Windows.Forms.Label lblStop;
         private System.Windows.Forms.TextBox txtStop;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtLastError;
         private System.Windows.Forms.Button btnBreakEven;
         private System.Windows.Forms.TextBox txtAveragePrice;
@@ -784,8 +786,6 @@ namespace TdInterface
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtLimit;
         private System.Windows.Forms.CheckBox chkTradeShares;
-        private System.Windows.Forms.TextBox txtHeartBeat;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtConnectionStatus;
         private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
@@ -808,7 +808,6 @@ namespace TdInterface
         private System.Windows.Forms.Button btnExit100;
         private System.Windows.Forms.Button btnExit10;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnScreenshot;
         private CustomControls.RoundedPictureBox rpbTickerLogo;
         private System.Windows.Forms.Label lblTickerDesc;
@@ -824,6 +823,10 @@ namespace TdInterface
         private CustomControls.RoundedButton btnBuyMrkTriggerOco;
         private CustomControls.RoundedButton btnSellMrkTriggerOco;
         private CustomControls.RoundedButton btnCancelAll;
+        private System.Windows.Forms.StatusStrip ssStatus;
+        private System.Windows.Forms.ToolStripStatusLabel tssVersion;
+        private System.Windows.Forms.ToolStripStatusLabel tssHeartbeat;
+        private System.Windows.Forms.ToolTip ttInfo;
     }
 }
 
