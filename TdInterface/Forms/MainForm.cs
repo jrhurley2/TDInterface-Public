@@ -73,6 +73,8 @@ namespace TdInterface
             this.TopMost = Program.Settings.AlwaysOnTop;
 
             lblVersion.Text = $"v {Program.AppVersion}";
+            GlobalHotKey.RegisterHotKey("Alt + OemQuestion", () => txtSymbol.Focus());
+            GlobalHotKey.RegisterHotKey("Alt + OemPeriod", () => txtStop.Focus());
         }
 
 
@@ -516,6 +518,9 @@ namespace TdInterface
                             oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
                         Extensions.SafeUpdateControl(txtOneToOne, oneToOne.ToString("0.00"));
+                        var riskPerShare = Math.Abs(stockQuote.lastPrice - double.Parse(txtStop.Text));
+                        Extensions.SafeUpdateControl(lblPerShare, riskPerShare.ToString("$0.00 / share"));
+                        Extensions.SafeUpdateControl(lblSharesRisk, (double.Parse(txtRisk.Text) / riskPerShare).ToString("0 shares"));
                     }
                 }
             }
@@ -1076,6 +1081,11 @@ namespace TdInterface
         private void lblRisk_Click(object sender, EventArgs e)
         {
             txtRisk.Focus();
+        }
+
+        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            txtConnectionStatus.Text = "testing";
         }
     }
 }
