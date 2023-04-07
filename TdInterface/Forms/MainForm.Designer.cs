@@ -40,7 +40,6 @@ namespace TdInterface
             this.txtLastError = new System.Windows.Forms.TextBox();
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
             this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
-            this.btnCancelAll = new System.Windows.Forms.Button();
             this.txtStopToClose = new System.Windows.Forms.TextBox();
             this.btnBreakEven = new System.Windows.Forms.Button();
             this.txtAveragePrice = new System.Windows.Forms.TextBox();
@@ -87,6 +86,7 @@ namespace TdInterface
             this.roundedPanel5 = new TdInterface.CustomControls.RoundedPanel();
             this.btnBuyMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
             this.btnSellMrkTriggerOco = new TdInterface.CustomControls.RoundedButton();
+            this.btnCancelAll = new TdInterface.CustomControls.RoundedButton();
             this.groupBox2.SuspendLayout();
             this.roundedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -157,13 +157,13 @@ namespace TdInterface
             // txtLastError
             // 
             this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(368, 643);
+            this.txtLastError.Location = new System.Drawing.Point(12, 682);
             this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtLastError.Multiline = true;
             this.txtLastError.Name = "txtLastError";
             this.txtLastError.ReadOnly = true;
             this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLastError.Size = new System.Drawing.Size(291, 108);
+            this.txtLastError.Size = new System.Drawing.Size(334, 33);
             this.txtLastError.TabIndex = 34;
             this.txtLastError.TabStop = false;
             this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
@@ -172,10 +172,10 @@ namespace TdInterface
             // 
             this.btnSellLmtTriggerOco.AutoSize = true;
             this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(211, 497);
+            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(90, 576);
             this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
-            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(135, 51);
+            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(74, 51);
             this.btnSellLmtTriggerOco.TabIndex = 3;
             this.btnSellLmtTriggerOco.TabStop = false;
             this.btnSellLmtTriggerOco.Text = "Sell Limit";
@@ -186,31 +186,19 @@ namespace TdInterface
             // 
             this.btnBuyLmtTriggerOco.AutoSize = true;
             this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(15, 496);
+            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(12, 576);
             this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
-            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(135, 52);
+            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(76, 52);
             this.btnBuyLmtTriggerOco.TabIndex = 1;
             this.btnBuyLmtTriggerOco.TabStop = false;
             this.btnBuyLmtTriggerOco.Text = "Buy Limit";
             this.btnBuyLmtTriggerOco.UseVisualStyleBackColor = false;
             this.btnBuyLmtTriggerOco.Click += new System.EventHandler(this.btnBuyLmtTriggerOco_Click);
             // 
-            // btnCancelAll
-            // 
-            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(211, 374);
-            this.btnCancelAll.Name = "btnCancelAll";
-            this.btnCancelAll.Size = new System.Drawing.Size(135, 58);
-            this.btnCancelAll.TabIndex = 31;
-            this.btnCancelAll.TabStop = false;
-            this.btnCancelAll.Text = "Cancel All";
-            this.btnCancelAll.UseVisualStyleBackColor = false;
-            this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
-            // 
             // txtStopToClose
             // 
-            this.txtStopToClose.Location = new System.Drawing.Point(19, 458);
+            this.txtStopToClose.Location = new System.Drawing.Point(156, 397);
             this.txtStopToClose.Name = "txtStopToClose";
             this.txtStopToClose.Size = new System.Drawing.Size(172, 26);
             this.txtStopToClose.TabIndex = 5;
@@ -271,7 +259,7 @@ namespace TdInterface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 551);
+            this.label7.Location = new System.Drawing.Point(166, 574);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 19);
             this.label7.TabIndex = 22;
@@ -280,7 +268,7 @@ namespace TdInterface
             // txtLimit
             // 
             this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(25, 570);
+            this.txtLimit.Location = new System.Drawing.Point(166, 593);
             this.txtLimit.Name = "txtLimit";
             this.txtLimit.Size = new System.Drawing.Size(89, 34);
             this.txtLimit.TabIndex = 3;
@@ -290,7 +278,7 @@ namespace TdInterface
             // chkTradeShares
             // 
             this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(203, 464);
+            this.chkTradeShares.Location = new System.Drawing.Point(260, 439);
             this.chkTradeShares.Name = "chkTradeShares";
             this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
             this.chkTradeShares.TabIndex = 5;
@@ -300,10 +288,10 @@ namespace TdInterface
             // 
             // txtHeartBeat
             // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(29, 665);
+            this.txtHeartBeat.Location = new System.Drawing.Point(139, 741);
             this.txtHeartBeat.Name = "txtHeartBeat";
             this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(317, 26);
+            this.txtHeartBeat.Size = new System.Drawing.Size(140, 26);
             this.txtHeartBeat.TabIndex = 36;
             this.txtHeartBeat.TabStop = false;
             this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -311,7 +299,7 @@ namespace TdInterface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 643);
+            this.label8.Location = new System.Drawing.Point(139, 719);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 19);
             this.label8.TabIndex = 35;
@@ -319,17 +307,17 @@ namespace TdInterface
             // 
             // txtConnectionStatus
             // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(28, 724);
+            this.txtConnectionStatus.Location = new System.Drawing.Point(12, 741);
             this.txtConnectionStatus.Name = "txtConnectionStatus";
             this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(318, 26);
+            this.txtConnectionStatus.Size = new System.Drawing.Size(121, 26);
             this.txtConnectionStatus.TabIndex = 38;
             this.txtConnectionStatus.TabStop = false;
             // 
             // lblConnectionStatus
             // 
             this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(29, 702);
+            this.lblConnectionStatus.Location = new System.Drawing.Point(12, 719);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
             this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
             this.lblConnectionStatus.TabIndex = 37;
@@ -338,7 +326,7 @@ namespace TdInterface
             // txtLimitOffset
             // 
             this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(120, 570);
+            this.txtLimitOffset.Location = new System.Drawing.Point(261, 593);
             this.txtLimitOffset.Name = "txtLimitOffset";
             this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
             this.txtLimitOffset.TabIndex = 4;
@@ -412,7 +400,7 @@ namespace TdInterface
             // chkDisableFirstTarget
             // 
             this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(203, 435);
+            this.chkDisableFirstTarget.Location = new System.Drawing.Point(15, 439);
             this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
             this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
             this.chkDisableFirstTarget.TabIndex = 7;
@@ -422,7 +410,7 @@ namespace TdInterface
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(120, 551);
+            this.label11.Location = new System.Drawing.Point(261, 574);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(80, 19);
             this.label11.TabIndex = 23;
@@ -431,7 +419,7 @@ namespace TdInterface
             // txtMoveStop
             // 
             this.txtMoveStop.AutoSize = true;
-            this.txtMoveStop.Location = new System.Drawing.Point(19, 436);
+            this.txtMoveStop.Location = new System.Drawing.Point(156, 375);
             this.txtMoveStop.Name = "txtMoveStop";
             this.txtMoveStop.Size = new System.Drawing.Size(94, 19);
             this.txtMoveStop.TabIndex = 32;
@@ -462,7 +450,7 @@ namespace TdInterface
             // btnExit33
             // 
             this.btnExit33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit33.Location = new System.Drawing.Point(120, 85);
+            this.btnExit33.Location = new System.Drawing.Point(120, 52);
             this.btnExit33.Name = "btnExit33";
             this.btnExit33.Size = new System.Drawing.Size(46, 39);
             this.btnExit33.TabIndex = 2;
@@ -475,7 +463,7 @@ namespace TdInterface
             // btnExit50
             // 
             this.btnExit50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit50.Location = new System.Drawing.Point(172, 85);
+            this.btnExit50.Location = new System.Drawing.Point(172, 52);
             this.btnExit50.Name = "btnExit50";
             this.btnExit50.Size = new System.Drawing.Size(46, 39);
             this.btnExit50.TabIndex = 3;
@@ -488,7 +476,7 @@ namespace TdInterface
             // btnExit25
             // 
             this.btnExit25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit25.Location = new System.Drawing.Point(68, 85);
+            this.btnExit25.Location = new System.Drawing.Point(68, 52);
             this.btnExit25.Name = "btnExit25";
             this.btnExit25.Size = new System.Drawing.Size(46, 39);
             this.btnExit25.TabIndex = 1;
@@ -501,7 +489,7 @@ namespace TdInterface
             // btnExit100
             // 
             this.btnExit100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit100.Location = new System.Drawing.Point(224, 85);
+            this.btnExit100.Location = new System.Drawing.Point(224, 52);
             this.btnExit100.Name = "btnExit100";
             this.btnExit100.Size = new System.Drawing.Size(52, 39);
             this.btnExit100.TabIndex = 4;
@@ -514,7 +502,7 @@ namespace TdInterface
             // btnExit10
             // 
             this.btnExit10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit10.Location = new System.Drawing.Point(16, 85);
+            this.btnExit10.Location = new System.Drawing.Point(16, 52);
             this.btnExit10.Name = "btnExit10";
             this.btnExit10.Size = new System.Drawing.Size(46, 39);
             this.btnExit10.TabIndex = 0;
@@ -533,9 +521,9 @@ namespace TdInterface
             this.groupBox2.Controls.Add(this.btnExit50);
             this.groupBox2.Controls.Add(this.btnExit25);
             this.groupBox2.Controls.Add(this.btnExit33);
-            this.groupBox2.Location = new System.Drawing.Point(393, 250);
+            this.groupBox2.Location = new System.Drawing.Point(12, 468);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(291, 144);
+            this.groupBox2.Size = new System.Drawing.Size(336, 104);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "To Close";
@@ -543,7 +531,7 @@ namespace TdInterface
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(292, 702);
+            this.lblVersion.Location = new System.Drawing.Point(292, 748);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(54, 19);
             this.lblVersion.TabIndex = 39;
@@ -552,7 +540,7 @@ namespace TdInterface
             // 
             // btnScreenshot
             // 
-            this.btnScreenshot.Location = new System.Drawing.Point(156, 390);
+            this.btnScreenshot.Location = new System.Drawing.Point(302, 719);
             this.btnScreenshot.Name = "btnScreenshot";
             this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
             this.btnScreenshot.TabIndex = 40;
@@ -616,8 +604,8 @@ namespace TdInterface
             // 
             this.lblPerShare.AutoSize = true;
             this.lblPerShare.BackColor = System.Drawing.Color.Transparent;
-            this.lblPerShare.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblPerShare.Location = new System.Drawing.Point(120, 109);
+            this.lblPerShare.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(164)))), ((int)(((byte)(174)))));
+            this.lblPerShare.Location = new System.Drawing.Point(15, 182);
             this.lblPerShare.Name = "lblPerShare";
             this.lblPerShare.Size = new System.Drawing.Size(51, 19);
             this.lblPerShare.TabIndex = 41;
@@ -627,8 +615,8 @@ namespace TdInterface
             // 
             this.lblSharesRisk.AutoSize = true;
             this.lblSharesRisk.BackColor = System.Drawing.Color.Transparent;
-            this.lblSharesRisk.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblSharesRisk.Location = new System.Drawing.Point(298, 109);
+            this.lblSharesRisk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(164)))), ((int)(((byte)(174)))));
+            this.lblSharesRisk.Location = new System.Drawing.Point(189, 182);
             this.lblSharesRisk.Name = "lblSharesRisk";
             this.lblSharesRisk.Size = new System.Drawing.Size(48, 19);
             this.lblSharesRisk.TabIndex = 42;
@@ -671,7 +659,7 @@ namespace TdInterface
             this.btnBuyMrkTriggerOco.FlatAppearance.BorderSize = 0;
             this.btnBuyMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuyMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(18, 185);
+            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(15, 217);
             this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
             this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(153, 40);
             this.btnBuyMrkTriggerOco.TabIndex = 45;
@@ -684,8 +672,9 @@ namespace TdInterface
             this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(238)))));
             this.btnSellMrkTriggerOco.FlatAppearance.BorderSize = 0;
             this.btnSellMrkTriggerOco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSellMrkTriggerOco.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnSellMrkTriggerOco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(189, 185);
+            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(190, 217);
             this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
             this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(156, 40);
             this.btnSellMrkTriggerOco.TabIndex = 46;
@@ -693,11 +682,26 @@ namespace TdInterface
             this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
             this.btnSellMrkTriggerOco.Click += new System.EventHandler(this.btnSellMrkTriggerOco_Click);
             // 
+            // btnCancelAll
+            // 
+            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(205)))), ((int)(((byte)(210)))));
+            this.btnCancelAll.FlatAppearance.BorderSize = 0;
+            this.btnCancelAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnCancelAll.Location = new System.Drawing.Point(12, 635);
+            this.btnCancelAll.Name = "btnCancelAll";
+            this.btnCancelAll.Size = new System.Drawing.Size(336, 40);
+            this.btnCancelAll.TabIndex = 47;
+            this.btnCancelAll.Text = "Cancel All Orders";
+            this.btnCancelAll.UseVisualStyleBackColor = false;
+            this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(702, 779);
+            this.ClientSize = new System.Drawing.Size(360, 779);
+            this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.btnSellMrkTriggerOco);
             this.Controls.Add(this.btnBuyMrkTriggerOco);
             this.Controls.Add(this.lblSharesRisk);
@@ -718,7 +722,6 @@ namespace TdInterface
             this.Controls.Add(this.label11);
             this.Controls.Add(this.chkDisableFirstTarget);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.btnBreakEven);
             this.Controls.Add(this.txtOneToOne);
             this.Controls.Add(this.lblPnL);
@@ -740,7 +743,7 @@ namespace TdInterface
             this.Controls.Add(this.txtAveragePrice);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.txtLastError);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -786,7 +789,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtConnectionStatus;
         private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
-        private System.Windows.Forms.Button btnCancelAll;
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRValue;
@@ -821,6 +823,7 @@ namespace TdInterface
         private CustomControls.RoundedPanel roundedPanel5;
         private CustomControls.RoundedButton btnBuyMrkTriggerOco;
         private CustomControls.RoundedButton btnSellMrkTriggerOco;
+        private CustomControls.RoundedButton btnCancelAll;
     }
 }
 
