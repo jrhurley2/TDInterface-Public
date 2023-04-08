@@ -660,8 +660,9 @@ namespace TdInterface
             // 
             // tssConnectionStatus
             // 
+            this.tssConnectionStatus.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tssConnectionStatus.Name = "tssConnectionStatus";
-            this.tssConnectionStatus.Size = new System.Drawing.Size(239, 19);
+            this.tssConnectionStatus.Size = new System.Drawing.Size(208, 19);
             this.tssConnectionStatus.Spring = true;
             // 
             // tssLastMessage
@@ -671,6 +672,7 @@ namespace TdInterface
             this.tssLastMessage.Size = new System.Drawing.Size(28, 19);
             this.tssLastMessage.Text = "📄";
             this.tssLastMessage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tssLastMessage.Visible = false;
             this.tssLastMessage.Click += new System.EventHandler(this.tssLastMessage_Click);
             // 
             // tssHeartbeat

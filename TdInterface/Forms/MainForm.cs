@@ -136,7 +136,7 @@ namespace TdInterface
                 }
 
                 ResetInitialOrder();
-                tssLastMessage.ToolTipText = JsonConvert.SerializeObject(triggerOrder);
+                SetLastMessage(JsonConvert.SerializeObject(triggerOrder));
                 AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
@@ -178,7 +178,8 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -206,7 +207,8 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -225,7 +227,8 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -251,7 +254,8 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
 
         }
@@ -287,7 +291,7 @@ namespace TdInterface
                     }
                     else
                     {
-                        tssLastMessage.ToolTipText = "BreakEven Button Can't Deterimine position";
+                        SetLastMessage("BreakEven Button Can't Deterimine position");
                         return;
                     }
 
@@ -302,7 +306,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -335,7 +339,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -457,7 +461,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                tssLastMessage.ToolTipText = ex.Message;
+                SetLastMessage(ex.Message);
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -714,6 +718,7 @@ namespace TdInterface
                 // Do anything you want with the control here
                 tssHeartbeat.ToolTipText = DateTime.Now.ToString();
                 tssHeartbeat.ForeColor = Color.FromArgb(27, 94, 32);
+                tssConnectionStatus.Text = "Connected";
             });
         }
 
@@ -737,6 +742,12 @@ namespace TdInterface
             Extensions.SafeUpdateControl(tssConnectionStatus.GetCurrentParent(), reconnectionInfo.Type.ToString());
         }
         #endregion
+
+        private async void SetLastMessage(string message)
+        {
+            tssLastMessage.ToolTipText = message;
+            tssLastMessage.Visible = true;
+        }
 
         private async Task SetPosition()
         {
@@ -991,6 +1002,32 @@ namespace TdInterface
             btnBreakEven.Enabled = hasPosition;
         }
 
+        private void btnScreenshot_Click(object sender, EventArgs e)
+        {
+            Utility.CaptureScreen(txtSymbol.Text);
+        }
+
+        private void txtSymbol_TextChanged(object sender, EventArgs e)
+        {
+            rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@1x.png");
+            lblTickerDesc.Text = String.Empty;
+        }
+
+        private void lblStop_Click(object sender, EventArgs e)
+        {
+            txtStop.Focus();
+        }
+
+        private void lblRisk_Click(object sender, EventArgs e)
+        {
+            txtRisk.Focus();
+        }
+
+        private void tssLastMessage_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(tssLastMessage.ToolTipText, "Last Message");
+            tssLastMessage.Visible = false;
+        }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -1020,7 +1057,7 @@ namespace TdInterface
                 {
                     txtBox.SelectAll();
                     txtBox.Focus();
-                    tssLastMessage.ToolTipText = $"Can't Parse {txtBox.Name}";
+                    SetLastMessage($"Can't Parse {txtBox.Name}");
                 }
                 else
                 {
@@ -1049,7 +1086,7 @@ namespace TdInterface
                     Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
                 }
 
-                if (DateTime.Now.AddSeconds(-20) >= DateTime.Parse(tssHeartbeat.Tag.ToString()))
+                if (tssHeartbeat.Tag != null && DateTime.Now.AddSeconds(-20) >= DateTime.Parse(tssHeartbeat.Tag.ToString()))
                 {
                     tssHeartbeat.ForeColor = Color.FromArgb(183, 28, 28);
                 }
@@ -1060,36 +1097,7 @@ namespace TdInterface
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
-
-
         }
-
         #endregion
-
-        private void btnScreenshot_Click(object sender, EventArgs e)
-        {
-            Utility.CaptureScreen(txtSymbol.Text);
-        }
-
-        private void txtSymbol_TextChanged(object sender, EventArgs e)
-        {
-            rpbTickerLogo.LoadAsync($"https://universal.hellopublic.com/companyLogos/{txtSymbol.Text}@1x.png");
-            lblTickerDesc.Text = String.Empty;
-        }
-
-        private void lblStop_Click(object sender, EventArgs e)
-        {
-            txtStop.Focus();
-        }
-
-        private void lblRisk_Click(object sender, EventArgs e)
-        {
-            txtRisk.Focus();
-        }
-
-        private void tssLastMessage_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(tssLastMessage.ToolTipText, "Last Message");
-        }
     }
 }
