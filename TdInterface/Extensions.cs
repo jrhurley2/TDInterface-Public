@@ -35,27 +35,14 @@ namespace TdInterface
         {
             try
             {
-                sender.InvokeIfRequired(() =>
+                if (sender != null)
                 {
-                    // Do anything you want with the control here
-                    sender.Text = text;
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
-        public static void SafeUpdateControlTag(Control sender, string tag)
-        {
-            try
-            {
-                sender.InvokeIfRequired(() =>
-                {
-                    // Do anything you want with the control here
-                    sender.Tag = tag;
-                });
+                    sender.InvokeIfRequired(() =>
+                    {
+                        // Do anything you want with the control here
+                        sender.Text = text;
+                    });
+                }
             }
             catch (Exception ex)
             {

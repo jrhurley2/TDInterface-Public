@@ -136,7 +136,7 @@ namespace TdInterface
                 }
 
                 ResetInitialOrder();
-                txtLastError.Text = JsonConvert.SerializeObject(triggerOrder);
+                tssLastMessage.ToolTipText = JsonConvert.SerializeObject(triggerOrder);
                 AddInitialOrder(symbol, orderKey);
 
                 // Capture Screenshots if requested
@@ -178,7 +178,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
             }
         }
 
@@ -206,7 +206,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
             }
 
         }
@@ -225,7 +225,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
             }
         }
 
@@ -251,7 +251,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
             }
 
         }
@@ -287,7 +287,7 @@ namespace TdInterface
                     }
                     else
                     {
-                        txtLastError.Text = "BreakEven Button Cant' Deterimine position";
+                        tssLastMessage.ToolTipText = "BreakEven Button Can't Deterimine position";
                         return;
                     }
 
@@ -302,7 +302,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -335,7 +335,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -457,7 +457,7 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                txtLastError.Text = ex.Message;
+                tssLastMessage.ToolTipText = ex.Message;
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -702,7 +702,6 @@ namespace TdInterface
             }
             catch (Exception ex)
             {
-                Extensions.SafeUpdateControl(txtLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
             }
         }
@@ -713,7 +712,7 @@ namespace TdInterface
             tssHeartbeat.GetCurrentParent().InvokeIfRequired(() =>
             {
                 // Do anything you want with the control here
-                tssHeartbeat.Tag = DateTime.Now.ToString();
+                tssHeartbeat.ToolTipText = DateTime.Now.ToString();
                 tssHeartbeat.ForeColor = Color.FromArgb(27, 94, 32);
             });
         }
@@ -722,21 +721,20 @@ namespace TdInterface
         {
             try
             {
-                Extensions.SafeUpdateControl(txtConnectionStatus, "Disconnected - Attemptinng to Reconnect");
+                Extensions.SafeUpdateControl(tssConnectionStatus.GetCurrentParent(), "Disconnected - Attemptinng to Reconnect");
                 await _streamer.WebsocketClient.ReconnectOrFail();
             }
             catch (Exception ex)
             {
-                Extensions.SafeUpdateControl(txtLastError, ex.Message);
                 Debug.WriteLine(ex.Message);
-                Extensions.SafeUpdateControl(txtConnectionStatus, "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
+                Extensions.SafeUpdateControl(tssConnectionStatus.GetCurrentParent(), "Disconnected - COULD NOT RECONNECT-  RESTART APPLICATION");
 
             }
         }
 
         private async void HandleReconnection(ReconnectionInfo reconnectionInfo)
         {
-            Extensions.SafeUpdateControl(txtConnectionStatus, reconnectionInfo.Type.ToString());
+            Extensions.SafeUpdateControl(tssConnectionStatus.GetCurrentParent(), reconnectionInfo.Type.ToString());
         }
         #endregion
 
@@ -938,11 +936,6 @@ namespace TdInterface
             btnBreakEven.Enabled = isStopValid || validateDecimalTextBox(txtStopToClose);
         }
 
-        private void txtLastError_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show(txtLastError.Text, "Last Message");
-        }
-
         private void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)
@@ -1027,7 +1020,7 @@ namespace TdInterface
                 {
                     txtBox.SelectAll();
                     txtBox.Focus();
-                    txtLastError.Text = $"Can't Parse {txtBox.Name}";
+                    tssLastMessage.ToolTipText = $"Can't Parse {txtBox.Name}";
                 }
                 else
                 {
@@ -1094,14 +1087,9 @@ namespace TdInterface
             txtRisk.Focus();
         }
 
-        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        private void tssLastMessage_Click(object sender, EventArgs e)
         {
-            txtConnectionStatus.Text = "testing";
-        }
-
-        private void tssHeartbeat_MouseHover(object sender, EventArgs e)
-        {
-            ttInfo.SetToolTip(tssHeartbeat.GetCurrentParent(), tssHeartbeat.Tag.ToString());
+            MessageBox.Show(tssLastMessage.ToolTipText, "Last Message");
         }
     }
 }

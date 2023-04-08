@@ -36,7 +36,6 @@ namespace TdInterface
             this.txtRisk = new System.Windows.Forms.TextBox();
             this.lblStop = new System.Windows.Forms.Label();
             this.txtStop = new System.Windows.Forms.TextBox();
-            this.txtLastError = new System.Windows.Forms.TextBox();
             this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
             this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
             this.txtStopToClose = new System.Windows.Forms.TextBox();
@@ -48,8 +47,6 @@ namespace TdInterface
             this.label7 = new System.Windows.Forms.Label();
             this.txtLimit = new System.Windows.Forms.TextBox();
             this.chkTradeShares = new System.Windows.Forms.CheckBox();
-            this.txtConnectionStatus = new System.Windows.Forms.TextBox();
-            this.lblConnectionStatus = new System.Windows.Forms.Label();
             this.txtLimitOffset = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtRValue = new System.Windows.Forms.TextBox();
@@ -85,8 +82,9 @@ namespace TdInterface
             this.btnCancelAll = new TdInterface.CustomControls.RoundedButton();
             this.ssStatus = new System.Windows.Forms.StatusStrip();
             this.tssVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLastMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssHeartbeat = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2.SuspendLayout();
             this.roundedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -154,20 +152,6 @@ namespace TdInterface
             this.txtStop.TabIndex = 0;
             this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStop.Leave += new System.EventHandler(this.txtWithValidation_Leave);
-            // 
-            // txtLastError
-            // 
-            this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(12, 682);
-            this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtLastError.Multiline = true;
-            this.txtLastError.Name = "txtLastError";
-            this.txtLastError.ReadOnly = true;
-            this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLastError.Size = new System.Drawing.Size(334, 33);
-            this.txtLastError.TabIndex = 34;
-            this.txtLastError.TabStop = false;
-            this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
             // 
             // btnSellLmtTriggerOco
             // 
@@ -286,24 +270,6 @@ namespace TdInterface
             this.chkTradeShares.Text = "Shares";
             this.chkTradeShares.UseVisualStyleBackColor = true;
             this.chkTradeShares.CheckedChanged += new System.EventHandler(this.chkTradeShares_CheckedChanged);
-            // 
-            // txtConnectionStatus
-            // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(12, 741);
-            this.txtConnectionStatus.Name = "txtConnectionStatus";
-            this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(121, 26);
-            this.txtConnectionStatus.TabIndex = 38;
-            this.txtConnectionStatus.TabStop = false;
-            // 
-            // lblConnectionStatus
-            // 
-            this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(12, 719);
-            this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
-            this.lblConnectionStatus.TabIndex = 37;
-            this.lblConnectionStatus.Text = "Connection Status";
             // 
             // txtLimitOffset
             // 
@@ -512,7 +478,7 @@ namespace TdInterface
             // 
             // btnScreenshot
             // 
-            this.btnScreenshot.Location = new System.Drawing.Point(302, 719);
+            this.btnScreenshot.Location = new System.Drawing.Point(193, 439);
             this.btnScreenshot.Name = "btnScreenshot";
             this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
             this.btnScreenshot.TabIndex = 40;
@@ -673,9 +639,12 @@ namespace TdInterface
             this.ssStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(249)))));
             this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssVersion,
+            this.tssConnectionStatus,
+            this.tssLastMessage,
             this.tssHeartbeat});
-            this.ssStatus.Location = new System.Drawing.Point(0, 777);
+            this.ssStatus.Location = new System.Drawing.Point(0, 690);
             this.ssStatus.Name = "ssStatus";
+            this.ssStatus.ShowItemToolTips = true;
             this.ssStatus.Size = new System.Drawing.Size(360, 24);
             this.ssStatus.SizingGrip = false;
             this.ssStatus.TabIndex = 48;
@@ -689,21 +658,34 @@ namespace TdInterface
             this.tssVersion.Size = new System.Drawing.Size(50, 19);
             this.tssVersion.Text = "v 0.0.0";
             // 
+            // tssConnectionStatus
+            // 
+            this.tssConnectionStatus.Name = "tssConnectionStatus";
+            this.tssConnectionStatus.Size = new System.Drawing.Size(239, 19);
+            this.tssConnectionStatus.Spring = true;
+            // 
+            // tssLastMessage
+            // 
+            this.tssLastMessage.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tssLastMessage.Name = "tssLastMessage";
+            this.tssLastMessage.Size = new System.Drawing.Size(28, 19);
+            this.tssLastMessage.Text = "📄";
+            this.tssLastMessage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tssLastMessage.Click += new System.EventHandler(this.tssLastMessage_Click);
+            // 
             // tssHeartbeat
             // 
             this.tssHeartbeat.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tssHeartbeat.Name = "tssHeartbeat";
-            this.tssHeartbeat.Size = new System.Drawing.Size(295, 19);
-            this.tssHeartbeat.Spring = true;
+            this.tssHeartbeat.Size = new System.Drawing.Size(28, 19);
             this.tssHeartbeat.Text = "💓";
             this.tssHeartbeat.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tssHeartbeat.MouseHover += new System.EventHandler(this.tssHeartbeat_MouseHover);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(360, 801);
+            this.ClientSize = new System.Drawing.Size(360, 714);
             this.Controls.Add(this.ssStatus);
             this.Controls.Add(this.btnCancelAll);
             this.Controls.Add(this.btnSellMrkTriggerOco);
@@ -733,8 +715,6 @@ namespace TdInterface
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtLimitOffset);
             this.Controls.Add(this.txtStopToClose);
-            this.Controls.Add(this.lblConnectionStatus);
-            this.Controls.Add(this.txtConnectionStatus);
             this.Controls.Add(this.chkTradeShares);
             this.Controls.Add(this.txtLimit);
             this.Controls.Add(this.label7);
@@ -743,7 +723,6 @@ namespace TdInterface
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtAveragePrice);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.txtLastError);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -752,7 +731,6 @@ namespace TdInterface
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.roundedPanel1.ResumeLayout(false);
@@ -775,7 +753,6 @@ namespace TdInterface
         private System.Windows.Forms.TextBox txtRisk;
         private System.Windows.Forms.Label lblStop;
         private System.Windows.Forms.TextBox txtStop;
-        private System.Windows.Forms.TextBox txtLastError;
         private System.Windows.Forms.Button btnBreakEven;
         private System.Windows.Forms.TextBox txtAveragePrice;
         private System.Windows.Forms.Label label3;
@@ -786,8 +763,6 @@ namespace TdInterface
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtLimit;
         private System.Windows.Forms.CheckBox chkTradeShares;
-        private System.Windows.Forms.TextBox txtConnectionStatus;
-        private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TextBox txtStopToClose;
         private System.Windows.Forms.TextBox txtLimitOffset;
         private System.Windows.Forms.Label label9;
@@ -814,7 +789,6 @@ namespace TdInterface
         private CustomControls.RoundedPanel roundedPanel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblLastPrice;
-        private CustomControls.RoundedPanel roundedPanel2;
         private System.Windows.Forms.Label lblRisk;
         private System.Windows.Forms.Label lblPerShare;
         private System.Windows.Forms.Label lblSharesRisk;
@@ -826,7 +800,8 @@ namespace TdInterface
         private System.Windows.Forms.StatusStrip ssStatus;
         private System.Windows.Forms.ToolStripStatusLabel tssVersion;
         private System.Windows.Forms.ToolStripStatusLabel tssHeartbeat;
-        private System.Windows.Forms.ToolTip ttInfo;
+        private System.Windows.Forms.ToolStripStatusLabel tssLastMessage;
+        private System.Windows.Forms.ToolStripStatusLabel tssConnectionStatus;
     }
 }
 
