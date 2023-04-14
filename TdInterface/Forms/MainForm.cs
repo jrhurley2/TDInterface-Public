@@ -44,9 +44,6 @@ namespace TdInterface
             MainFormName = name;
             this.Text = name;
 
-            txtPnL.Visible = Program.Settings.ShowPnL;
-            lblPnL.Visible = Program.Settings.ShowPnL;
-
             _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
@@ -117,7 +114,7 @@ namespace TdInterface
 
             try
             {
-                var stopPrice = double.Parse(txtStop.Text);
+                var stopPrice = float.Parse(txtStop.Text);
                 var tradeShares = chkTradeShares.Checked;
                 var maxRisk = double.Parse(txtRisk.Text);
 
@@ -263,9 +260,10 @@ namespace TdInterface
 
         private void ResetInitialOrder()
         {
-            txtAveragePrice.Text = string.Empty;
-            txtShares.Text = string.Empty;
-            txtStopToClose.Text = string.Empty;
+            lblAveragePrice.Text = String.Empty;
+            lblPositionState.Text = "NONE";
+            lblShares.Text = String.Empty;
+            txtStopToClose.Text = String.Empty;
         }
 
         #endregion
@@ -543,11 +541,6 @@ namespace TdInterface
                 _securitiesaccount = _broker.Securitiesaccount;
                 await SetPosition();
                 _securitiesaccount = await GetSecuritiesaccountAsync();
-
-                if (typeof(TdHelper) == _broker.GetType() && _securitiesaccount != null)
-                {
-                    txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
-                }
             }
             catch (Exception ex)
             {
@@ -756,14 +749,14 @@ namespace TdInterface
             if (position != null)
             {
                 _activePosition = position;
-                Extensions.SafeUpdateControl(txtAveragePrice, _activePosition.averagePrice.ToString("0.00"));
-                Extensions.SafeUpdateControl(txtShares, _activePosition.DisplayQuantity.ToString());
+                Extensions.SafeUpdateControl(lblShares, $"{_activePosition.Quantity} shares");
+                Extensions.SafeUpdateControl(lblAveragePrice, _activePosition.averagePrice.ToString("$0.00"));
             }
             else
             {
                 _activePosition = null;
-                Extensions.SafeUpdateControl(txtAveragePrice, string.Empty);
-                Extensions.SafeUpdateControl(txtShares, string.Empty);
+                Extensions.SafeUpdateControl(lblShares, String.Empty);
+                Extensions.SafeUpdateControl(lblAveragePrice, String.Empty);
                 Debug.WriteLine($"No position found for txtSymbol:{txtSymbol.Text.ToUpper()} | curSymbol: {curSymbol}");
             }
         }
@@ -778,17 +771,6 @@ namespace TdInterface
 
                 if (_securitiesaccount != null)
                 {
-                    try
-                    {
-                        Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("Can't Update PnL");
-                        Debug.WriteLine(ex.Message);
-                        Debug.WriteLine(ex.StackTrace);
-                    }
-
                     if (_securitiesaccount.positions != null)
                     {
                         position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
@@ -925,7 +907,7 @@ namespace TdInterface
         private void txtWithValidation_Leave(object sender, EventArgs e)
         {
             Decimal d;
-            TextBox txtBox = (TextBox)sender;
+            Control txtBox = (Control)sender;
 
             d = ValidateOcoStopAndLimit(txtBox);
         }
@@ -984,13 +966,16 @@ namespace TdInterface
             // don't want to change anything with quantiy as it is used in other calculations....
             if (_activePosition != null && _activePosition.DisplayQuantity > 0)
             {
-                txtShares.ForeColor = Color.FromArgb(0, 194, 136);
+                lblPositionState.Text = "LONG";
+            }
+            else if (_activePosition != null && _activePosition.DisplayQuantity < 0)
+            {
+                lblPositionState.Text = "SHORT";
             }
             else
             {
-                txtShares.ForeColor = Color.FromArgb(255, 82, 109);
-            }
-            txtShares.BackColor = txtShares.BackColor;
+                lblPositionState.Text = "NONE";
+            }    
 
             bool hasPosition = _activePosition != null && _activePosition.DisplayQuantity != 0;
             // No Active Position, so we should disable exit buttons
@@ -1043,7 +1028,7 @@ namespace TdInterface
 
         #region Validations
 
-        private decimal ValidateOcoStopAndLimit(TextBox txtBox)
+        private decimal ValidateOcoStopAndLimit(Control txtBox)
         {
             decimal d = decimal.MinValue;
             if (string.IsNullOrEmpty(txtBox.Text.Trim()))
@@ -1055,7 +1040,7 @@ namespace TdInterface
                 var canParse = Decimal.TryParse(txtBox.Text, out d);
                 if (!canParse)
                 {
-                    txtBox.SelectAll();
+                    //txtBox.SelectAll();
                     txtBox.Focus();
                     SetLastMessage($"Can't Parse {txtBox.Name}");
                 }
@@ -1068,7 +1053,7 @@ namespace TdInterface
             return d;
         }
 
-        private bool validateDecimalTextBox(TextBox txtBox)
+        private bool validateDecimalTextBox(Control txtBox)
         {
             return (!string.IsNullOrEmpty(txtBox.Text.Trim()) && decimal.TryParse(txtBox.Text.Trim(), out decimal d));
         }
@@ -1077,15 +1062,9 @@ namespace TdInterface
         #region Timers
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
-            _securitiesaccount = await GetSecuritiesaccountAsync();
-
             try
             {
-                if (_broker.GetType() == typeof(TdHelper) && _securitiesaccount != null)
-                {
-                    Extensions.SafeUpdateControl(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-
+                _securitiesaccount = await GetSecuritiesaccountAsync();
                 if (tssHeartbeat.Tag != null && DateTime.Now.AddSeconds(-20) >= DateTime.Parse(tssHeartbeat.Tag.ToString()))
                 {
                     tssHeartbeat.ForeColor = Color.FromArgb(183, 28, 28);
@@ -1099,5 +1078,13 @@ namespace TdInterface
             }
         }
         #endregion
+
+        private void txtStop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.OemQuestion)
+            {
+                e.Handled = e.SuppressKeyPress = true;
+            }
+        }
     }
 }

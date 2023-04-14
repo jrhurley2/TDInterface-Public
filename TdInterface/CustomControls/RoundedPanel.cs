@@ -15,7 +15,7 @@ namespace TdInterface.CustomControls
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.FillRoundedRectangle(new SolidBrush(this.ForeColor), 5, 5, this.Width - 10, this.Height - 10, 10);
+            g.FillRoundedRectangle(new SolidBrush(this.ForeColor), 0, 0, this.Width, this.Height, 12);
             //g.FillRoundedRectangle(brush, 12, 12, this.Width - 44, this.Height - 44, 10);
             //g.DrawRoundedRectangle(new Pen(ControlPaint.Light(Color.Orange, 0.00f)), 12, 12, this.Width - 44, this.Height - 44, 10);
             //g.FillRoundedRectangle(new SolidBrush(Color.Purple), 12, 12 + ((this.Height - 44) / 2), this.Width - 44, (this.Height - 44) / 2, 10);

@@ -9,7 +9,7 @@ namespace TdInterface.CustomControls
     {
         // Fields
         private int borderSize = 0;
-        private int borderRadius = 10;
+        private int borderRadius = 12;
         private Color borderColor = Color.PaleVioletRed;
 
         // Constructor
