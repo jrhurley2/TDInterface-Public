@@ -1,5 +1,42 @@
-# TDInterface-Public
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
+  <a href="https://github.com/jrhurley2/TDInterface-Public">
+    <img src="TdInterface/Resources/logo-96.png" alt="Logo" width="180" height="180">
+  </a>
+
+<h3 align="center">EZ Risk Manager</h3>
+
+<p align="center">
+    <a href="https://github.com/jrhurley2/TDInterface-Public/tags">
+        <img alt="GitHub tag" src="https://img.shields.io/github/v/tag/jrhurley2/TDInterface-Public?label=release&sort=semver&style=for-the-badge" /></a>
+    <a href="https://github.com/jrhurley2/TDInterface-Public/graphs/commit-activity">
+        <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/jrhurley2/TDInterface-Public?style=for-the-badge&color=red"/></a>
+    <a href="https://github.com/jrhurley2/TDInterface-Public/network/members">
+        <img alt="Forks" src="https://img.shields.io/github/forks/jrhurley2/TDInterface-Public.svg?style=for-the-badge" /></a>
+    <a href="https://github.com/jrhurley2/TDInterface-Public/stargazers">
+        <img alt="Stars" src="https://img.shields.io/github/stars/jrhurley2/TDInterface-Public.svg?style=for-the-badge&color=yellowgreen" /></a>
+    <a href="https://github.com/jrhurley2/TDInterface-Public/issues">
+        <img alt="Issues" src="https://img.shields.io/github/issues/jrhurley2/TDInterface-Public.svg?style=for-the-badge" /></a>
+    <a href="https://github.com/jrhurley2/TDInterface-Public/blob/master/LICENSE.txt">
+        <img alt="License" src="https://img.shields.io/github/license/jrhurley2/TDInterface-Public.svg?style=for-the-badge" /></a>
+</p>
+
+  <p align="center">
+    EZ Risk Manager allows trading with fixed risk on every trade using TD America or TradeStation APIs, and provides easy one click buttons to scale out of trades
+    <br />
+    <a href="https://github.com/jrhurley2/TDInterface-Public#about-the-project"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/jrhurley2/TDInterface-Public/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/jrhurley2/TDInterface-Public/issues">Request Feature</a>
+  </p>
+</div>
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
 > ⚠️ **TDA is working on their migration with Schwab. At this time you can NOT get an API key. ** ⚠️
 > 
 >  ℹ️ We will update this page and update the app with any changes required when the migration to Schwab is complete.
