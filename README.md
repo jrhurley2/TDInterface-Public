@@ -6,7 +6,7 @@
     <img src="TdInterface/Resources/logo-96.png" alt="Logo" width="180" height="180">
   </a>
 
-<h3 align="center">EZ Risk Manager</h3>
+<h3 align="center">EZ Trade Manager</h3>
 
 <p align="center">
     <a href="https://github.com/jrhurley2/TDInterface-Public/tags">
@@ -24,7 +24,7 @@
 </p>
 
   <p align="center">
-    EZ Risk Manager allows trading with fixed risk on every trade using TD America or TradeStation APIs, and provides easy one click buttons to scale out of trades
+    EZ Trade Manager allows trading with fixed risk on every trade using TD America or TradeStation APIs, and provides easy one click buttons to scale out of trades
     <br />
     <a href="https://github.com/jrhurley2/TDInterface-Public#about-the-project"><strong>Explore the docs »</strong></a>
     <br />
