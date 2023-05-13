@@ -29,353 +29,330 @@ namespace TdInterface
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTradeShares = new System.Windows.Forms.Label();
-            this.chkTradeShares = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtMaxShares = new System.Windows.Forms.TextBox();
-            this.lblMaxRisk = new System.Windows.Forms.Label();
-            this.txtMaxRisk = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.chkUseBidAskOcoCalc = new System.Windows.Forms.CheckBox();
-            this.txtOneRSharePct = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chkMoveLimitOnFill = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.chkReduceStopOnClose = new System.Windows.Forms.CheckBox();
-            this.txtDefaultLimitOffset = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.chkMaxLossLimit = new System.Windows.Forms.CheckBox();
-            this.txtMaxLossLimit = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtMinRisk = new System.Windows.Forms.TextBox();
-            this.chkSendPrtScrOnOpen = new System.Windows.Forms.CheckBox();
-            this.chkShowPnL = new System.Windows.Forms.CheckBox();
-            this.chkPreventExceedMaxLoss = new System.Windows.Forms.CheckBox();
-            this.chkAdjustRiskForMaxLoss = new System.Windows.Forms.CheckBox();
-            this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.chkAlwaysOnTop = new System.Windows.Forms.CheckBox();
-            this.chkCaptureSSOnOpen = new System.Windows.Forms.CheckBox();
-            this.SuspendLayout();
+            lblTradeShares = new System.Windows.Forms.Label();
+            chkTradeShares = new System.Windows.Forms.CheckBox();
+            label1 = new System.Windows.Forms.Label();
+            txtMaxShares = new System.Windows.Forms.TextBox();
+            lblMaxRisk = new System.Windows.Forms.Label();
+            txtMaxRisk = new System.Windows.Forms.TextBox();
+            btnSave = new System.Windows.Forms.Button();
+            btnCancel = new System.Windows.Forms.Button();
+            label2 = new System.Windows.Forms.Label();
+            chkUseBidAskOcoCalc = new System.Windows.Forms.CheckBox();
+            txtOneRSharePct = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            chkMoveLimitOnFill = new System.Windows.Forms.CheckBox();
+            label4 = new System.Windows.Forms.Label();
+            txtDefaultLimitOffset = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
+            chkMaxLossLimit = new System.Windows.Forms.CheckBox();
+            txtMaxLossLimit = new System.Windows.Forms.TextBox();
+            label7 = new System.Windows.Forms.Label();
+            txtMinRisk = new System.Windows.Forms.TextBox();
+            chkSendPrtScrOnOpen = new System.Windows.Forms.CheckBox();
+            chkShowPnL = new System.Windows.Forms.CheckBox();
+            chkPreventExceedMaxLoss = new System.Windows.Forms.CheckBox();
+            chkAdjustRiskForMaxLoss = new System.Windows.Forms.CheckBox();
+            chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
+            label8 = new System.Windows.Forms.Label();
+            chkAlwaysOnTop = new System.Windows.Forms.CheckBox();
+            chkCaptureSSOnOpen = new System.Windows.Forms.CheckBox();
+            SuspendLayout();
             // 
             // lblTradeShares
             // 
-            this.lblTradeShares.AutoSize = true;
-            this.lblTradeShares.Location = new System.Drawing.Point(53, 48);
-            this.lblTradeShares.Name = "lblTradeShares";
-            this.lblTradeShares.Size = new System.Drawing.Size(86, 19);
-            this.lblTradeShares.TabIndex = 1;
-            this.lblTradeShares.Text = "Trade Shares";
+            lblTradeShares.AutoSize = true;
+            lblTradeShares.Location = new System.Drawing.Point(53, 48);
+            lblTradeShares.Name = "lblTradeShares";
+            lblTradeShares.Size = new System.Drawing.Size(93, 20);
+            lblTradeShares.TabIndex = 1;
+            lblTradeShares.Text = "Trade Shares";
             // 
             // chkTradeShares
             // 
-            this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(269, 51);
-            this.chkTradeShares.Name = "chkTradeShares";
-            this.chkTradeShares.Size = new System.Drawing.Size(15, 14);
-            this.chkTradeShares.TabIndex = 2;
-            this.chkTradeShares.UseVisualStyleBackColor = true;
+            chkTradeShares.AutoSize = true;
+            chkTradeShares.Location = new System.Drawing.Point(269, 51);
+            chkTradeShares.Name = "chkTradeShares";
+            chkTradeShares.Size = new System.Drawing.Size(18, 17);
+            chkTradeShares.TabIndex = 2;
+            chkTradeShares.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(53, 77);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 19);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Max Shares (Trade Shares)";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(53, 77);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(182, 20);
+            label1.TabIndex = 3;
+            label1.Text = "Max Shares (Trade Shares)";
             // 
             // txtMaxShares
             // 
-            this.txtMaxShares.Location = new System.Drawing.Point(269, 73);
-            this.txtMaxShares.Name = "txtMaxShares";
-            this.txtMaxShares.Size = new System.Drawing.Size(125, 26);
-            this.txtMaxShares.TabIndex = 4;
+            txtMaxShares.Location = new System.Drawing.Point(269, 73);
+            txtMaxShares.Name = "txtMaxShares";
+            txtMaxShares.Size = new System.Drawing.Size(125, 26);
+            txtMaxShares.TabIndex = 4;
             // 
             // lblMaxRisk
             // 
-            this.lblMaxRisk.AutoSize = true;
-            this.lblMaxRisk.Location = new System.Drawing.Point(53, 109);
-            this.lblMaxRisk.Name = "lblMaxRisk";
-            this.lblMaxRisk.Size = new System.Drawing.Size(63, 19);
-            this.lblMaxRisk.TabIndex = 5;
-            this.lblMaxRisk.Text = "Max Risk";
+            lblMaxRisk.AutoSize = true;
+            lblMaxRisk.Location = new System.Drawing.Point(53, 109);
+            lblMaxRisk.Name = "lblMaxRisk";
+            lblMaxRisk.Size = new System.Drawing.Size(67, 20);
+            lblMaxRisk.TabIndex = 5;
+            lblMaxRisk.Text = "Max Risk";
             // 
             // txtMaxRisk
             // 
-            this.txtMaxRisk.Location = new System.Drawing.Point(269, 105);
-            this.txtMaxRisk.Name = "txtMaxRisk";
-            this.txtMaxRisk.Size = new System.Drawing.Size(125, 26);
-            this.txtMaxRisk.TabIndex = 6;
+            txtMaxRisk.Location = new System.Drawing.Point(269, 105);
+            txtMaxRisk.Name = "txtMaxRisk";
+            txtMaxRisk.Size = new System.Drawing.Size(125, 26);
+            txtMaxRisk.TabIndex = 6;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(862, 394);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(94, 28);
-            this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            btnSave.Location = new System.Drawing.Point(862, 394);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new System.Drawing.Size(94, 28);
+            btnSave.TabIndex = 7;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(758, 394);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(94, 28);
-            this.btnCancel.TabIndex = 8;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Location = new System.Drawing.Point(758, 394);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new System.Drawing.Size(94, 28);
+            btnCancel.TabIndex = 8;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(53, 149);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(140, 19);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Use Bid/Ask Oco Calc";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(53, 149);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(151, 20);
+            label2.TabIndex = 9;
+            label2.Text = "Use Bid/Ask Oco Calc";
             // 
             // chkUseBidAskOcoCalc
             // 
-            this.chkUseBidAskOcoCalc.AccessibleName = "chkUseBidAskOcoCalc";
-            this.chkUseBidAskOcoCalc.AutoSize = true;
-            this.chkUseBidAskOcoCalc.Location = new System.Drawing.Point(271, 147);
-            this.chkUseBidAskOcoCalc.Name = "chkUseBidAskOcoCalc";
-            this.chkUseBidAskOcoCalc.Size = new System.Drawing.Size(15, 14);
-            this.chkUseBidAskOcoCalc.TabIndex = 10;
-            this.chkUseBidAskOcoCalc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.chkUseBidAskOcoCalc.UseVisualStyleBackColor = true;
+            chkUseBidAskOcoCalc.AccessibleName = "chkUseBidAskOcoCalc";
+            chkUseBidAskOcoCalc.AutoSize = true;
+            chkUseBidAskOcoCalc.Location = new System.Drawing.Point(271, 147);
+            chkUseBidAskOcoCalc.Name = "chkUseBidAskOcoCalc";
+            chkUseBidAskOcoCalc.Size = new System.Drawing.Size(18, 17);
+            chkUseBidAskOcoCalc.TabIndex = 10;
+            chkUseBidAskOcoCalc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            chkUseBidAskOcoCalc.UseVisualStyleBackColor = true;
             // 
             // txtOneRSharePct
             // 
-            this.txtOneRSharePct.Location = new System.Drawing.Point(269, 219);
-            this.txtOneRSharePct.Name = "txtOneRSharePct";
-            this.txtOneRSharePct.Size = new System.Drawing.Size(125, 26);
-            this.txtOneRSharePct.TabIndex = 11;
-            this.txtOneRSharePct.Text = "25";
+            txtOneRSharePct.Location = new System.Drawing.Point(269, 219);
+            txtOneRSharePct.Name = "txtOneRSharePct";
+            txtOneRSharePct.Size = new System.Drawing.Size(125, 26);
+            txtOneRSharePct.TabIndex = 11;
+            txtOneRSharePct.Text = "25";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(53, 223);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(178, 19);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "1st Target Share Percentage";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(53, 223);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(191, 20);
+            label3.TabIndex = 12;
+            label3.Text = "1st Target Share Percentage";
             // 
             // chkMoveLimitOnFill
             // 
-            this.chkMoveLimitOnFill.AutoSize = true;
-            this.chkMoveLimitOnFill.Location = new System.Drawing.Point(271, 266);
-            this.chkMoveLimitOnFill.Name = "chkMoveLimitOnFill";
-            this.chkMoveLimitOnFill.Size = new System.Drawing.Size(15, 14);
-            this.chkMoveLimitOnFill.TabIndex = 13;
-            this.chkMoveLimitOnFill.UseVisualStyleBackColor = true;
+            chkMoveLimitOnFill.AutoSize = true;
+            chkMoveLimitOnFill.Location = new System.Drawing.Point(271, 266);
+            chkMoveLimitOnFill.Name = "chkMoveLimitOnFill";
+            chkMoveLimitOnFill.Size = new System.Drawing.Size(18, 17);
+            chkMoveLimitOnFill.TabIndex = 13;
+            chkMoveLimitOnFill.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(53, 267);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(121, 19);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Move Limit On Fill";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(53, 307);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 19);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Reduce Stop On Close";
-            // 
-            // chkReduceStopOnClose
-            // 
-            this.chkReduceStopOnClose.AutoSize = true;
-            this.chkReduceStopOnClose.Location = new System.Drawing.Point(271, 307);
-            this.chkReduceStopOnClose.Name = "chkReduceStopOnClose";
-            this.chkReduceStopOnClose.Size = new System.Drawing.Size(15, 14);
-            this.chkReduceStopOnClose.TabIndex = 15;
-            this.chkReduceStopOnClose.UseVisualStyleBackColor = true;
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(53, 267);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(129, 20);
+            label4.TabIndex = 14;
+            label4.Text = "Move Limit On Fill";
             // 
             // txtDefaultLimitOffset
             // 
-            this.txtDefaultLimitOffset.Location = new System.Drawing.Point(269, 342);
-            this.txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
-            this.txtDefaultLimitOffset.Size = new System.Drawing.Size(125, 26);
-            this.txtDefaultLimitOffset.TabIndex = 17;
+            txtDefaultLimitOffset.Location = new System.Drawing.Point(269, 342);
+            txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
+            txtDefaultLimitOffset.Size = new System.Drawing.Size(125, 26);
+            txtDefaultLimitOffset.TabIndex = 17;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(53, 346);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(128, 19);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Default Limit Offset";
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(53, 346);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(139, 20);
+            label6.TabIndex = 18;
+            label6.Text = "Default Limit Offset";
             // 
             // chkMaxLossLimit
             // 
-            this.chkMaxLossLimit.AutoSize = true;
-            this.chkMaxLossLimit.Location = new System.Drawing.Point(574, 51);
-            this.chkMaxLossLimit.Name = "chkMaxLossLimit";
-            this.chkMaxLossLimit.Size = new System.Drawing.Size(220, 23);
-            this.chkMaxLossLimit.TabIndex = 19;
-            this.chkMaxLossLimit.Text = "Enable Max Loss Limit (R) Value";
-            this.chkMaxLossLimit.UseVisualStyleBackColor = true;
+            chkMaxLossLimit.AutoSize = true;
+            chkMaxLossLimit.Location = new System.Drawing.Point(574, 51);
+            chkMaxLossLimit.Name = "chkMaxLossLimit";
+            chkMaxLossLimit.Size = new System.Drawing.Size(240, 24);
+            chkMaxLossLimit.TabIndex = 19;
+            chkMaxLossLimit.Text = "Enable Max Loss Limit (R) Value";
+            chkMaxLossLimit.UseVisualStyleBackColor = true;
             // 
             // txtMaxLossLimit
             // 
-            this.txtMaxLossLimit.Location = new System.Drawing.Point(831, 48);
-            this.txtMaxLossLimit.Name = "txtMaxLossLimit";
-            this.txtMaxLossLimit.Size = new System.Drawing.Size(125, 26);
-            this.txtMaxLossLimit.TabIndex = 20;
+            txtMaxLossLimit.Location = new System.Drawing.Point(831, 48);
+            txtMaxLossLimit.Name = "txtMaxLossLimit";
+            txtMaxLossLimit.Size = new System.Drawing.Size(125, 26);
+            txtMaxLossLimit.TabIndex = 20;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(574, 147);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(116, 19);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Min Risk (ex:  .15)";
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(574, 147);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(123, 20);
+            label7.TabIndex = 21;
+            label7.Text = "Min Risk (ex:  .15)";
             // 
             // txtMinRisk
             // 
-            this.txtMinRisk.Location = new System.Drawing.Point(831, 146);
-            this.txtMinRisk.Name = "txtMinRisk";
-            this.txtMinRisk.Size = new System.Drawing.Size(125, 26);
-            this.txtMinRisk.TabIndex = 22;
+            txtMinRisk.Location = new System.Drawing.Point(831, 146);
+            txtMinRisk.Name = "txtMinRisk";
+            txtMinRisk.Size = new System.Drawing.Size(125, 26);
+            txtMinRisk.TabIndex = 22;
             // 
             // chkSendPrtScrOnOpen
             // 
-            this.chkSendPrtScrOnOpen.AutoSize = true;
-            this.chkSendPrtScrOnOpen.Location = new System.Drawing.Point(574, 191);
-            this.chkSendPrtScrOnOpen.Name = "chkSendPrtScrOnOpen";
-            this.chkSendPrtScrOnOpen.Size = new System.Drawing.Size(172, 23);
-            this.chkSendPrtScrOnOpen.TabIndex = 23;
-            this.chkSendPrtScrOnOpen.Text = "Send Al-PrtSc On Open";
-            this.chkSendPrtScrOnOpen.UseVisualStyleBackColor = true;
+            chkSendPrtScrOnOpen.AutoSize = true;
+            chkSendPrtScrOnOpen.Location = new System.Drawing.Point(574, 191);
+            chkSendPrtScrOnOpen.Name = "chkSendPrtScrOnOpen";
+            chkSendPrtScrOnOpen.Size = new System.Drawing.Size(184, 24);
+            chkSendPrtScrOnOpen.TabIndex = 23;
+            chkSendPrtScrOnOpen.Text = "Send Al-PrtSc On Open";
+            chkSendPrtScrOnOpen.UseVisualStyleBackColor = true;
             // 
             // chkShowPnL
             // 
-            this.chkShowPnL.AutoSize = true;
-            this.chkShowPnL.Location = new System.Drawing.Point(574, 347);
-            this.chkShowPnL.Name = "chkShowPnL";
-            this.chkShowPnL.Size = new System.Drawing.Size(88, 23);
-            this.chkShowPnL.TabIndex = 24;
-            this.chkShowPnL.Text = "Show PnL";
-            this.chkShowPnL.UseVisualStyleBackColor = true;
+            chkShowPnL.AutoSize = true;
+            chkShowPnL.Location = new System.Drawing.Point(574, 347);
+            chkShowPnL.Name = "chkShowPnL";
+            chkShowPnL.Size = new System.Drawing.Size(94, 24);
+            chkShowPnL.TabIndex = 24;
+            chkShowPnL.Text = "Show PnL";
+            chkShowPnL.UseVisualStyleBackColor = true;
             // 
             // chkPreventExceedMaxLoss
             // 
-            this.chkPreventExceedMaxLoss.AutoSize = true;
-            this.chkPreventExceedMaxLoss.Location = new System.Drawing.Point(574, 79);
-            this.chkPreventExceedMaxLoss.Name = "chkPreventExceedMaxLoss";
-            this.chkPreventExceedMaxLoss.Size = new System.Drawing.Size(228, 23);
-            this.chkPreventExceedMaxLoss.TabIndex = 25;
-            this.chkPreventExceedMaxLoss.Text = "Prevent Risk Exceeding Max Loss";
-            this.chkPreventExceedMaxLoss.UseVisualStyleBackColor = true;
+            chkPreventExceedMaxLoss.AutoSize = true;
+            chkPreventExceedMaxLoss.Location = new System.Drawing.Point(574, 79);
+            chkPreventExceedMaxLoss.Name = "chkPreventExceedMaxLoss";
+            chkPreventExceedMaxLoss.Size = new System.Drawing.Size(246, 24);
+            chkPreventExceedMaxLoss.TabIndex = 25;
+            chkPreventExceedMaxLoss.Text = "Prevent Risk Exceeding Max Loss";
+            chkPreventExceedMaxLoss.UseVisualStyleBackColor = true;
             // 
             // chkAdjustRiskForMaxLoss
             // 
-            this.chkAdjustRiskForMaxLoss.AutoSize = true;
-            this.chkAdjustRiskForMaxLoss.Location = new System.Drawing.Point(574, 108);
-            this.chkAdjustRiskForMaxLoss.Name = "chkAdjustRiskForMaxLoss";
-            this.chkAdjustRiskForMaxLoss.Size = new System.Drawing.Size(245, 23);
-            this.chkAdjustRiskForMaxLoss.TabIndex = 26;
-            this.chkAdjustRiskForMaxLoss.Text = "Adjust Risk to Not Exceed Max Loss";
-            this.chkAdjustRiskForMaxLoss.UseVisualStyleBackColor = true;
+            chkAdjustRiskForMaxLoss.AutoSize = true;
+            chkAdjustRiskForMaxLoss.Location = new System.Drawing.Point(574, 108);
+            chkAdjustRiskForMaxLoss.Name = "chkAdjustRiskForMaxLoss";
+            chkAdjustRiskForMaxLoss.Size = new System.Drawing.Size(265, 24);
+            chkAdjustRiskForMaxLoss.TabIndex = 26;
+            chkAdjustRiskForMaxLoss.Text = "Adjust Risk to Not Exceed Max Loss";
+            chkAdjustRiskForMaxLoss.UseVisualStyleBackColor = true;
             // 
             // chkDisableFirstTarget
             // 
-            this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(271, 191);
-            this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
-            this.chkDisableFirstTarget.Size = new System.Drawing.Size(15, 14);
-            this.chkDisableFirstTarget.TabIndex = 27;
-            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            chkDisableFirstTarget.AutoSize = true;
+            chkDisableFirstTarget.Location = new System.Drawing.Point(271, 191);
+            chkDisableFirstTarget.Name = "chkDisableFirstTarget";
+            chkDisableFirstTarget.Size = new System.Drawing.Size(18, 17);
+            chkDisableFirstTarget.TabIndex = 27;
+            chkDisableFirstTarget.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(53, 193);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(154, 19);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "Disable 1st Target Profit";
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(53, 193);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(167, 20);
+            label8.TabIndex = 28;
+            label8.Text = "Disable 1st Target Profit";
             // 
             // chkAlwaysOnTop
             // 
-            this.chkAlwaysOnTop.AutoSize = true;
-            this.chkAlwaysOnTop.Location = new System.Drawing.Point(574, 267);
-            this.chkAlwaysOnTop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
-            this.chkAlwaysOnTop.Size = new System.Drawing.Size(119, 23);
-            this.chkAlwaysOnTop.TabIndex = 29;
-            this.chkAlwaysOnTop.Text = "Always On Top";
-            this.chkAlwaysOnTop.UseVisualStyleBackColor = true;
+            chkAlwaysOnTop.AutoSize = true;
+            chkAlwaysOnTop.Location = new System.Drawing.Point(574, 267);
+            chkAlwaysOnTop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            chkAlwaysOnTop.Name = "chkAlwaysOnTop";
+            chkAlwaysOnTop.Size = new System.Drawing.Size(129, 24);
+            chkAlwaysOnTop.TabIndex = 29;
+            chkAlwaysOnTop.Text = "Always On Top";
+            chkAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
             // chkCaptureSSOnOpen
             // 
-            this.chkCaptureSSOnOpen.AutoSize = true;
-            this.chkCaptureSSOnOpen.Location = new System.Drawing.Point(574, 224);
-            this.chkCaptureSSOnOpen.Name = "chkCaptureSSOnOpen";
-            this.chkCaptureSSOnOpen.Size = new System.Drawing.Size(206, 23);
-            this.chkCaptureSSOnOpen.TabIndex = 30;
-            this.chkCaptureSSOnOpen.Text = "Capture Screenshot on Open";
-            this.chkCaptureSSOnOpen.UseVisualStyleBackColor = true;
+            chkCaptureSSOnOpen.AutoSize = true;
+            chkCaptureSSOnOpen.Location = new System.Drawing.Point(574, 224);
+            chkCaptureSSOnOpen.Name = "chkCaptureSSOnOpen";
+            chkCaptureSSOnOpen.Size = new System.Drawing.Size(220, 24);
+            chkCaptureSSOnOpen.TabIndex = 30;
+            chkCaptureSSOnOpen.Text = "Capture Screenshot on Open";
+            chkCaptureSSOnOpen.UseVisualStyleBackColor = true;
             // 
             // UserOptionsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 457);
-            this.Controls.Add(this.chkCaptureSSOnOpen);
-            this.Controls.Add(this.chkAlwaysOnTop);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.chkDisableFirstTarget);
-            this.Controls.Add(this.chkAdjustRiskForMaxLoss);
-            this.Controls.Add(this.chkPreventExceedMaxLoss);
-            this.Controls.Add(this.chkShowPnL);
-            this.Controls.Add(this.chkSendPrtScrOnOpen);
-            this.Controls.Add(this.txtMinRisk);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtMaxLossLimit);
-            this.Controls.Add(this.chkMaxLossLimit);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtDefaultLimitOffset);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.chkReduceStopOnClose);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.chkMoveLimitOnFill);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtOneRSharePct);
-            this.Controls.Add(this.chkUseBidAskOcoCalc);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtMaxRisk);
-            this.Controls.Add(this.lblMaxRisk);
-            this.Controls.Add(this.txtMaxShares);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.chkTradeShares);
-            this.Controls.Add(this.lblTradeShares);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(3);
-            this.MaximizeBox = false;
-            this.Name = "UserOptionsForm";
-            this.Text = "EZTM Settings";
-            this.Load += new System.EventHandler(this.UserOptionsForm_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(994, 457);
+            Controls.Add(chkCaptureSSOnOpen);
+            Controls.Add(chkAlwaysOnTop);
+            Controls.Add(label8);
+            Controls.Add(chkDisableFirstTarget);
+            Controls.Add(chkAdjustRiskForMaxLoss);
+            Controls.Add(chkPreventExceedMaxLoss);
+            Controls.Add(chkShowPnL);
+            Controls.Add(chkSendPrtScrOnOpen);
+            Controls.Add(txtMinRisk);
+            Controls.Add(label7);
+            Controls.Add(txtMaxLossLimit);
+            Controls.Add(chkMaxLossLimit);
+            Controls.Add(label6);
+            Controls.Add(txtDefaultLimitOffset);
+            Controls.Add(label4);
+            Controls.Add(chkMoveLimitOnFill);
+            Controls.Add(label3);
+            Controls.Add(txtOneRSharePct);
+            Controls.Add(chkUseBidAskOcoCalc);
+            Controls.Add(label2);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
+            Controls.Add(txtMaxRisk);
+            Controls.Add(lblMaxRisk);
+            Controls.Add(txtMaxShares);
+            Controls.Add(label1);
+            Controls.Add(chkTradeShares);
+            Controls.Add(lblTradeShares);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Margin = new System.Windows.Forms.Padding(3);
+            MaximizeBox = false;
+            Name = "UserOptionsForm";
+            Text = "EZTM Settings";
+            Load += UserOptionsForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -394,8 +371,6 @@ namespace TdInterface
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkMoveLimitOnFill;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox chkReduceStopOnClose;
         private System.Windows.Forms.TextBox txtDefaultLimitOffset;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox chkMaxLossLimit;

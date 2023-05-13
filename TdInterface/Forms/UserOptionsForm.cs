@@ -20,7 +20,6 @@ namespace TdInterface
             Program.Settings.DisableFirstTargetProfitDefault = chkDisableFirstTarget.Checked;
             Program.Settings.OneRProfitPercenatage = int.Parse(txtOneRSharePct.Text);
             Program.Settings.MoveLimitPriceOnFill = chkMoveLimitOnFill.Checked;
-            Program.Settings.ReduceStopOnClose = chkReduceStopOnClose.Checked;
             Program.Settings.DefaultLimitOffset = string.IsNullOrEmpty(txtDefaultLimitOffset.Text) ? 0 : decimal.Parse(txtDefaultLimitOffset.Text);
             Program.Settings.EnableMaxLossLimit = chkMaxLossLimit.Checked;
             Program.Settings.MaxLossLimitInR = Program.Settings.EnableMaxLossLimit ? decimal.Parse(txtMaxLossLimit.Text) : 0;
@@ -39,7 +38,7 @@ namespace TdInterface
         private void UserOptionsForm_Load(object sender, EventArgs e)
         {
             Program.Settings = Utility.GetSettings();
-            if(Program.Settings == null) Program.Settings = new Settings();
+            if (Program.Settings == null) Program.Settings = new Settings();
 
             chkTradeShares.Checked = Program.Settings.TradeShares;
             txtMaxRisk.Text = Program.Settings.MaxRisk.ToString("#.##");
@@ -48,7 +47,6 @@ namespace TdInterface
             chkDisableFirstTarget.Checked = Program.Settings.DisableFirstTargetProfitDefault;
             txtOneRSharePct.Text = Program.Settings.OneRProfitPercenatage.ToString();
             chkMoveLimitOnFill.Checked = Program.Settings.MoveLimitPriceOnFill;
-            chkReduceStopOnClose.Checked = Program.Settings.ReduceStopOnClose;
             txtDefaultLimitOffset.Text = Program.Settings.DefaultLimitOffset.ToString("#.##");
             chkMaxLossLimit.Checked = Program.Settings.EnableMaxLossLimit;
             txtMaxLossLimit.Text = Program.Settings.MaxLossLimitInR.ToString("#.##");
