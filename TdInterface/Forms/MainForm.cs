@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
@@ -12,6 +13,7 @@ using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace TdInterface
 {
@@ -354,14 +356,24 @@ namespace TdInterface
             }
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
+            var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
 
-            if (stopOrder != null  && Program.Settings.ReduceStopOnClose)
+            if (stopOrder != null)
             {
-                //Change the stop order to a Limit order to take profit and repladce
-                var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
-                await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
-                var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
-                await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+                if (parent != null && parent.orderStrategyType.Equals("OCO"))
+                {
+                    await CancelAll();
+                    await PlaceLimitOrder(_activePosition.instrument.symbol, quantity, exitInstruction, limitPrice);
+                }
+                else
+                {
+                    //Change the stop order to a Limit order to take profit and repladce
+                    var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
+                    await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
+                    await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
+                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                    await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+                }
             }
             else
             {
@@ -377,7 +389,7 @@ namespace TdInterface
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
             var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
 
-            if (stopOrder != null && Program.Settings.ReduceStopOnClose)
+            if (stopOrder != null)
             {
                 if (parent != null && parent.orderStrategyType.Equals("OCO"))
                 {
@@ -389,6 +401,7 @@ namespace TdInterface
                     //Change the stop order to a Limit order to take profit and repladce
                     var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
+                    await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
                     var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
                     await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                 }

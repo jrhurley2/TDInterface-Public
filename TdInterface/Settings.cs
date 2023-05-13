@@ -21,7 +21,6 @@
             }
         }
         public bool MoveLimitPriceOnFill { get; set; }
-        public bool ReduceStopOnClose { get; set; }
         public decimal DefaultLimitOffset { get; set; }
         public bool EnableMaxLossLimit { get; set; }
         public decimal MaxLossLimitInR { get; set; }
@@ -32,5 +31,6 @@
         public bool ShowPnL { get;set; }
         public bool AlwaysOnTop { get; set; }
         public bool CaptureScreenshotOnOpen { get; set; }
+        public int SleepBetweenReduceOrderOnClose { get; set; } = 1000;
     }
 }
