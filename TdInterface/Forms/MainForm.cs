@@ -367,11 +367,12 @@ namespace TdInterface
                 }
                 else
                 {
+                    var activeQuantity = _activePosition.Quantity;
                     //Change the stop order to a Limit order to take profit and repladce
                     var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
-                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                     await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                 }
             }
@@ -398,11 +399,12 @@ namespace TdInterface
                 }
                 else
                 {
+                    var activeQuantity = _activePosition.Quantity;
                     //Change the stop order to a Limit order to take profit and repladce
                     var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
-                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, _activePosition.Quantity - quantity, Double.Parse(stopOrder.stopPrice));
+                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                     await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                 }
             }
