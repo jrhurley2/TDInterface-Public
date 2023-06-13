@@ -197,6 +197,8 @@ namespace TdInterface.Tda
             {
                 Debug.WriteLine("Securities Account is null!");
                 Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
+                Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
+                Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
             }
 
             return securitiesaccount;
