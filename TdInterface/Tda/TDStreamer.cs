@@ -79,6 +79,11 @@ namespace TdInterface.Tda
 
             _replayFile = new StreamWriter($"{replayFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
+            ConnectSocket(userPrincipals);
+        }
+
+        private void ConnectSocket(UserPrincipal userPrincipals)
+        {
             _credentials = new StreamerSettings.Credentials
             {
                 userid = userPrincipals.accounts[0].accountId,
@@ -139,7 +144,6 @@ namespace TdInterface.Tda
             _ws.Send(req);
         }
 
-
         private static string SanatizeAccountNumbers(UserPrincipal userPrincipal, string message)
         {
             int index = 0;
@@ -156,8 +160,21 @@ namespace TdInterface.Tda
         {
             client.DisconnectionHappened.Subscribe(dis =>
             {
-                Debug.WriteLine($"DisconnectionHappened {dis.Type}");
-                _disconnectionInfo.OnNext(dis);
+                try
+                {
+                    Debug.WriteLine($"DisconnectionHappened {dis.Type}");
+                    _disconnectionInfo.OnNext(dis);
+                    Debug.WriteLine($"Calling ConnectSocket");
+                    ConnectSocket(userPrincipals);
+                    Debug.WriteLine("Calling SubscribeQuote");
+                    SubscribeQuote();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unable to connect {ex.Message}");
+                    Debug.WriteLine(ex);
+                }
+
             });
 
             client.ReconnectionHappened.Subscribe(info =>
@@ -327,6 +344,11 @@ namespace TdInterface.Tda
                 _quoteSymbols.Add(tickerSymbol.ToUpper());
             }
 
+            SubscribeQuote();
+        }
+
+        private void SubscribeQuote()
+        {
             var symbols = string.Join(",", _quoteSymbols);
 
             var _reqs = new List<StreamerSettings.Request>();
