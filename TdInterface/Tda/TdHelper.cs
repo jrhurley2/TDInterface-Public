@@ -190,18 +190,26 @@ namespace TdInterface.Tda
 
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-            var securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
-            Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+            Securitiesaccount securitiesaccount = null;
 
-            if (securitiesaccount == null)
+            if(response.IsSuccessStatusCode)
             {
-                Debug.WriteLine("Securities Account is null!");
+                securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+                Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+
+                //Store it in tdhelper class.
+                Securitiesaccount = securitiesaccount;
+            }
+            else
+            {
+                Debug.WriteLine("Call to get Securities Account failed!");
                 Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
                 Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
                 Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
+                Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
             }
 
-            return securitiesaccount;
+            return Securitiesaccount;
         }
 
         public async Task<List<Account>> GetAccounts()
