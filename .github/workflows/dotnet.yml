@@ -27,7 +27,7 @@ jobs:
       run: dotnet restore
 
     - name: Increment version number
-      if: github.ref == 'refs/heads/master'
+      #if: github.ref == 'refs/heads/master'
       id: version
       run: |
         $pathToCsproj = "TdInterface/TdInterface.csproj"
@@ -42,7 +42,7 @@ jobs:
         Write-Output "::set-output name=version::$newVersion"
 
     - name: Commit changes
-      if: github.ref == 'refs/heads/master'
+      #if: github.ref == 'refs/heads/master'
       run: |
         git config --global user.name "Jrhurley2"
         git config --global user.email "jrhurley2@outlook.com"
@@ -67,11 +67,11 @@ jobs:
         directory: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\'
         
     - name: Upload Release
-      if: github.ref == 'refs/heads/master'
+      #if: github.ref == 'refs/heads/master'
       uses: ncipollo/release-action@v1
       with:
         artifacts: 'D:\a\TDInterface-Public\TDInterface-Public\TdInterface\bin\Debug\net7.0-windows\publish\TDInterface${{steps.version.outputs.version}}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: "${{ steps.version.outputs.version}}"
-        makeLatest: false
+        makeLatest: true
 
