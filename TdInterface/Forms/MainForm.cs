@@ -355,6 +355,11 @@ namespace TdInterface
                 limitPrice = stockQuote.bidPrice;
             }
 
+            if (_securitiesaccount == null)
+            {
+                _securitiesaccount = await GetSecuritiesaccountAsync();
+            }
+
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
             var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
 
@@ -385,6 +390,10 @@ namespace TdInterface
         private async Task ExitMarket(int quantity)
         {
             string exitInstruction = GetExitInstruction(_activePosition);
+            if(_securitiesaccount == null)
+            {
+                _securitiesaccount = await GetSecuritiesaccountAsync();
+            }
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
