@@ -194,11 +194,19 @@ namespace TdInterface.Tda
 
             if(response.IsSuccessStatusCode)
             {
-                securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
-                Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+                try
+                {
+                    securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+                    Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
 
-                //Store it in tdhelper class.
-                Securitiesaccount = securitiesaccount;
+                    //Store it in tdhelper class.
+                    Securitiesaccount = securitiesaccount;
+                }
+                catch (Exception ex) 
+                { 
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                }
             }
             else
             {
