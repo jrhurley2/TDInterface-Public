@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -38,10 +40,16 @@ namespace TdInterface.Tda
         public AccountInfo AccountInfo { get;  set; }
 
         private static Securitiesaccount _securitiesaccount;
+        private readonly Subject<Securitiesaccount> _securitiesAccountSubject = new Subject<Securitiesaccount>();
+        public IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
+
+
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
         public TdHelper(AccountInfo ai) { AccountInfo = ai; }
+
+
 
         public Securitiesaccount Securitiesaccount
         {
@@ -181,40 +189,49 @@ namespace TdInterface.Tda
 
         public async Task<Securitiesaccount> GetAccount(string accountId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
-            {
-                Method = HttpMethod.Get,
-            };
-
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
-
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-
             Securitiesaccount securitiesaccount = null;
-
-            if(response.IsSuccessStatusCode)
+            try
             {
-                try
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
                 {
-                    securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
-                    Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+                    Method = HttpMethod.Get,
+                };
 
-                    //Store it in tdhelper class.
-                    Securitiesaccount = securitiesaccount;
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
+
+                var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+                        Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+
+                        //Store it in tdhelper class.
+                        Securitiesaccount = securitiesaccount;
+                        _securitiesAccountSubject.OnNext(securitiesaccount);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                    }
                 }
-                catch (Exception ex) 
-                { 
-                    Debug.WriteLine(ex.Message);
-                    Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                else
+                {
+                    Debug.WriteLine("Call to get Securities Account failed!");
+                    Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
+                    Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
+                    Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
+                    Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
                 }
             }
-            else
+            catch (Exception ex) 
             {
-                Debug.WriteLine("Call to get Securities Account failed!");
-                Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
-                Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
-                Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
-                Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
             }
 
             return Securitiesaccount;

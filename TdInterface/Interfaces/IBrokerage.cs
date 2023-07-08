@@ -10,6 +10,7 @@ namespace TdInterface.Interfaces
     {
         public AccessTokenContainer AccessTokenContainer { get; set; }
 
+        public IObservable<Securitiesaccount> SecuritiesAccountUpdated { get; }
         public Securitiesaccount Securitiesaccount
         {
             get;

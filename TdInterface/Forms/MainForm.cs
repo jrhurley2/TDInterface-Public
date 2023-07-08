@@ -58,6 +58,8 @@ namespace TdInterface
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
+            helper.SecuritiesAccountUpdated.Subscribe(s => HandleSecuritiesAccountUpdated(s));
+
             btnBuyLmtTriggerOco.Enabled = false;
             btnBuyMrkTriggerOco.Enabled = false;
             btnSellLmtTriggerOco.Enabled = false;
@@ -355,10 +357,10 @@ namespace TdInterface
                 limitPrice = stockQuote.bidPrice;
             }
 
-            if (_securitiesaccount == null)
-            {
-                _securitiesaccount = await GetSecuritiesaccountAsync();
-            }
+            //if (_securitiesaccount == null)
+            //{
+            //    _securitiesaccount = await GetSecuritiesaccountAsync();
+            //}
 
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
             var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
@@ -390,10 +392,10 @@ namespace TdInterface
         private async Task ExitMarket(int quantity)
         {
             string exitInstruction = GetExitInstruction(_activePosition);
-            if(_securitiesaccount == null)
-            {
-                _securitiesaccount = await GetSecuritiesaccountAsync();
-            }
+            //if(_securitiesaccount == null)
+            //{
+            //    _securitiesaccount = await GetSecuritiesaccountAsync();
+            //}
             var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
@@ -413,6 +415,7 @@ namespace TdInterface
                     var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
+                    //TODO:  Check the active position, ITS THROWING NULL REFERENCE EXCEPTION, WHEN THE ACTIVE POSITION IS NULL
                     var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                     await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                 }
@@ -491,6 +494,14 @@ namespace TdInterface
         }
         #endregion
 
+        #region Handle Brokerage Events
+        private async Task HandleSecuritiesAccountUpdated(Securitiesaccount s)
+        {
+            _securitiesaccount = s;
+            await SetPosition();
+        }
+
+        #endregion
         #region Handle Streamer Events
         private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
@@ -557,14 +568,15 @@ namespace TdInterface
         {
             try
             {
-                _securitiesaccount = _broker.Securitiesaccount;
-                await SetPosition();
-                _securitiesaccount = await GetSecuritiesaccountAsync();
+                _ = await GetSecuritiesaccountAsync();
+                //_securitiesaccount = _broker.Securitiesaccount;
+                //await SetPosition();
+                //_securitiesaccount = await GetSecuritiesaccountAsync();
 
-                if (typeof(TdHelper) == _broker.GetType() && _securitiesaccount != null)
-                {
-                    txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
-                }
+                //if (typeof(TdHelper) == _broker.GetType() && _securitiesaccount != null)
+                //{
+                //    txtPnL.Text = _securitiesaccount.DailyPnL.ToString("#.##");
+                //}
             }
             catch (Exception ex)
             {
@@ -808,8 +820,7 @@ namespace TdInterface
 
             try
             {
-                _securitiesaccount = await GetSecuritiesaccountAsync();
-
+                //_securitiesaccount = await GetSecuritiesaccountAsync();
                 if (_securitiesaccount != null)
                 {
                     try

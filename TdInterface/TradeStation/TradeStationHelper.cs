@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
@@ -39,6 +41,9 @@ namespace TdInterface.TradeStation
         public AccountInfo AccountInfo { get; set; }
 
         private static Securitiesaccount _securitiesaccount;
+        private readonly Subject<Securitiesaccount> _securitiesAccountSubject = new Subject<Securitiesaccount>();
+        public IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
+
         private AccessTokenContainer accessTokenContainer;
 
 
@@ -427,6 +432,7 @@ namespace TdInterface.TradeStation
                 }); 
             }
             securitiesaccount.orderStrategies = tdaOrder.ToArray();
+            _securitiesAccountSubject.OnNext(securitiesaccount);
 
             return securitiesaccount;
         }
