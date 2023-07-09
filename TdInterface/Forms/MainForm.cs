@@ -30,10 +30,33 @@ namespace TdInterface
         public bool isTda = false;
         public bool isTradeStation = true;
 
-        public Securitiesaccount _securitiesaccount;
+        //private Securitiesaccount securitiesaccount;
         private Position _activePosition;
 
         public string MainFormName{ get; private set; }
+        //public Securitiesaccount Securitiesaccount { get => securitiesaccount; set => securitiesaccount = value; }
+
+        private readonly object securitiesAccountLock = new object();
+        private Securitiesaccount securitiesAccount;
+
+        public Securitiesaccount Securitiesaccount
+        {
+            get
+            {
+                lock (securitiesAccountLock)
+                {
+                    return securitiesAccount;
+                }
+            }
+            set
+            {
+                lock (securitiesAccountLock)
+                {
+                    securitiesAccount = value;
+                }
+            }
+        }
+
 
         public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
@@ -128,7 +151,7 @@ namespace TdInterface
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, Securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _broker.PlaceOrder(_broker.AccountId, triggerOrder);
                 }
                 else if (isTradeStation)
@@ -362,8 +385,8 @@ namespace TdInterface
             //    _securitiesaccount = await GetSecuritiesaccountAsync();
             //}
 
-            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
-            var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
+            var stopOrder = Securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
+            var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -379,8 +402,12 @@ namespace TdInterface
                     var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
-                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
-                    await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+
+                    if (_activePosition != null && (activeQuantity - quantity) != 0)
+                    {
+                        var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
+                        await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+                    }
                 }
             }
             else
@@ -396,10 +423,10 @@ namespace TdInterface
             //{
             //    _securitiesaccount = await GetSecuritiesaccountAsync();
             //}
-            var stopOrder = _securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
+            var stopOrder = Securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
-            var parent = TDAOrderHelper.GetParentOrder(_securitiesaccount.orderStrategies, stopOrder);
+            var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -415,9 +442,12 @@ namespace TdInterface
                     var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
-                    //TODO:  Check the active position, ITS THROWING NULL REFERENCE EXCEPTION, WHEN THE ACTIVE POSITION IS NULL
-                    var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
-                    await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+
+                    if (_activePosition != null && (activeQuantity - quantity) !=  0)
+                    {
+                        var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
+                        await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
+                    }
                 }
             }
             else
@@ -497,7 +527,7 @@ namespace TdInterface
         #region Handle Brokerage Events
         private async Task HandleSecuritiesAccountUpdated(Securitiesaccount s)
         {
-            _securitiesaccount = s;
+            Securitiesaccount = s;
             await SetPosition();
         }
 
@@ -600,11 +630,13 @@ namespace TdInterface
             return securitiesaccount;
 
         }
+
+        //TODO: THIS IS NOT LONGER FIRING, Streamer is not sending this.
         private async void HandleOrderRecieved(OrderEntryRequestMessage orderEntryRequestMessage)
         {
             try
             {
-                _securitiesaccount = await GetSecuritiesaccountAsync();
+                Securitiesaccount = await GetSecuritiesaccountAsync();
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -614,10 +646,10 @@ namespace TdInterface
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && _securitiesaccount != null)
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && Securitiesaccount != null)
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
-                        var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
+                        var triggerOrder = Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
                         //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                         //So the Trigger has an OCO that has the limit and stop.  
                         if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
@@ -677,11 +709,12 @@ namespace TdInterface
                             {
                                 Debug.WriteLine("Found OrderKey");
 
-                                _securitiesaccount = await GetSecuritiesaccountAsync();
+                                //should already have the securities account based on Acct_Activity
+                                //Securitiesaccount = await GetSecuritiesaccountAsync();
 
-                                if (_securitiesaccount != null)
+                                if (Securitiesaccount != null)
                                 {
-                                    var triggerOrder = _securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                                    var triggerOrder = Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                                     //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                                     //So the Trigger has an OCO that has the limit and stop.
                                     //
@@ -821,11 +854,11 @@ namespace TdInterface
             try
             {
                 //_securitiesaccount = await GetSecuritiesaccountAsync();
-                if (_securitiesaccount != null)
+                if (Securitiesaccount != null)
                 {
                     try
                     {
-                        SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
+                        SafeUpdateTextBox(txtPnL, Securitiesaccount.DailyPnL.ToString("#.##"));
                     }
                     catch (Exception ex)
                     {
@@ -834,9 +867,9 @@ namespace TdInterface
                         Debug.WriteLine(ex.StackTrace);
                     }
 
-                    if (_securitiesaccount.positions != null)
+                    if (Securitiesaccount.positions != null)
                     {
-                        position = _securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                        position = Securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
                     }
                 }
             }
@@ -1099,25 +1132,10 @@ namespace TdInterface
         #endregion
 
         #region Timers
+//TODO: NOT SURE WE STILL NEED THIS.  Since we have an observable and everytime there is ACCT_Activity we call get securities, this is probably obsolete.  Look to remove.
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
-            _securitiesaccount = await GetSecuritiesaccountAsync();
-
-            try
-            {
-                if (_broker.GetType() == typeof(TdHelper) && _securitiesaccount != null)
-                {
-                    SafeUpdateTextBox(txtPnL, _securitiesaccount.DailyPnL.ToString("#.##"));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Can't Update PnL");
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-
-
+            //_ = await GetSecuritiesaccountAsync();
         }
 
         #endregion
