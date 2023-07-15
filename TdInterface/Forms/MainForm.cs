@@ -14,6 +14,9 @@ using TdInterface.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 namespace TdInterface
 {
@@ -81,7 +84,7 @@ namespace TdInterface
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
-            helper.SecuritiesAccountUpdated.Subscribe(s => HandleSecuritiesAccountUpdated(s));
+            helper.SecuritiesAccountUpdated.Subscribe(async (s) => await HandleSecuritiesAccountUpdated(s));
 
             btnBuyLmtTriggerOco.Enabled = false;
             btnBuyMrkTriggerOco.Enabled = false;
@@ -528,7 +531,7 @@ namespace TdInterface
         private async Task HandleSecuritiesAccountUpdated(Securitiesaccount s)
         {
             Securitiesaccount = s;
-            await SetPosition();
+            SetPosition();
         }
 
         #endregion
@@ -672,9 +675,11 @@ namespace TdInterface
         {
             try
             {
+                Securitiesaccount = await GetSecuritiesaccountAsync();
+
                 if (orderFillMessage != null)
                 {
-                    await SetPosition();
+                    SetPosition();
 
                     Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
 
@@ -810,7 +815,7 @@ namespace TdInterface
                 if (textBox.InvokeRequired)
                 {
                     var d = new SafeCallDelegate(SafeUpdateTextBox);
-                    textBox.Invoke(d, new object[] { textBox, text });
+                    textBox.BeginInvoke(d, new object[] { textBox, text });
                 }
                 else
                 {
@@ -828,9 +833,9 @@ namespace TdInterface
         private Order _initialLimitOrder;
 
 
-        private async Task SetPosition()
+        private void SetPosition()
         {
-            Position position = await GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _broker.AccountId);
+            Position position = GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _broker.AccountId);
 
             if (position != null)
             {
@@ -847,7 +852,8 @@ namespace TdInterface
             }
         }
 
-        private async Task<Position> GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
+        //private async Task<Position> GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
+        private Position GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
         {
             Position position = null;
 
@@ -994,7 +1000,7 @@ namespace TdInterface
                     txtOneToOne.Text = String.Empty;
                     txtRValue.Text = String.Empty;
                     this.Text = txtSymbol.Text;
-                    await SetPosition();
+                    SetPosition();
                 }
             }
             catch (Exception) { }
@@ -1135,7 +1141,7 @@ namespace TdInterface
 //TODO: NOT SURE WE STILL NEED THIS.  Since we have an observable and everytime there is ACCT_Activity we call get securities, this is probably obsolete.  Look to remove.
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
-            //_ = await GetSecuritiesaccountAsync();
+            _ = await GetSecuritiesaccountAsync();
         }
 
         #endregion

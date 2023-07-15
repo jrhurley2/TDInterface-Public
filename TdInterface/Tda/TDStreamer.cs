@@ -156,12 +156,23 @@ namespace TdInterface.Tda
             return newMessage;
         }
 
+
+        private int reconnectionCount = 0;
         private void SubscribeWebSocketMessages(UserPrincipal userPrincipals, WebsocketClient client)
         {
             client.DisconnectionHappened.Subscribe(dis =>
             {
                 try
                 {
+                    Debug.WriteLine($"Disconnect sleeping");
+                    Thread.Sleep(10000);
+                    Debug.WriteLine($"Disconnect awake");
+                    if (reconnectionCount >= 100)
+                    {
+                        Debug.WriteLine($"reconnectionCount exceeded retry.");
+                    }
+                    reconnectionCount++;
+
                     Debug.WriteLine($"DisconnectionHappened {dis.Type}");
                     _disconnectionInfo.OnNext(dis);
                     Debug.WriteLine($"Calling ConnectSocket");
@@ -180,6 +191,7 @@ namespace TdInterface.Tda
             client.ReconnectionHappened.Subscribe(info =>
             {
                 Debug.WriteLine($"Reconnection happened, type: {info.Type}");
+                reconnectionCount = 0;
                 _reconnectionInfo.OnNext(info);
             });
 
