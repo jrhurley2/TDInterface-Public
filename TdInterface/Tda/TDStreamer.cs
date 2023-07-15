@@ -156,12 +156,23 @@ namespace TdInterface.Tda
             return newMessage;
         }
 
+
+        private int reconnectionCount = 0;
         private void SubscribeWebSocketMessages(UserPrincipal userPrincipals, WebsocketClient client)
         {
             client.DisconnectionHappened.Subscribe(dis =>
             {
                 try
                 {
+                    Debug.WriteLine($"Disconnect sleeping");
+                    Thread.Sleep(10000);
+                    Debug.WriteLine($"Disconnect awake");
+                    if (reconnectionCount >= 100)
+                    {
+                        Debug.WriteLine($"reconnectionCount exceeded retry.");
+                    }
+                    reconnectionCount++;
+
                     Debug.WriteLine($"DisconnectionHappened {dis.Type}");
                     _disconnectionInfo.OnNext(dis);
                     Debug.WriteLine($"Calling ConnectSocket");
@@ -180,6 +191,7 @@ namespace TdInterface.Tda
             client.ReconnectionHappened.Subscribe(info =>
             {
                 Debug.WriteLine($"Reconnection happened, type: {info.Type}");
+                reconnectionCount = 0;
                 _reconnectionInfo.OnNext(info);
             });
 
@@ -281,6 +293,9 @@ namespace TdInterface.Tda
                         }
                         else if (service == "ACCT_ACTIVITY")
                         {
+                            //Signal we have Account Activity
+                            _acctActivity.OnNext(new AcctActivity());
+
                             foreach (var content in socketData.content)
                             {
 
@@ -304,11 +319,16 @@ namespace TdInterface.Tda
                                     try
                                     {
                                         Debug.WriteLine(content["3"]);
-                                        var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
-                                        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
-                                        //var orderFillMessage = new OrderFillMessage();
-                                        _orderFillMessage.OnNext(orderFillMessage);
-                                        //Debug.WriteLine(orderFillMessage.ExecutionInformation.ExecutionPrice);
+                                        //Check that the order is a stock order, will throw excption if it is options, etc...
+                                        if (content["3"].Contains("EquityOrderT"))
+                                        {
+                                            var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
+                                            _orderFillMessage.OnNext(orderFillMessage);
+                                        }
+                                        else
+                                        {
+                                            Debug.WriteLine("We don't handle messages other than EquityOrderT");
+                                        }
                                     }
                                     catch (Exception ex)
                                     {
@@ -317,7 +337,6 @@ namespace TdInterface.Tda
                                     }
                                 }
                             }
-                            _acctActivity.OnNext(new AcctActivity());
                         }
                         else if (service == "CHART_EQUITY")
                         {

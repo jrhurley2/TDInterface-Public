@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -38,20 +40,34 @@ namespace TdInterface.Tda
         public AccountInfo AccountInfo { get;  set; }
 
         private static Securitiesaccount _securitiesaccount;
+        private readonly Subject<Securitiesaccount> _securitiesAccountSubject = new Subject<Securitiesaccount>();
+        public IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
+
+
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
         public TdHelper(AccountInfo ai) { AccountInfo = ai; }
 
+
+
+        private readonly object _lockSecuritiesAccount = new object();
+
         public Securitiesaccount Securitiesaccount
         {
             get
             {
-                return _securitiesaccount;
+                lock (_lockSecuritiesAccount)
+                {
+                    return _securitiesaccount;
+                }
             }
             set
             {
-                _securitiesaccount = value;
+                lock (_lockSecuritiesAccount)
+                {
+                    _securitiesaccount = value;
+                }
             }
         }
 
@@ -109,35 +125,43 @@ namespace TdInterface.Tda
         /// <returns></returns>
         public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
-
-            var accountInfo = Utility.GetAccountInfo();
-
-            Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
-
-            List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
-            postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
-            postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
-            postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
-            postData.Add(new KeyValuePair<string, string>("client_id", $"{consumerKey}@AMER.OAUTHTD"));
-            postData.Add(new KeyValuePair<string, string>("redirect_uri", $"{redirectUri}"));
-
-            FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
-            var rawSTring = await content.ReadAsStringAsync();
-            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(BaseUri, routeGetToken)) //Uri."https://api.tdameritrade.com/v1/oauth2/token"); // ; 
+            try
             {
-                Method = HttpMethod.Post,
-                Content = content
-            };
+                var accountInfo = Utility.GetAccountInfo();
 
-            var response = await _httpClient.SendAsync(request);
+                Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
-            AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
-            AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
+                List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
+                postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
+                postData.Add(new KeyValuePair<string, string>("access_type", "offline"));
+                postData.Add(new KeyValuePair<string, string>("code", $"{authToken}"));
+                postData.Add(new KeyValuePair<string, string>("client_id", $"{consumerKey}@AMER.OAUTHTD"));
+                postData.Add(new KeyValuePair<string, string>("redirect_uri", $"{redirectUri}"));
 
-            //Write the access token container, this should ahve the refresh token
-            Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
+                var rawSTring = await content.ReadAsStringAsync();
+                var request = new HttpRequestMessage(HttpMethod.Post, new Uri(BaseUri, routeGetToken)) //Uri."https://api.tdameritrade.com/v1/oauth2/token"); // ; 
+                {
+                    Method = HttpMethod.Post,
+                    Content = content
+                };
 
-            return AccessTokenContainer;
+                var response = await _httpClient.SendAsync(request);
+
+                AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
+
+                //Write the access token container, this should ahve the refresh token
+                Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
+
+                return AccessTokenContainer;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+                throw;  
+            }
         }
 
         public async Task<AccessTokenContainer> RefreshAccessToken()
@@ -175,46 +199,57 @@ namespace TdInterface.Tda
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
                 throw;
             }
         }
 
         public async Task<Securitiesaccount> GetAccount(string accountId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
-            {
-                Method = HttpMethod.Get,
-            };
-
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
-
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-
             Securitiesaccount securitiesaccount = null;
-
-            if(response.IsSuccessStatusCode)
+            try
             {
-                try
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetAccount, accountId)))
                 {
-                    securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
-                    Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+                    Method = HttpMethod.Get,
+                };
 
-                    //Store it in tdhelper class.
-                    Securitiesaccount = securitiesaccount;
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
+
+                var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+                        Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+
+                        //Store it in tdhelper class.
+                        Securitiesaccount = securitiesaccount;
+                        //TODO:  When 2 windows are open this will cause the app to hang.
+                        _securitiesAccountSubject.OnNext(securitiesaccount);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                    }
                 }
-                catch (Exception ex) 
-                { 
-                    Debug.WriteLine(ex.Message);
-                    Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                else
+                {
+                    Debug.WriteLine("Call to get Securities Account failed!");
+                    Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
+                    Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
+                    Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
+                    Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
                 }
             }
-            else
+            catch (Exception ex) 
             {
-                Debug.WriteLine("Call to get Securities Account failed!");
-                Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
-                Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
-                Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
-                Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
             }
 
             return Securitiesaccount;
@@ -330,24 +365,33 @@ namespace TdInterface.Tda
 
         public async Task<UserPrincipal> GetUserPrincipals()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetUserPrincipals))
+            try
             {
-                Method = HttpMethod.Get
-            };
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, routeGetUserPrincipals))
+                {
+                    Method = HttpMethod.Get
+                };
 
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                Debug.WriteLine($"GetUserPrincipals: StatusCode: {response.StatusCode}");
-                Debug.WriteLine($"GetUserPrincipals: {await response.Content.ReadAsStringAsync()}");
-                throw new Exception("Error retreiving UserPrincipals");
+                var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    Debug.WriteLine($"GetUserPrincipals: StatusCode: {response.StatusCode}");
+                    Debug.WriteLine($"GetUserPrincipals: {await response.Content.ReadAsStringAsync()}");
+                    throw new Exception("Error retreiving UserPrincipals");
+                }
+
+                var userPrincipal = Utility.DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
+
+                return userPrincipal;
             }
-
-            var userPrincipal = Utility.DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
-
-            return userPrincipal;
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+                throw;
+            }
         }
 
         public async Task<string> GetStreamerSubscriptionKeys(AccessTokenContainer accessTokenContainer, UserPrincipal userPrincipal)
