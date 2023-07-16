@@ -1,4 +1,5 @@
 # TDInterface-Public
+  ⚠️ 7/15/2023 - We will no longer be supporting TradeStation.  I will try to keep it up to date, but I dont' have the time to test its.  If anyone wants to volunteer, let me known.   ** ⚠️
 
 > ⚠️ **TDA is working on their migration with Schwab. At this time you can NOT get an API key. ** ⚠️
 > 
