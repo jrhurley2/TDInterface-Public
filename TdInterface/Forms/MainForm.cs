@@ -383,12 +383,8 @@ namespace TdInterface
                 limitPrice = stockQuote.bidPrice;
             }
 
-            //if (_securitiesaccount == null)
-            //{
-            //    _securitiesaccount = await GetSecuritiesaccountAsync();
-            //}
+            Order stopOrder = TDAOrderHelper.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
 
-            var stopOrder = Securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "STOP").FirstOrDefault();
             var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
@@ -419,15 +415,12 @@ namespace TdInterface
             }
         }
 
+
         private async Task ExitMarket(int quantity)
         {
             string exitInstruction = GetExitInstruction(_activePosition);
-            //if(_securitiesaccount == null)
-            //{
-            //    _securitiesaccount = await GetSecuritiesaccountAsync();
-            //}
-            var stopOrder = Securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)  && o.orderType == "STOP").FirstOrDefault();
 
+            Order stopOrder = TDAOrderHelper.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
             var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 

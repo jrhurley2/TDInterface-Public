@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
@@ -153,6 +154,20 @@ namespace TdInterface.Tda
             }
 
             return null;
+        }
+
+        public static Order GetStopOrder(List<Order> orders, string symbol)
+        {
+            return orders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && 
+                                     (o.orderLegCollection != null && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.CurrentCultureIgnoreCase)) && 
+                                      o.orderType == "STOP").FirstOrDefault();
+        }
+
+        public static List<Order> GetOpenOrders(List<Order> orders, string symbol)
+        {
+            return orders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") &&
+                                     (o.orderLegCollection != null && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.CurrentCultureIgnoreCase))).ToList<Order>();
+
         }
 
         public static int CalculateShares(double riskPerShare, double maxRisk, double minRisk, bool tradeShares = false)

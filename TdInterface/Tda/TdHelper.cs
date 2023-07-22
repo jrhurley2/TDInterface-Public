@@ -453,7 +453,9 @@ namespace TdInterface.Tda
 
             if (securitiesaccount != null)
             {
-                var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
+
+                var openOrders = TDAOrderHelper.GetOpenOrders(securitiesaccount.FlatOrders, symbol);
+                //var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
 
                 var tasks = new List<Task>();
                 foreach (var order in openOrders)

@@ -28,7 +28,10 @@ namespace TdInterface
         {
             try
             {
+
                 Debug.WriteLine("Start Master Form");
+                Debug.WriteLine($"version: {Program.AppVersion}");
+
                 InitializeComponent();
 
                 // TODO: Move Getting AccountInfo logic to a function - maybe this happens in Program before MainForm even exists?
