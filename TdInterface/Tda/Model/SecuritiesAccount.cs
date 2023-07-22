@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -16,7 +17,17 @@ namespace TdInterface.Tda.Model
     {
         public static Securitiesaccount ParseJson(string json)
         {
-            return JsonConvert.DeserializeObject<Rootobject>(json).securitiesAccount;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<Rootobject>(json).securitiesAccount;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ParseJson Error: {ex.Message}");
+                Debug.WriteLine($"JSON: {json}");
+                return null;
+            }
         }
 
         public string type { get; set; }
