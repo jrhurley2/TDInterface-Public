@@ -36,7 +36,7 @@ namespace TdInterface
 
                 // TODO: Move Getting AccountInfo logic to a function - maybe this happens in Program before MainForm even exists?
                 var accountInfo = Utility.GetAccountInfo();
-                if (accountInfo == null )
+                if (accountInfo == null)
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
@@ -50,7 +50,7 @@ namespace TdInterface
                 Login().ConfigureAwait(false);
             }
             catch (Exception)
-            { 
+            {
             }
         }
 
@@ -85,6 +85,7 @@ namespace TdInterface
         {
             if (_broker.AccessTokenContainer.ExpiresIn < 100)
             {
+                Debug.WriteLine($"timer1_tick: calling RefreshAccessToken {DateTime.Now.ToShortTimeString()}");
                 _ = await _broker.RefreshAccessToken();
             }
         }
@@ -95,7 +96,7 @@ namespace TdInterface
             frm.ShowDialog();
         }
 
-        private static Dictionary<string, MainForm> _mainForms = new  Dictionary<string, MainForm>();
+        private static Dictionary<string, MainForm> _mainForms = new Dictionary<string, MainForm>();
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
             launchMainForm(txtSymbol.Text);
@@ -120,9 +121,9 @@ namespace TdInterface
         {
             try
             {
-                if(_streamer != null) _streamer.Dispose();
+                if (_streamer != null) _streamer.Dispose();
 
-                foreach(var frm in _mainForms)
+                foreach (var frm in _mainForms)
                 {
                     frm.Value.Close();
                     frm.Value.Dispose();
@@ -187,6 +188,13 @@ namespace TdInterface
             futureCalcFrom.Show();
         }
 
+        private void btnThetaForm_Click(object sender, EventArgs e)
+        {
+            var theThetaForm = new ThetaForm((TdHelper)_broker);
+            theThetaForm.Show();
+        }
+
+
         private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var accountInfoForm = new AccountInfoForm();
@@ -226,5 +234,6 @@ namespace TdInterface
                 MessageBox.Show("You have the latest version.");
             }
         }
+
     }
 }

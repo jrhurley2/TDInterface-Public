@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using TdInterface.Interfaces;
@@ -18,6 +19,8 @@ namespace TdInterface.Tda
 {
     public class TDStreamer : IDisposable, IStreamer
     {
+        private bool _isConnected = false;
+        private IBrokerage _brokerage;
         private UserPrincipal _userPrincipal;
         private bool _isDisposing;
         private StreamerSettings.Credentials _credentials;
@@ -68,9 +71,15 @@ namespace TdInterface.Tda
             _ws = testSocketClient;
             SubscribeWebSocketMessages(new UserPrincipal(), testSocketClient);
         }
-        public TDStreamer(UserPrincipal userPrincipals)
+
+        public TDStreamer(IBrokerage brokerage)
         {
-            _userPrincipal = userPrincipals;
+            _brokerage = brokerage;
+            //_userPrincipal = brokerage.GetUserPrincipals().Result;
+        //}
+        //public TDStreamer(UserPrincipal userPrincipals)
+        //{
+        //    _userPrincipal = userPrincipals;
 
             string currentPath = Directory.GetCurrentDirectory();
             string replayFolder = Path.Combine(currentPath, "replays");
@@ -79,24 +88,25 @@ namespace TdInterface.Tda
 
             _replayFile = new StreamWriter($"{replayFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
 
-            ConnectSocket(userPrincipals);
+            ConnectSocket();
         }
 
-        private void ConnectSocket(UserPrincipal userPrincipals)
+        private void ConnectSocket()
         {
+            _userPrincipal = _brokerage.GetUserPrincipals().Result;
             _credentials = new StreamerSettings.Credentials
             {
-                userid = userPrincipals.accounts[0].accountId,
-                token = userPrincipals.streamerInfo.token,
-                company = userPrincipals.accounts[0].company,
-                segment = userPrincipals.accounts[0].segment,
-                cddomain = userPrincipals.accounts[0].accountCdDomainId,
-                usergroup = userPrincipals.streamerInfo.userGroup,
-                accesslevel = userPrincipals.streamerInfo.accessLevel,
+                userid = _userPrincipal.accounts[0].accountId,
+                token = _userPrincipal.streamerInfo.token,
+                company = _userPrincipal.accounts[0].company,
+                segment = _userPrincipal.accounts[0].segment,
+                cddomain = _userPrincipal.accounts[0].accountCdDomainId,
+                usergroup = _userPrincipal.streamerInfo.userGroup,
+                accesslevel = _userPrincipal.streamerInfo.accessLevel,
                 authorized = "Y",
-                timestamp = Convert.ToInt64(ConvertToUnixTimestamp(Convert.ToDateTime(userPrincipals.streamerInfo.tokenTimestamp))),
-                appid = userPrincipals.streamerInfo.appId,
-                acl = userPrincipals.streamerInfo.acl
+                timestamp = Convert.ToInt64(ConvertToUnixTimestamp(Convert.ToDateTime(_userPrincipal.streamerInfo.tokenTimestamp))),
+                appid = _userPrincipal.streamerInfo.appId,
+                acl = _userPrincipal.streamerInfo.acl
             };
 
             //Convert credentials to dictionary
@@ -110,12 +120,12 @@ namespace TdInterface.Tda
                 service = "ADMIN",
                 command = "LOGIN",
                 requestid = "0",
-                account = userPrincipals.accounts[0].accountId,
-                source = userPrincipals.streamerInfo.appId,
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
                 parameters = new StreamerSettings.Parameters
                 {
                     credential = ToQueryString(cred),
-                    token = userPrincipals.streamerInfo.token,
+                    token = _userPrincipal.streamerInfo.token,
                     version = "1.0",
                     qoslevel = "0"
                 }
@@ -131,12 +141,12 @@ namespace TdInterface.Tda
 
             var exitEvent = new ManualResetEvent(false);
 
-            var url = new Uri($"wss://{userPrincipals.streamerInfo.streamerSocketUrl}/ws");
+            var url = new Uri($"wss://{_userPrincipal.streamerInfo.streamerSocketUrl}/ws");
 
             _ws = new WebsocketClient(url);
             _ws.ReconnectTimeout = TimeSpan.FromSeconds(30);
 
-            SubscribeWebSocketMessages(userPrincipals, _ws);
+            SubscribeWebSocketMessages(_userPrincipal, _ws);
 
             _ws.Start();
 
@@ -164,21 +174,21 @@ namespace TdInterface.Tda
             {
                 try
                 {
-                    Debug.WriteLine($"Disconnect sleeping");
-                    Thread.Sleep(10000);
-                    Debug.WriteLine($"Disconnect awake");
-                    if (reconnectionCount >= 100)
-                    {
-                        Debug.WriteLine($"reconnectionCount exceeded retry.");
-                    }
-                    reconnectionCount++;
-
-                    Debug.WriteLine($"DisconnectionHappened {dis.Type}");
                     _disconnectionInfo.OnNext(dis);
-                    Debug.WriteLine($"Calling ConnectSocket");
-                    ConnectSocket(userPrincipals);
-                    Debug.WriteLine("Calling SubscribeQuote");
-                    SubscribeQuote();
+                    //Debug.WriteLine($"Disconnect sleeping");
+                    //Thread.Sleep(10000);
+                    //Debug.WriteLine($"Disconnect awake");
+                    //if (reconnectionCount >= 100)
+                    //{
+                    //    Debug.WriteLine($"reconnectionCount exceeded retry.");
+                    //}
+                    //reconnectionCount++;
+
+                    //Debug.WriteLine($"DisconnectionHappened {dis.Type}");
+                    //Debug.WriteLine($"Calling ConnectSocket");
+                    //ConnectSocket();
+                    //Debug.WriteLine("Calling SubscribeQuote");
+                    //SubscribeQuote();
                 }
                 catch (Exception ex)
                 {
