@@ -175,8 +175,6 @@ namespace TdInterface.Tda
 
                 Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
-                Debug.WriteLine($"Old AccessToken Container: {JsonConvert.SerializeObject(AccessTokenContainer)}");
-
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", AccessTokenContainer.RefreshToken));
@@ -198,8 +196,6 @@ namespace TdInterface.Tda
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = AccessTokenContainer.RefreshToken;
                 newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
-
-                Debug.WriteLine($"New AccessToken Container: {JsonConvert.SerializeObject(newAccessTokenContainer)}");
 
                 AccessTokenContainer = newAccessTokenContainer;
                 return AccessTokenContainer;
