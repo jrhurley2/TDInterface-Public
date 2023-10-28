@@ -65,6 +65,7 @@ namespace TdInterface
 
             // Setup debug trace listener for the application
             _textWriterTraceListener = new TextWriterTraceListener(DebugLogFile);
+            _textWriterTraceListener.TraceOutputOptions = TraceOptions.Timestamp;
             Trace.Listeners.Add(_textWriterTraceListener);
 
             Settings = Utility.GetSettings();

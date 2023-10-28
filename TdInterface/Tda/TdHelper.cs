@@ -36,6 +36,7 @@ namespace TdInterface.Tda
         public const string routeGetPriceHistory = "v1/marketdata/{0}/pricehistory?periodType=day&frequencyType=minute&frequency=1&needExtendedHoursData=true&startDate={1}&endDate={2}";
         public const string routeGetUserPrincipals = "v1/userprincipals?fields=streamerSubscriptionKeys,streamerConnectionInfo";
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
+        public const string routeGetTransactions = "v1/accounts/{0}/transactions";
 
         public AccountInfo AccountInfo { get;  set; }
 
@@ -127,6 +128,7 @@ namespace TdInterface.Tda
         {
             try
             {
+                Debug.WriteLine($"*******8   Why are we calling this, it should only get called ever 90 or so days  Calling GetAccessToken:  {DateTime.Now.ToShortTimeString()}");
                 var accountInfo = Utility.GetAccountInfo();
 
                 Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
@@ -168,9 +170,12 @@ namespace TdInterface.Tda
         {
             try
             {
+                Debug.WriteLine($"Calling RefreshAccessToken:  {DateTime.Now.ToShortTimeString()}");
                 var accountInfo = Utility.GetAccountInfo();
 
                 Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+
+                Debug.WriteLine($"Old AccessToken Container: {JsonConvert.SerializeObject(AccessTokenContainer)}");
 
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
@@ -189,9 +194,12 @@ namespace TdInterface.Tda
 
                 var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
 
+
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = AccessTokenContainer.RefreshToken;
                 newAccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
+
+                Debug.WriteLine($"New AccessToken Container: {JsonConvert.SerializeObject(newAccessTokenContainer)}");
 
                 AccessTokenContainer = newAccessTokenContainer;
                 return AccessTokenContainer;
@@ -270,6 +278,59 @@ namespace TdInterface.Tda
             return account;
         }
 
+        public async Task<Securitiesaccount> GetTransactions(string accountId, string symbol)
+        {
+            Securitiesaccount securitiesaccount = null;
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetTransactions, accountId)))
+                {
+                    Method = HttpMethod.Get,
+                };
+
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
+
+                var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        securitiesaccount = Securitiesaccount.ParseJson(await response.Content.ReadAsStringAsync());
+                        Debug.WriteLine(JsonConvert.SerializeObject(securitiesaccount));
+
+                        //Store it in tdhelper class.
+                        Securitiesaccount = securitiesaccount;
+                        //TODO:  When 2 windows are open this will cause the app to hang.
+                        _securitiesAccountSubject.OnNext(securitiesaccount);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine($"Message Content: {await response.Content.ReadAsStringAsync()} ");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Call to get Securities Account failed!");
+                    Debug.WriteLine($"GetAccount Response {response.StatusCode}: {response.Content}");
+                    Debug.WriteLine($"AccessContainerToken.ExpiresIn: {AccessTokenContainer.ExpiresIn}");
+                    Debug.WriteLine($"AccessTokenContainer.IsTokenExpired: {AccessTokenContainer.IsTokenExpired}");
+                    Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+            return Securitiesaccount;
+        }
+
+
+
         public async Task<CandleList> GetPriceHistoryAsync(string symbol)
         {
             var today = DateTimeOffset.Now;
@@ -298,7 +359,7 @@ namespace TdInterface.Tda
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, accountId)))
             {
                 Method = HttpMethod.Post,
-                Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
+                Content = Serialize(order)
             };
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
@@ -317,6 +378,18 @@ namespace TdInterface.Tda
             return orderNumber;
         }
 
+        private static StringContent Serialize(Order order)
+        {
+            return new StringContent(JsonConvert.SerializeObject(order,
+                                                                                    Formatting.None,
+                                                                                    new JsonSerializerSettings
+                                                                                    {
+                                                                                        NullValueHandling = NullValueHandling.Ignore,
+                                                                                        DefaultValueHandling = DefaultValueHandling.Ignore
+                                                                                    }),
+                            Encoding.UTF8, "application/json");
+        }
+
         public async Task<ulong> ReplaceOrder(string accountId, string orderId, Order newOrder)
         {
             var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
@@ -324,7 +397,7 @@ namespace TdInterface.Tda
             var request = new HttpRequestMessage(HttpMethod.Put, uri)
             {
                 Method = HttpMethod.Put,
-                Content = new StringContent(JsonConvert.SerializeObject(newOrder), Encoding.UTF8, "application/json")
+                Content = Serialize(newOrder)
             };
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
@@ -476,7 +549,7 @@ namespace TdInterface.Tda
         {
             UserPrincipal up = await GetUserPrincipals();
             accountId = up.accounts[0].accountId;
-            return new TDStreamer(up);
+            return new TDStreamer(this);
         }
     }
 }
