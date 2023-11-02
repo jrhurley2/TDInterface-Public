@@ -4,20 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation;
 using Websocket.Client;
 using Websocket.Client.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using TdInterface.TradeStation;
 
 namespace TdInterface
 {
