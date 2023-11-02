@@ -4,19 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
+using TdInterface.TradeStation;
 using Websocket.Client;
 using Websocket.Client.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 
 namespace TdInterface
 {
@@ -30,8 +27,8 @@ namespace TdInterface
 
       
         // Made Public for testing.
-        public bool isTda = false;
-        public bool isTradeStation = true;
+        public bool isTda = true;
+        public bool isTradeStation = false;
 
         //private Securitiesaccount securitiesaccount;
         private Position _activePosition;
@@ -64,6 +61,9 @@ namespace TdInterface
         public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
             InitializeComponent();
+
+            isTda = typeof(TdHelper) == helper.GetType();
+            isTradeStation = typeof(TradeStationHelper) == helper.GetType();
 
             this.AutoScaleMode = AutoScaleMode.Font;
 
