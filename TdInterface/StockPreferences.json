@@ -1,0 +1,11 @@
+[
+    {"Stock": "AAPL", "LimitOffset":  0.05, "MinimumRisk":  0.05},
+    {"Stock": "AMD"},
+    {"Stock": "AMZN"},
+    {"Stock": "META"},
+    {"Stock": "MSFT"},
+    {"Stock": "NVDA"},
+    {"Stock": "TSLA"},
+    {"Stock": "SPY"},
+    {"Stock": "QQQ"}
+]

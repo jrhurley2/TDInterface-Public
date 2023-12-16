@@ -1,4 +1,6 @@
-﻿namespace TdInterface
+﻿using System;
+
+namespace TdInterface
 {
     public class Settings
     {
@@ -32,5 +34,9 @@
         public bool AlwaysOnTop { get; set; }
         public bool CaptureScreenshotOnOpen { get; set; }
         public int SleepBetweenReduceOrderOnClose { get; set; } = 1000;
+        public bool HasTimeRestrict { get; set; }
+        public DateTime? TimeRestrict { get; set; }
+        public bool HasTriggerOrderLimit { get; set; }
+        public int TriggerOrderLimit { get; set; }
     }
 }

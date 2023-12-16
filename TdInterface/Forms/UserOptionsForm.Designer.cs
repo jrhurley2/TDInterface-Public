@@ -57,6 +57,12 @@ namespace TdInterface
             label8 = new System.Windows.Forms.Label();
             chkAlwaysOnTop = new System.Windows.Forms.CheckBox();
             chkCaptureSSOnOpen = new System.Windows.Forms.CheckBox();
+            label5 = new System.Windows.Forms.Label();
+            chkTimeRestrict = new System.Windows.Forms.CheckBox();
+            dtPickerTimeRestrict = new System.Windows.Forms.DateTimePicker();
+            label9 = new System.Windows.Forms.Label();
+            chkTriggerOrderLimit = new System.Windows.Forms.CheckBox();
+            txtTriggerOrderLimit = new System.Windows.Forms.TextBox();
             SuspendLayout();
             // 
             // lblTradeShares
@@ -186,7 +192,7 @@ namespace TdInterface
             // 
             // txtDefaultLimitOffset
             // 
-            txtDefaultLimitOffset.Location = new System.Drawing.Point(269, 342);
+            txtDefaultLimitOffset.Location = new System.Drawing.Point(269, 297);
             txtDefaultLimitOffset.Name = "txtDefaultLimitOffset";
             txtDefaultLimitOffset.Size = new System.Drawing.Size(125, 26);
             txtDefaultLimitOffset.TabIndex = 17;
@@ -194,7 +200,7 @@ namespace TdInterface
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(53, 346);
+            label6.Location = new System.Drawing.Point(53, 301);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(139, 20);
             label6.TabIndex = 18;
@@ -312,11 +318,70 @@ namespace TdInterface
             chkCaptureSSOnOpen.Text = "Capture Screenshot on Open";
             chkCaptureSSOnOpen.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(56, 356);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(131, 20);
+            label5.TabIndex = 31;
+            label5.Text = "No Trading Before";
+            // 
+            // chkTimeRestrict
+            // 
+            chkTimeRestrict.AutoSize = true;
+            chkTimeRestrict.Location = new System.Drawing.Point(222, 353);
+            chkTimeRestrict.Name = "chkTimeRestrict";
+            chkTimeRestrict.Size = new System.Drawing.Size(18, 17);
+            chkTimeRestrict.TabIndex = 32;
+            chkTimeRestrict.UseVisualStyleBackColor = true;
+            // 
+            // dtPickerTimeRestrict
+            // 
+            dtPickerTimeRestrict.CustomFormat = "";
+            dtPickerTimeRestrict.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            dtPickerTimeRestrict.Location = new System.Drawing.Point(265, 351);
+            dtPickerTimeRestrict.Name = "dtPickerTimeRestrict";
+            dtPickerTimeRestrict.Size = new System.Drawing.Size(250, 26);
+            dtPickerTimeRestrict.TabIndex = 33;
+            dtPickerTimeRestrict.Value = new System.DateTime(2023, 11, 3, 9, 30, 0, 0);
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(53, 394);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(135, 20);
+            label9.TabIndex = 34;
+            label9.Text = "Trigger Order Limit";
+            // 
+            // chkTriggerOrderLimit
+            // 
+            chkTriggerOrderLimit.AutoSize = true;
+            chkTriggerOrderLimit.Location = new System.Drawing.Point(222, 397);
+            chkTriggerOrderLimit.Name = "chkTriggerOrderLimit";
+            chkTriggerOrderLimit.Size = new System.Drawing.Size(18, 17);
+            chkTriggerOrderLimit.TabIndex = 35;
+            chkTriggerOrderLimit.UseVisualStyleBackColor = true;
+            // 
+            // txtTriggerOrderLimit
+            // 
+            txtTriggerOrderLimit.Location = new System.Drawing.Point(262, 393);
+            txtTriggerOrderLimit.Name = "txtTriggerOrderLimit";
+            txtTriggerOrderLimit.Size = new System.Drawing.Size(125, 26);
+            txtTriggerOrderLimit.TabIndex = 36;
+            // 
             // UserOptionsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(994, 457);
+            Controls.Add(txtTriggerOrderLimit);
+            Controls.Add(chkTriggerOrderLimit);
+            Controls.Add(label9);
+            Controls.Add(dtPickerTimeRestrict);
+            Controls.Add(chkTimeRestrict);
+            Controls.Add(label5);
             Controls.Add(chkCaptureSSOnOpen);
             Controls.Add(chkAlwaysOnTop);
             Controls.Add(label8);
@@ -385,5 +450,11 @@ namespace TdInterface
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkAlwaysOnTop;
         private System.Windows.Forms.CheckBox chkCaptureSSOnOpen;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkTimeRestrict;
+        private System.Windows.Forms.DateTimePicker dtPickerTimeRestrict;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chkTriggerOrderLimit;
+        private System.Windows.Forms.TextBox txtTriggerOrderLimit;
     }
 }

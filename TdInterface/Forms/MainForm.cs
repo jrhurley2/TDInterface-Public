@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Animation;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
@@ -22,10 +23,10 @@ namespace TdInterface
         private IStreamer _streamer;
 
         private IBrokerage _broker;
-      
+
         private string curSymbol = String.Empty;
 
-      
+
         // Made Public for testing.
         public bool isTda = true;
         public bool isTradeStation = false;
@@ -33,7 +34,7 @@ namespace TdInterface
         //private Securitiesaccount securitiesaccount;
         private Position _activePosition;
 
-        public string MainFormName{ get; private set; }
+        public string MainFormName { get; private set; }
         //public Securitiesaccount Securitiesaccount { get => securitiesaccount; set => securitiesaccount = value; }
 
         private readonly object securitiesAccountLock = new object();
@@ -56,7 +57,6 @@ namespace TdInterface
                 }
             }
         }
-
 
         public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
@@ -105,9 +105,30 @@ namespace TdInterface
             lblVersion.Text = $"v {Program.AppVersion}";
         }
 
+        //public static bool CanTrade(Securitiesaccount securitiesaccount)
+        public static bool CanTrade()
+        {
+            if (Program.Settings.HasTimeRestrict)
+            {
+                var time = Program.Settings.TimeRestrict.Value.TimeOfDay;
+                DateTime today = DateTime.Today;
+                DateTime newDt = today + time;
+                if (DateTime.Now < newDt) return false;
+            }
+            //if (Program.Settings.HasTriggerOrderLimit)
+            //{
+            //    var count = securitiesaccount.orderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count();
+            //    if(count > Program.Settings.TriggerOrderLimit) return false;
+            //}
+            return true;
+        }
+
 
         public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
+            var cantrade = CanTrade();
+            if (!cantrade) throw new Exception("Trading Exception:  Rules ");
+
             maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
@@ -150,7 +171,7 @@ namespace TdInterface
                 var maxRisk = double.Parse(txtRisk.Text);
 
                 ulong orderKey = 0;
-                Order triggerOrder= null;
+                Order triggerOrder = null;
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
@@ -439,7 +460,7 @@ namespace TdInterface
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
 
-                    if (_activePosition != null && (activeQuantity - quantity) !=  0)
+                    if (_activePosition != null && (activeQuantity - quantity) != 0)
                     {
                         var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                         await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
@@ -578,7 +599,7 @@ namespace TdInterface
                         {
                             oneToOne = stockQuote.lastPrice - (stop - stockQuote.lastPrice);
                         }
-                       SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
+                        SafeUpdateTextBox(txtOneToOne, oneToOne.ToString("0.00"));
                     }
                 }
             }
@@ -858,6 +879,7 @@ namespace TdInterface
                     try
                     {
                         SafeUpdateTextBox(txtPnL, Securitiesaccount.DailyPnL.ToString("#.##"));
+                        SafeUpdateTextBox(txtOrderCoount, Securitiesaccount.orderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count().ToString());
                     }
                     catch (Exception ex)
                     {
@@ -888,9 +910,9 @@ namespace TdInterface
             //    e.SuppressKeyPress = true;
             //}
             //else
-            if(e.Alt && e.KeyCode == Keys.R) 
+            if (e.Alt && e.KeyCode == Keys.R)
             {
-                e.SuppressKeyPress = false; 
+                e.SuppressKeyPress = false;
                 e.Handled = false;
             }
 
@@ -949,7 +971,7 @@ namespace TdInterface
             //}
         }
 
-        
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             ApplySettings();
@@ -1011,7 +1033,7 @@ namespace TdInterface
         {
             ApplySettings();
         }
-        
+
         private void SetButtonsState()
         {
             bool isLimitValid = validateDecimalTextBox(txtLimit) || validateDecimalTextBox(txtLimitOffset);
@@ -1131,7 +1153,7 @@ namespace TdInterface
         #endregion
 
         #region Timers
-//TODO: NOT SURE WE STILL NEED THIS.  Since we have an observable and everytime there is ACCT_Activity we call get securities, this is probably obsolete.  Look to remove.
+        //TODO: NOT SURE WE STILL NEED THIS.  Since we have an observable and everytime there is ACCT_Activity we call get securities, this is probably obsolete.  Look to remove.
         private async void timerGetSecuritiesAccount_Tick(object sender, EventArgs e)
         {
             _ = await GetSecuritiesaccountAsync();

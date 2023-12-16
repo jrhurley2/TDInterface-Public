@@ -83,6 +83,45 @@ namespace TdInterface
             }
         }
 
+
+        // Declare a list of StockPreference objects
+        private static List<StockPreference> _stockPreferences = new List<StockPreference>();
+        public static StockPreference GetStockPreference(string ticker)
+        {
+            if (_stockPreferences == null || ticker == null) return null;
+            return _stockPreferences.FirstOrDefault(s => s.Stock.Equals(ticker));
+        }
+
+        public static List<StockPreference> LoadStockPreferences(string fileName)
+        {
+            // Check if the file exists
+            if (File.Exists(fileName))
+            {
+                try
+                {
+                    // Read the JSON file as a string
+                    string jsonString = File.ReadAllText(fileName);
+
+                    // Deserialize the JSON string into a list of StockPreference objects
+                    _stockPreferences = JsonConvert.DeserializeObject<List<StockPreference>>(jsonString);
+                }
+                catch (Exception e)
+                {
+                    // Handle any exceptions that might occur
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            // Return the list of StockPreference objects
+            return _stockPreferences;
+        }
+
+        public static void SaveStockPreferences(List<StockPreference> stockPreferences)
+        {
+            var json = JsonConvert.SerializeObject(stockPreferences);
+            File.WriteAllText("StockPreferences.json", json);
+        }
+
         public static void SaveAccountInfo(AccountInfo accountInfo)
         {
             var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
