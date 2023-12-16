@@ -126,9 +126,6 @@ namespace TdInterface
 
         public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
-            var cantrade = CanTrade(settings);
-            if (!cantrade) throw new Exception("Trading Exception:  Rules ");
-
             maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
             var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
