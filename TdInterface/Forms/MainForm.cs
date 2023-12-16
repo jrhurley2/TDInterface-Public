@@ -106,11 +106,11 @@ namespace TdInterface
         }
 
         //public static bool CanTrade(Securitiesaccount securitiesaccount)
-        public static bool CanTrade()
+        public static bool CanTrade(Settings settings)
         {
-            if (Program.Settings.HasTimeRestrict)
+            if (settings.HasTimeRestrict)
             {
-                var time = Program.Settings.TimeRestrict.Value.TimeOfDay;
+                var time = settings.TimeRestrict.Value.TimeOfDay;
                 DateTime today = DateTime.Today;
                 DateTime newDt = today + time;
                 if (DateTime.Now < newDt) return false;
@@ -126,7 +126,7 @@ namespace TdInterface
 
         public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
-            var cantrade = CanTrade();
+            var cantrade = CanTrade(settings);
             if (!cantrade) throw new Exception("Trading Exception:  Rules ");
 
             maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
