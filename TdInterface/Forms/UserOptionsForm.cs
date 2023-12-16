@@ -30,6 +30,10 @@ namespace TdInterface
             Program.Settings.AdjustRiskNotExceedMaxLoss = chkAdjustRiskForMaxLoss.Checked;
             Program.Settings.AlwaysOnTop = chkAlwaysOnTop.Checked;
             Program.Settings.CaptureScreenshotOnOpen = chkCaptureSSOnOpen.Checked;
+            Program.Settings.HasTimeRestrict = chkTimeRestrict.Checked;
+            Program.Settings.TimeRestrict = dtPickerTimeRestrict.Value;
+            Program.Settings.HasTriggerOrderLimit = chkTriggerOrderLimit.Checked;
+            Program.Settings.TriggerOrderLimit = int.Parse(txtTriggerOrderLimit.Text);
 
             Utility.SaveSettings(Program.Settings);
             this.Close();
@@ -57,7 +61,10 @@ namespace TdInterface
             chkAdjustRiskForMaxLoss.Checked = Program.Settings.AdjustRiskNotExceedMaxLoss;
             chkAlwaysOnTop.Checked = Program.Settings.AlwaysOnTop;
             chkCaptureSSOnOpen.Checked = Program.Settings.CaptureScreenshotOnOpen;
-
+            chkTimeRestrict.Checked = Program.Settings.HasTimeRestrict;
+            if (Program.Settings.TimeRestrict != null) dtPickerTimeRestrict.Value = Program.Settings.TimeRestrict.Value;
+            chkTriggerOrderLimit.Checked = Program.Settings.HasTriggerOrderLimit;
+            txtTriggerOrderLimit.Text = Program.Settings.TriggerOrderLimit.ToString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

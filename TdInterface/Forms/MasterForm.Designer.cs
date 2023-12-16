@@ -37,18 +37,18 @@
             checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             btnFuturesCalc = new System.Windows.Forms.Button();
-            btnAMZN = new System.Windows.Forms.Button();
-            btnMSFT = new System.Windows.Forms.Button();
-            btnAMD = new System.Windows.Forms.Button();
-            btnAAPL = new System.Windows.Forms.Button();
+            btnStock3 = new System.Windows.Forms.Button();
+            btnStock5 = new System.Windows.Forms.Button();
+            btnStock2 = new System.Windows.Forms.Button();
+            btnStock1 = new System.Windows.Forms.Button();
             lblSymbol = new System.Windows.Forms.Label();
             btnNewTrade = new System.Windows.Forms.Button();
             txtSymbol = new System.Windows.Forms.TextBox();
-            btnNVDA = new System.Windows.Forms.Button();
-            btnMETA = new System.Windows.Forms.Button();
-            btnTSLA = new System.Windows.Forms.Button();
-            btnSPY = new System.Windows.Forms.Button();
-            btnQQQ = new System.Windows.Forms.Button();
+            btnStock6 = new System.Windows.Forms.Button();
+            btnStock4 = new System.Windows.Forms.Button();
+            btnStock7 = new System.Windows.Forms.Button();
+            btnStock8 = new System.Windows.Forms.Button();
+            btnStock9 = new System.Windows.Forms.Button();
             lblQuickTrade = new System.Windows.Forms.Label();
             lblQuickTradeLine = new System.Windows.Forms.Label();
             lblToolsLine = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@
             lblTrade = new System.Windows.Forms.Label();
             btnScreenshots = new System.Windows.Forms.Button();
             btnThetaForm = new System.Windows.Forms.Button();
+            stockPreferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -77,7 +78,7 @@
             // 
             // optionsToolStripMenuItem
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, accountSettingsToolStripMenuItem, checkForUpdateToolStripMenuItem, aboutToolStripMenuItem });
+            optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, accountSettingsToolStripMenuItem, stockPreferenceToolStripMenuItem, checkForUpdateToolStripMenuItem, aboutToolStripMenuItem });
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             optionsToolStripMenuItem.Text = "Options";
@@ -85,28 +86,28 @@
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // accountSettingsToolStripMenuItem
             // 
             accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             accountSettingsToolStripMenuItem.Text = "Account Settings";
             accountSettingsToolStripMenuItem.Click += accountSettingsToolStripMenuItem_Click;
             // 
             // checkForUpdateToolStripMenuItem
             // 
             checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             checkForUpdateToolStripMenuItem.Text = "Check For Update";
             checkForUpdateToolStripMenuItem.Click += checkForUpdateToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -121,53 +122,53 @@
             btnFuturesCalc.UseVisualStyleBackColor = true;
             btnFuturesCalc.Click += btnFuturesCalc_Click;
             // 
-            // btnAMZN
+            // btnStock3
             // 
-            btnAMZN.Location = new System.Drawing.Point(199, 131);
-            btnAMZN.Margin = new System.Windows.Forms.Padding(4);
-            btnAMZN.Name = "btnAMZN";
-            btnAMZN.Size = new System.Drawing.Size(86, 26);
-            btnAMZN.TabIndex = 8;
-            btnAMZN.Tag = "AMZN";
-            btnAMZN.Text = "AMZN";
-            btnAMZN.UseVisualStyleBackColor = true;
-            btnAMZN.Click += btnTicker_Click;
+            btnStock3.Location = new System.Drawing.Point(199, 131);
+            btnStock3.Margin = new System.Windows.Forms.Padding(4);
+            btnStock3.Name = "btnStock3";
+            btnStock3.Size = new System.Drawing.Size(86, 26);
+            btnStock3.TabIndex = 8;
+            btnStock3.Tag = "AMZN";
+            btnStock3.Text = "AMZN";
+            btnStock3.UseVisualStyleBackColor = true;
+            btnStock3.Click += btnTicker_Click;
             // 
-            // btnMSFT
+            // btnStock5
             // 
-            btnMSFT.Location = new System.Drawing.Point(107, 165);
-            btnMSFT.Margin = new System.Windows.Forms.Padding(4);
-            btnMSFT.Name = "btnMSFT";
-            btnMSFT.Size = new System.Drawing.Size(86, 26);
-            btnMSFT.TabIndex = 9;
-            btnMSFT.Tag = "MSFT";
-            btnMSFT.Text = "MSFT";
-            btnMSFT.UseVisualStyleBackColor = true;
-            btnMSFT.Click += btnTicker_Click;
+            btnStock5.Location = new System.Drawing.Point(107, 165);
+            btnStock5.Margin = new System.Windows.Forms.Padding(4);
+            btnStock5.Name = "btnStock5";
+            btnStock5.Size = new System.Drawing.Size(86, 26);
+            btnStock5.TabIndex = 9;
+            btnStock5.Tag = "MSFT";
+            btnStock5.Text = "MSFT";
+            btnStock5.UseVisualStyleBackColor = true;
+            btnStock5.Click += btnTicker_Click;
             // 
-            // btnAMD
+            // btnStock2
             // 
-            btnAMD.Location = new System.Drawing.Point(107, 131);
-            btnAMD.Margin = new System.Windows.Forms.Padding(4);
-            btnAMD.Name = "btnAMD";
-            btnAMD.Size = new System.Drawing.Size(86, 26);
-            btnAMD.TabIndex = 5;
-            btnAMD.Tag = "AMD";
-            btnAMD.Text = "AMD";
-            btnAMD.UseVisualStyleBackColor = true;
-            btnAMD.Click += btnTicker_Click;
+            btnStock2.Location = new System.Drawing.Point(107, 131);
+            btnStock2.Margin = new System.Windows.Forms.Padding(4);
+            btnStock2.Name = "btnStock2";
+            btnStock2.Size = new System.Drawing.Size(86, 26);
+            btnStock2.TabIndex = 5;
+            btnStock2.Tag = "AMD";
+            btnStock2.Text = "AMD";
+            btnStock2.UseVisualStyleBackColor = true;
+            btnStock2.Click += btnTicker_Click;
             // 
-            // btnAAPL
+            // btnStock1
             // 
-            btnAAPL.Location = new System.Drawing.Point(13, 131);
-            btnAAPL.Margin = new System.Windows.Forms.Padding(4);
-            btnAAPL.Name = "btnAAPL";
-            btnAAPL.Size = new System.Drawing.Size(86, 26);
-            btnAAPL.TabIndex = 4;
-            btnAAPL.Tag = "AAPL";
-            btnAAPL.Text = "AAPL";
-            btnAAPL.UseVisualStyleBackColor = true;
-            btnAAPL.Click += btnTicker_Click;
+            btnStock1.Location = new System.Drawing.Point(13, 131);
+            btnStock1.Margin = new System.Windows.Forms.Padding(4);
+            btnStock1.Name = "btnStock1";
+            btnStock1.Size = new System.Drawing.Size(86, 26);
+            btnStock1.TabIndex = 4;
+            btnStock1.Tag = "AAPL";
+            btnStock1.Text = "AAPL";
+            btnStock1.UseVisualStyleBackColor = true;
+            btnStock1.Click += btnTicker_Click;
             // 
             // lblSymbol
             // 
@@ -199,65 +200,65 @@
             txtSymbol.Size = new System.Drawing.Size(86, 26);
             txtSymbol.TabIndex = 2;
             // 
-            // btnNVDA
+            // btnStock6
             // 
-            btnNVDA.Location = new System.Drawing.Point(201, 165);
-            btnNVDA.Margin = new System.Windows.Forms.Padding(4);
-            btnNVDA.Name = "btnNVDA";
-            btnNVDA.Size = new System.Drawing.Size(86, 26);
-            btnNVDA.TabIndex = 10;
-            btnNVDA.Tag = "NVDA";
-            btnNVDA.Text = "NVDA";
-            btnNVDA.UseVisualStyleBackColor = true;
-            btnNVDA.Click += btnTicker_Click;
+            btnStock6.Location = new System.Drawing.Point(201, 165);
+            btnStock6.Margin = new System.Windows.Forms.Padding(4);
+            btnStock6.Name = "btnStock6";
+            btnStock6.Size = new System.Drawing.Size(86, 26);
+            btnStock6.TabIndex = 10;
+            btnStock6.Tag = "NVDA";
+            btnStock6.Text = "NVDA";
+            btnStock6.UseVisualStyleBackColor = true;
+            btnStock6.Click += btnTicker_Click;
             // 
-            // btnMETA
+            // btnStock4
             // 
-            btnMETA.Location = new System.Drawing.Point(13, 165);
-            btnMETA.Margin = new System.Windows.Forms.Padding(4);
-            btnMETA.Name = "btnMETA";
-            btnMETA.Size = new System.Drawing.Size(86, 26);
-            btnMETA.TabIndex = 11;
-            btnMETA.Tag = "META";
-            btnMETA.Text = "META";
-            btnMETA.UseVisualStyleBackColor = true;
-            btnMETA.Click += btnTicker_Click;
+            btnStock4.Location = new System.Drawing.Point(13, 165);
+            btnStock4.Margin = new System.Windows.Forms.Padding(4);
+            btnStock4.Name = "btnStock4";
+            btnStock4.Size = new System.Drawing.Size(86, 26);
+            btnStock4.TabIndex = 11;
+            btnStock4.Tag = "META";
+            btnStock4.Text = "META";
+            btnStock4.UseVisualStyleBackColor = true;
+            btnStock4.Click += btnTicker_Click;
             // 
-            // btnTSLA
+            // btnStock7
             // 
-            btnTSLA.Location = new System.Drawing.Point(13, 199);
-            btnTSLA.Margin = new System.Windows.Forms.Padding(4);
-            btnTSLA.Name = "btnTSLA";
-            btnTSLA.Size = new System.Drawing.Size(86, 26);
-            btnTSLA.TabIndex = 12;
-            btnTSLA.Tag = "TSLA";
-            btnTSLA.Text = "TSLA";
-            btnTSLA.UseVisualStyleBackColor = true;
-            btnTSLA.Click += btnTicker_Click;
+            btnStock7.Location = new System.Drawing.Point(13, 199);
+            btnStock7.Margin = new System.Windows.Forms.Padding(4);
+            btnStock7.Name = "btnStock7";
+            btnStock7.Size = new System.Drawing.Size(86, 26);
+            btnStock7.TabIndex = 12;
+            btnStock7.Tag = "TSLA";
+            btnStock7.Text = "TSLA";
+            btnStock7.UseVisualStyleBackColor = true;
+            btnStock7.Click += btnTicker_Click;
             // 
-            // btnSPY
+            // btnStock8
             // 
-            btnSPY.Location = new System.Drawing.Point(107, 199);
-            btnSPY.Margin = new System.Windows.Forms.Padding(4);
-            btnSPY.Name = "btnSPY";
-            btnSPY.Size = new System.Drawing.Size(86, 26);
-            btnSPY.TabIndex = 13;
-            btnSPY.Tag = "SPY";
-            btnSPY.Text = "SPY";
-            btnSPY.UseVisualStyleBackColor = true;
-            btnSPY.Click += btnTicker_Click;
+            btnStock8.Location = new System.Drawing.Point(107, 199);
+            btnStock8.Margin = new System.Windows.Forms.Padding(4);
+            btnStock8.Name = "btnStock8";
+            btnStock8.Size = new System.Drawing.Size(86, 26);
+            btnStock8.TabIndex = 13;
+            btnStock8.Tag = "SPY";
+            btnStock8.Text = "SPY";
+            btnStock8.UseVisualStyleBackColor = true;
+            btnStock8.Click += btnTicker_Click;
             // 
-            // btnQQQ
+            // btnStock9
             // 
-            btnQQQ.Location = new System.Drawing.Point(201, 199);
-            btnQQQ.Margin = new System.Windows.Forms.Padding(4);
-            btnQQQ.Name = "btnQQQ";
-            btnQQQ.Size = new System.Drawing.Size(86, 26);
-            btnQQQ.TabIndex = 14;
-            btnQQQ.Tag = "QQQ";
-            btnQQQ.Text = "QQQ";
-            btnQQQ.UseVisualStyleBackColor = true;
-            btnQQQ.Click += btnTicker_Click;
+            btnStock9.Location = new System.Drawing.Point(201, 199);
+            btnStock9.Margin = new System.Windows.Forms.Padding(4);
+            btnStock9.Name = "btnStock9";
+            btnStock9.Size = new System.Drawing.Size(86, 26);
+            btnStock9.TabIndex = 14;
+            btnStock9.Tag = "QQQ";
+            btnStock9.Text = "QQQ";
+            btnStock9.UseVisualStyleBackColor = true;
+            btnStock9.Click += btnTicker_Click;
             // 
             // lblQuickTrade
             // 
@@ -331,6 +332,13 @@
             btnThetaForm.UseVisualStyleBackColor = true;
             btnThetaForm.Click += btnThetaForm_Click;
             // 
+            // stockPreferenceToolStripMenuItem
+            // 
+            stockPreferenceToolStripMenuItem.Name = "stockPreferenceToolStripMenuItem";
+            stockPreferenceToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            stockPreferenceToolStripMenuItem.Text = "Stock Preference";
+            stockPreferenceToolStripMenuItem.Click += stockPreferenceToolStripMenuItem_Click;
+            // 
             // MasterForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -344,18 +352,18 @@
             Controls.Add(lblTools);
             Controls.Add(lblQuickTradeLine);
             Controls.Add(lblQuickTrade);
-            Controls.Add(btnQQQ);
-            Controls.Add(btnSPY);
-            Controls.Add(btnTSLA);
-            Controls.Add(btnMETA);
-            Controls.Add(btnNVDA);
-            Controls.Add(btnAMD);
-            Controls.Add(btnAAPL);
+            Controls.Add(btnStock9);
+            Controls.Add(btnStock8);
+            Controls.Add(btnStock7);
+            Controls.Add(btnStock4);
+            Controls.Add(btnStock6);
+            Controls.Add(btnStock2);
+            Controls.Add(btnStock1);
             Controls.Add(btnNewTrade);
             Controls.Add(txtSymbol);
-            Controls.Add(btnMSFT);
+            Controls.Add(btnStock5);
             Controls.Add(lblSymbol);
-            Controls.Add(btnAMZN);
+            Controls.Add(btnStock3);
             Controls.Add(btnFuturesCalc);
             Controls.Add(menuStrip1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -378,18 +386,18 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btnFuturesCalc;
-        private System.Windows.Forms.Button btnAMZN;
-        private System.Windows.Forms.Button btnMSFT;
-        private System.Windows.Forms.Button btnAMD;
-        private System.Windows.Forms.Button btnAAPL;
+        private System.Windows.Forms.Button btnStock3;
+        private System.Windows.Forms.Button btnStock5;
+        private System.Windows.Forms.Button btnStock2;
+        private System.Windows.Forms.Button btnStock1;
         private System.Windows.Forms.Label lblSymbol;
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.Button btnNewTrade;
-        private System.Windows.Forms.Button btnNVDA;
-        private System.Windows.Forms.Button btnMETA;
-        private System.Windows.Forms.Button btnTSLA;
-        private System.Windows.Forms.Button btnSPY;
-        private System.Windows.Forms.Button btnQQQ;
+        private System.Windows.Forms.Button btnStock6;
+        private System.Windows.Forms.Button btnStock4;
+        private System.Windows.Forms.Button btnStock7;
+        private System.Windows.Forms.Button btnStock8;
+        private System.Windows.Forms.Button btnStock9;
         private System.Windows.Forms.Label lblQuickTrade;
         private System.Windows.Forms.Label lblQuickTradeLine;
         private System.Windows.Forms.Label lblToolsLine;
@@ -401,5 +409,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private System.Windows.Forms.Button btnThetaForm;
+        private System.Windows.Forms.ToolStripMenuItem stockPreferenceToolStripMenuItem;
     }
 }

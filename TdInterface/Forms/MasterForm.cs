@@ -24,6 +24,11 @@ namespace TdInterface
 
         private IBrokerage _broker;
 
+        public const int NumberStockButtons = 9;
+        public Button[] StockButtons = new Button[NumberStockButtons];
+
+
+
         public MasterForm()
         {
             try
@@ -45,6 +50,26 @@ namespace TdInterface
                 if (accountInfo != null)
                 {
                     _broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                }
+                StockButtons = new Button[] { btnStock1,
+                                              btnStock2,
+                                              btnStock3,
+                                              btnStock4,
+                                              btnStock5,
+                                              btnStock6,
+                                              btnStock7,
+                                              btnStock8,
+                                              btnStock9 };
+
+                var stockPreferences = Utility.LoadStockPreferences("StockPreferences.json");
+
+                if (stockPreferences != null)
+                {
+                    for (int i = 0; i < stockPreferences.Count; i++)
+                    {
+                        StockButtons[i].Tag = stockPreferences[i].Stock.ToUpper();
+                        StockButtons[i].Text = stockPreferences[i].Stock.ToUpper();
+                    }
                 }
 
                 Login().ConfigureAwait(false);
@@ -235,5 +260,11 @@ namespace TdInterface
             }
         }
 
+        private void stockPreferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var stockPreferenceForm = new StockPreferenceForm();
+            stockPreferenceForm.Show();
+
+        }
     }
 }

@@ -31,693 +31,716 @@ namespace TdInterface
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.btnBuyMrkTriggerOco = new System.Windows.Forms.Button();
-            this.txtSymbol = new System.Windows.Forms.TextBox();
-            this.lblSymbol = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtRisk = new System.Windows.Forms.TextBox();
-            this.btnSellMrkTriggerOco = new System.Windows.Forms.Button();
-            this.txtLastPrice = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtStop = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.txtLastError = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnSellLmtTriggerOco = new System.Windows.Forms.Button();
-            this.btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
-            this.btnCancelAll = new System.Windows.Forms.Button();
-            this.txtStopToClose = new System.Windows.Forms.TextBox();
-            this.btnBreakEven = new System.Windows.Forms.Button();
-            this.txtAveragePrice = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtShares = new System.Windows.Forms.TextBox();
-            this.lblShares = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtBid = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtAsk = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtLimit = new System.Windows.Forms.TextBox();
-            this.chkTradeShares = new System.Windows.Forms.CheckBox();
-            this.txtHeartBeat = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtConnectionStatus = new System.Windows.Forms.TextBox();
-            this.lblConnectionStatus = new System.Windows.Forms.Label();
-            this.txtLimitOffset = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtRValue = new System.Windows.Forms.TextBox();
-            this.txtPnL = new System.Windows.Forms.TextBox();
-            this.lblPnL = new System.Windows.Forms.Label();
-            this.timerGetSecuritiesAccount = new System.Windows.Forms.Timer(this.components);
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtOneToOne = new System.Windows.Forms.TextBox();
-            this.chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtMoveStop = new System.Windows.Forms.Label();
-            this.rbExitMarket = new System.Windows.Forms.RadioButton();
-            this.rbExitBidAsk = new System.Windows.Forms.RadioButton();
-            this.btnExit33 = new System.Windows.Forms.Button();
-            this.btnExit50 = new System.Windows.Forms.Button();
-            this.btnExit25 = new System.Windows.Forms.Button();
-            this.btnExit100 = new System.Windows.Forms.Button();
-            this.btnExit10 = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.btnScreenshot = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            btnBuyMrkTriggerOco = new System.Windows.Forms.Button();
+            txtSymbol = new System.Windows.Forms.TextBox();
+            lblSymbol = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            txtRisk = new System.Windows.Forms.TextBox();
+            btnSellMrkTriggerOco = new System.Windows.Forms.Button();
+            txtLastPrice = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            txtStop = new System.Windows.Forms.TextBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            txtLastError = new System.Windows.Forms.TextBox();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            btnSellLmtTriggerOco = new System.Windows.Forms.Button();
+            btnBuyLmtTriggerOco = new System.Windows.Forms.Button();
+            btnCancelAll = new System.Windows.Forms.Button();
+            txtStopToClose = new System.Windows.Forms.TextBox();
+            btnBreakEven = new System.Windows.Forms.Button();
+            txtAveragePrice = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            txtShares = new System.Windows.Forms.TextBox();
+            lblShares = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            txtBid = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
+            txtAsk = new System.Windows.Forms.TextBox();
+            label7 = new System.Windows.Forms.Label();
+            txtLimit = new System.Windows.Forms.TextBox();
+            chkTradeShares = new System.Windows.Forms.CheckBox();
+            txtHeartBeat = new System.Windows.Forms.TextBox();
+            label8 = new System.Windows.Forms.Label();
+            txtConnectionStatus = new System.Windows.Forms.TextBox();
+            lblConnectionStatus = new System.Windows.Forms.Label();
+            txtLimitOffset = new System.Windows.Forms.TextBox();
+            label9 = new System.Windows.Forms.Label();
+            txtRValue = new System.Windows.Forms.TextBox();
+            txtPnL = new System.Windows.Forms.TextBox();
+            lblPnL = new System.Windows.Forms.Label();
+            timerGetSecuritiesAccount = new System.Windows.Forms.Timer(components);
+            label10 = new System.Windows.Forms.Label();
+            txtOneToOne = new System.Windows.Forms.TextBox();
+            chkDisableFirstTarget = new System.Windows.Forms.CheckBox();
+            label11 = new System.Windows.Forms.Label();
+            txtMoveStop = new System.Windows.Forms.Label();
+            rbExitMarket = new System.Windows.Forms.RadioButton();
+            rbExitBidAsk = new System.Windows.Forms.RadioButton();
+            btnExit33 = new System.Windows.Forms.Button();
+            btnExit50 = new System.Windows.Forms.Button();
+            btnExit25 = new System.Windows.Forms.Button();
+            btnExit100 = new System.Windows.Forms.Button();
+            btnExit10 = new System.Windows.Forms.Button();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            lblVersion = new System.Windows.Forms.Label();
+            btnScreenshot = new System.Windows.Forms.Button();
+            label12 = new System.Windows.Forms.Label();
+            txtOrderCoount = new System.Windows.Forms.TextBox();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            SuspendLayout();
             // 
             // btnBuyMrkTriggerOco
             // 
-            this.btnBuyMrkTriggerOco.AutoSize = true;
-            this.btnBuyMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyMrkTriggerOco.Location = new System.Drawing.Point(6, 23);
-            this.btnBuyMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
-            this.btnBuyMrkTriggerOco.Size = new System.Drawing.Size(174, 52);
-            this.btnBuyMrkTriggerOco.TabIndex = 0;
-            this.btnBuyMrkTriggerOco.TabStop = false;
-            this.btnBuyMrkTriggerOco.Text = "Buy Market";
-            this.btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
-            this.btnBuyMrkTriggerOco.Click += new System.EventHandler(this.btnBuyMrkTriggerOco_Click);
+            btnBuyMrkTriggerOco.AutoSize = true;
+            btnBuyMrkTriggerOco.BackColor = Color.FromArgb(0, 194, 136);
+            btnBuyMrkTriggerOco.Location = new Point(6, 23);
+            btnBuyMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnBuyMrkTriggerOco.Name = "btnBuyMrkTriggerOco";
+            btnBuyMrkTriggerOco.Size = new Size(174, 52);
+            btnBuyMrkTriggerOco.TabIndex = 0;
+            btnBuyMrkTriggerOco.TabStop = false;
+            btnBuyMrkTriggerOco.Text = "Buy Market";
+            btnBuyMrkTriggerOco.UseVisualStyleBackColor = false;
+            btnBuyMrkTriggerOco.Click += btnBuyMrkTriggerOco_Click;
             // 
             // txtSymbol
             // 
-            this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtSymbol.Location = new System.Drawing.Point(12, 28);
-            this.txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(87, 26);
-            this.txtSymbol.TabIndex = 0;
-            this.txtSymbol.Enter += new System.EventHandler(this.txtSymbol_Enter);
-            this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
-            this.txtSymbol.Leave += new System.EventHandler(this.txtSymbol_Leave);
-            this.txtSymbol.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtSymbol_Enter);
+            txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            txtSymbol.Location = new Point(12, 28);
+            txtSymbol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtSymbol.Name = "txtSymbol";
+            txtSymbol.Size = new Size(87, 26);
+            txtSymbol.TabIndex = 0;
+            txtSymbol.Enter += txtSymbol_Enter;
+            txtSymbol.KeyPress += txtSymbol_KeyPress;
+            txtSymbol.Leave += txtSymbol_Leave;
+            txtSymbol.MouseUp += txtSymbol_Enter;
             // 
             // lblSymbol
             // 
-            this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Location = new System.Drawing.Point(12, 9);
-            this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new System.Drawing.Size(54, 19);
-            this.lblSymbol.TabIndex = 8;
-            this.lblSymbol.Text = "Symbol";
+            lblSymbol.AutoSize = true;
+            lblSymbol.Location = new Point(12, 9);
+            lblSymbol.Name = "lblSymbol";
+            lblSymbol.Size = new Size(59, 20);
+            lblSymbol.TabIndex = 8;
+            lblSymbol.Text = "Symbol";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(291, 74);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 19);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Risk";
+            label1.AutoSize = true;
+            label1.Location = new Point(291, 74);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 20);
+            label1.TabIndex = 24;
+            label1.Text = "Risk";
             // 
             // txtRisk
             // 
-            this.txtRisk.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRisk.Location = new System.Drawing.Point(291, 93);
-            this.txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtRisk.Name = "txtRisk";
-            this.txtRisk.Size = new System.Drawing.Size(87, 34);
-            this.txtRisk.TabIndex = 4;
-            this.txtRisk.Text = "5";
-            this.txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtRisk.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtRisk.Location = new Point(291, 93);
+            txtRisk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtRisk.Name = "txtRisk";
+            txtRisk.Size = new Size(87, 34);
+            txtRisk.TabIndex = 4;
+            txtRisk.Text = "5";
+            txtRisk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSellMrkTriggerOco
             // 
-            this.btnSellMrkTriggerOco.AutoSize = true;
-            this.btnSellMrkTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellMrkTriggerOco.Location = new System.Drawing.Point(6, 85);
-            this.btnSellMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
-            this.btnSellMrkTriggerOco.Size = new System.Drawing.Size(174, 51);
-            this.btnSellMrkTriggerOco.TabIndex = 2;
-            this.btnSellMrkTriggerOco.TabStop = false;
-            this.btnSellMrkTriggerOco.Text = "Sell Market";
-            this.btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
-            this.btnSellMrkTriggerOco.Click += new System.EventHandler(this.btnSellMrkTriggerOco_Click);
+            btnSellMrkTriggerOco.AutoSize = true;
+            btnSellMrkTriggerOco.BackColor = Color.FromArgb(255, 82, 109);
+            btnSellMrkTriggerOco.Location = new Point(6, 85);
+            btnSellMrkTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnSellMrkTriggerOco.Name = "btnSellMrkTriggerOco";
+            btnSellMrkTriggerOco.Size = new Size(174, 51);
+            btnSellMrkTriggerOco.TabIndex = 2;
+            btnSellMrkTriggerOco.TabStop = false;
+            btnSellMrkTriggerOco.Text = "Sell Market";
+            btnSellMrkTriggerOco.UseVisualStyleBackColor = false;
+            btnSellMrkTriggerOco.Click += btnSellMrkTriggerOco_Click;
             // 
             // txtLastPrice
             // 
-            this.txtLastPrice.Location = new System.Drawing.Point(105, 28);
-            this.txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtLastPrice.Name = "txtLastPrice";
-            this.txtLastPrice.ReadOnly = true;
-            this.txtLastPrice.Size = new System.Drawing.Size(87, 26);
-            this.txtLastPrice.TabIndex = 10;
-            this.txtLastPrice.TabStop = false;
-            this.txtLastPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtLastPrice.Location = new Point(105, 28);
+            txtLastPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtLastPrice.Name = "txtLastPrice";
+            txtLastPrice.ReadOnly = true;
+            txtLastPrice.Size = new Size(87, 26);
+            txtLastPrice.TabIndex = 10;
+            txtLastPrice.TabStop = false;
+            txtLastPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 19);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Stop";
+            label2.AutoSize = true;
+            label2.Location = new Point(14, 74);
+            label2.Name = "label2";
+            label2.Size = new Size(40, 20);
+            label2.TabIndex = 21;
+            label2.Text = "Stop";
             // 
             // txtStop
             // 
-            this.txtStop.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtStop.Location = new System.Drawing.Point(12, 93);
-            this.txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtStop.Name = "txtStop";
-            this.txtStop.Size = new System.Drawing.Size(85, 34);
-            this.txtStop.TabIndex = 1;
-            this.txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtStop.Leave += new System.EventHandler(this.txtWithValidation_Leave);
+            txtStop.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtStop.Location = new Point(12, 93);
+            txtStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtStop.Name = "txtStop";
+            txtStop.Size = new Size(85, 34);
+            txtStop.TabIndex = 1;
+            txtStop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtStop.Leave += txtWithValidation_Leave;
             // 
             // txtLastError
             // 
-            this.txtLastError.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLastError.Location = new System.Drawing.Point(390, 315);
-            this.txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtLastError.Multiline = true;
-            this.txtLastError.Name = "txtLastError";
-            this.txtLastError.ReadOnly = true;
-            this.txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLastError.Size = new System.Drawing.Size(291, 108);
-            this.txtLastError.TabIndex = 34;
-            this.txtLastError.TabStop = false;
-            this.txtLastError.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtLastError_MouseDoubleClick);
+            txtLastError.BackColor = SystemColors.Control;
+            txtLastError.Location = new Point(390, 315);
+            txtLastError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtLastError.Multiline = true;
+            txtLastError.Name = "txtLastError";
+            txtLastError.ReadOnly = true;
+            txtLastError.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            txtLastError.Size = new Size(291, 108);
+            txtLastError.TabIndex = 34;
+            txtLastError.TabStop = false;
+            txtLastError.MouseDoubleClick += txtLastError_MouseDoubleClick;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnSellLmtTriggerOco);
-            this.groupBox1.Controls.Add(this.btnBuyLmtTriggerOco);
-            this.groupBox1.Controls.Add(this.btnSellMrkTriggerOco);
-            this.groupBox1.Controls.Add(this.btnBuyMrkTriggerOco);
-            this.groupBox1.Location = new System.Drawing.Point(12, 164);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(362, 144);
-            this.groupBox1.TabIndex = 29;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " To Open";
+            groupBox1.Controls.Add(btnSellLmtTriggerOco);
+            groupBox1.Controls.Add(btnBuyLmtTriggerOco);
+            groupBox1.Controls.Add(btnSellMrkTriggerOco);
+            groupBox1.Controls.Add(btnBuyMrkTriggerOco);
+            groupBox1.Location = new Point(12, 164);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(362, 144);
+            groupBox1.TabIndex = 29;
+            groupBox1.TabStop = false;
+            groupBox1.Text = " To Open";
             // 
             // btnSellLmtTriggerOco
             // 
-            this.btnSellLmtTriggerOco.AutoSize = true;
-            this.btnSellLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(82)))), ((int)(((byte)(109)))));
-            this.btnSellLmtTriggerOco.Location = new System.Drawing.Point(186, 83);
-            this.btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
-            this.btnSellLmtTriggerOco.Size = new System.Drawing.Size(170, 51);
-            this.btnSellLmtTriggerOco.TabIndex = 3;
-            this.btnSellLmtTriggerOco.TabStop = false;
-            this.btnSellLmtTriggerOco.Text = "Sell Limit";
-            this.btnSellLmtTriggerOco.UseVisualStyleBackColor = false;
-            this.btnSellLmtTriggerOco.Click += new System.EventHandler(this.btnSellLmtTriggerOco_Click);
+            btnSellLmtTriggerOco.AutoSize = true;
+            btnSellLmtTriggerOco.BackColor = Color.FromArgb(255, 82, 109);
+            btnSellLmtTriggerOco.Location = new Point(186, 83);
+            btnSellLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnSellLmtTriggerOco.Name = "btnSellLmtTriggerOco";
+            btnSellLmtTriggerOco.Size = new Size(170, 51);
+            btnSellLmtTriggerOco.TabIndex = 3;
+            btnSellLmtTriggerOco.TabStop = false;
+            btnSellLmtTriggerOco.Text = "Sell Limit";
+            btnSellLmtTriggerOco.UseVisualStyleBackColor = false;
+            btnSellLmtTriggerOco.Click += btnSellLmtTriggerOco_Click;
             // 
             // btnBuyLmtTriggerOco
             // 
-            this.btnBuyLmtTriggerOco.AutoSize = true;
-            this.btnBuyLmtTriggerOco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(194)))), ((int)(((byte)(136)))));
-            this.btnBuyLmtTriggerOco.Location = new System.Drawing.Point(186, 23);
-            this.btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
-            this.btnBuyLmtTriggerOco.Size = new System.Drawing.Size(170, 52);
-            this.btnBuyLmtTriggerOco.TabIndex = 1;
-            this.btnBuyLmtTriggerOco.TabStop = false;
-            this.btnBuyLmtTriggerOco.Text = "Buy Limit";
-            this.btnBuyLmtTriggerOco.UseVisualStyleBackColor = false;
-            this.btnBuyLmtTriggerOco.Click += new System.EventHandler(this.btnBuyLmtTriggerOco_Click);
+            btnBuyLmtTriggerOco.AutoSize = true;
+            btnBuyLmtTriggerOco.BackColor = Color.FromArgb(0, 194, 136);
+            btnBuyLmtTriggerOco.Location = new Point(186, 23);
+            btnBuyLmtTriggerOco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnBuyLmtTriggerOco.Name = "btnBuyLmtTriggerOco";
+            btnBuyLmtTriggerOco.Size = new Size(170, 52);
+            btnBuyLmtTriggerOco.TabIndex = 1;
+            btnBuyLmtTriggerOco.TabStop = false;
+            btnBuyLmtTriggerOco.Text = "Buy Limit";
+            btnBuyLmtTriggerOco.UseVisualStyleBackColor = false;
+            btnBuyLmtTriggerOco.Click += btnBuyLmtTriggerOco_Click;
             // 
             // btnCancelAll
             // 
-            this.btnCancelAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnCancelAll.Location = new System.Drawing.Point(201, 314);
-            this.btnCancelAll.Name = "btnCancelAll";
-            this.btnCancelAll.Size = new System.Drawing.Size(167, 58);
-            this.btnCancelAll.TabIndex = 31;
-            this.btnCancelAll.TabStop = false;
-            this.btnCancelAll.Text = "Cancel All";
-            this.btnCancelAll.UseVisualStyleBackColor = false;
-            this.btnCancelAll.Click += new System.EventHandler(this.btnCancelAll_Click);
+            btnCancelAll.BackColor = Color.FromArgb(179, 237, 220);
+            btnCancelAll.Location = new Point(201, 314);
+            btnCancelAll.Name = "btnCancelAll";
+            btnCancelAll.Size = new Size(167, 58);
+            btnCancelAll.TabIndex = 31;
+            btnCancelAll.TabStop = false;
+            btnCancelAll.Text = "Cancel All";
+            btnCancelAll.UseVisualStyleBackColor = false;
+            btnCancelAll.Click += btnCancelAll_Click;
             // 
             // txtStopToClose
             // 
-            this.txtStopToClose.Location = new System.Drawing.Point(18, 397);
-            this.txtStopToClose.Name = "txtStopToClose";
-            this.txtStopToClose.Size = new System.Drawing.Size(172, 26);
-            this.txtStopToClose.TabIndex = 6;
-            this.txtStopToClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtStopToClose.Leave += new System.EventHandler(this.txtWithValidation_Leave);
+            txtStopToClose.Location = new Point(18, 397);
+            txtStopToClose.Name = "txtStopToClose";
+            txtStopToClose.Size = new Size(172, 26);
+            txtStopToClose.TabIndex = 6;
+            txtStopToClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtStopToClose.Leave += txtWithValidation_Leave;
             // 
             // btnBreakEven
             // 
-            this.btnBreakEven.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(203)))), ((int)(((byte)(212)))));
-            this.btnBreakEven.Location = new System.Drawing.Point(18, 314);
-            this.btnBreakEven.Name = "btnBreakEven";
-            this.btnBreakEven.Size = new System.Drawing.Size(174, 58);
-            this.btnBreakEven.TabIndex = 30;
-            this.btnBreakEven.TabStop = false;
-            this.btnBreakEven.Text = "Stop/BE";
-            this.btnBreakEven.UseVisualStyleBackColor = false;
-            this.btnBreakEven.Click += new System.EventHandler(this.btnBreakEven_Click);
+            btnBreakEven.BackColor = Color.FromArgb(255, 203, 212);
+            btnBreakEven.Location = new Point(18, 314);
+            btnBreakEven.Name = "btnBreakEven";
+            btnBreakEven.Size = new Size(174, 58);
+            btnBreakEven.TabIndex = 30;
+            btnBreakEven.TabStop = false;
+            btnBreakEven.Text = "Stop/BE";
+            btnBreakEven.UseVisualStyleBackColor = false;
+            btnBreakEven.Click += btnBreakEven_Click;
             // 
             // txtAveragePrice
             // 
-            this.txtAveragePrice.Location = new System.Drawing.Point(390, 28);
-            this.txtAveragePrice.Name = "txtAveragePrice";
-            this.txtAveragePrice.ReadOnly = true;
-            this.txtAveragePrice.Size = new System.Drawing.Size(104, 26);
-            this.txtAveragePrice.TabIndex = 16;
-            this.txtAveragePrice.TabStop = false;
-            this.txtAveragePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtAveragePrice.Location = new Point(390, 28);
+            txtAveragePrice.Name = "txtAveragePrice";
+            txtAveragePrice.ReadOnly = true;
+            txtAveragePrice.Size = new Size(104, 26);
+            txtAveragePrice.TabIndex = 16;
+            txtAveragePrice.TabStop = false;
+            txtAveragePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(390, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 19);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Avg Price";
+            label3.AutoSize = true;
+            label3.Location = new Point(390, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(71, 20);
+            label3.TabIndex = 15;
+            label3.Text = "Avg Price";
             // 
             // txtShares
             // 
-            this.txtShares.Location = new System.Drawing.Point(500, 28);
-            this.txtShares.Name = "txtShares";
-            this.txtShares.ReadOnly = true;
-            this.txtShares.Size = new System.Drawing.Size(87, 26);
-            this.txtShares.TabIndex = 18;
-            this.txtShares.TabStop = false;
-            this.txtShares.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtShares.TextChanged += new System.EventHandler(this.txtShares_TextChanged);
+            txtShares.Location = new Point(500, 28);
+            txtShares.Name = "txtShares";
+            txtShares.ReadOnly = true;
+            txtShares.Size = new Size(87, 26);
+            txtShares.TabIndex = 18;
+            txtShares.TabStop = false;
+            txtShares.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtShares.TextChanged += txtShares_TextChanged;
             // 
             // lblShares
             // 
-            this.lblShares.AutoSize = true;
-            this.lblShares.Location = new System.Drawing.Point(505, 9);
-            this.lblShares.Name = "lblShares";
-            this.lblShares.Size = new System.Drawing.Size(49, 19);
-            this.lblShares.TabIndex = 17;
-            this.lblShares.Text = "Shares";
+            lblShares.AutoSize = true;
+            lblShares.Location = new Point(505, 9);
+            lblShares.Name = "lblShares";
+            lblShares.Size = new Size(52, 20);
+            lblShares.TabIndex = 17;
+            lblShares.Text = "Shares";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(107, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 19);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Last";
+            label4.AutoSize = true;
+            label4.Location = new Point(107, 9);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 20);
+            label4.TabIndex = 9;
+            label4.Text = "Last";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(198, 9);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 19);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Bid";
+            label5.AutoSize = true;
+            label5.Location = new Point(198, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(31, 20);
+            label5.TabIndex = 11;
+            label5.Text = "Bid";
             // 
             // txtBid
             // 
-            this.txtBid.Location = new System.Drawing.Point(198, 28);
-            this.txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtBid.Name = "txtBid";
-            this.txtBid.ReadOnly = true;
-            this.txtBid.Size = new System.Drawing.Size(87, 26);
-            this.txtBid.TabIndex = 12;
-            this.txtBid.TabStop = false;
-            this.txtBid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtBid.Location = new Point(198, 28);
+            txtBid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtBid.Name = "txtBid";
+            txtBid.ReadOnly = true;
+            txtBid.Size = new Size(87, 26);
+            txtBid.TabIndex = 12;
+            txtBid.TabStop = false;
+            txtBid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(291, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 19);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Ask";
+            label6.AutoSize = true;
+            label6.Location = new Point(291, 9);
+            label6.Name = "label6";
+            label6.Size = new Size(32, 20);
+            label6.TabIndex = 13;
+            label6.Text = "Ask";
             // 
             // txtAsk
             // 
-            this.txtAsk.Location = new System.Drawing.Point(291, 28);
-            this.txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAsk.Name = "txtAsk";
-            this.txtAsk.ReadOnly = true;
-            this.txtAsk.Size = new System.Drawing.Size(87, 26);
-            this.txtAsk.TabIndex = 14;
-            this.txtAsk.TabStop = false;
-            this.txtAsk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtAsk.Location = new Point(291, 28);
+            txtAsk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtAsk.Name = "txtAsk";
+            txtAsk.ReadOnly = true;
+            txtAsk.Size = new Size(87, 26);
+            txtAsk.TabIndex = 14;
+            txtAsk.TabStop = false;
+            txtAsk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(103, 74);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 19);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Limit";
+            label7.AutoSize = true;
+            label7.Location = new Point(103, 74);
+            label7.Name = "label7";
+            label7.Size = new Size(42, 20);
+            label7.TabIndex = 22;
+            label7.Text = "Limit";
             // 
             // txtLimit
             // 
-            this.txtLimit.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimit.Location = new System.Drawing.Point(103, 93);
-            this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(89, 34);
-            this.txtLimit.TabIndex = 2;
-            this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtLimit.Leave += new System.EventHandler(this.txtWithValidation_Leave);
+            txtLimit.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtLimit.Location = new Point(103, 93);
+            txtLimit.Name = "txtLimit";
+            txtLimit.Size = new Size(89, 34);
+            txtLimit.TabIndex = 2;
+            txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtLimit.Leave += txtWithValidation_Leave;
             // 
             // chkTradeShares
             // 
-            this.chkTradeShares.AutoSize = true;
-            this.chkTradeShares.Location = new System.Drawing.Point(310, 129);
-            this.chkTradeShares.Name = "chkTradeShares";
-            this.chkTradeShares.Size = new System.Drawing.Size(68, 23);
-            this.chkTradeShares.TabIndex = 5;
-            this.chkTradeShares.Text = "Shares";
-            this.chkTradeShares.UseVisualStyleBackColor = true;
-            this.chkTradeShares.CheckedChanged += new System.EventHandler(this.chkTradeShares_CheckedChanged);
+            chkTradeShares.AutoSize = true;
+            chkTradeShares.Location = new Point(310, 129);
+            chkTradeShares.Name = "chkTradeShares";
+            chkTradeShares.Size = new Size(74, 24);
+            chkTradeShares.TabIndex = 5;
+            chkTradeShares.Text = "Shares";
+            chkTradeShares.UseVisualStyleBackColor = true;
+            chkTradeShares.CheckedChanged += chkTradeShares_CheckedChanged;
             // 
             // txtHeartBeat
             // 
-            this.txtHeartBeat.Location = new System.Drawing.Point(396, 453);
-            this.txtHeartBeat.Name = "txtHeartBeat";
-            this.txtHeartBeat.ReadOnly = true;
-            this.txtHeartBeat.Size = new System.Drawing.Size(285, 26);
-            this.txtHeartBeat.TabIndex = 36;
-            this.txtHeartBeat.TabStop = false;
-            this.txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtHeartBeat.Location = new Point(396, 453);
+            txtHeartBeat.Name = "txtHeartBeat";
+            txtHeartBeat.ReadOnly = true;
+            txtHeartBeat.Size = new Size(285, 26);
+            txtHeartBeat.TabIndex = 36;
+            txtHeartBeat.TabStop = false;
+            txtHeartBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(396, 430);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 19);
-            this.label8.TabIndex = 35;
-            this.label8.Text = "HeartBeat";
+            label8.AutoSize = true;
+            label8.Location = new Point(396, 430);
+            label8.Name = "label8";
+            label8.Size = new Size(76, 20);
+            label8.TabIndex = 35;
+            label8.Text = "HeartBeat";
             // 
             // txtConnectionStatus
             // 
-            this.txtConnectionStatus.Location = new System.Drawing.Point(20, 453);
-            this.txtConnectionStatus.Name = "txtConnectionStatus";
-            this.txtConnectionStatus.ReadOnly = true;
-            this.txtConnectionStatus.Size = new System.Drawing.Size(318, 26);
-            this.txtConnectionStatus.TabIndex = 38;
-            this.txtConnectionStatus.TabStop = false;
+            txtConnectionStatus.Location = new Point(20, 453);
+            txtConnectionStatus.Name = "txtConnectionStatus";
+            txtConnectionStatus.ReadOnly = true;
+            txtConnectionStatus.Size = new Size(318, 26);
+            txtConnectionStatus.TabIndex = 38;
+            txtConnectionStatus.TabStop = false;
             // 
             // lblConnectionStatus
             // 
-            this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(20, 430);
-            this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(121, 19);
-            this.lblConnectionStatus.TabIndex = 37;
-            this.lblConnectionStatus.Text = "Connection Status";
+            lblConnectionStatus.AutoSize = true;
+            lblConnectionStatus.Location = new Point(20, 430);
+            lblConnectionStatus.Name = "lblConnectionStatus";
+            lblConnectionStatus.Size = new Size(128, 20);
+            lblConnectionStatus.TabIndex = 37;
+            lblConnectionStatus.Text = "Connection Status";
             // 
             // txtLimitOffset
             // 
-            this.txtLimitOffset.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtLimitOffset.Location = new System.Drawing.Point(198, 93);
-            this.txtLimitOffset.Name = "txtLimitOffset";
-            this.txtLimitOffset.Size = new System.Drawing.Size(87, 34);
-            this.txtLimitOffset.TabIndex = 3;
-            this.txtLimitOffset.Leave += new System.EventHandler(this.txtWithValidation_Leave);
+            txtLimitOffset.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtLimitOffset.Location = new Point(198, 93);
+            txtLimitOffset.Name = "txtLimitOffset";
+            txtLimitOffset.Size = new Size(87, 34);
+            txtLimitOffset.TabIndex = 3;
+            txtLimitOffset.Leave += txtWithValidation_Leave;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(594, 74);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(17, 19);
-            this.label9.TabIndex = 27;
-            this.label9.Text = "R";
+            label9.AutoSize = true;
+            label9.Location = new Point(594, 74);
+            label9.Name = "label9";
+            label9.Size = new Size(18, 20);
+            label9.TabIndex = 27;
+            label9.Text = "R";
             // 
             // txtRValue
             // 
-            this.txtRValue.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtRValue.Location = new System.Drawing.Point(594, 93);
-            this.txtRValue.Name = "txtRValue";
-            this.txtRValue.ReadOnly = true;
-            this.txtRValue.Size = new System.Drawing.Size(87, 34);
-            this.txtRValue.TabIndex = 28;
-            this.txtRValue.TabStop = false;
-            this.txtRValue.TextChanged += new System.EventHandler(this.txtRValue_TextChanged);
+            txtRValue.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtRValue.Location = new Point(594, 93);
+            txtRValue.Name = "txtRValue";
+            txtRValue.ReadOnly = true;
+            txtRValue.Size = new Size(87, 34);
+            txtRValue.TabIndex = 28;
+            txtRValue.TabStop = false;
+            txtRValue.TextChanged += txtRValue_TextChanged;
             // 
             // txtPnL
             // 
-            this.txtPnL.Enabled = false;
-            this.txtPnL.Location = new System.Drawing.Point(594, 27);
-            this.txtPnL.Name = "txtPnL";
-            this.txtPnL.ReadOnly = true;
-            this.txtPnL.Size = new System.Drawing.Size(87, 26);
-            this.txtPnL.TabIndex = 20;
-            this.txtPnL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            txtPnL.Enabled = false;
+            txtPnL.Location = new Point(594, 27);
+            txtPnL.Name = "txtPnL";
+            txtPnL.ReadOnly = true;
+            txtPnL.Size = new Size(87, 26);
+            txtPnL.TabIndex = 20;
+            txtPnL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPnL
             // 
-            this.lblPnL.AutoSize = true;
-            this.lblPnL.Location = new System.Drawing.Point(594, 9);
-            this.lblPnL.Name = "lblPnL";
-            this.lblPnL.Size = new System.Drawing.Size(32, 19);
-            this.lblPnL.TabIndex = 19;
-            this.lblPnL.Text = "PnL";
+            lblPnL.AutoSize = true;
+            lblPnL.Location = new Point(594, 9);
+            lblPnL.Name = "lblPnL";
+            lblPnL.Size = new Size(32, 20);
+            lblPnL.TabIndex = 19;
+            lblPnL.Text = "PnL";
             // 
             // timerGetSecuritiesAccount
             // 
-            this.timerGetSecuritiesAccount.Enabled = true;
-            this.timerGetSecuritiesAccount.Interval = 20000;
-            this.timerGetSecuritiesAccount.Tick += new System.EventHandler(this.timerGetSecuritiesAccount_Tick);
+            timerGetSecuritiesAccount.Enabled = true;
+            timerGetSecuritiesAccount.Interval = 20000;
+            timerGetSecuritiesAccount.Tick += timerGetSecuritiesAccount_Tick;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(390, 74);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(28, 19);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "1:1";
+            label10.AutoSize = true;
+            label10.Location = new Point(390, 74);
+            label10.Name = "label10";
+            label10.Size = new Size(28, 20);
+            label10.TabIndex = 25;
+            label10.Text = "1:1";
             // 
             // txtOneToOne
             // 
-            this.txtOneToOne.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtOneToOne.Location = new System.Drawing.Point(390, 93);
-            this.txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtOneToOne.Name = "txtOneToOne";
-            this.txtOneToOne.ReadOnly = true;
-            this.txtOneToOne.Size = new System.Drawing.Size(197, 34);
-            this.txtOneToOne.TabIndex = 26;
-            this.txtOneToOne.TabStop = false;
+            txtOneToOne.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtOneToOne.Location = new Point(390, 93);
+            txtOneToOne.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            txtOneToOne.Name = "txtOneToOne";
+            txtOneToOne.ReadOnly = true;
+            txtOneToOne.Size = new Size(197, 34);
+            txtOneToOne.TabIndex = 26;
+            txtOneToOne.TabStop = false;
             // 
             // chkDisableFirstTarget
             // 
-            this.chkDisableFirstTarget.AutoSize = true;
-            this.chkDisableFirstTarget.Location = new System.Drawing.Point(205, 374);
-            this.chkDisableFirstTarget.Name = "chkDisableFirstTarget";
-            this.chkDisableFirstTarget.Size = new System.Drawing.Size(143, 23);
-            this.chkDisableFirstTarget.TabIndex = 7;
-            this.chkDisableFirstTarget.Text = "Disable First Target";
-            this.chkDisableFirstTarget.UseVisualStyleBackColor = true;
+            chkDisableFirstTarget.AutoSize = true;
+            chkDisableFirstTarget.Location = new Point(205, 374);
+            chkDisableFirstTarget.Name = "chkDisableFirstTarget";
+            chkDisableFirstTarget.Size = new Size(157, 24);
+            chkDisableFirstTarget.TabIndex = 7;
+            chkDisableFirstTarget.Text = "Disable First Target";
+            chkDisableFirstTarget.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(198, 74);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(80, 19);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "Limit Offset";
+            label11.AutoSize = true;
+            label11.Location = new Point(198, 74);
+            label11.Name = "label11";
+            label11.Size = new Size(86, 20);
+            label11.TabIndex = 23;
+            label11.Text = "Limit Offset";
             // 
             // txtMoveStop
             // 
-            this.txtMoveStop.AutoSize = true;
-            this.txtMoveStop.Location = new System.Drawing.Point(20, 375);
-            this.txtMoveStop.Name = "txtMoveStop";
-            this.txtMoveStop.Size = new System.Drawing.Size(94, 19);
-            this.txtMoveStop.TabIndex = 32;
-            this.txtMoveStop.Text = "Move Stop To";
+            txtMoveStop.AutoSize = true;
+            txtMoveStop.Location = new Point(20, 375);
+            txtMoveStop.Name = "txtMoveStop";
+            txtMoveStop.Size = new Size(101, 20);
+            txtMoveStop.TabIndex = 32;
+            txtMoveStop.Text = "Move Stop To";
             // 
             // rbExitMarket
             // 
-            this.rbExitMarket.AutoSize = true;
-            this.rbExitMarket.Checked = true;
-            this.rbExitMarket.Location = new System.Drawing.Point(114, 23);
-            this.rbExitMarket.Name = "rbExitMarket";
-            this.rbExitMarket.Size = new System.Drawing.Size(79, 23);
-            this.rbExitMarket.TabIndex = 39;
-            this.rbExitMarket.TabStop = true;
-            this.rbExitMarket.Text = "MARKET";
-            this.rbExitMarket.UseVisualStyleBackColor = true;
+            rbExitMarket.AutoSize = true;
+            rbExitMarket.Checked = true;
+            rbExitMarket.Location = new Point(114, 23);
+            rbExitMarket.Name = "rbExitMarket";
+            rbExitMarket.Size = new Size(87, 24);
+            rbExitMarket.TabIndex = 39;
+            rbExitMarket.TabStop = true;
+            rbExitMarket.Text = "MARKET";
+            rbExitMarket.UseVisualStyleBackColor = true;
             // 
             // rbExitBidAsk
             // 
-            this.rbExitBidAsk.AutoSize = true;
-            this.rbExitBidAsk.Location = new System.Drawing.Point(199, 23);
-            this.rbExitBidAsk.Name = "rbExitBidAsk";
-            this.rbExitBidAsk.Size = new System.Drawing.Size(86, 23);
-            this.rbExitBidAsk.TabIndex = 40;
-            this.rbExitBidAsk.Text = "BID / ASK";
-            this.rbExitBidAsk.UseVisualStyleBackColor = true;
+            rbExitBidAsk.AutoSize = true;
+            rbExitBidAsk.Location = new Point(199, 23);
+            rbExitBidAsk.Name = "rbExitBidAsk";
+            rbExitBidAsk.Size = new Size(95, 24);
+            rbExitBidAsk.TabIndex = 40;
+            rbExitBidAsk.Text = "BID / ASK";
+            rbExitBidAsk.UseVisualStyleBackColor = true;
             // 
             // btnExit33
             // 
-            this.btnExit33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit33.Location = new System.Drawing.Point(120, 85);
-            this.btnExit33.Name = "btnExit33";
-            this.btnExit33.Size = new System.Drawing.Size(46, 39);
-            this.btnExit33.TabIndex = 2;
-            this.btnExit33.TabStop = false;
-            this.btnExit33.Tag = ".33";
-            this.btnExit33.Text = "33%";
-            this.btnExit33.UseVisualStyleBackColor = false;
-            this.btnExit33.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            btnExit33.BackColor = Color.FromArgb(179, 237, 220);
+            btnExit33.Location = new Point(120, 85);
+            btnExit33.Name = "btnExit33";
+            btnExit33.Size = new Size(46, 39);
+            btnExit33.TabIndex = 2;
+            btnExit33.TabStop = false;
+            btnExit33.Tag = ".33";
+            btnExit33.Text = "33%";
+            btnExit33.UseVisualStyleBackColor = false;
+            btnExit33.Click += btnExitPercentage_Click;
             // 
             // btnExit50
             // 
-            this.btnExit50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit50.Location = new System.Drawing.Point(172, 85);
-            this.btnExit50.Name = "btnExit50";
-            this.btnExit50.Size = new System.Drawing.Size(46, 39);
-            this.btnExit50.TabIndex = 3;
-            this.btnExit50.TabStop = false;
-            this.btnExit50.Tag = ".5";
-            this.btnExit50.Text = "50%";
-            this.btnExit50.UseVisualStyleBackColor = false;
-            this.btnExit50.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            btnExit50.BackColor = Color.FromArgb(179, 237, 220);
+            btnExit50.Location = new Point(172, 85);
+            btnExit50.Name = "btnExit50";
+            btnExit50.Size = new Size(46, 39);
+            btnExit50.TabIndex = 3;
+            btnExit50.TabStop = false;
+            btnExit50.Tag = ".5";
+            btnExit50.Text = "50%";
+            btnExit50.UseVisualStyleBackColor = false;
+            btnExit50.Click += btnExitPercentage_Click;
             // 
             // btnExit25
             // 
-            this.btnExit25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit25.Location = new System.Drawing.Point(68, 85);
-            this.btnExit25.Name = "btnExit25";
-            this.btnExit25.Size = new System.Drawing.Size(46, 39);
-            this.btnExit25.TabIndex = 1;
-            this.btnExit25.TabStop = false;
-            this.btnExit25.Tag = ".25";
-            this.btnExit25.Text = "25%";
-            this.btnExit25.UseVisualStyleBackColor = false;
-            this.btnExit25.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            btnExit25.BackColor = Color.FromArgb(179, 237, 220);
+            btnExit25.Location = new Point(68, 85);
+            btnExit25.Name = "btnExit25";
+            btnExit25.Size = new Size(46, 39);
+            btnExit25.TabIndex = 1;
+            btnExit25.TabStop = false;
+            btnExit25.Tag = ".25";
+            btnExit25.Text = "25%";
+            btnExit25.UseVisualStyleBackColor = false;
+            btnExit25.Click += btnExitPercentage_Click;
             // 
             // btnExit100
             // 
-            this.btnExit100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit100.Location = new System.Drawing.Point(224, 85);
-            this.btnExit100.Name = "btnExit100";
-            this.btnExit100.Size = new System.Drawing.Size(52, 39);
-            this.btnExit100.TabIndex = 4;
-            this.btnExit100.TabStop = false;
-            this.btnExit100.Tag = "1";
-            this.btnExit100.Text = "100%";
-            this.btnExit100.UseVisualStyleBackColor = false;
-            this.btnExit100.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            btnExit100.BackColor = Color.FromArgb(179, 237, 220);
+            btnExit100.Location = new Point(224, 85);
+            btnExit100.Name = "btnExit100";
+            btnExit100.Size = new Size(52, 39);
+            btnExit100.TabIndex = 4;
+            btnExit100.TabStop = false;
+            btnExit100.Tag = "1";
+            btnExit100.Text = "100%";
+            btnExit100.UseVisualStyleBackColor = false;
+            btnExit100.Click += btnExitPercentage_Click;
             // 
             // btnExit10
             // 
-            this.btnExit10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(237)))), ((int)(((byte)(220)))));
-            this.btnExit10.Location = new System.Drawing.Point(16, 85);
-            this.btnExit10.Name = "btnExit10";
-            this.btnExit10.Size = new System.Drawing.Size(46, 39);
-            this.btnExit10.TabIndex = 0;
-            this.btnExit10.TabStop = false;
-            this.btnExit10.Tag = ".1";
-            this.btnExit10.Text = "10%";
-            this.btnExit10.UseVisualStyleBackColor = false;
-            this.btnExit10.Click += new System.EventHandler(this.btnExitPercentage_Click);
+            btnExit10.BackColor = Color.FromArgb(179, 237, 220);
+            btnExit10.Location = new Point(16, 85);
+            btnExit10.Name = "btnExit10";
+            btnExit10.Size = new Size(46, 39);
+            btnExit10.TabIndex = 0;
+            btnExit10.TabStop = false;
+            btnExit10.Tag = ".1";
+            btnExit10.Text = "10%";
+            btnExit10.UseVisualStyleBackColor = false;
+            btnExit10.Click += btnExitPercentage_Click;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.rbExitBidAsk);
-            this.groupBox2.Controls.Add(this.btnExit10);
-            this.groupBox2.Controls.Add(this.rbExitMarket);
-            this.groupBox2.Controls.Add(this.btnExit100);
-            this.groupBox2.Controls.Add(this.btnExit50);
-            this.groupBox2.Controls.Add(this.btnExit25);
-            this.groupBox2.Controls.Add(this.btnExit33);
-            this.groupBox2.Location = new System.Drawing.Point(390, 164);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(291, 144);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "To Close";
+            groupBox2.Controls.Add(rbExitBidAsk);
+            groupBox2.Controls.Add(btnExit10);
+            groupBox2.Controls.Add(rbExitMarket);
+            groupBox2.Controls.Add(btnExit100);
+            groupBox2.Controls.Add(btnExit50);
+            groupBox2.Controls.Add(btnExit25);
+            groupBox2.Controls.Add(btnExit33);
+            groupBox2.Location = new Point(390, 164);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(291, 144);
+            groupBox2.TabIndex = 33;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "To Close";
             // 
             // lblVersion
             // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(280, 430);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(54, 19);
-            this.lblVersion.TabIndex = 39;
-            this.lblVersion.Text = "Version";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            lblVersion.AutoSize = true;
+            lblVersion.Location = new Point(280, 430);
+            lblVersion.Name = "lblVersion";
+            lblVersion.Size = new Size(57, 20);
+            lblVersion.TabIndex = 39;
+            lblVersion.Text = "Version";
+            lblVersion.TextAlign = ContentAlignment.MiddleRight;
             // 
             // btnScreenshot
             // 
-            this.btnScreenshot.Location = new System.Drawing.Point(344, 453);
-            this.btnScreenshot.Name = "btnScreenshot";
-            this.btnScreenshot.Size = new System.Drawing.Size(44, 26);
-            this.btnScreenshot.TabIndex = 40;
-            this.btnScreenshot.Text = "🖼️";
-            this.btnScreenshot.UseVisualStyleBackColor = true;
-            this.btnScreenshot.Click += new System.EventHandler(this.btnScreenshot_Click);
+            btnScreenshot.Location = new Point(344, 453);
+            btnScreenshot.Name = "btnScreenshot";
+            btnScreenshot.Size = new Size(44, 26);
+            btnScreenshot.TabIndex = 40;
+            btnScreenshot.Text = "🖼️";
+            btnScreenshot.UseVisualStyleBackColor = true;
+            btnScreenshot.Click += btnScreenshot_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(709, 9);
+            label12.Name = "label12";
+            label12.Size = new Size(90, 20);
+            label12.TabIndex = 41;
+            label12.Text = "Order Count";
+            // 
+            // txtOrderCoount
+            // 
+            txtOrderCoount.Enabled = false;
+            txtOrderCoount.Location = new Point(709, 32);
+            txtOrderCoount.Name = "txtOrderCoount";
+            txtOrderCoount.ReadOnly = true;
+            txtOrderCoount.Size = new Size(87, 26);
+            txtOrderCoount.TabIndex = 42;
+            txtOrderCoount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(694, 496);
-            this.Controls.Add(this.btnScreenshot);
-            this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.txtMoveStop);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.chkDisableFirstTarget);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.btnCancelAll);
-            this.Controls.Add(this.btnBreakEven);
-            this.Controls.Add(this.txtOneToOne);
-            this.Controls.Add(this.lblPnL);
-            this.Controls.Add(this.txtPnL);
-            this.Controls.Add(this.txtRValue);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtLimitOffset);
-            this.Controls.Add(this.txtStopToClose);
-            this.Controls.Add(this.lblConnectionStatus);
-            this.Controls.Add(this.txtConnectionStatus);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtHeartBeat);
-            this.Controls.Add(this.chkTradeShares);
-            this.Controls.Add(this.txtLimit);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtAsk);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBid);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.lblShares);
-            this.Controls.Add(this.txtShares);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtAveragePrice);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtLastError);
-            this.Controls.Add(this.txtStop);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtLastPrice);
-            this.Controls.Add(this.txtRisk);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblSymbol);
-            this.Controls.Add(this.txtSymbol);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.KeyPreview = true;
-            this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "EZTM - EZ Trade Manager";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 19F);
+            ClientSize = new Size(833, 496);
+            Controls.Add(txtOrderCoount);
+            Controls.Add(label12);
+            Controls.Add(btnScreenshot);
+            Controls.Add(lblVersion);
+            Controls.Add(txtMoveStop);
+            Controls.Add(label11);
+            Controls.Add(chkDisableFirstTarget);
+            Controls.Add(label10);
+            Controls.Add(btnCancelAll);
+            Controls.Add(btnBreakEven);
+            Controls.Add(txtOneToOne);
+            Controls.Add(lblPnL);
+            Controls.Add(txtPnL);
+            Controls.Add(txtRValue);
+            Controls.Add(label9);
+            Controls.Add(txtLimitOffset);
+            Controls.Add(txtStopToClose);
+            Controls.Add(lblConnectionStatus);
+            Controls.Add(txtConnectionStatus);
+            Controls.Add(label8);
+            Controls.Add(txtHeartBeat);
+            Controls.Add(chkTradeShares);
+            Controls.Add(txtLimit);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(txtAsk);
+            Controls.Add(label5);
+            Controls.Add(txtBid);
+            Controls.Add(label4);
+            Controls.Add(lblShares);
+            Controls.Add(txtShares);
+            Controls.Add(label3);
+            Controls.Add(txtAveragePrice);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
+            Controls.Add(txtLastError);
+            Controls.Add(txtStop);
+            Controls.Add(label2);
+            Controls.Add(txtLastPrice);
+            Controls.Add(txtRisk);
+            Controls.Add(label1);
+            Controls.Add(lblSymbol);
+            Controls.Add(txtSymbol);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            KeyPreview = true;
+            MaximizeBox = false;
+            Name = "MainForm";
+            Text = "EZTM - EZ Trade Manager";
+            Load += MainForm_Load;
+            Shown += MainForm_Shown;
+            KeyDown += MainForm_KeyDown;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -775,6 +798,8 @@ namespace TdInterface
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnScreenshot;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtOrderCoount;
     }
 }
 
