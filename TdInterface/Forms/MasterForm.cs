@@ -95,23 +95,12 @@ namespace TdInterface
 
                 _streamer = await _broker.GetStreamer();
 
-                timer1.Start();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
                 MessageBox.Show("Error Logging In, Clear Creds or enter account info, shut down and retry.");
-            }
-        }
-
-
-        private async void timer1_Tick(object sender, EventArgs e)
-        {
-            if (_broker.AccessTokenContainer.ExpiresIn < 100)
-            {
-                Debug.WriteLine($"timer1_tick: calling RefreshAccessToken {DateTime.Now.ToShortTimeString()}");
-                _ = await _broker.RefreshAccessToken();
             }
         }
 

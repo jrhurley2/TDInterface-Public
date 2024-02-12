@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            timer1 = new System.Windows.Forms.Timer(components);
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            stockPreferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             btnFuturesCalc = new System.Windows.Forms.Button();
@@ -57,14 +56,8 @@
             lblTrade = new System.Windows.Forms.Label();
             btnScreenshots = new System.Windows.Forms.Button();
             btnThetaForm = new System.Windows.Forms.Button();
-            stockPreferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // timer1
-            // 
-            timer1.Interval = 50000;
-            timer1.Tick += timer1_Tick;
             // 
             // menuStrip1
             // 
@@ -86,28 +79,35 @@
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // accountSettingsToolStripMenuItem
             // 
             accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
             accountSettingsToolStripMenuItem.Text = "Account Settings";
             accountSettingsToolStripMenuItem.Click += accountSettingsToolStripMenuItem_Click;
+            // 
+            // stockPreferenceToolStripMenuItem
+            // 
+            stockPreferenceToolStripMenuItem.Name = "stockPreferenceToolStripMenuItem";
+            stockPreferenceToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            stockPreferenceToolStripMenuItem.Text = "Stock Preference";
+            stockPreferenceToolStripMenuItem.Click += stockPreferenceToolStripMenuItem_Click;
             // 
             // checkForUpdateToolStripMenuItem
             // 
             checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
             checkForUpdateToolStripMenuItem.Text = "Check For Update";
             checkForUpdateToolStripMenuItem.Click += checkForUpdateToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -332,13 +332,6 @@
             btnThetaForm.UseVisualStyleBackColor = true;
             btnThetaForm.Click += btnThetaForm_Click;
             // 
-            // stockPreferenceToolStripMenuItem
-            // 
-            stockPreferenceToolStripMenuItem.Name = "stockPreferenceToolStripMenuItem";
-            stockPreferenceToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            stockPreferenceToolStripMenuItem.Text = "Stock Preference";
-            stockPreferenceToolStripMenuItem.Click += stockPreferenceToolStripMenuItem_Click;
-            // 
             // MasterForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -380,8 +373,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;

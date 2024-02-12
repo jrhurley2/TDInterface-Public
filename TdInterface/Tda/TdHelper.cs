@@ -48,8 +48,26 @@ namespace TdInterface.Tda
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
-        public TdHelper(AccountInfo ai) { AccountInfo = ai; }
+        public TdHelper(AccountInfo ai) { 
+            AccountInfo = ai;
 
+            Task.Run(CheckTokenRefresh);
+        }
+
+        private async Task CheckTokenRefresh()
+        {
+            while (true)
+            {
+                if(AccessTokenContainer.ExpiresIn < 100)
+                {
+                    Debug.WriteLine("Refreshing Access Token");
+                    await RefreshAccessToken();
+                }
+
+                // Wait for an hour before checking again
+                await Task.Delay(TimeSpan.FromMilliseconds(30000));
+            }
+        }
 
 
         private readonly object _lockSecuritiesAccount = new object();

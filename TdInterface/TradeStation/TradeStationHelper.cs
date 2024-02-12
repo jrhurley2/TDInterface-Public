@@ -105,6 +105,22 @@ namespace TdInterface.TradeStation
         {
             AccountInfo = ai;
             BaseUri = ai.TradeStationUseSimAccount ? BaseUriSim: BaseUri;
+            Task.Run(CheckTokenRefresh);
+        }
+
+        private async Task CheckTokenRefresh()
+        {
+            while (true)
+            {
+                if (AccessTokenContainer.ExpiresIn < 100)
+                {
+                    Debug.WriteLine("Refreshing Access Token");
+                    await RefreshAccessToken();
+                }
+
+                // Wait for an hour before checking again
+                await Task.Delay(TimeSpan.FromMilliseconds(30000));
+            }
         }
 
         /// <summary>
