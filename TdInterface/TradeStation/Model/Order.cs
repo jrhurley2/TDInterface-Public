@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Printing;
-using System.Security.Permissions;
-using System.Text;
 
 namespace TdInterface.TradeStation.Model
 {
@@ -42,7 +39,7 @@ namespace TdInterface.TradeStation.Model
         public List<OrderRequestOSO> OSOs { get; set; } = new List<OrderRequestOSO>();
     }
 
-    public class TimeInForceRequest 
+    public class TimeInForceRequest
     {
         public string Duration { get; set; }
     }

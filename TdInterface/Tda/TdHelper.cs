@@ -38,7 +38,7 @@ namespace TdInterface.Tda
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
         public const string routeGetTransactions = "v1/accounts/{0}/transactions";
 
-        public AccountInfo AccountInfo { get;  set; }
+        public AccountInfo AccountInfo { get; set; }
 
         private static Securitiesaccount _securitiesaccount;
         private readonly Subject<Securitiesaccount> _securitiesAccountSubject = new Subject<Securitiesaccount>();
@@ -48,7 +48,8 @@ namespace TdInterface.Tda
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
-        public TdHelper(AccountInfo ai) { 
+        public TdHelper(AccountInfo ai)
+        {
             AccountInfo = ai;
 
             Task.Run(CheckTokenRefresh);
@@ -58,7 +59,7 @@ namespace TdInterface.Tda
         {
             while (true)
             {
-                if(AccessTokenContainer.ExpiresIn < 100)
+                if (AccessTokenContainer.ExpiresIn < 100)
                 {
                     Debug.WriteLine("Refreshing Access Token");
                     await RefreshAccessToken();
@@ -94,7 +95,7 @@ namespace TdInterface.Tda
         {
             get
             {
-                if (accessTokenContainer== null)
+                if (accessTokenContainer == null)
                 {
                     accessTokenContainer = Utility.GetAccessTokenContainer(ACCESSTOKENCONTAINER);
                 }
@@ -180,7 +181,7 @@ namespace TdInterface.Tda
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
-                throw;  
+                throw;
             }
         }
 
@@ -268,7 +269,7 @@ namespace TdInterface.Tda
                     Debug.WriteLine($"{await response.Content.ReadAsStringAsync()}");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);

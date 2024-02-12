@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TdInterface.TradeStation.Model
+﻿namespace TdInterface.TradeStation.Model
 {
 
-    public class OrderResponses  
+    public class OrderResponses
     {
         public OrderResponse[] Orders { get; set; }
         public ErrorResponse[] Errors { get; set; }

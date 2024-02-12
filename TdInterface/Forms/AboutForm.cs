@@ -1,9 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
-using TdInterface.Properties;
-
-namespace TdInterface.Forms
+﻿namespace TdInterface.Forms
 {
     public partial class AboutForm : EZTMBaseForm
     {

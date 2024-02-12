@@ -1,19 +1,9 @@
-﻿using TdInterface;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using TDAmeritradeAPI.Client;
-using Websocket.Client;
-using Moq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Diagnostics;
 //using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.Tda.Model;
-using TdInterface.TradeStation.Model;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TdInterface.Tests
 {
@@ -123,7 +113,7 @@ namespace TdInterface.Tests
                 MaxLossLimitInR = 3,
                 AdjustRiskNotExceedMaxLoss = false,
             };
-           var actual = TDAOrderHelper.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
+            var actual = TDAOrderHelper.CheckMaxRisk(expectedMaxRisk, dailyPnl, settings);
         }
 
         [TestMethod()]

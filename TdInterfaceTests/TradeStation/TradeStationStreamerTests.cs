@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TdInterface.TradeStation;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TdInterface.Tda.Model;
 
 namespace TdInterface.TradeStation.Tests

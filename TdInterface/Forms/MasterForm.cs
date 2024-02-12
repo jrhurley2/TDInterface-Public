@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
-using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
 using MessageBox = System.Windows.MessageBox;
 

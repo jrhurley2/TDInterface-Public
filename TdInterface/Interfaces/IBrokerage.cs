@@ -17,7 +17,7 @@ namespace TdInterface.Interfaces
             set;
         }
 
-        public AccountInfo AccountInfo { get;  set; }
+        public AccountInfo AccountInfo { get; set; }
 
         public string LoginUri { get; }
 

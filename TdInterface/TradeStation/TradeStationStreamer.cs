@@ -120,7 +120,7 @@ namespace TdInterface.TradeStation
                     lastSecuritiesaccount = securitiesaccount;
                     _broker.Securitiesaccount = securitiesaccount;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                     Debug.WriteLine(ex.StackTrace);
@@ -131,7 +131,7 @@ namespace TdInterface.TradeStation
             }
         }
 
-        private async void ProcessStreamQuotes() 
+        private async void ProcessStreamQuotes()
         {
 
             while (true)

@@ -1,21 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using TdInterface.Tda.Model;
-using TdInterface.Model;
-using System.Drawing.Imaging;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Text.Json.Nodes;
 using System.Net;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using TdInterface.Model;
 using TdInterface.Properties;
+using TdInterface.Tda.Model;
 
 namespace TdInterface
 {
@@ -46,7 +46,7 @@ namespace TdInterface
             }
         }
 
-        public static void SaveAccessTokenContainer(string tokenFileName , AccessTokenContainer accessTokenContainer)
+        public static void SaveAccessTokenContainer(string tokenFileName, AccessTokenContainer accessTokenContainer)
         {
             var accessTokenAsString = JsonConvert.SerializeObject(accessTokenContainer);
 

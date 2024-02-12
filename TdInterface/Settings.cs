@@ -12,10 +12,10 @@ namespace TdInterface
         public bool UseBidAskOcoCalc { get; set; }
         public bool DisableFirstTargetProfitDefault { get; set; }
         public int OneRProfitPercenatage
-        { 
-            get 
-            { 
-                return _oneRProfitPercenatage == 0 ? 25 : _oneRProfitPercenatage; 
+        {
+            get
+            {
+                return _oneRProfitPercenatage == 0 ? 25 : _oneRProfitPercenatage;
             }
             set
             {
@@ -30,7 +30,7 @@ namespace TdInterface
         public bool AdjustRiskNotExceedMaxLoss { get; set; }
         public double MinimumRisk { get; set; }
         public bool SendAltPrtScrOnOpen { get; set; }
-        public bool ShowPnL { get;set; }
+        public bool ShowPnL { get; set; }
         public bool AlwaysOnTop { get; set; }
         public bool CaptureScreenshotOnOpen { get; set; }
         public int SleepBetweenReduceOrderOnClose { get; set; } = 1000;

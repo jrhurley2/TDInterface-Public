@@ -2,7 +2,7 @@
 {
     public class AccountInfo
     {
-        public bool UseTdaEquity { get;set; }
+        public bool UseTdaEquity { get; set; }
         public string TdaConsumerKey { get; set; }
 
         public bool UseTSEquity { get; set; }
