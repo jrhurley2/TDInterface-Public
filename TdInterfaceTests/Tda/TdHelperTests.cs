@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using TdInterface.Model;
-using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda.Tests
 {

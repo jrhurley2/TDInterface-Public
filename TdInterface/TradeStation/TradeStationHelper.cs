@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TdInterface.Interfaces;
 using TdInterface.Model;
-using TdInterface.Tda;
 using TdInterface.Tda.Model;
 using TdInterface.TradeStation.Model;
 
@@ -37,7 +36,7 @@ namespace TdInterface.TradeStation
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
 
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
-        
+
         public AccountInfo AccountInfo { get; set; }
 
         private static Securitiesaccount _securitiesaccount;
@@ -60,7 +59,7 @@ namespace TdInterface.TradeStation
         }
 
         public AccessTokenContainer AccessTokenContainer
-        { 
+        {
             get
             {
                 if (accessTokenContainer == null)
@@ -104,7 +103,23 @@ namespace TdInterface.TradeStation
         public TradeStationHelper(AccountInfo ai)
         {
             AccountInfo = ai;
-            BaseUri = ai.TradeStationUseSimAccount ? BaseUriSim: BaseUri;
+            BaseUri = ai.TradeStationUseSimAccount ? BaseUriSim : BaseUri;
+            Task.Run(CheckTokenRefresh);
+        }
+
+        private async Task CheckTokenRefresh()
+        {
+            while (true)
+            {
+                if (AccessTokenContainer.ExpiresIn < 100)
+                {
+                    Debug.WriteLine("Refreshing Access Token");
+                    await RefreshAccessToken();
+                }
+
+                // Wait for an hour before checking again
+                await Task.Delay(TimeSpan.FromMilliseconds(30000));
+            }
         }
 
         /// <summary>
@@ -112,7 +127,7 @@ namespace TdInterface.TradeStation
         /// </summary>
         /// <param name="authToken"></param>
         /// <returns></returns>
-        public async Task<AccessTokenContainer> GetAccessToken(string authToken) 
+        public async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
             List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
             postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
@@ -124,7 +139,7 @@ namespace TdInterface.TradeStation
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
             var rawSTring = await content.ReadAsStringAsync();
-            var request = new HttpRequestMessage(HttpMethod.Post, TokenUri) 
+            var request = new HttpRequestMessage(HttpMethod.Post, TokenUri)
             {
                 Method = HttpMethod.Post,
                 Content = content
@@ -132,7 +147,7 @@ namespace TdInterface.TradeStation
 
             var response = await _httpClient.SendAsync(request);
 
-            AccessTokenContainer  = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
             AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TradeStation;
 
             //Write the access token container, this should ahve the refresh token
@@ -153,7 +168,7 @@ namespace TdInterface.TradeStation
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
                 var rawSTring = await content.ReadAsStringAsync();
-                var request = new HttpRequestMessage(HttpMethod.Post, TokenUri) 
+                var request = new HttpRequestMessage(HttpMethod.Post, TokenUri)
                 {
                     Method = HttpMethod.Post,
                     Content = content
@@ -235,7 +250,7 @@ namespace TdInterface.TradeStation
         {
             var instruction = tdaInstruction;
 
-            switch(tdaInstruction.ToUpper())
+            switch (tdaInstruction.ToUpper())
             {
                 case "SELL_SHORT":
                     instruction = "SELLSHORT";
@@ -251,7 +266,7 @@ namespace TdInterface.TradeStation
         {
             var orderType = tdaOrderType;
 
-            switch(orderType.ToUpper())
+            switch (orderType.ToUpper())
             {
                 case "STOP":
                     orderType = "STOPMARKET";
@@ -405,14 +420,14 @@ namespace TdInterface.TradeStation
 
             var tdaPostion = new List<Tda.Model.Position>();
 
-            foreach(var postion in postionResponse.Positions)
+            foreach (var postion in postionResponse.Positions)
             {
                 tdaPostion.Add(new Tda.Model.Position()
                 {
                     averagePrice = float.Parse(postion.AveragePrice),
                     longQuantity = postion.LongShort.Equals("LONG", StringComparison.InvariantCultureIgnoreCase) ? float.Parse(postion.Quantity) : 0.0F,
                     shortQuantity = postion.LongShort.Equals("SHORT", StringComparison.InvariantCultureIgnoreCase) ? Math.Abs(float.Parse(postion.Quantity)) : 0.0F,
-                    instrument = new Instrument { symbol = postion.Symbol}
+                    instrument = new Instrument { symbol = postion.Symbol }
                 }); ;
             }
             securitiesaccount.positions = tdaPostion.ToArray();
@@ -425,11 +440,11 @@ namespace TdInterface.TradeStation
                 {
                     status = ConvertOrderStatus(order.Status),
                     orderId = order.OrderID,
-                    orderType= ConvertOrderTypeFromTradeStation(order.OrderType),
+                    orderType = ConvertOrderTypeFromTradeStation(order.OrderType),
                     stopPrice = order.StopPrice,
                     price = order.LimitPrice,
                     orderLegCollection = new List<OrderLeg> { new OrderLeg { instrument = new Instrument { symbol = order.Legs[0].Symbol } } }
-                }); 
+                });
             }
             securitiesaccount.orderStrategies = tdaOrder.ToArray();
             _securitiesAccountSubject.OnNext(securitiesaccount);
@@ -449,7 +464,7 @@ namespace TdInterface.TradeStation
                     status = "PENDING_ACTIVATION";
                     break;
                 default:
-                    status= orderStatus; 
+                    status = orderStatus;
                     break;
             }
 
@@ -481,7 +496,7 @@ namespace TdInterface.TradeStation
                     var body = await response.Content.ReadAsStringAsync();
                     accounts = Model.Account.ParseJson(body);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                 }

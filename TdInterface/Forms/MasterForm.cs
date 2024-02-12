@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;
-using TdInterface.Tda.Model;
 using TdInterface.TradeStation;
 using MessageBox = System.Windows.MessageBox;
 
@@ -95,23 +90,12 @@ namespace TdInterface
 
                 _streamer = await _broker.GetStreamer();
 
-                timer1.Start();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
                 MessageBox.Show("Error Logging In, Clear Creds or enter account info, shut down and retry.");
-            }
-        }
-
-
-        private async void timer1_Tick(object sender, EventArgs e)
-        {
-            if (_broker.AccessTokenContainer.ExpiresIn < 100)
-            {
-                Debug.WriteLine($"timer1_tick: calling RefreshAccessToken {DateTime.Now.ToShortTimeString()}");
-                _ = await _broker.RefreshAccessToken();
             }
         }
 

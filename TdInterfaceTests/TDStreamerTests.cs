@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TDAmeritradeAPI.Client;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Websocket.Client;
-using System.IO;
 
 namespace TDAmeritradeAPI.Client.Tests
 {

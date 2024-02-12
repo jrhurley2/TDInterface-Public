@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
 using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.TradeStation;
@@ -45,7 +43,7 @@ namespace TdInterface.Forms
 
         private void chkTdaEnableEquity_CheckedChanged(object sender, EventArgs e)
         {
-            if(chkTdaEnableEquity.Checked)
+            if (chkTdaEnableEquity.Checked)
             {
                 chkTsEnableEquity.Checked = false;
             }
@@ -53,7 +51,7 @@ namespace TdInterface.Forms
 
         private void chkTsEnableEquity_CheckedChanged(object sender, EventArgs e)
         {
-            if(chkTsEnableEquity.Checked)
+            if (chkTsEnableEquity.Checked)
             {
                 chkTdaEnableEquity.Checked = false;
             }

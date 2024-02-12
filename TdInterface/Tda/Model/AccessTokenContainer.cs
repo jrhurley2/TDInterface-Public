@@ -6,7 +6,7 @@ namespace TdInterface.Tda.Model
 
     public class AccessTokenContainer
     {
-        public enum EnumTokenSystem { TDA, TradeStation}
+        public enum EnumTokenSystem { TDA, TradeStation }
 
         private DateTime _tokenExpiration;
         private DateTime _refreshExpiration;

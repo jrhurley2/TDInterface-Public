@@ -202,7 +202,7 @@ namespace TdInterface
                         wVk = 0x12,
                         dwFlags = (uint)(InputSender.KeyEventF.KeyUp)
                     }
-            });  
+            });
 
         }
 

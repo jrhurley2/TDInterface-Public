@@ -158,8 +158,8 @@ namespace TdInterface.Tda
 
         public static Order GetStopOrder(List<Order> orders, string symbol)
         {
-            return orders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && 
-                                     (o.orderLegCollection != null && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.CurrentCultureIgnoreCase)) && 
+            return orders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") &&
+                                     (o.orderLegCollection != null && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.CurrentCultureIgnoreCase)) &&
                                       o.orderType == "STOP").FirstOrDefault();
         }
 

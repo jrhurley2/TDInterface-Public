@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Animation;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
 using TdInterface.Tda;

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using TdInterface.Interfaces;
@@ -76,10 +75,10 @@ namespace TdInterface.Tda
         {
             _brokerage = brokerage;
             //_userPrincipal = brokerage.GetUserPrincipals().Result;
-        //}
-        //public TDStreamer(UserPrincipal userPrincipals)
-        //{
-        //    _userPrincipal = userPrincipals;
+            //}
+            //public TDStreamer(UserPrincipal userPrincipals)
+            //{
+            //    _userPrincipal = userPrincipals;
 
             string currentPath = Directory.GetCurrentDirectory();
             string replayFolder = Path.Combine(currentPath, "replays");

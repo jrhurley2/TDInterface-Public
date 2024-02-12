@@ -38,7 +38,7 @@ namespace TdInterface
             _streamer.SubscribeFuture(txtSymbol.Text);
 
             var futureInfo = _futureInfos.Where(f => f.Symbol.ToLower() == txtSymbol.Text.ToLower()).FirstOrDefault();
-            if (futureInfo!=null)
+            if (futureInfo != null)
             {
                 txtTicksPerPoint.Text = futureInfo.TicksPerPoint.ToString("#");
                 txtTickValue.Text = futureInfo.TickValue.ToString("#.00");

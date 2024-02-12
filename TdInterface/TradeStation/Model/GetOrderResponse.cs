@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TdInterface.TradeStation.Model
+﻿namespace TdInterface.TradeStation.Model
 {
 
     public class GetOrderResponse

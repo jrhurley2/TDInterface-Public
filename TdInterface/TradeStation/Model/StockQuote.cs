@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace TdInterface.TradeStation.Model
 {
@@ -35,7 +32,8 @@ namespace TdInterface.TradeStation.Model
                 Ask = value.ToString();
             }
         }
-        public override double lastPrice {
+        public override double lastPrice
+        {
             get
             {
                 return Last != null ? double.Parse(Last) : 0.0;
