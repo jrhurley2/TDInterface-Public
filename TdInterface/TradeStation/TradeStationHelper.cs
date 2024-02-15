@@ -16,7 +16,7 @@ using TdInterface.TradeStation.Model;
 
 namespace TdInterface.TradeStation
 {
-    public class TradeStationHelper : IBrokerage
+    public class TradeStationHelper : Brokerage, IBrokerage
     {
         private string accountId;
 
@@ -64,7 +64,7 @@ namespace TdInterface.TradeStation
             {
                 if (accessTokenContainer == null)
                 {
-                    accessTokenContainer = Utility.GetAccessTokenContainer(ACCESSTOKENCONTAINER);
+                    accessTokenContainer = GetAccessTokenContainer(ACCESSTOKENCONTAINER);
                 }
                 return accessTokenContainer;
             }
@@ -147,11 +147,11 @@ namespace TdInterface.TradeStation
 
             var response = await _httpClient.SendAsync(request);
 
-            AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+            AccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
             AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TradeStation;
 
             //Write the access token container, this should ahve the refresh token
-            Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
+            SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
 
             return AccessTokenContainer;
         }
@@ -176,7 +176,7 @@ namespace TdInterface.TradeStation
 
                 var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-                var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                var newAccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
                 //Add the refresh token back as it doesn't come back with the payload.
                 newAccessTokenContainer.RefreshToken = AccessTokenContainer.RefreshToken;
 
@@ -310,7 +310,7 @@ namespace TdInterface.TradeStation
                 throw new Exception($"Error Creating Order {await response.Content.ReadAsStringAsync()} ");
             };
 
-            var orders = Utility.DeserializeJsonFromStream<OrderResponses>(await response.Content.ReadAsStreamAsync());
+            var orders = DeserializeJsonFromStream<OrderResponses>(await response.Content.ReadAsStreamAsync());
             var o = orders.Orders.OrderByDescending(o => o.OrderID).FirstOrDefault();
 
             var orderNumber = ulong.Parse(o.OrderID);

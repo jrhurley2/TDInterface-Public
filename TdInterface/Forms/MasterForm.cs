@@ -82,8 +82,8 @@ namespace TdInterface
                 {
                     var oAuthLoginForm = new OAuthLoginForm(_broker.LoginUri);
                     int num2 = (int)oAuthLoginForm.ShowDialog(this);
-                    Utility.AuthToken = oAuthLoginForm.Code;
-                    _ = await _broker.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
+                    var authToken  = oAuthLoginForm.Code;
+                    _ = await _broker.GetAccessToken(WebUtility.UrlDecode(authToken));
                 }
 
                 _ = await _broker.RefreshAccessToken();

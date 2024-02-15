@@ -16,7 +16,7 @@ using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda
 {
-    public class TdHelper : IBrokerage
+    public class TdHelper : Brokerage, IBrokerage
     {
         private string accountId;
 
@@ -97,7 +97,7 @@ namespace TdInterface.Tda
             {
                 if (accessTokenContainer == null)
                 {
-                    accessTokenContainer = Utility.GetAccessTokenContainer(ACCESSTOKENCONTAINER);
+                    accessTokenContainer = GetAccessTokenContainer(ACCESSTOKENCONTAINER);
                 }
                 return accessTokenContainer;
             }
@@ -116,7 +116,7 @@ namespace TdInterface.Tda
         {
             get
             {
-                Utility.SplitTdaConsumerKey(AccountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+                SplitTdaConsumerKey(AccountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
                 return $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
             }
         }
@@ -147,10 +147,9 @@ namespace TdInterface.Tda
         {
             try
             {
-                Debug.WriteLine($"*******8   Why are we calling this, it should only get called ever 90 or so days  Calling GetAccessToken:  {DateTime.Now.ToShortTimeString()}");
                 var accountInfo = Utility.GetAccountInfo();
 
-                Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+                SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
@@ -169,11 +168,11 @@ namespace TdInterface.Tda
 
                 var response = await _httpClient.SendAsync(request);
 
-                AccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                AccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
                 AccessTokenContainer.TokenSystem = AccessTokenContainer.EnumTokenSystem.TDA;
 
                 //Write the access token container, this should ahve the refresh token
-                Utility.SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
+                SaveAccessTokenContainer(ACCESSTOKENCONTAINER, AccessTokenContainer);
 
                 return AccessTokenContainer;
             }
@@ -192,7 +191,7 @@ namespace TdInterface.Tda
                 Debug.WriteLine($"Calling RefreshAccessToken:  {DateTime.Now.ToShortTimeString()}");
                 var accountInfo = Utility.GetAccountInfo();
 
-                Utility.SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
+                SplitTdaConsumerKey(accountInfo.TdaConsumerKey, out string consumerKey, out string redirectUri);
 
                 List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
@@ -209,7 +208,7 @@ namespace TdInterface.Tda
 
                 var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-                var newAccessTokenContainer = Utility.DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
+                var newAccessTokenContainer = DeserializeJsonFromStream<AccessTokenContainer>(await response.Content.ReadAsStreamAsync());
 
 
                 //Add the refresh token back as it doesn't come back with the payload.
@@ -288,7 +287,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var account = Utility.DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
+            var account = DeserializeJsonFromStream<List<Account>>(await response.Content.ReadAsStreamAsync());
 
             return account;
         }
@@ -359,7 +358,7 @@ namespace TdInterface.Tda
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
             var response = await _httpClient.SendAsync(request);
-            var candleList = Utility.DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
+            var candleList = DeserializeJsonFromStream<CandleList>(await response.Content.ReadAsStreamAsync());
 
             foreach (var candle in candleList.candles)
             {
@@ -470,7 +469,7 @@ namespace TdInterface.Tda
                     throw new Exception("Error retreiving UserPrincipals");
                 }
 
-                var userPrincipal = Utility.DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
+                var userPrincipal = DeserializeJsonFromStream<UserPrincipal>(await response.Content.ReadAsStreamAsync());
 
                 return userPrincipal;
             }
@@ -499,7 +498,7 @@ namespace TdInterface.Tda
                     throw new Exception("Error retreiving Streamer Subscription Keys");
                 };
 
-                var keys = Utility.DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
+                var keys = DeserializeJsonFromStream<List<SubscriptionKeys>>(await response.Content.ReadAsStreamAsync());
 
             }
             catch (Exception ex)
@@ -566,5 +565,19 @@ namespace TdInterface.Tda
             accountId = up.accounts[0].accountId;
             return new TDStreamer(this);
         }
+
+        public static void SplitTdaConsumerKey(string tdaConsumerKey, out string consumerKey, out string callback)
+        {
+            consumerKey = tdaConsumerKey;
+            callback = "http://localhost";
+            if (consumerKey.IndexOf("~") > 0)
+            {
+                var parts = consumerKey.Split('~');
+                consumerKey = parts[0];
+                callback = parts[1];
+            }
+        }
+
+
     }
 }

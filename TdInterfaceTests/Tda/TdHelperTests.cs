@@ -144,5 +144,31 @@ namespace TdInterface.Tda.Tests
            }).Verifiable();
             return handlerMock;
         }
+
+        [TestMethod()]
+        public void SplitTdaConsumerKey_ConsumerKey()
+        {
+            var expectedConsumerKey = "TDAConsumerKey";
+            var expectedRedirectUri = "http://localhost";
+
+            TdHelper.SplitTdaConsumerKey(expectedConsumerKey, out string consumerKey, out string redirectUri);
+
+            Assert.AreEqual(expectedConsumerKey, consumerKey);
+            Assert.AreEqual(expectedRedirectUri, redirectUri);
+        }
+
+        [TestMethod()]
+        public void SplitTdaConsumerKey_ConsumerKey_And_RedirectUri()
+        {
+            var expectedConsumerKey = "TDAConsumerKey";
+            var expectedRedirectUri = "http://someotheruri";
+            var accountInfoConsumerKey = $"{expectedConsumerKey}~{expectedRedirectUri}";
+
+            TdHelper.SplitTdaConsumerKey(accountInfoConsumerKey, out string consumerKey, out string redirectUri);
+
+            Assert.AreEqual(expectedConsumerKey, consumerKey);
+            Assert.AreEqual(expectedRedirectUri, redirectUri);
+        }
+
     }
 }

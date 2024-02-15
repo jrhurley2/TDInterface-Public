@@ -83,7 +83,7 @@ namespace TdInterface
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
 
-            helper.SecuritiesAccountUpdated.Subscribe(async (s) => await HandleSecuritiesAccountUpdated(s));
+            helper.SecuritiesAccountUpdated.Subscribe((s) => HandleSecuritiesAccountUpdated(s));
 
             btnBuyLmtTriggerOco.Enabled = false;
             btnBuyMrkTriggerOco.Enabled = false;
@@ -538,7 +538,7 @@ namespace TdInterface
         #endregion
 
         #region Handle Brokerage Events
-        private async Task HandleSecuritiesAccountUpdated(Securitiesaccount s)
+        private void HandleSecuritiesAccountUpdated(Securitiesaccount s)
         {
             Securitiesaccount = s;
             SetPosition();
@@ -788,7 +788,7 @@ namespace TdInterface
             }
         }
 
-        private async void HandleHeartBeat(SocketNotify notify)
+        private void HandleHeartBeat(SocketNotify notify)
         {
             SafeUpdateTextBox(txtHeartBeat, DateTime.Now.ToString());
         }
@@ -809,7 +809,7 @@ namespace TdInterface
             }
         }
 
-        private async void HandleReconnection(ReconnectionInfo reconnectionInfo)
+        private void HandleReconnection(ReconnectionInfo reconnectionInfo)
         {
             SafeUpdateTextBox(txtConnectionStatus, reconnectionInfo.Type.ToString());
         }
@@ -845,7 +845,7 @@ namespace TdInterface
 
         private void SetPosition()
         {
-            Position position = GetPosition(txtSymbol.Text.ToUpper(), Utility.AccessTokenContainer, _broker.AccountId);
+            Position position = GetPosition(txtSymbol.Text.ToUpper());
 
             if (position != null)
             {
@@ -862,8 +862,7 @@ namespace TdInterface
             }
         }
 
-        //private async Task<Position> GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
-        private Position GetPosition(string symbol, AccessTokenContainer accessTokenContainer, string accountId)
+        private Position GetPosition(string symbol)
         {
             Position position = null;
 
@@ -997,7 +996,7 @@ namespace TdInterface
 
         #region UI Event Handlers
 
-        private async void txtSymbol_Leave(object sender, EventArgs e)
+        private void txtSymbol_Leave(object sender, EventArgs e)
         {
             try
             {

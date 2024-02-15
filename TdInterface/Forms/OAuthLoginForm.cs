@@ -47,10 +47,10 @@ namespace TdInterface
                     oauthLoginForm.webView.CoreWebView2.Settings.IsStatusBarEnabled = false;
                     oauthLoginForm.webView.CoreWebView2.Navigate(loginUrl);
                 });
-                this.webView.NavigationCompleted += (EventHandler<CoreWebView2NavigationCompletedEventArgs>)(async (s, e) =>
+                this.webView.NavigationCompleted += (EventHandler<CoreWebView2NavigationCompletedEventArgs>)((s, e) =>
                 {
                     if (oauthLoginForm._autoConfirmAmeritrade)
-                        await oauthLoginForm.ProcessAutomatedAmeritradeLogin();
+                        oauthLoginForm.ProcessAutomatedAmeritradeLogin();
                     else
                         oauthLoginForm.ProcessNormalLogin();
                 });
@@ -83,7 +83,7 @@ namespace TdInterface
         }
 
 
-        private async Task ProcessAutomatedAmeritradeLogin() => this.ProcessNormalLogin();
+        private void ProcessAutomatedAmeritradeLogin() => this.ProcessNormalLogin();
 
         private async Task<string> GetHtml(string selector = null)
         {
