@@ -24,12 +24,6 @@ namespace TdInterface
         private static string SettingsFile = "Settings.json";
         private static string AccountInfoFile = "AccountInfo.json";
 
-        public static string AuthToken { get; set; }
-
-        public static AccessTokenContainer AccessTokenContainer { get; set; }
-
-        public static UserPrincipal UserPrincipal { get; set; }
-
         public static AccessTokenContainer GetAccessTokenContainer(string tokenFile)
         {
             try
@@ -230,17 +224,6 @@ namespace TdInterface
             return screenshotFullPathWithTicker;
         }
 
-        public static void SplitTdaConsumerKey(string tdaConsumerKey, out string consumerKey, out string callback)
-        {
-            consumerKey = tdaConsumerKey;
-            callback = "http://localhost";
-            if (consumerKey.IndexOf("~") > 0)
-            {
-                var parts = consumerKey.Split('~');
-                consumerKey = parts[0];
-                callback = parts[1];
-            }
-        }
 
         /// <summary>
         /// Checks GitHub for the latset release and compares it to the current version
