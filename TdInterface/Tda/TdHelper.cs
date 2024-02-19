@@ -13,12 +13,19 @@ using System.Threading.Tasks;
 using TdInterface.Interfaces;
 using TdInterface.Model;
 using TdInterface.Tda.Model;
+using Websocket.Client.Models;
+using Websocket.Client;
+using System.IO;
+using System.Reflection;
+using System.Threading;
 
 namespace TdInterface.Tda
 {
-    public class TdHelper : Brokerage, IBrokerage
+    public class TdHelper : Brokerage
     {
         private string accountId;
+
+        private StreamWriter _replayFile;
 
         public const string ACCESSTOKENCONTAINER = "tda-accesstokencontainer.json";
         public static HttpClient _httpClient = new HttpClient();
@@ -38,11 +45,11 @@ namespace TdInterface.Tda
         public const string routeGetStreamerSubscriptionKeys = "v1/userprincipals/streamersubscriptionkeys?accountIds={0}";
         public const string routeGetTransactions = "v1/accounts/{0}/transactions";
 
-        public AccountInfo AccountInfo { get; set; }
+        public override AccountInfo AccountInfo { get; set; }
 
         private static Securitiesaccount _securitiesaccount;
         private readonly Subject<Securitiesaccount> _securitiesAccountSubject = new Subject<Securitiesaccount>();
-        public IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
+        public override IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
 
 
         private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
@@ -52,8 +59,223 @@ namespace TdInterface.Tda
         {
             AccountInfo = ai;
 
-            Task.Run(CheckTokenRefresh);
+            string currentPath = Directory.GetCurrentDirectory();
+            string replayFolder = Path.Combine(currentPath, "replays");
+            if (!Directory.Exists(replayFolder))
+                Directory.CreateDirectory(replayFolder);
+
+            _replayFile = new StreamWriter($"{replayFolder}\\{DateTime.Now.ToString("yyyyMMdd-HHmmss")}replay.txt");
+            
         }
+
+
+        public override void Initialize()
+        {
+            _ = RefreshAccessToken().Result;
+            ConnectSocket();
+
+            Task.Run(CheckTokenRefresh);
+
+        }
+
+
+        private int reconnectionCount = 0;
+        private void SubscribeWebSocketMessages(UserPrincipal userPrincipals, WebsocketClient client)
+        {
+            client.DisconnectionHappened.Subscribe(dis =>
+            {
+                try
+                {
+                    _disconnectionInfo.OnNext(dis);
+                    //Debug.WriteLine($"Disconnect sleeping");
+                    //Thread.Sleep(10000);
+                    //Debug.WriteLine($"Disconnect awake");
+                    //if (reconnectionCount >= 100)
+                    //{
+                    //    Debug.WriteLine($"reconnectionCount exceeded retry.");
+                    //}
+                    //reconnectionCount++;
+
+                    //Debug.WriteLine($"DisconnectionHappened {dis.Type}");
+                    //Debug.WriteLine($"Calling ConnectSocket");
+                    //ConnectSocket();
+                    //Debug.WriteLine("Calling SubscribeQuote");
+                    //SubscribeQuote();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unable to connect {ex.Message}");
+                    Debug.WriteLine(ex);
+                }
+
+            });
+
+            client.ReconnectionHappened.Subscribe(info =>
+            {
+                Debug.WriteLine($"Reconnection happened, type: {info.Type}");
+                reconnectionCount = 0;
+                _reconnectionInfo.OnNext(info);
+            });
+
+            client.MessageReceived.Subscribe(msg =>
+            {
+                _socketNotify.OnNext(new SocketNotify());
+
+                try
+                {
+                    if (_replayFile != null)
+                        _replayFile.WriteLine(SanatizeAccountNumbers(userPrincipals, msg.Text));
+                }
+                catch
+                {
+                    Debug.WriteLine("error writing to replay file");
+                }
+
+                var v = JsonConvert.DeserializeObject<Dictionary<string, object>>(msg.Text);
+
+                if (v.ContainsKey("response"))
+                {
+                    Debug.WriteLine(msg.Text);
+                    var r = v["response"];
+                    var response = JsonConvert.DeserializeObject<List<SocketResponse>>(v["response"].ToString());
+                    var command = response[0].command;
+                    if (command == "LOGIN")
+                    {
+                        var reqs = new List<StreamerSettings.Request>();
+                        var acctAcivity = new StreamerSettings.Request
+                        {
+                            command = "SUBS",
+                            service = "ACCT_ACTIVITY",
+                            requestid = "2",
+                            account = userPrincipals.accounts[0].accountId,
+                            source = userPrincipals.streamerInfo.appId,
+                            parameters = new StreamerSettings.Parameters
+                            {
+                                keys = userPrincipals.streamerSubscriptionKeys.keys[0].key,
+                                fields = "0,1,2,3"
+                            }
+
+                        };
+
+
+                        reqs.Add(acctAcivity);
+
+                        var request = new StreamerSettings.Requests()
+                        {
+                            requests = reqs.ToArray()
+                        };
+                        var firstreq = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                        client.Send(firstreq);
+
+                        Console.WriteLine(msg);
+                    }
+                    else if (command == "SUBS")
+                    {
+                        Debug.WriteLine(msg.Text);
+                        Console.WriteLine(msg);
+                    }
+                }
+                else if (v.ContainsKey("notify"))
+                {
+                    var notifyList = JsonConvert.DeserializeObject<List<SocketNotify>>(v["notify"].ToString());
+                    foreach (var notify in notifyList)
+                    {
+                        _socketNotify.OnNext(notify);
+                    }
+                }
+                else if (v.ContainsKey("data"))
+                {
+                    var r = v["data"];
+                    var data = JsonConvert.DeserializeObject<List<SocketData>>(v["data"].ToString());
+
+                    foreach (var socketData in data)
+                    {
+                        var command = socketData.command;
+                        var service = socketData.service;
+                        if (service == "QUOTE")
+                        {
+                            foreach (var quoteJson in socketData.content)
+                            {
+
+                                var stockQuote = new Model.StockQuote(quoteJson);
+                                _stockQuoteRecievedSubject.OnNext(stockQuote);
+                                Debug.WriteLine("TDStreamer:" + JsonConvert.SerializeObject(stockQuote));
+                            }
+                        }
+                        else if (service == "LEVELONE_FUTURES")
+                        {
+                            foreach (var quoteJson in socketData.content)
+                            {
+
+                                var futureQuote = new Model.StockQuote(quoteJson);
+                                _futureQuoteRecievedSubject.OnNext(futureQuote);
+                                Debug.WriteLine(JsonConvert.SerializeObject(futureQuote));
+                            }
+                            Console.WriteLine($"Futures {socketData.content}");
+                        }
+                        else if (service == "ACCT_ACTIVITY")
+                        {
+                            //Signal we have Account Activity
+                            _acctActivity.OnNext(new AcctActivity());
+
+                            foreach (var content in socketData.content)
+                            {
+
+                                //if (content["2"] == "OrderEntryRequest")
+                                //{
+                                //    try
+                                //    {
+                                //        //Parsing was inconsitnat don't have a complete XML Schema, and wasn't using it on the other side.
+                                //        //var orderEntryRequestMessage = OrderEntryRequestMessage.ParseXml(content["3"]);
+                                //        var orderEntryRequestMessage = new OrderEntryRequestMessage();
+                                //        _orderEntryRequestMessage.OnNext(orderEntryRequestMessage);
+                                //    }
+                                //    catch (Exception ex)
+                                //    {
+                                //        Debug.WriteLine(ex.Message);
+                                //        Debug.WriteLine(ex.StackTrace);
+                                //    }
+                                //}
+                                if (content["2"] == "OrderFill")
+                                {
+                                    try
+                                    {
+                                        Debug.WriteLine(content["3"]);
+                                        //Check that the order is a stock order, will throw excption if it is options, etc...
+                                        if (content["3"].Contains("EquityOrderT"))
+                                        {
+                                            var orderFillMessage = OrderFillMessage.ParseXml(content["3"]);
+                                            _orderFillMessage.OnNext(orderFillMessage);
+                                        }
+                                        else
+                                        {
+                                            Debug.WriteLine("We don't handle messages other than EquityOrderT");
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Debug.WriteLine(ex.Message);
+                                        Debug.WriteLine(ex.StackTrace);
+                                    }
+                                }
+                            }
+                        }
+                        else if (service == "CHART_EQUITY")
+                        {
+                            var stockChartBar = new StockChartBar(socketData.content[0]);
+                            Debug.WriteLine(msg.Text);
+                        }
+                        else
+                        {
+                            Debug.WriteLine(msg.Text);
+                        }
+                        Console.WriteLine(msg);
+                    }
+                }
+                Console.WriteLine($"Message received: {msg}");
+            });
+        }
+
 
         private async Task CheckTokenRefresh()
         {
@@ -73,7 +295,7 @@ namespace TdInterface.Tda
 
         private readonly object _lockSecuritiesAccount = new object();
 
-        public Securitiesaccount Securitiesaccount
+        public override Securitiesaccount Securitiesaccount
         {
             get
             {
@@ -91,7 +313,7 @@ namespace TdInterface.Tda
             }
         }
 
-        public AccessTokenContainer AccessTokenContainer
+        public override AccessTokenContainer AccessTokenContainer
         {
             get
             {
@@ -112,7 +334,7 @@ namespace TdInterface.Tda
 
         //loginUri = $"https://auth.tdameritrade.com/auth?response_type=code&redirect_uri={UrlEncoder.Create().Encode(redirectUri)}&client_id={consumerKey}%40AMER.OAUTHAP";
 
-        public string LoginUri
+        public override string LoginUri
         {
             get
             {
@@ -121,7 +343,7 @@ namespace TdInterface.Tda
             }
         }
 
-        public bool NeedTokenRefreshed
+        public override bool NeedTokenRefreshed
         {
             get
             {
@@ -129,7 +351,7 @@ namespace TdInterface.Tda
             }
         }
 
-        public string AccountId
+        public override string AccountId
         {
             get
             {
@@ -143,7 +365,7 @@ namespace TdInterface.Tda
         /// </summary>
         /// <param name="authToken"></param>
         /// <returns></returns>
-        public async Task<AccessTokenContainer> GetAccessToken(string authToken)
+        public override async Task<AccessTokenContainer> GetAccessToken(string authToken)
         {
             try
             {
@@ -184,7 +406,7 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<AccessTokenContainer> RefreshAccessToken()
+        public override async Task<AccessTokenContainer> RefreshAccessToken()
         {
             try
             {
@@ -226,7 +448,7 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<Securitiesaccount> GetAccount(string accountId)
+        public override async Task<Securitiesaccount> GetAccount(string accountId)
         {
             Securitiesaccount securitiesaccount = null;
             try
@@ -343,8 +565,6 @@ namespace TdInterface.Tda
             return Securitiesaccount;
         }
 
-
-
         public async Task<CandleList> GetPriceHistoryAsync(string symbol)
         {
             var today = DateTimeOffset.Now;
@@ -368,7 +588,7 @@ namespace TdInterface.Tda
             return candleList;
         }
 
-        public async Task<ulong> PlaceOrder(string accountId, Order order)
+        public override async Task<ulong> PlaceOrder(string accountId, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routePlaceOrder, accountId)))
             {
@@ -404,7 +624,7 @@ namespace TdInterface.Tda
                             Encoding.UTF8, "application/json");
         }
 
-        public async Task<ulong> ReplaceOrder(string accountId, string orderId, Order newOrder)
+        public override async Task<ulong> ReplaceOrder(string accountId, string orderId, Order newOrder)
         {
             var uri = new Uri(BaseUri, string.Format(routeReplaceOrder, accountId, orderId));
 
@@ -433,7 +653,7 @@ namespace TdInterface.Tda
 
         }
 
-        public async Task CancelOrder(string accountId, Order order)
+        public override async Task CancelOrder(string accountId, Order order)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeCancelOrder, accountId, order.orderId)))
             {
@@ -450,7 +670,7 @@ namespace TdInterface.Tda
             };
         }
 
-        public async Task<UserPrincipal> GetUserPrincipals()
+        public override async Task<UserPrincipal> GetUserPrincipals()
         {
             try
             {
@@ -509,13 +729,13 @@ namespace TdInterface.Tda
             return string.Empty;
         }
 
-        public Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Order triggerOrder)
+        public override Order GetInitialLimitOrder(Securitiesaccount securitiesaccount, Order triggerOrder)
         {
             var lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol.ToUpper() == triggerOrder.orderLegCollection[0].instrument.symbol.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
             return lmitOrder;
         }
 
-        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        public override TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
         {
             if (!_stockQuotes.ContainsKey(stockQuote.symbol))
             {
@@ -527,21 +747,21 @@ namespace TdInterface.Tda
             return _stockQuotes[stockQuote.symbol];
         }
 
-        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        public override TdInterface.Model.StockQuote GetStockQuote(string symbol)
         {
             if (!_stockQuotes.ContainsKey(symbol)) { return null; }
 
             return _stockQuotes[symbol];
         }
 
-        public async Task CancelAll(string accountId, string symbol)
+        public override async Task CancelAll(string accountId, string symbol)
         {
             var securitiesaccount = await this.GetAccount(accountId);
 
             if (securitiesaccount != null)
             {
 
-                var openOrders = TDAOrderHelper.GetOpenOrders(securitiesaccount.FlatOrders, symbol);
+                var openOrders = Brokerage.GetOpenOrders(securitiesaccount.FlatOrders, symbol);
                 //var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
 
                 var tasks = new List<Task>();
@@ -559,11 +779,13 @@ namespace TdInterface.Tda
             }
         }
 
-        public async Task<IStreamer> GetStreamer()
+
+
+        public override async Task<IStreamer> GetStreamer()
         {
             UserPrincipal up = await GetUserPrincipals();
             accountId = up.accounts[0].accountId;
-            return new TDStreamer(this);
+            return this; // new TDStreamer(this);
         }
 
         public static void SplitTdaConsumerKey(string tdaConsumerKey, out string consumerKey, out string callback)
@@ -579,5 +801,319 @@ namespace TdInterface.Tda
         }
 
 
+        #region IStreamer
+
+
+        private bool _isConnected = false;
+        private UserPrincipal _userPrincipal;
+        private bool _isDisposing;
+        private StreamerSettings.Credentials _credentials;
+        private StreamerSettings.Request _loginRequest;
+
+        private WebsocketClient _ws;
+        private List<string> _quoteSymbols = new List<string>();
+        public int _quoteRequestId = 0;
+
+
+        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
+        public override IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+
+        private readonly Subject<Model.StockQuote> _futureQuoteRecievedSubject = new Subject<Model.StockQuote>();
+        public override IObservable<Model.StockQuote> FutureQuoteReceived => _futureQuoteRecievedSubject.AsObservable();
+
+        private readonly Subject<AcctActivity> _acctActivity = new Subject<AcctActivity>();
+        public override IObservable<AcctActivity> AcctActivity => _acctActivity.AsObservable();
+
+        private readonly Subject<OrderEntryRequestMessage> _orderEntryRequestMessage = new Subject<OrderEntryRequestMessage>();
+        public override IObservable<OrderEntryRequestMessage> OrderRecieved => _orderEntryRequestMessage.AsObservable();
+
+        private readonly Subject<OrderFillMessage> _orderFillMessage = new Subject<OrderFillMessage>();
+        public override IObservable<OrderFillMessage> OrderFilled => _orderFillMessage.AsObservable();
+
+        private readonly Subject<SocketNotify> _socketNotify = new Subject<SocketNotify>();
+        public override IObservable<SocketNotify> HeartBeat => _socketNotify.AsObservable();
+
+        private readonly Subject<DisconnectionInfo> _disconnectionInfo = new Subject<DisconnectionInfo>();
+        public override IObservable<DisconnectionInfo> Disconnection => _disconnectionInfo.AsObservable();
+
+        private readonly Subject<ReconnectionInfo> _reconnectionInfo = new Subject<ReconnectionInfo>();
+        public override IObservable<ReconnectionInfo> Reconnection => _reconnectionInfo.AsObservable();
+
+        public override WebsocketClient WebsocketClient
+        {
+            get
+            {
+                return _ws;
+            }
+        }
+
+
+        private void ConnectSocket()
+        {
+            _userPrincipal = GetUserPrincipals().Result;
+            _credentials = new StreamerSettings.Credentials
+            {
+                userid = _userPrincipal.accounts[0].accountId,
+                token = _userPrincipal.streamerInfo.token,
+                company = _userPrincipal.accounts[0].company,
+                segment = _userPrincipal.accounts[0].segment,
+                cddomain = _userPrincipal.accounts[0].accountCdDomainId,
+                usergroup = _userPrincipal.streamerInfo.userGroup,
+                accesslevel = _userPrincipal.streamerInfo.accessLevel,
+                authorized = "Y",
+                timestamp = Convert.ToInt64(ConvertToUnixTimestamp(Convert.ToDateTime(_userPrincipal.streamerInfo.tokenTimestamp))),
+                appid = _userPrincipal.streamerInfo.appId,
+                acl = _userPrincipal.streamerInfo.acl
+            };
+
+            //Convert credentials to dictionary
+            var cred = _credentials.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .ToDictionary(p => p.Name, p => p.GetValue(_credentials, null));
+
+            var _reqs = new List<StreamerSettings.Request>();
+
+            _loginRequest = new StreamerSettings.Request
+            {
+                service = "ADMIN",
+                command = "LOGIN",
+                requestid = "0",
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    credential = ToQueryString(cred),
+                    token = _userPrincipal.streamerInfo.token,
+                    version = "1.0",
+                    qoslevel = "0"
+                }
+            };
+
+            _reqs.Add(_loginRequest);
+
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+
+            var exitEvent = new ManualResetEvent(false);
+
+            var url = new Uri($"wss://{_userPrincipal.streamerInfo.streamerSocketUrl}/ws");
+
+            _ws = new WebsocketClient(url);
+            _ws.ReconnectTimeout = TimeSpan.FromSeconds(30);
+
+            SubscribeWebSocketMessages(_userPrincipal, _ws);
+
+            _ws.Start();
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
+
+
+        private static string SanatizeAccountNumbers(UserPrincipal userPrincipal, string message)
+        {
+            int index = 0;
+            string newMessage = message;
+            foreach (var account in userPrincipal.accounts)
+            {
+                newMessage = newMessage.Replace(account.accountId, $"sanatizedAccountNumber{index}");
+            }
+
+            return newMessage;
+        }
+
+
+
+
+        public override void SubscribeQuote(string tickerSymbol)
+        {
+            if (!_quoteSymbols.Contains(tickerSymbol.ToUpper()))
+            {
+                _quoteSymbols.Add(tickerSymbol.ToUpper());
+            }
+
+            SubscribeQuote();
+        }
+
+        private  void SubscribeQuote()
+        {
+            var symbols = string.Join(",", _quoteSymbols);
+
+            var _reqs = new List<StreamerSettings.Request>();
+
+            _quoteRequestId++;
+            var quoteRequest = new StreamerSettings.Request
+            {
+                service = "QUOTE",
+                command = "SUBS",
+                requestid = "1", //_quoteRequestId.ToString(),
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    keys = symbols,
+                    fields = "0,1,2,3"
+                }
+            };
+            _reqs.Add(quoteRequest);
+            //}
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
+
+        List<string> _futureSymbols = new List<string>();
+
+        public override void SubscribeFuture(string tickerSymbol)
+        {
+            if (!_futureSymbols.Contains(tickerSymbol.ToUpper()))
+            {
+                _futureSymbols.Add(tickerSymbol.ToUpper());
+            }
+
+            var symbols = string.Join(",", _futureSymbols);
+
+            var _reqs = new List<StreamerSettings.Request>();
+
+            _quoteRequestId++;
+            var quoteRequest = new StreamerSettings.Request
+            {
+                service = "LEVELONE_FUTURES",
+                command = "SUBS",
+                requestid = "1", //_quoteRequestId.ToString(),
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    keys = symbols,
+                    fields = "0,1,2,3,4"
+                }
+            };
+            _reqs.Add(quoteRequest);
+            //}
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
+
+        //List<string> _futureSymbols= new List<string>();
+
+        //public void SubscribeFuture(UserPrincipal userPrincipals, string tickerSymbol)
+        //{
+        //    if (!_futureSymbols.Contains(tickerSymbol.ToUpper()))
+        //    {
+        //        _futureSymbols.Add(tickerSymbol.ToUpper());
+        //    }
+
+        //    var symbols = string.Join(",", _futureSymbols);
+
+        //    var _reqs = new List<StreamerSettings.Request>();
+
+        //    int requestId = 0;
+        //    //foreach (var symbol in _quoteSymbols)
+        //    //{
+        //    //requestId++;
+        //    _quoteRequestId++;
+        //    var quoteRequest = new StreamerSettings.Request
+        //    {
+        //        service = "LEVELONE_FUTURES",
+        //        command = "SUBS",
+        //        requestid = "1", //_quoteRequestId.ToString(),
+        //        account = userPrincipals.accounts[0].accountId,
+        //        source = userPrincipals.streamerInfo.appId,
+        //        parameters = new StreamerSettings.Parameters
+        //        {
+        //            keys = symbols,
+        //            fields = "0,1,2,3,4"
+        //        }
+        //    };
+        //    _reqs.Add(quoteRequest);
+        //    //}
+        //    var request = new StreamerSettings.Requests()
+        //    {
+        //        requests = _reqs.ToArray()
+        //    };
+
+        //    var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+        //    _ws.Send(req);
+        //}
+
+        public override void SubscribeChartData(string tickerSymbol)
+        {
+            var _reqs = new List<StreamerSettings.Request>();
+            var chartRequest = new StreamerSettings.Request
+            {
+                service = "CHART_EQUITY",
+                command = "SUBS",
+                requestid = "1",
+                account = _userPrincipal.accounts[0].accountId,
+                source = _userPrincipal.streamerInfo.appId,
+                parameters = new StreamerSettings.Parameters
+                {
+                    keys = tickerSymbol,
+                    fields = "0,1,2,3,4,5,6,7,8"
+                }
+            };
+            _reqs.Add(chartRequest);
+
+            var request = new StreamerSettings.Requests()
+            {
+                requests = _reqs.ToArray()
+            };
+
+            var req = JsonConvert.SerializeObject(request, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            _ws.Send(req);
+        }
+        public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return Math.Floor(diff.TotalMilliseconds);
+        }
+        #endregion
+
+        public static string ToQueryString(Dictionary<string, object> dict)
+        {
+            if (dict.Count == 0) return string.Empty;
+
+            var buffer = new StringBuilder();
+            int count = 0;
+            bool end = false;
+
+            foreach (var key in dict.Keys)
+            {
+                if (count == dict.Count - 1) end = true;
+
+                if (end)
+                    buffer.AppendFormat("{0}={1}", key, dict[key]);
+                else
+                    buffer.AppendFormat("{0}={1}&", key, dict[key]);
+
+                count++;
+            }
+
+            return buffer.ToString();
+        }
+        public override void Dispose()
+        {
+            if (_ws != null) _ws.Dispose();
+            if (_replayFile != null)
+            {
+                _replayFile.Flush();
+                _replayFile.Dispose();
+            }
+            _stockQuoteRecievedSubject.Dispose();
+        }
     }
+
 }

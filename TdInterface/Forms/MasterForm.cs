@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Forms;
 using TdInterface.Forms;
 using TdInterface.Interfaces;
+using TdInterface.Model;
 using TdInterface.Tda;
 using TdInterface.TradeStation;
 using MessageBox = System.Windows.MessageBox;
@@ -44,7 +45,8 @@ namespace TdInterface
                 }
                 if (accountInfo != null)
                 {
-                    _broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                    //_broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                    _broker = new TdHelper(accountInfo);
                 }
                 StockButtons = new Button[] { btnStock1,
                                               btnStock2,
@@ -86,7 +88,7 @@ namespace TdInterface
                     _ = await _broker.GetAccessToken(WebUtility.UrlDecode(authToken));
                 }
 
-                _ = await _broker.RefreshAccessToken();
+                _broker.Initialize();
 
                 _streamer = await _broker.GetStreamer();
 

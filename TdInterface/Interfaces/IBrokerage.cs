@@ -8,6 +8,7 @@ namespace TdInterface.Interfaces
 {
     public interface IBrokerage
     {
+        public void Initialize();
         public AccessTokenContainer AccessTokenContainer { get; set; }
 
         public IObservable<Securitiesaccount> SecuritiesAccountUpdated { get; }

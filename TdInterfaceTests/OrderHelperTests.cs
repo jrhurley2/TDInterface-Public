@@ -26,7 +26,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = Brokerage.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -71,7 +71,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = Brokerage.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -114,7 +114,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = Brokerage.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -128,7 +128,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(Brokerage.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -136,7 +136,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(Brokerage.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 
@@ -157,7 +157,7 @@ namespace TdInterface.Tests
             var expectedChildStrategy = "OCO";
 
 
-            var actual = TDAOrderHelper.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
+            var actual = Brokerage.CreateTriggerOcoOrder(expectedTriggerOrderType, expectedSymbol, expectedInstruction, expectedTriggerQuantity, expectedTriggerLimit, expectedLimitQuantity, expectedLimitPrice, expectedStopPrice);
 
             Assert.AreEqual(expectedOrderStrategyType, actual.orderStrategyType);
             Assert.AreEqual(expectedTriggerOrderType, actual.orderType);
@@ -171,7 +171,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(stopOrder);
             Assert.AreEqual(expectedSymbol, stopOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("STOP", stopOrder.orderType);
-            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(Brokerage.BUY_TO_COVER, stopOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedStopPrice.ToString("0.00"), stopOrder.stopPrice);
 
 
@@ -179,7 +179,7 @@ namespace TdInterface.Tests
             Assert.IsNotNull(limitOrder);
             Assert.AreEqual(expectedSymbol, limitOrder.orderLegCollection[0].instrument.symbol);
             Assert.AreEqual("LIMIT", limitOrder.orderType);
-            Assert.AreEqual(TDAOrderHelper.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
+            Assert.AreEqual(Brokerage.BUY_TO_COVER, limitOrder.orderLegCollection[0].instruction);
             Assert.AreEqual(expectedLimitPrice.ToString("0.00"), limitOrder.price);
         }
 
@@ -204,7 +204,7 @@ namespace TdInterface.Tests
             var stopOrder = securitiesaccount.FlatOrders.Where(o => o.orderId.Equals("5846530523")).FirstOrDefault();
             Assert.IsNotNull(stopOrder);
 
-            var actual = TDAOrderHelper.GetParentOrder(securitiesaccount.orderStrategies, stopOrder);
+            var actual = Brokerage.GetParentOrder(securitiesaccount.orderStrategies, stopOrder);
             Assert.IsNotNull(actual);
             Assert.AreEqual("OCO", actual.orderStrategyType.ToString());
         }
@@ -219,7 +219,7 @@ namespace TdInterface.Tests
             var stopOrder = securitiesaccount.FlatOrders.Where(o => o.orderId.Equals("5844688646")).FirstOrDefault();
             Assert.IsNotNull(stopOrder);
 
-            var actual = TDAOrderHelper.GetParentOrder(securitiesaccount.orderStrategies, stopOrder);
+            var actual = Brokerage.GetParentOrder(securitiesaccount.orderStrategies, stopOrder);
             Assert.IsNull(actual);
         }
 
@@ -230,7 +230,7 @@ namespace TdInterface.Tests
             var maxRisk = 50;
             var minRisk = 0;
 
-            var shares = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, minRisk);
+            var shares = Brokerage.CalculateShares(riskPerShare, maxRisk, minRisk);
 
             Assert.AreEqual(100, shares);
 
@@ -243,7 +243,7 @@ namespace TdInterface.Tests
             var maxRisk = 50; // shares
             var minRisk = 0;
 
-            var shares = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, minRisk, true);
+            var shares = Brokerage.CalculateShares(riskPerShare, maxRisk, minRisk, true);
 
             Assert.AreEqual(50, shares);
 

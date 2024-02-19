@@ -65,7 +65,7 @@ namespace TdInterface.Forms
         private void btnClearCreds_Click(object sender, EventArgs e)
         {
             Utility.ClearAccessTokenContainerFile(TdHelper.ACCESSTOKENCONTAINER);
-            Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
+            //Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
         }
     }
 }
