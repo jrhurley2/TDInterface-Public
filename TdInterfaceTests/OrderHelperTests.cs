@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Linq;
-using TdInterface.Tda;
-using TdInterface.Tda.Model;
 
 namespace TdInterface.Tests
 {

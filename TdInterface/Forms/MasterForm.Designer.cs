@@ -1,4 +1,4 @@
-﻿namespace TdInterface
+﻿namespace EZTM.UI
 {
     partial class MasterForm
     {

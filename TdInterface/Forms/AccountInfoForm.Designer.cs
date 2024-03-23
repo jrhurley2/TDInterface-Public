@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Forms
+﻿namespace EZTM.UI.Forms
 {
     partial class AccountInfoForm
     {

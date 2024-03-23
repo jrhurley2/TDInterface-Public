@@ -1,8 +1,8 @@
-﻿using System;
+﻿using EZTM.Common.Tda;
+using System;
 using System.Windows.Forms;
-using TdInterface.Tda;
 
-namespace TdInterface.Forms
+namespace EZTM.UI.Forms
 {
     public partial class ThetaForm : Form
     {

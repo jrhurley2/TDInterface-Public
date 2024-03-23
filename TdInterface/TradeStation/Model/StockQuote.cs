@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TdInterface.TradeStation.Model
+namespace EZTM.UI.TradeStation.Model
 {
-    public class StockQuote : TdInterface.Model.StockQuote
+    public class StockQuote : EZTM.Common.Model.StockQuote
     {
         [JsonPropertyName("Symbol")]
         public override string symbol { get; set; }

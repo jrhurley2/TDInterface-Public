@@ -1,9 +1,9 @@
-﻿using System;
-using TdInterface.Model;
-using TdInterface.Tda;
-using TdInterface.TradeStation;
+﻿using EZTM.Common;
+using EZTM.Common.Model;
+using EZTM.Common.Tda;
+using System;
 
-namespace TdInterface.Forms
+namespace EZTM.UI.Forms
 {
     public partial class AccountInfoForm : EZTMBaseForm
     {
@@ -24,13 +24,13 @@ namespace TdInterface.Forms
             _accountInfo.TradeStationClientId = txtClientId.Text;
             _accountInfo.TradeStationClientSecret = txtClientSecret.Text;
             _accountInfo.TradeStationUseSimAccount = chkUseSimAccount.Checked;
-            Utility.SaveAccountInfo(_accountInfo);
+            Brokerage.SaveAccountInfo(_accountInfo);
             this.Close();
         }
 
         private void AccountInfoForm_Load(object sender, EventArgs e)
         {
-            _accountInfo = Utility.GetAccountInfo();
+            _accountInfo = Brokerage.GetAccountInfo();
             if (_accountInfo == null) _accountInfo = new AccountInfo();
             chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
             txtConsumerKey.Text = _accountInfo.TdaConsumerKey;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     public class InputSender
     {

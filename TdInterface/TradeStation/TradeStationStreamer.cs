@@ -8,12 +8,12 @@
 //using System.Reactive.Linq;
 //using System.Reactive.Subjects;
 //using System.Threading;
-//using TdInterface.Interfaces;
-//using TdInterface.Tda.Model;
+//using EZTM.UI.Interfaces;
+//using EZTM.UI.Tda.Model;
 //using Websocket.Client;
 //using Websocket.Client.Models;
 
-//namespace TdInterface.TradeStation
+//namespace EZTM.UI.TradeStation
 //{
 //    public class TradeStationStreamer : IStreamer
 //    {

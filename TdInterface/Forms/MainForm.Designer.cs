@@ -1,7 +1,7 @@
 ﻿
 using System.Drawing;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     partial class MainForm
     {

@@ -1,14 +1,15 @@
-﻿using System;
+﻿using EZTM.Common.Interfaces;
+using EZTM.Common.Model;
+using EZTM.Common.Tda.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using TdInterface.Forms;
-using TdInterface.Interfaces;
-using TdInterface.Tda.Model;
+using EZTM.UI.Forms;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     public partial class FurtureCalcForm : EZTMBaseForm
     {
@@ -45,8 +46,8 @@ namespace TdInterface
             }
         }
 
-        private StockQuote _stockQuote = new StockQuote();
-        private void HandleFutureQuote(StockQuote stockQuote)
+        private EZTM.Common.Model.StockQuote _stockQuote = new EZTM.Common.Model.StockQuote();
+        private void HandleFutureQuote(EZTM.Common.Model.StockQuote stockQuote)
         {
             try
             {

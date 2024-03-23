@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using EZTM.Common;
+using EZTM.Common.Interfaces;
+using EZTM.Common.Tda;
+using EZTM.Common.Tda.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,15 +11,11 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TdInterface.Forms;
-using TdInterface.Interfaces;
-using TdInterface.Tda;
-using TdInterface.Tda.Model;
-using TdInterface.TradeStation;
+using EZTM.UI.Forms;
 using Websocket.Client;
 using Websocket.Client.Models;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     public partial class MainForm : EZTMBaseForm
     {
@@ -123,7 +123,7 @@ namespace TdInterface
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(EZTM.Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
             //maxRisk = Brokerage.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
@@ -157,7 +157,7 @@ namespace TdInterface
             return triggerOrder;
         }
 
-        public async Task GenericTriggerOco(TdInterface.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        public async Task GenericTriggerOco(EZTM.Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
 
             try
@@ -546,7 +546,7 @@ namespace TdInterface
 
         #endregion
         #region Handle Streamer Events
-        private void HandleStockQuote(TdInterface.Model.StockQuote stockQuote)
+        private void HandleStockQuote(EZTM.Common.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);

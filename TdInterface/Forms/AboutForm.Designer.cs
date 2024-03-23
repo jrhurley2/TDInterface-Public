@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Forms
+﻿namespace EZTM.UI.Forms
 {
     partial class AboutForm
     {
@@ -38,7 +38,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::TdInterface.Properties.Resources.logo_96;
+            this.pictureBox1.Image = global::EZTM.UI.Properties.Resources.logo_96;
             this.pictureBox1.Location = new System.Drawing.Point(104, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(96, 96);

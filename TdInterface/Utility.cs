@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EZTM.Common.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,16 +14,14 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TdInterface.Model;
-using TdInterface.Properties;
-using TdInterface.Tda.Model;
+using EZTM.UI.Model;
+using EZTM.UI.Properties;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     public static class Utility
     {
         private static string SettingsFile = "Settings.json";
-        private static string AccountInfoFile = "AccountInfo.json";
 
 
         public static void SaveSettings(Settings settings)
@@ -94,30 +93,7 @@ namespace TdInterface
         }
         #endregion
 
-        public static void SaveAccountInfo(AccountInfo accountInfo)
-        {
-            var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
 
-            var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accountInfoAsString);
-            var encrypted = ProtectedData.Protect(bytesToEncrypt, null, DataProtectionScope.CurrentUser);
-            File.WriteAllBytes(AccountInfoFile, encrypted);
-        }
-
-        public static AccountInfo GetAccountInfo()
-        {
-            try
-            {
-                var bytesToDecrypt = File.ReadAllBytes(AccountInfoFile);
-                var decrypted = ProtectedData.Unprotect(bytesToDecrypt, null, DataProtectionScope.CurrentUser);
-
-                var accountInfoString = UnicodeEncoding.ASCII.GetString(decrypted);
-                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoString);
-            }
-            catch
-            {
-                return null;
-            }
-        }
 
         public static void ClearAccessTokenContainerFile(string fileName)
         {

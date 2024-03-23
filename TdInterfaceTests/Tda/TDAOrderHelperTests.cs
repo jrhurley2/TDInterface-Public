@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TdInterface.Tda.Model;
 
 namespace TdInterface.Tda.Tests
 {

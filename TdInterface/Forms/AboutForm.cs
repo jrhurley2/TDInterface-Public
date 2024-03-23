@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Forms
+﻿namespace EZTM.UI.Forms
 {
     public partial class AboutForm : EZTMBaseForm
     {

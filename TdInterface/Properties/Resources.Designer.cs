@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TdInterface.Properties {
+namespace EZTM.UI.Properties {
     using System;
     
     

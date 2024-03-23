@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Model
+﻿namespace EZTM.UI.Model
 {
     public class StockPreference
     {

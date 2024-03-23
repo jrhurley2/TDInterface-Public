@@ -1,4 +1,4 @@
-﻿namespace TdInterface.TradeStation.Model
+﻿namespace EZTM.UI.TradeStation.Model
 {
 
     public class BalanceResponse

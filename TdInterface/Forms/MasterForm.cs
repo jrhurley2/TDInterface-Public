@@ -1,18 +1,17 @@
-﻿using System;
+﻿using EZTM.Common;
+using EZTM.Common.Interfaces;
+using EZTM.Common.Tda;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using TdInterface.Forms;
-using TdInterface.Interfaces;
-using TdInterface.Model;
-using TdInterface.Tda;
-using TdInterface.TradeStation;
+using EZTM.UI.Forms;
 using MessageBox = System.Windows.MessageBox;
 
-namespace TdInterface
+namespace EZTM.UI
 {
     public partial class MasterForm : EZTMBaseForm
     {
@@ -36,12 +35,12 @@ namespace TdInterface
                 InitializeComponent();
 
                 // TODO: Move Getting AccountInfo logic to a function - maybe this happens in Program before MainForm even exists?
-                var accountInfo = Utility.GetAccountInfo();
+                var accountInfo = Brokerage.GetAccountInfo();
                 if (accountInfo == null)
                 {
                     var frmAccountInfo = new AccountInfoForm();
                     frmAccountInfo.ShowDialog();
-                    accountInfo = Utility.GetAccountInfo();
+                    accountInfo = Brokerage.GetAccountInfo();
                 }
                 if (accountInfo != null)
                 {
@@ -84,7 +83,7 @@ namespace TdInterface
                 {
                     var oAuthLoginForm = new OAuthLoginForm(_broker.LoginUri);
                     int num2 = (int)oAuthLoginForm.ShowDialog(this);
-                    var authToken  = oAuthLoginForm.Code;
+                    var authToken = oAuthLoginForm.Code;
                     _ = await _broker.GetAccessToken(WebUtility.UrlDecode(authToken));
                 }
 

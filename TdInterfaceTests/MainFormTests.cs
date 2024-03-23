@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 //using TdInterface.Model;
-using TdInterface.Tda;
-using TdInterface.Tda.Model;
 
 namespace TdInterface.Tests
 {
