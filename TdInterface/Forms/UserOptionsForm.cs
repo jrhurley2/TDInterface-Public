@@ -1,7 +1,7 @@
 ﻿using System;
-using TdInterface.Forms;
+using EZTM.Forms.UI.Forms;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public partial class UserOptionsForm : EZTMBaseForm
     {

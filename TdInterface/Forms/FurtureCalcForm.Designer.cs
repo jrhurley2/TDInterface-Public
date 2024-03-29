@@ -1,4 +1,4 @@
-﻿namespace TdInterface
+﻿namespace EZTM.Forms.UI
 {
     partial class FurtureCalcForm
     {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EZTM.Common.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,47 +14,15 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TdInterface.Model;
-using TdInterface.Properties;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Properties;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public static class Utility
     {
         private static string SettingsFile = "Settings.json";
-        private static string AccountInfoFile = "AccountInfo.json";
 
-        public static string AuthToken { get; set; }
-
-        public static AccessTokenContainer AccessTokenContainer { get; set; }
-
-        public static UserPrincipal UserPrincipal { get; set; }
-
-        public static AccessTokenContainer GetAccessTokenContainer(string tokenFile)
-        {
-            try
-            {
-                var bytesToDecrypt = File.ReadAllBytes(tokenFile);
-                var decrypted = ProtectedData.Unprotect(bytesToDecrypt, GetEntropy(), DataProtectionScope.CurrentUser);
-
-                var accessTokenContainerSTring = UnicodeEncoding.ASCII.GetString(decrypted);
-                return JsonConvert.DeserializeObject<AccessTokenContainer>(accessTokenContainerSTring);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static void SaveAccessTokenContainer(string tokenFileName, AccessTokenContainer accessTokenContainer)
-        {
-            var accessTokenAsString = JsonConvert.SerializeObject(accessTokenContainer);
-
-            var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accessTokenAsString);
-            var encrypted = ProtectedData.Protect(bytesToEncrypt, GetEntropy(), DataProtectionScope.CurrentUser);
-            File.WriteAllBytes(tokenFileName, encrypted);
-        }
 
         public static void SaveSettings(Settings settings)
         {
@@ -84,6 +53,7 @@ namespace TdInterface
         }
 
 
+        #region Stock Preferences
         // Declare a list of StockPreference objects
         private static List<StockPreference> _stockPreferences = new List<StockPreference>();
         public static StockPreference GetStockPreference(string ticker)
@@ -121,59 +91,16 @@ namespace TdInterface
             var json = JsonConvert.SerializeObject(stockPreferences);
             File.WriteAllText("StockPreferences.json", json);
         }
-
-        public static void SaveAccountInfo(AccountInfo accountInfo)
-        {
-            var accountInfoAsString = JsonConvert.SerializeObject(accountInfo);
-
-            var bytesToEncrypt = UnicodeEncoding.ASCII.GetBytes(accountInfoAsString);
-            var encrypted = ProtectedData.Protect(bytesToEncrypt, null, DataProtectionScope.CurrentUser);
-            File.WriteAllBytes(AccountInfoFile, encrypted);
-        }
-
-        public static AccountInfo GetAccountInfo()
-        {
-            try
-            {
-                var bytesToDecrypt = File.ReadAllBytes(AccountInfoFile);
-                var decrypted = ProtectedData.Unprotect(bytesToDecrypt, null, DataProtectionScope.CurrentUser);
-
-                var accountInfoString = UnicodeEncoding.ASCII.GetString(decrypted);
-                return JsonConvert.DeserializeObject<AccountInfo>(accountInfoString);
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        #endregion
 
 
-        public static byte[] GetEntropy()
-        {
-            return UnicodeEncoding.ASCII.GetBytes("TDInterface");
-        }
 
         public static void ClearAccessTokenContainerFile(string fileName)
         {
             File.Delete(fileName);
         }
 
-
-        public static T DeserializeJsonFromStream<T>(Stream stream)
-        {
-            if (stream == null || stream.CanRead == false)
-                return default(T);
-
-            using (var sr = new StreamReader(stream))
-            using (var jtr = new JsonTextReader(sr))
-            {
-                var js = new JsonSerializer();
-                var searchResult = js.Deserialize<T>(jtr);
-                return searchResult;
-            }
-
-        }
-
+        #region ScreenShots
         public static void CaptureScreen(string ticker)
         {
             try
@@ -229,19 +156,9 @@ namespace TdInterface
             Directory.CreateDirectory(screenshotFullPathWithTicker);
             return screenshotFullPathWithTicker;
         }
+        #endregion
 
-        public static void SplitTdaConsumerKey(string tdaConsumerKey, out string consumerKey, out string callback)
-        {
-            consumerKey = tdaConsumerKey;
-            callback = "http://localhost";
-            if (consumerKey.IndexOf("~") > 0)
-            {
-                var parts = consumerKey.Split('~');
-                consumerKey = parts[0];
-                callback = parts[1];
-            }
-        }
-
+        #region GitHub Versioning
         /// <summary>
         /// Checks GitHub for the latset release and compares it to the current version
         /// </summary>
@@ -317,5 +234,6 @@ namespace TdInterface
             }
         }
 
+        #endregion
     }
 }
