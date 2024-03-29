@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public class InputSender
     {

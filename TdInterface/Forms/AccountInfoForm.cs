@@ -3,7 +3,7 @@ using EZTM.Common.Model;
 using EZTM.Common.Tda;
 using System;
 
-namespace EZTM.UI.Forms
+namespace EZTM.Forms.UI.Forms
 {
     public partial class AccountInfoForm : EZTMBaseForm
     {

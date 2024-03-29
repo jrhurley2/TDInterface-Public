@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TdInterface\TdInterface.csproj" />
+    <ProjectReference Include="..\..\ETZM.Common.Api\EZTM.Common\EZTM.Common.csproj" />
+    <ProjectReference Include="..\TdInterface\EZTM.Forms.UI.csproj" />
   </ItemGroup>
 
 </Project>

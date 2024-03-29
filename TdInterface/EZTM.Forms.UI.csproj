@@ -43,6 +43,6 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EZTM.Common\EZTM.Common.csproj" />
+    <ProjectReference Include="..\..\ETZM.Common.Api\EZTM.Common\EZTM.Common.csproj" />
   </ItemGroup>
 </Project>

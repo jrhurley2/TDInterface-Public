@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using EZTM.UI.Properties;
+using EZTM.Forms.UI.Properties;
 
-namespace EZTM.UI.Forms
+namespace EZTM.Forms.UI.Forms
 {
     public partial class EZTMBaseForm : Form
     {

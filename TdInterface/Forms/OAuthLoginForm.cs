@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EZTM.UI.Forms;
+using EZTM.Forms.UI.Forms;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public class OAuthLoginForm : EZTMBaseForm
     {

@@ -1,4 +1,4 @@
-﻿namespace EZTM.UI.Forms
+﻿namespace EZTM.Forms.UI.Forms
 {
     partial class ThetaForm
     {

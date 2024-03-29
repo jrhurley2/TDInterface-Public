@@ -1,4 +1,4 @@
-﻿namespace EZTM.UI.Model
+﻿namespace EZTM.Forms.UI.Model
 {
     public class StockPreference
     {

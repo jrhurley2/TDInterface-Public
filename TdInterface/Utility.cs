@@ -14,10 +14,10 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EZTM.UI.Model;
-using EZTM.UI.Properties;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Properties;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public static class Utility
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace EZTM.UI.Forms
+namespace EZTM.Forms.UI.Forms
 {
     public partial class ThetaForm : Form
     {

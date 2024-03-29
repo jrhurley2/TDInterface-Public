@@ -7,9 +7,9 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using EZTM.UI.Forms;
+using EZTM.Forms.UI.Forms;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public partial class FurtureCalcForm : EZTMBaseForm
     {

@@ -11,11 +11,11 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EZTM.UI.Forms;
+using EZTM.Forms.UI.Forms;
 using Websocket.Client;
 using Websocket.Client.Models;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public partial class MainForm : EZTMBaseForm
     {

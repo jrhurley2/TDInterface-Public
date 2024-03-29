@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public class DailyLossExceededException : Exception
     {

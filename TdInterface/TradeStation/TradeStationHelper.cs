@@ -9,12 +9,12 @@
 //using System.Reactive.Subjects;
 //using System.Text;
 //using System.Threading.Tasks;
-//using EZTM.UI.Interfaces;
-//using EZTM.UI.Model;
-//using EZTM.UI.Tda.Model;
-//using EZTM.UI.TradeStation.Model;
+//using EZTM.Forms.UI.Interfaces;
+//using EZTM.Forms.UI.Model;
+//using EZTM.Forms.UI.Tda.Model;
+//using EZTM.Forms.UI.TradeStation.Model;
 
-//namespace EZTM.UI.TradeStation
+//namespace EZTM.Forms.UI.TradeStation
 //{
 //    public class TradeStationHelper : Brokerage, IBrokerage
 //    {

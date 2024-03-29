@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EZTM.UI.TradeStation.Model
+namespace EZTM.Forms.UI.TradeStation.Model
 {
     public class Order
     {

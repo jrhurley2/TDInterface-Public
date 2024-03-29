@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-//using TdInterface.Model;
+using EZTM.Common.Tda.Model;
+using EZTM.Forms.UI;
 
 namespace TdInterface.Tests
 {

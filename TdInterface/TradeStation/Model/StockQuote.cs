@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EZTM.UI.TradeStation.Model
+namespace EZTM.Forms.UI.TradeStation.Model
 {
     public class StockQuote : EZTM.Common.Model.StockQuote
     {

@@ -8,10 +8,10 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using EZTM.UI.Forms;
+using EZTM.Forms.UI.Forms;
 using MessageBox = System.Windows.MessageBox;
 
-namespace EZTM.UI
+namespace EZTM.Forms.UI
 {
     public partial class MasterForm : EZTMBaseForm
     {

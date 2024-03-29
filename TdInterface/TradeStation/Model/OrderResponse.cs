@@ -1,4 +1,4 @@
-﻿namespace EZTM.UI.TradeStation.Model
+﻿namespace EZTM.Forms.UI.TradeStation.Model
 {
 
     public class OrderResponses
