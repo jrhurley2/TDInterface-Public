@@ -46,6 +46,7 @@ namespace EZTM.Forms.UI
                 {
                     //_broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
                     _broker = new TdHelper(accountInfo);
+                    _broker.Initialize();
                 }
                 StockButtons = new Button[] { btnStock1,
                                               btnStock2,
