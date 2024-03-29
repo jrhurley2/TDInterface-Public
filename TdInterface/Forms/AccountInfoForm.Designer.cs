@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Forms
+﻿namespace EZTM.Forms.UI.Forms
 {
     partial class AccountInfoForm
     {
@@ -28,204 +28,270 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkTdaEnableEquity = new System.Windows.Forms.CheckBox();
-            this.txtConsumerKey = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkTsEnableEquity = new System.Windows.Forms.CheckBox();
-            this.chkUseSimAccount = new System.Windows.Forms.CheckBox();
-            this.txtClientSecret = new System.Windows.Forms.TextBox();
-            this.txtClientId = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnClearCreds = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.SuspendLayout();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            chkTdaEnableEquity = new System.Windows.Forms.CheckBox();
+            txtConsumerKey = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            chkTsEnableEquity = new System.Windows.Forms.CheckBox();
+            chkUseSimAccount = new System.Windows.Forms.CheckBox();
+            txtClientSecret = new System.Windows.Forms.TextBox();
+            txtClientId = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            btnSave = new System.Windows.Forms.Button();
+            btnCancel = new System.Windows.Forms.Button();
+            btnClearCreds = new System.Windows.Forms.Button();
+            textBox1 = new System.Windows.Forms.TextBox();
+            groupBox3 = new System.Windows.Forms.GroupBox();
+            chkSchwabEnableEquity = new System.Windows.Forms.CheckBox();
+            txtSchwabClientSecret = new System.Windows.Forms.TextBox();
+            txtSchwabClientId = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.chkTdaEnableEquity);
-            this.groupBox1.Controls.Add(this.txtConsumerKey);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 110);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "TD Ameritrade";
+            groupBox1.Controls.Add(chkTdaEnableEquity);
+            groupBox1.Controls.Add(txtConsumerKey);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Location = new System.Drawing.Point(11, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(284, 110);
+            groupBox1.TabIndex = 0;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "TD Ameritrade";
             // 
             // chkTdaEnableEquity
             // 
-            this.chkTdaEnableEquity.AutoSize = true;
-            this.chkTdaEnableEquity.Location = new System.Drawing.Point(16, 25);
-            this.chkTdaEnableEquity.Name = "chkTdaEnableEquity";
-            this.chkTdaEnableEquity.Size = new System.Drawing.Size(131, 23);
-            this.chkTdaEnableEquity.TabIndex = 2;
-            this.chkTdaEnableEquity.Text = "Enable for Equity";
-            this.chkTdaEnableEquity.UseVisualStyleBackColor = true;
-            this.chkTdaEnableEquity.CheckedChanged += new System.EventHandler(this.chkTdaEnableEquity_CheckedChanged);
+            chkTdaEnableEquity.AutoSize = true;
+            chkTdaEnableEquity.Location = new System.Drawing.Point(16, 25);
+            chkTdaEnableEquity.Name = "chkTdaEnableEquity";
+            chkTdaEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkTdaEnableEquity.TabIndex = 2;
+            chkTdaEnableEquity.Text = "Enable for Equity";
+            chkTdaEnableEquity.UseVisualStyleBackColor = true;
+            chkTdaEnableEquity.CheckedChanged += chkTdaEnableEquity_CheckedChanged;
             // 
             // txtConsumerKey
             // 
-            this.txtConsumerKey.Location = new System.Drawing.Point(16, 73);
-            this.txtConsumerKey.Name = "txtConsumerKey";
-            this.txtConsumerKey.PasswordChar = '*';
-            this.txtConsumerKey.Size = new System.Drawing.Size(256, 26);
-            this.txtConsumerKey.TabIndex = 1;
+            txtConsumerKey.Location = new System.Drawing.Point(16, 73);
+            txtConsumerKey.Name = "txtConsumerKey";
+            txtConsumerKey.PasswordChar = '*';
+            txtConsumerKey.Size = new System.Drawing.Size(256, 26);
+            txtConsumerKey.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Consumer Key";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(15, 51);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(103, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Consumer Key";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.chkTsEnableEquity);
-            this.groupBox2.Controls.Add(this.chkUseSimAccount);
-            this.groupBox2.Controls.Add(this.txtClientSecret);
-            this.groupBox2.Controls.Add(this.txtClientId);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 137);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(283, 187);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "TradeStation";
+            groupBox2.Controls.Add(chkTsEnableEquity);
+            groupBox2.Controls.Add(chkUseSimAccount);
+            groupBox2.Controls.Add(txtClientSecret);
+            groupBox2.Controls.Add(txtClientId);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(label3);
+            groupBox2.Location = new System.Drawing.Point(26, 337);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(283, 187);
+            groupBox2.TabIndex = 1;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "TradeStation";
             // 
             // chkTsEnableEquity
             // 
-            this.chkTsEnableEquity.AutoSize = true;
-            this.chkTsEnableEquity.Location = new System.Drawing.Point(14, 23);
-            this.chkTsEnableEquity.Name = "chkTsEnableEquity";
-            this.chkTsEnableEquity.Size = new System.Drawing.Size(131, 23);
-            this.chkTsEnableEquity.TabIndex = 7;
-            this.chkTsEnableEquity.Text = "Enable for Equity";
-            this.chkTsEnableEquity.UseVisualStyleBackColor = true;
-            this.chkTsEnableEquity.CheckedChanged += new System.EventHandler(this.chkTsEnableEquity_CheckedChanged);
+            chkTsEnableEquity.AutoSize = true;
+            chkTsEnableEquity.Location = new System.Drawing.Point(14, 23);
+            chkTsEnableEquity.Name = "chkTsEnableEquity";
+            chkTsEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkTsEnableEquity.TabIndex = 7;
+            chkTsEnableEquity.Text = "Enable for Equity";
+            chkTsEnableEquity.UseVisualStyleBackColor = true;
+            chkTsEnableEquity.CheckedChanged += chkTsEnableEquity_CheckedChanged;
             // 
             // chkUseSimAccount
             // 
-            this.chkUseSimAccount.AutoSize = true;
-            this.chkUseSimAccount.Location = new System.Drawing.Point(15, 156);
-            this.chkUseSimAccount.Name = "chkUseSimAccount";
-            this.chkUseSimAccount.Size = new System.Drawing.Size(131, 23);
-            this.chkUseSimAccount.TabIndex = 6;
-            this.chkUseSimAccount.Text = "Use Sim Account";
-            this.chkUseSimAccount.UseVisualStyleBackColor = true;
+            chkUseSimAccount.AutoSize = true;
+            chkUseSimAccount.Location = new System.Drawing.Point(15, 156);
+            chkUseSimAccount.Name = "chkUseSimAccount";
+            chkUseSimAccount.Size = new System.Drawing.Size(142, 24);
+            chkUseSimAccount.TabIndex = 6;
+            chkUseSimAccount.Text = "Use Sim Account";
+            chkUseSimAccount.UseVisualStyleBackColor = true;
             // 
             // txtClientSecret
             // 
-            this.txtClientSecret.Location = new System.Drawing.Point(14, 124);
-            this.txtClientSecret.Name = "txtClientSecret";
-            this.txtClientSecret.PasswordChar = '*';
-            this.txtClientSecret.Size = new System.Drawing.Size(257, 26);
-            this.txtClientSecret.TabIndex = 3;
+            txtClientSecret.Location = new System.Drawing.Point(14, 124);
+            txtClientSecret.Name = "txtClientSecret";
+            txtClientSecret.PasswordChar = '*';
+            txtClientSecret.Size = new System.Drawing.Size(257, 26);
+            txtClientSecret.TabIndex = 3;
             // 
             // txtClientId
             // 
-            this.txtClientId.Location = new System.Drawing.Point(15, 71);
-            this.txtClientId.Name = "txtClientId";
-            this.txtClientId.PasswordChar = '*';
-            this.txtClientId.Size = new System.Drawing.Size(256, 26);
-            this.txtClientId.TabIndex = 5;
+            txtClientId.Location = new System.Drawing.Point(15, 71);
+            txtClientId.Name = "txtClientId";
+            txtClientId.PasswordChar = '*';
+            txtClientId.Size = new System.Drawing.Size(256, 26);
+            txtClientId.TabIndex = 5;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 102);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 19);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Client Secret";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(15, 102);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(92, 20);
+            label2.TabIndex = 2;
+            label2.Text = "Client Secret";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 49);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 19);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Client Id";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(14, 49);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(64, 20);
+            label3.TabIndex = 4;
+            label3.Text = "Client Id";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(201, 376);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(94, 28);
-            this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            btnSave.Location = new System.Drawing.Point(201, 597);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new System.Drawing.Size(94, 28);
+            btnSave.TabIndex = 2;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(11, 376);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(94, 28);
-            this.btnCancel.TabIndex = 3;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Location = new System.Drawing.Point(11, 597);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new System.Drawing.Size(94, 28);
+            btnCancel.TabIndex = 3;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnClearCreds
             // 
-            this.btnClearCreds.Location = new System.Drawing.Point(11, 340);
-            this.btnClearCreds.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnClearCreds.Name = "btnClearCreds";
-            this.btnClearCreds.Size = new System.Drawing.Size(284, 29);
-            this.btnClearCreds.TabIndex = 4;
-            this.btnClearCreds.Text = "Clear Credentials";
-            this.btnClearCreds.UseVisualStyleBackColor = true;
-            this.btnClearCreds.Click += new System.EventHandler(this.btnClearCreds_Click);
+            btnClearCreds.Location = new System.Drawing.Point(11, 561);
+            btnClearCreds.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnClearCreds.Name = "btnClearCreds";
+            btnClearCreds.Size = new System.Drawing.Size(284, 29);
+            btnClearCreds.TabIndex = 4;
+            btnClearCreds.Text = "Clear Credentials";
+            btnClearCreds.UseVisualStyleBackColor = true;
+            btnClearCreds.Click += btnClearCreds_Click;
             // 
             // textBox1
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.textBox1.Location = new System.Drawing.Point(12, 413);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(283, 62);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "At this time, there is NO support for futures trading in the application.\r\nIt is " +
-    "on our list of features to add.";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            textBox1.Location = new System.Drawing.Point(12, 634);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new System.Drawing.Size(283, 62);
+            textBox1.TabIndex = 5;
+            textBox1.Text = "At this time, there is NO support for futures trading in the application.\r\nIt is on our list of features to add.";
+            textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(chkSchwabEnableEquity);
+            groupBox3.Controls.Add(txtSchwabClientSecret);
+            groupBox3.Controls.Add(txtSchwabClientId);
+            groupBox3.Controls.Add(label4);
+            groupBox3.Controls.Add(label5);
+            groupBox3.Location = new System.Drawing.Point(27, 128);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(283, 187);
+            groupBox3.TabIndex = 8;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Schwab";
+            // 
+            // chkSchwabEnableEquity
+            // 
+            chkSchwabEnableEquity.AutoSize = true;
+            chkSchwabEnableEquity.Location = new System.Drawing.Point(14, 23);
+            chkSchwabEnableEquity.Name = "chkSchwabEnableEquity";
+            chkSchwabEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkSchwabEnableEquity.TabIndex = 7;
+            chkSchwabEnableEquity.Text = "Enable for Equity";
+            chkSchwabEnableEquity.UseVisualStyleBackColor = true;
+            // 
+            // txtSchwabClientSecret
+            // 
+            txtSchwabClientSecret.Location = new System.Drawing.Point(14, 124);
+            txtSchwabClientSecret.Name = "txtSchwabClientSecret";
+            txtSchwabClientSecret.PasswordChar = '*';
+            txtSchwabClientSecret.Size = new System.Drawing.Size(257, 26);
+            txtSchwabClientSecret.TabIndex = 3;
+            // 
+            // txtSchwabClientId
+            // 
+            txtSchwabClientId.Location = new System.Drawing.Point(15, 71);
+            txtSchwabClientId.Name = "txtSchwabClientId";
+            txtSchwabClientId.PasswordChar = '*';
+            txtSchwabClientId.Size = new System.Drawing.Size(256, 26);
+            txtSchwabClientId.TabIndex = 5;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(15, 102);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(92, 20);
+            label4.TabIndex = 2;
+            label4.Text = "Client Secret";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(14, 49);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(64, 20);
+            label5.TabIndex = 4;
+            label5.Text = "Client Id";
             // 
             // AccountInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 499);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.btnClearCreds);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(3);
-            this.MaximizeBox = false;
-            this.Name = "AccountInfoForm";
-            this.Text = "EZTM Account Settings";
-            this.Load += new System.EventHandler(this.AccountInfoForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(353, 709);
+            Controls.Add(groupBox3);
+            Controls.Add(textBox1);
+            Controls.Add(btnClearCreds);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Margin = new System.Windows.Forms.Padding(3);
+            MaximizeBox = false;
+            Name = "AccountInfoForm";
+            Text = "EZTM Account Settings";
+            Load += AccountInfoForm_Load;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -245,5 +311,11 @@
         private System.Windows.Forms.CheckBox chkTsEnableEquity;
         private System.Windows.Forms.Button btnClearCreds;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox chkSchwabEnableEquity;
+        private System.Windows.Forms.TextBox txtSchwabClientSecret;
+        private System.Windows.Forms.TextBox txtSchwabClientId;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }

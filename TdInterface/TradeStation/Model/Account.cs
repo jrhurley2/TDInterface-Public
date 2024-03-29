@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TdInterface.TradeStation.Model
+namespace EZTM.Forms.UI.TradeStation.Model
 {
 
     public class Rootobject

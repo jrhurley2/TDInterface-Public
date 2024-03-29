@@ -1,9 +1,9 @@
 ﻿using System;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
 
-namespace TdInterface.Interfaces
+namespace EZTM.Forms.UI.Interfaces
 {
     public interface IStreamer
     {
@@ -14,7 +14,7 @@ namespace TdInterface.Interfaces
         IObservable<OrderFillMessage> OrderFilled { get; }
         IObservable<OrderEntryRequestMessage> OrderRecieved { get; }
         IObservable<ReconnectionInfo> Reconnection { get; }
-        IObservable<TdInterface.Model.StockQuote> StockQuoteReceived { get; }
+        IObservable<EZTM.Forms.UI.Model.StockQuote> StockQuoteReceived { get; }
         WebsocketClient WebsocketClient { get; }
 
         void Dispose();

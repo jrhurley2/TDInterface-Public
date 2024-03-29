@@ -8,12 +8,12 @@ using System.Net.Http;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using TdInterface.Interfaces;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
 
-namespace TdInterface.TradeStation
+namespace EZTM.Forms.UI.TradeStation
 {
     public class TradeStationStreamer : IStreamer
     {
@@ -45,8 +45,8 @@ namespace TdInterface.TradeStation
 
         IObservable<Tda.Model.StockQuote> IStreamer.FutureQuoteReceived => throw new NotImplementedException();
 
-        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
-        public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+        private readonly Subject<EZTM.Forms.UI.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<EZTM.Forms.UI.Model.StockQuote>();
+        public IObservable<EZTM.Forms.UI.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
         public TradeStationStreamer(IBrokerage tradeStationHelper)
         {

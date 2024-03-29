@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     internal static class Program
     {

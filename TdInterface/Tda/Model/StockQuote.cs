@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TdInterface.Tda.Model
+namespace EZTM.Forms.UI.Tda.Model
 {
-    public class StockQuote : TdInterface.Model.StockQuote
+    public class StockQuote : EZTM.Forms.UI.Model.StockQuote
     {
 
         //public string symbol { get; set; }

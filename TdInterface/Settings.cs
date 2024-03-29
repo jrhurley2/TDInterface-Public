@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public class Settings
     {

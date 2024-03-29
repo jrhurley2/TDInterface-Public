@@ -9,12 +9,12 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using TdInterface.Interfaces;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Tda.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
 
-namespace TdInterface.Tda
+namespace EZTM.Forms.UI.Tda
 {
     public class TDStreamer : IDisposable, IStreamer
     {
@@ -29,8 +29,8 @@ namespace TdInterface.Tda
         private List<string> _quoteSymbols = new List<string>();
 
 
-        private readonly Subject<TdInterface.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<TdInterface.Model.StockQuote>();
-        public IObservable<TdInterface.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
+        private readonly Subject<EZTM.Forms.UI.Model.StockQuote> _stockQuoteRecievedSubject = new Subject<EZTM.Forms.UI.Model.StockQuote>();
+        public IObservable<EZTM.Forms.UI.Model.StockQuote> StockQuoteReceived => _stockQuoteRecievedSubject.AsObservable();
 
         private readonly Subject<StockQuote> _futureQuoteRecievedSubject = new Subject<StockQuote>();
         public IObservable<StockQuote> FutureQuoteReceived => _futureQuoteRecievedSubject.AsObservable();

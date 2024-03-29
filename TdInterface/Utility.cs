@@ -13,11 +13,11 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TdInterface.Model;
-using TdInterface.Properties;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Properties;
+using EZTM.Forms.UI.Tda.Model;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public static class Utility
     {

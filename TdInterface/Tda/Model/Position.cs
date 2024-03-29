@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Tda.Model
+﻿namespace EZTM.Forms.UI.Tda.Model
 {
     public class Position
     {

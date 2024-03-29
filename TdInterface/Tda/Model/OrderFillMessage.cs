@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 
 
-namespace TdInterface.Tda.Model
+namespace EZTM.Forms.UI.Tda.Model
 {
 
 

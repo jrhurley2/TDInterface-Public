@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TdInterface.Tda.Model
+namespace EZTM.Forms.UI.Tda.Model
 {
     public class SocketResponse
     {

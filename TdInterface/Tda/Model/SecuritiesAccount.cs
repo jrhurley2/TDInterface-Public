@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TdInterface.Tda.Model
+namespace EZTM.Forms.UI.Tda.Model
 {
 
     public class Rootobject

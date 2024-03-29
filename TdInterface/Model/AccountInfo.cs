@@ -1,4 +1,4 @@
-﻿namespace TdInterface.Model
+﻿namespace EZTM.Forms.UI.Model
 {
     public class AccountInfo
     {

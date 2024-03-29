@@ -5,13 +5,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using TdInterface.Forms;
-using TdInterface.Interfaces;
-using TdInterface.Tda;
-using TdInterface.TradeStation;
+using EZTM.Forms.UI.Forms;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Tda;
+using EZTM.Forms.UI.TradeStation;
 using MessageBox = System.Windows.MessageBox;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public partial class MasterForm : EZTMBaseForm
     {

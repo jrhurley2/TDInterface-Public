@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="StockPreference" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-  <TypeInfo>TdInterface.Model.StockPreference, TdInterface, Version=3.1.25.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+  <TypeInfo>EZTM.Forms.UI.Model.StockPreference, TdInterface, Version=3.1.25.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

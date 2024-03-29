@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using TdInterface.Model;
+using EZTM.Forms.UI.Model;
 
-namespace TdInterface.Forms
+namespace EZTM.Forms.UI.Forms
 {
     public partial class StockPreferenceForm : Form
     {

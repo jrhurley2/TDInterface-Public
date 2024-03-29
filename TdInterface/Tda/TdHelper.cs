@@ -10,11 +10,11 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using TdInterface.Interfaces;
-using TdInterface.Model;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Tda.Model;
 
-namespace TdInterface.Tda
+namespace EZTM.Forms.UI.Tda
 {
     public class TdHelper : IBrokerage
     {
@@ -45,7 +45,7 @@ namespace TdInterface.Tda
         public IObservable<Securitiesaccount> SecuritiesAccountUpdated => _securitiesAccountSubject.AsObservable();
 
 
-        private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
+        private Dictionary<string, EZTM.Forms.UI.Model.StockQuote> _stockQuotes = new();
         private AccessTokenContainer accessTokenContainer;
 
         public TdHelper(AccountInfo ai)
@@ -516,7 +516,7 @@ namespace TdInterface.Tda
             return lmitOrder;
         }
 
-        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        public EZTM.Forms.UI.Model.StockQuote SetStockQuote(EZTM.Forms.UI.Model.StockQuote stockQuote)
         {
             if (!_stockQuotes.ContainsKey(stockQuote.symbol))
             {
@@ -528,7 +528,7 @@ namespace TdInterface.Tda
             return _stockQuotes[stockQuote.symbol];
         }
 
-        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        public EZTM.Forms.UI.Model.StockQuote GetStockQuote(string symbol)
         {
             if (!_stockQuotes.ContainsKey(symbol)) { return null; }
 

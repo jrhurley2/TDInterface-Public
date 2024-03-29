@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Tda.Model;
 
-namespace TdInterface.Tda
+namespace EZTM.Forms.UI.Tda
 {
     public class TDAOrderHelper
     {

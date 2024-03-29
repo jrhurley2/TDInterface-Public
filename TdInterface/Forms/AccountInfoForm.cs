@@ -1,9 +1,9 @@
 ﻿using System;
-using TdInterface.Model;
-using TdInterface.Tda;
-using TdInterface.TradeStation;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Tda;
+using EZTM.Forms.UI.TradeStation;
 
-namespace TdInterface.Forms
+namespace EZTM.Forms.UI.Forms
 {
     public partial class AccountInfoForm : EZTMBaseForm
     {

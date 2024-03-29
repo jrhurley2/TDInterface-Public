@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TdInterface.Model;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Tda.Model;
 
-namespace TdInterface.Interfaces
+namespace EZTM.Forms.UI.Interfaces
 {
     public interface IBrokerage
     {

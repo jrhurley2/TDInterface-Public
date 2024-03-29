@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TdInterface.Tda.Model
+namespace EZTM.Forms.UI.Tda.Model
 {
     public class Account
     {

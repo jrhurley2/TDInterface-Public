@@ -4,11 +4,11 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using TdInterface.Forms;
-using TdInterface.Interfaces;
-using TdInterface.Tda.Model;
+using EZTM.Forms.UI.Forms;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Tda.Model;
 
-namespace TdInterface
+namespace EZTM.Forms.UI
 {
     public partial class FurtureCalcForm : EZTMBaseForm
     {

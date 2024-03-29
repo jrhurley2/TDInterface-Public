@@ -9,12 +9,12 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
-using TdInterface.Interfaces;
-using TdInterface.Model;
-using TdInterface.Tda.Model;
-using TdInterface.TradeStation.Model;
+using EZTM.Forms.UI.Interfaces;
+using EZTM.Forms.UI.Model;
+using EZTM.Forms.UI.Tda.Model;
+using EZTM.Forms.UI.TradeStation.Model;
 
-namespace TdInterface.TradeStation
+namespace EZTM.Forms.UI.TradeStation
 {
     public class TradeStationHelper : IBrokerage
     {
@@ -35,7 +35,7 @@ namespace TdInterface.TradeStation
         public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
         public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
 
-        private Dictionary<string, TdInterface.Model.StockQuote> _stockQuotes = new();
+        private Dictionary<string, EZTM.Forms.UI.Model.StockQuote> _stockQuotes = new();
 
         public AccountInfo AccountInfo { get; set; }
 
@@ -512,7 +512,7 @@ namespace TdInterface.TradeStation
         }
 
 
-        public TdInterface.Model.StockQuote SetStockQuote(TdInterface.Model.StockQuote stockQuote)
+        public EZTM.Forms.UI.Model.StockQuote SetStockQuote(EZTM.Forms.UI.Model.StockQuote stockQuote)
         {
             if (!_stockQuotes.ContainsKey(stockQuote.symbol))
             {
@@ -524,7 +524,7 @@ namespace TdInterface.TradeStation
             return _stockQuotes[stockQuote.symbol];
         }
 
-        public TdInterface.Model.StockQuote GetStockQuote(string symbol)
+        public EZTM.Forms.UI.Model.StockQuote GetStockQuote(string symbol)
         {
             if (!_stockQuotes.ContainsKey(symbol)) { return null; }
 
