@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -40,5 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\net7.0-windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ETZM.Common.Api\EZTM.Common\EZTM.Common.csproj" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 namespace EZTM.Forms.UI.TradeStation.Model
 {
-    public class StockQuote : EZTM.Forms.UI.Model.StockQuote
+    public class StockQuote : Common.Model.StockQuote
     {
         [JsonPropertyName("Symbol")]
         public override string symbol { get; set; }

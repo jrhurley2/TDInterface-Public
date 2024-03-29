@@ -8,12 +8,13 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
-using EZTM.Forms.UI.Interfaces;
-using EZTM.Forms.UI.Tda;
-using EZTM.Forms.UI.Tda.Model;
+using EZTM.Common.Interfaces;
+using EZTM.Common.Tda;
+using EZTM.Common.Tda.Model;
 using EZTM.Forms.UI.TradeStation;
 using Websocket.Client;
 using Websocket.Client.Models;
+using EZTM.Common;
 
 namespace EZTM.Forms.UI
 {
@@ -62,7 +63,7 @@ namespace EZTM.Forms.UI
             InitializeComponent();
 
             isTda = typeof(TdHelper) == helper.GetType();
-            isTradeStation = typeof(TradeStationHelper) == helper.GetType();
+            //isTradeStation = typeof(TradeStationHelper) == helper.GetType();
 
             this.AutoScaleMode = AutoScaleMode.Font;
 
@@ -123,11 +124,11 @@ namespace EZTM.Forms.UI
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(EZTM.Forms.UI.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
-            maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
+            //maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
-            var isShort = instruction.Equals(TDAOrderHelper.SELL_SHORT);
+            var isShort = instruction.Equals(Brokerage.SELL_SHORT);
 
             var bidAskPrice = isShort ? stockQuote.bidPrice : stockQuote.askPrice;
             var ocoCalcPrice = orderType == "MARKET" ? settings.UseBidAskOcoCalc ? bidAskPrice : stockQuote.lastPrice : triggerLimit;
@@ -139,7 +140,7 @@ namespace EZTM.Forms.UI
                 throw new Exception("Risk Per Share was negative.");
             }
 
-            int quantity = TDAOrderHelper.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
+            int quantity = Brokerage.CalculateShares(riskPerShare, maxRisk, settings.MinimumRisk, tradeShares);
 
             var firstTargetLimitShares = Convert.ToInt32(Math.Ceiling(quantity * decimal.Divide(settings.OneRProfitPercenatage, 100)));
 
@@ -147,17 +148,17 @@ namespace EZTM.Forms.UI
 
             if (disableFirstTarget)
             {
-                triggerOrder = TDAOrderHelper.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
+                triggerOrder = Brokerage.CreateTriggerStopOrder(orderType, symbol, instruction, quantity, triggerLimit, stopPrice);
             }
             else
             {
-                triggerOrder = TDAOrderHelper.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
+                triggerOrder = Brokerage.CreateTriggerOcoOrder(orderType, symbol, instruction, quantity, triggerLimit, firstTargetLimitShares, firstTargetlimtPrice, stopPrice);
             }
 
             return triggerOrder;
         }
 
-        public async Task GenericTriggerOco(EZTM.Forms.UI.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        public async Task GenericTriggerOco(Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
 
             try
@@ -216,7 +217,7 @@ namespace EZTM.Forms.UI
 
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = TDAOrderHelper.SELL_SHORT;
+                var instruction = Brokerage.SELL_SHORT;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -234,7 +235,7 @@ namespace EZTM.Forms.UI
                 var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = TDAOrderHelper.SELL_SHORT;
+                var instruction = Brokerage.SELL_SHORT;
 
                 double triggerLimit = double.MinValue;
 
@@ -263,7 +264,7 @@ namespace EZTM.Forms.UI
                 var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "MARKET";
                 var symbol = txtSymbol.Text;
-                var instruction = TDAOrderHelper.BUY;
+                var instruction = Brokerage.BUY;
                 var triggerLimit = double.Parse("0.0");
 
                 await GenericTriggerOco(stockQuote, orderType, symbol, instruction, triggerLimit);
@@ -281,7 +282,7 @@ namespace EZTM.Forms.UI
                 var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
                 var orderType = "LIMIT";
                 var symbol = txtSymbol.Text;
-                var instruction = TDAOrderHelper.BUY;
+                var instruction = Brokerage.BUY;
                 double triggerLimit = double.MinValue;
                 if (string.IsNullOrEmpty(txtLimit.Text))
                 {
@@ -322,12 +323,12 @@ namespace EZTM.Forms.UI
                     int quantity = 0;
                     if (_activePosition.longQuantity > 0)
                     {
-                        stopInstruction = TDAOrderHelper.SELL;
+                        stopInstruction = Brokerage.SELL;
                         quantity = (int)_activePosition.longQuantity;
                     }
                     else if (_activePosition.shortQuantity > 0)
                     {
-                        stopInstruction = TDAOrderHelper.BUY_TO_COVER;
+                        stopInstruction = Brokerage.BUY_TO_COVER;
                         quantity = (int)_activePosition.shortQuantity;
                     }
                     else
@@ -391,7 +392,7 @@ namespace EZTM.Forms.UI
             var stockQuote = _broker.GetStockQuote(txtSymbol.Text);
             string exitInstruction = GetExitInstruction(_activePosition);
             var limitPrice = 0.0;
-            if (exitInstruction == TDAOrderHelper.SELL)
+            if (exitInstruction == Brokerage.SELL)
             {
                 limitPrice = stockQuote.askPrice;
             }
@@ -400,9 +401,9 @@ namespace EZTM.Forms.UI
                 limitPrice = stockQuote.bidPrice;
             }
 
-            Order stopOrder = TDAOrderHelper.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
+            Order stopOrder = Brokerage.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
 
-            var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -415,13 +416,13 @@ namespace EZTM.Forms.UI
                 {
                     var activeQuantity = _activePosition.Quantity;
                     //Change the stop order to a Limit order to take profit and repladce
-                    var newOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
+                    var newOrder = Brokerage.CreateLimitOrder(exitInstruction, _activePosition.instrument.symbol, quantity, limitPrice);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
 
                     if (_activePosition != null && (activeQuantity - quantity) != 0)
                     {
-                        var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
+                        var newStopOrder = Brokerage.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                         await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                     }
                 }
@@ -437,9 +438,9 @@ namespace EZTM.Forms.UI
         {
             string exitInstruction = GetExitInstruction(_activePosition);
 
-            Order stopOrder = TDAOrderHelper.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
+            Order stopOrder = Brokerage.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
-            var parent = TDAOrderHelper.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -452,13 +453,13 @@ namespace EZTM.Forms.UI
                 {
                     var activeQuantity = _activePosition.Quantity;
                     //Change the stop order to a Limit order to take profit and repladce
-                    var newOrder = TDAOrderHelper.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
+                    var newOrder = Brokerage.CreateMarketOrder(exitInstruction, _activePosition.instrument.symbol, quantity);
                     await _broker.ReplaceOrder(_broker.AccountId, stopOrder.orderId, newOrder);
                     await Task.Delay(Program.Settings.SleepBetweenReduceOrderOnClose);
 
                     if (_activePosition != null && (activeQuantity - quantity) != 0)
                     {
-                        var newStopOrder = TDAOrderHelper.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
+                        var newStopOrder = Brokerage.CreateStopOrder(exitInstruction, _activePosition.instrument.symbol, activeQuantity - quantity, Double.Parse(stopOrder.stopPrice));
                         await _broker.PlaceOrder(_broker.AccountId, newStopOrder);
                     }
                 }
@@ -482,11 +483,11 @@ namespace EZTM.Forms.UI
             var exitInstruction = "";
             if (position.longQuantity > 0)
             {
-                exitInstruction = TDAOrderHelper.SELL;
+                exitInstruction = Brokerage.SELL;
             }
             else if (position.shortQuantity > 0)
             {
-                exitInstruction = TDAOrderHelper.BUY_TO_COVER;
+                exitInstruction = Brokerage.BUY_TO_COVER;
             }
             else
             {
@@ -498,20 +499,20 @@ namespace EZTM.Forms.UI
 
         private async Task PlaceMarketOrder(string symbol, int quantity, string instruction)
         {
-            var stopOrder = TDAOrderHelper.CreateMarketOrder(instruction, symbol, quantity);
+            var stopOrder = Brokerage.CreateMarketOrder(instruction, symbol, quantity);
             var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
 
         private async Task PlaceLimitOrder(string symbol, int quantity, string instruction, double limitPrice)
         {
-            var stopOrder = TDAOrderHelper.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
+            var stopOrder = Brokerage.CreateLimitOrder(instruction, symbol, quantity, limitPrice);
             var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
 
 
         private async Task PlaceStopOrder(string symbol, int quantity, string instruction, double stopPrice)
         {
-            var stopOrder = TDAOrderHelper.CreateStopOrder(instruction, symbol, quantity, stopPrice);
+            var stopOrder = Brokerage.CreateStopOrder(instruction, symbol, quantity, stopPrice);
             var orderKey = await _broker.PlaceOrder(_broker.AccountId, stopOrder);
         }
         #endregion
@@ -546,7 +547,7 @@ namespace EZTM.Forms.UI
 
         #endregion
         #region Handle Streamer Events
-        private void HandleStockQuote(EZTM.Forms.UI.Model.StockQuote stockQuote)
+        private void HandleStockQuote(Common.Model.StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);
@@ -754,7 +755,7 @@ namespace EZTM.Forms.UI
 
                                         Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                        var newLimitOrder = TDAOrderHelper.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                                        var newLimitOrder = Brokerage.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
                                         await _broker.ReplaceOrder(_broker.AccountId, lmitOrder.orderId, newLimitOrder);
                                     }
                                 }

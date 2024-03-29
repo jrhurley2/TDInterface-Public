@@ -1,7 +1,7 @@
 ﻿using System;
-using EZTM.Forms.UI.Model;
-using EZTM.Forms.UI.Tda;
-using EZTM.Forms.UI.TradeStation;
+using EZTM.Common.Model;
+using EZTM.Common.Tda;
+
 
 namespace EZTM.Forms.UI.Forms
 {
@@ -73,7 +73,7 @@ namespace EZTM.Forms.UI.Forms
         private void btnClearCreds_Click(object sender, EventArgs e)
         {
             Utility.ClearAccessTokenContainerFile(TdHelper.ACCESSTOKENCONTAINER);
-            Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
+            //Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
         }
     }
 }

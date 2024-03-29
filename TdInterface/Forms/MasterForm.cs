@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
-using EZTM.Forms.UI.Interfaces;
-using EZTM.Forms.UI.Tda;
+using EZTM.Common.Interfaces;
+using EZTM.Common.Tda;
 using EZTM.Forms.UI.TradeStation;
 using MessageBox = System.Windows.MessageBox;
 
@@ -44,7 +44,8 @@ namespace EZTM.Forms.UI
                 }
                 if (accountInfo != null)
                 {
-                    _broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                    //_broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
+                    _broker = new TdHelper(accountInfo);
                 }
                 StockButtons = new Button[] { btnStock1,
                                               btnStock2,

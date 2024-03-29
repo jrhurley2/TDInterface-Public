@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using EZTM.Forms.UI.Tda;
+using EZTM.Common.Tda;
 
 namespace EZTM.Forms.UI.Forms
 {

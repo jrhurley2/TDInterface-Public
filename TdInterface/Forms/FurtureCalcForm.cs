@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
-using EZTM.Forms.UI.Interfaces;
-using EZTM.Forms.UI.Tda.Model;
+using EZTM.Common.Interfaces;
+using EZTM.Common.Model;
 
 namespace EZTM.Forms.UI
 {
