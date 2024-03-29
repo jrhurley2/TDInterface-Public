@@ -20,6 +20,10 @@ namespace EZTM.Forms.UI.Forms
             _accountInfo.UseTdaEquity = chkTdaEnableEquity.Checked;
             _accountInfo.TdaConsumerKey = txtConsumerKey.Text;
 
+            _accountInfo.UseSchwabEquity = chkSchwabEnableEquity.Checked;
+            _accountInfo.SchwabClientId = txtSchwabClientId.Text;
+            _accountInfo.SchwabClientSecret = txtSchwabClientSecret.Text;
+
             _accountInfo.UseTSEquity = chkTsEnableEquity.Checked;
             _accountInfo.TradeStationClientId = txtClientId.Text;
             _accountInfo.TradeStationClientSecret = txtClientSecret.Text;
@@ -34,6 +38,10 @@ namespace EZTM.Forms.UI.Forms
             if (_accountInfo == null) _accountInfo = new AccountInfo();
             chkTdaEnableEquity.Checked = _accountInfo.UseTdaEquity;
             txtConsumerKey.Text = _accountInfo.TdaConsumerKey;
+
+            chkSchwabEnableEquity.Checked = _accountInfo.UseSchwabEquity;
+            txtSchwabClientId.Text = _accountInfo.SchwabClientId;
+            txtSchwabClientSecret.Text = _accountInfo.SchwabClientSecret;
 
             chkTsEnableEquity.Checked = _accountInfo.UseTSEquity;
             txtClientId.Text = _accountInfo.TradeStationClientId;
