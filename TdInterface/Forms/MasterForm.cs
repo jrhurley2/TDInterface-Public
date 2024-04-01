@@ -46,7 +46,7 @@ namespace EZTM.Forms.UI
                 {
                     //_broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
                     _broker = new TdHelper(accountInfo);
-                    _broker.Initialize();
+                    //_broker.Initialize();
                 }
                 StockButtons = new Button[] { btnStock1,
                                               btnStock2,
@@ -88,9 +88,12 @@ namespace EZTM.Forms.UI
                     _ = await _broker.GetAccessToken(WebUtility.UrlDecode(Utility.AuthToken));
                 }
 
-                _ = await _broker.RefreshAccessToken();
+                _broker.Initialize();
+                //_ = await _broker.RefreshAccessToken();
 
-                _streamer = await _broker.GetStreamer();
+                //_ = await ((TdHelper)_broker).RefreshRefreshToken();
+
+                //_streamer = await _broker.GetStreamer();
 
             }
             catch (Exception ex)
@@ -251,6 +254,13 @@ namespace EZTM.Forms.UI
             var stockPreferenceForm = new StockPreferenceForm();
             stockPreferenceForm.Show();
 
+        }
+
+        private void btnSchwabTest_Click(object sender, EventArgs e)
+        {
+            var schwabHelper = _broker as TdHelper;
+            var testHanessForm = new TestHanessForm(schwabHelper);
+            testHanessForm.Show();
         }
     }
 }

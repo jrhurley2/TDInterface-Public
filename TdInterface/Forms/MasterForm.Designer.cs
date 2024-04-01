@@ -56,6 +56,7 @@
             lblTrade = new System.Windows.Forms.Label();
             btnScreenshots = new System.Windows.Forms.Button();
             btnThetaForm = new System.Windows.Forms.Button();
+            btnSchwabTest = new System.Windows.Forms.Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -332,11 +333,22 @@
             btnThetaForm.UseVisualStyleBackColor = true;
             btnThetaForm.Click += btnThetaForm_Click;
             // 
+            // btnSchwabTest
+            // 
+            btnSchwabTest.Location = new System.Drawing.Point(140, 293);
+            btnSchwabTest.Name = "btnSchwabTest";
+            btnSchwabTest.Size = new System.Drawing.Size(116, 29);
+            btnSchwabTest.TabIndex = 23;
+            btnSchwabTest.Text = "Test Harness";
+            btnSchwabTest.UseVisualStyleBackColor = true;
+            btnSchwabTest.Click += btnSchwabTest_Click;
+            // 
             // MasterForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(301, 332);
+            Controls.Add(btnSchwabTest);
             Controls.Add(btnThetaForm);
             Controls.Add(btnScreenshots);
             Controls.Add(lblTradeLine);
@@ -401,5 +413,6 @@
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private System.Windows.Forms.Button btnThetaForm;
         private System.Windows.Forms.ToolStripMenuItem stockPreferenceToolStripMenuItem;
+        private System.Windows.Forms.Button btnSchwabTest;
     }
 }

@@ -117,9 +117,9 @@ namespace EZTM.Forms.UI
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(1200, 630);
             this.Controls.Add((Control)this.webView);
-            //this.Icon = (Icon)componentResourceManager.GetObject("$this.Icon");
+            this.Icon = (Icon)componentResourceManager.GetObject("$this.Icon");
             this.MinimumSize = new Size(800, 600);
-            this.Name = nameof(OAuthLoginForm);
+            //this.Name = nameof(OAuthLoginForm);
             this.ShowIcon = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Login";
