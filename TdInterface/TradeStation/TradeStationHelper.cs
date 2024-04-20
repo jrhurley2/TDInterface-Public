@@ -32,7 +32,7 @@
 //        public const string routeReplaceOrder = "v3/orderexecution/orders/{0}";
 //        public const string routeCancelOrder = "v3/orderexecution/orders/{0}";
 //        public const string routeGetAccounts = "v3/brokerage/accounts";
-//        public const string routeGetOrders = "v3/brokerage/accounts/{0}/orders";
+//        public const string routeGetOrdersByAccount = "v3/brokerage/accounts/{0}/orders";
 //        public const string routeGetPositions = "v3/brokerage/accounts/{0}/positions";
 
 //        private Dictionary<string, EZTM.Forms.UI.Model.StockQuote> _stockQuotes = new();
@@ -372,11 +372,11 @@
 
 //        }
 
-//        public async Task<GetOrderResponse> GetOrders(string accountId)
+//        public async Task<GetOrderResponse> GetOrdersByAccount(string accountId)
 //        {
 
 
-//            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetOrders, accountId)));
+//            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BaseUri, string.Format(routeGetOrdersByAccount, accountId)));
 
 //            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessTokenContainer.AccessToken);
 
@@ -411,10 +411,10 @@
 //            return positionResponse;
 //        }
 
-//        public async Task<Securitiesaccount> GetAccount(string accountId)
+//        public async Task<Securitiesaccount> GetAccountByAccountId(string accountId)
 //        {
 //            var securitiesaccount = new Securitiesaccount();
-//            var orderResponse = await GetOrders(accountId).ConfigureAwait(false);
+//            var orderResponse = await GetOrdersByAccount(accountId).ConfigureAwait(false);
 //            var postionResponse = await GetPositions(accountId).ConfigureAwait(false);
 
 
@@ -494,7 +494,7 @@
 //                {
 //                    response.EnsureSuccessStatusCode();
 //                    var body = await response.Content.ReadAsStringAsync();
-//                    accounts = Model.Account.ParseJson(body);
+//                    accounts = Model.Account.ParseAccounts(body);
 //                }
 //                catch (Exception ex)
 //                {
@@ -533,7 +533,7 @@
 
 //        public async Task CancelAll(string accountId, string symbol)
 //        {
-//            var securitiesaccount = await this.GetAccount(accountId);
+//            var securitiesaccount = await this.GetAccountByAccountId(accountId);
 //            var openOrders = securitiesaccount.FlatOrders.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION") && o.orderLegCollection[0].instrument.symbol.Equals(symbol, StringComparison.InvariantCultureIgnoreCase));
 
 //            var tasks = new List<Task>();

@@ -10,6 +10,8 @@ using EZTM.Common.Interfaces;
 using EZTM.Common.Tda;
 using EZTM.Forms.UI.TradeStation;
 using MessageBox = System.Windows.MessageBox;
+using EZTM.Common.Schwab;
+using Microsoft.Web.WebView2.Core;
 
 namespace EZTM.Forms.UI
 {
@@ -45,7 +47,7 @@ namespace EZTM.Forms.UI
                 if (accountInfo != null)
                 {
                     //_broker = accountInfo.UseTSEquity ? new TradeStationHelper(accountInfo) : new TdHelper(accountInfo);
-                    _broker = new TdHelper(accountInfo);
+                    _broker = new SchwabHelper(accountInfo);
                     //_broker.Initialize();
                 }
                 StockButtons = new Button[] { btnStock1,
@@ -94,6 +96,10 @@ namespace EZTM.Forms.UI
                 //_ = await ((TdHelper)_broker).RefreshRefreshToken();
 
                 //_streamer = await _broker.GetStreamer();
+                _streamer = new SchwabStreamer(_broker);
+                ((SchwabStreamer) _streamer).ConnectSocket();
+                ((SchwabStreamer)_streamer).Login();
+
 
             }
             catch (Exception ex)
@@ -204,7 +210,7 @@ namespace EZTM.Forms.UI
 
         private void btnThetaForm_Click(object sender, EventArgs e)
         {
-            var theThetaForm = new ThetaForm((TdHelper)_broker);
+            var theThetaForm = new ThetaForm((SchwabHelper)_broker);
             theThetaForm.Show();
         }
 
@@ -258,7 +264,7 @@ namespace EZTM.Forms.UI
 
         private void btnSchwabTest_Click(object sender, EventArgs e)
         {
-            var schwabHelper = _broker as TdHelper;
+            var schwabHelper = _broker as SchwabHelper;
             var testHanessForm = new TestHanessForm(schwabHelper);
             testHanessForm.Show();
         }

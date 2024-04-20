@@ -99,7 +99,7 @@
 //            {
 //                try
 //                {
-//                    var securitiesaccount = await _broker.GetAccount(_broker.AccountId).ConfigureAwait(false);
+//                    var securitiesaccount = await _broker.GetAccountByAccountId(_broker.AccountId).ConfigureAwait(false);
 //                    _broker.Securitiesaccount = securitiesaccount;
 //                    if (lastSecuritiesaccount != null)
 //                    {

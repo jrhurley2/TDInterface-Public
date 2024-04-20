@@ -1,5 +1,6 @@
 ﻿using System;
 using EZTM.Common.Model;
+using EZTM.Common.Schwab;
 using EZTM.Common.Tda;
 
 
@@ -72,7 +73,7 @@ namespace EZTM.Forms.UI.Forms
 
         private void btnClearCreds_Click(object sender, EventArgs e)
         {
-            Utility.ClearAccessTokenContainerFile(TdHelper.ACCESSTOKENCONTAINER);
+            Utility.ClearAccessTokenContainerFile(SchwabHelper.ACCESSTOKENCONTAINER);
             //Utility.ClearAccessTokenContainerFile(TradeStationHelper.ACCESSTOKENCONTAINER);
         }
     }

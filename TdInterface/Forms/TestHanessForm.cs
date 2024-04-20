@@ -1,4 +1,5 @@
-﻿using EZTM.Common.Tda;
+﻿using EZTM.Common.Schwab;
+using EZTM.Common.Tda;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,8 +14,8 @@ namespace EZTM.Forms.UI.Forms
 {
     public partial class TestHanessForm : Form
     {
-        private TdHelper _schwabHelper = null;
-        public TestHanessForm(TdHelper schwabHelper)
+        private SchwabHelper _schwabHelper = null;
+        public TestHanessForm(SchwabHelper schwabHelper)
         {
             InitializeComponent();
             _schwabHelper = schwabHelper;
@@ -78,10 +79,14 @@ namespace EZTM.Forms.UI.Forms
                 ((Button)sender).BackColor = Color.Yellow;
                 var actual = await _schwabHelper.GetAccounts().ConfigureAwait(true);
 
-                foreach (var account in actual)
+                if(actual != null)
                 {
-                    txtResults.Text += $"{account.accountId}:{account.type}{Environment.NewLine}";
+                    foreach (var account in actual)
+                    {
+                        txtResults.Text += $"{account.accountNumber}:{account.type}{Environment.NewLine}";
+                    }
                 }
+
                 ((Button)sender).BackColor = Color.Green;
 
             }
@@ -91,6 +96,32 @@ namespace EZTM.Forms.UI.Forms
                 txtResults.Text += ex.StackTrace;
                 ((Button)sender).BackColor = Color.Red;
             }
+
+        }
+
+        private async void btnRefreshRefreshToken_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtResults.Text = string.Empty;
+
+                var oldToken = _schwabHelper.AccessTokenContainer.RefreshToken;
+                ((Button)sender).BackColor = Color.Yellow;
+                txtResults.Text = $"Old AccesToken: {_schwabHelper.AccessTokenContainer.RefreshToken.ToString()}{Environment.NewLine}";
+
+                var token = await _schwabHelper.RefreshRefreshToken().ConfigureAwait(true);
+
+                txtResults.Text += $"New AccesToken: {token.RefreshToken.ToString()}{Environment.NewLine}";
+
+                ((Button)sender).BackColor = Color.Green;
+            }
+            catch (Exception ex)
+            {
+                txtResults.Text += ex.Message;
+                txtResults.Text += ex.StackTrace;
+                ((Button)sender).BackColor = Color.Red;
+            }
+
 
         }
     }

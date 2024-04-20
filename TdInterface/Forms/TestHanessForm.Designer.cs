@@ -32,6 +32,7 @@
             txtResults = new System.Windows.Forms.TextBox();
             btnAccountNumberHash = new System.Windows.Forms.Button();
             btnAccounts = new System.Windows.Forms.Button();
+            btnRefreshRefreshToken = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // btnRefreshToken
@@ -72,11 +73,22 @@
             btnAccounts.UseVisualStyleBackColor = true;
             btnAccounts.Click += btnAccounts_Click;
             // 
+            // btnRefreshRefreshToken
+            // 
+            btnRefreshRefreshToken.Location = new System.Drawing.Point(47, 149);
+            btnRefreshRefreshToken.Name = "btnRefreshRefreshToken";
+            btnRefreshRefreshToken.Size = new System.Drawing.Size(195, 29);
+            btnRefreshRefreshToken.TabIndex = 4;
+            btnRefreshRefreshToken.Text = "Refresh Refresh Token";
+            btnRefreshRefreshToken.UseVisualStyleBackColor = true;
+            btnRefreshRefreshToken.Click += btnRefreshRefreshToken_Click;
+            // 
             // TestHanessForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(btnRefreshRefreshToken);
             Controls.Add(btnAccounts);
             Controls.Add(btnAccountNumberHash);
             Controls.Add(txtResults);
@@ -93,5 +105,6 @@
         private System.Windows.Forms.TextBox txtResults;
         private System.Windows.Forms.Button btnAccountNumberHash;
         private System.Windows.Forms.Button btnAccounts;
+        private System.Windows.Forms.Button btnRefreshRefreshToken;
     }
 }

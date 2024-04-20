@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
 using EZTM.Common.Interfaces;
-using EZTM.Common.Tda;
-using EZTM.Common.Tda.Model;
-using EZTM.Forms.UI.TradeStation;
+using EZTM.Common.Schwab;
+using EZTM.Common.Schwab.Model;
 using Websocket.Client;
 using Websocket.Client.Models;
 using EZTM.Common;
@@ -62,7 +61,7 @@ namespace EZTM.Forms.UI
         {
             InitializeComponent();
 
-            isTda = typeof(TdHelper) == helper.GetType();
+            isTda = typeof(SchwabHelper) == helper.GetType();
             //isTradeStation = typeof(TradeStationHelper) == helper.GetType();
 
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -97,7 +96,7 @@ namespace EZTM.Forms.UI
             btnExit100.Enabled = false;
             btnBreakEven.Enabled = false;
 
-            var securitiesaccount = _broker.GetAccount(_broker.AccountId).Result;
+            var securitiesaccount = _broker.GetAccountByAccountId(_broker.AccountId).Result;
 
             // Handle always on top setting
             this.TopMost = Program.Settings.AlwaysOnTop;
@@ -124,7 +123,7 @@ namespace EZTM.Forms.UI
         }
 
 
-        public static Order CreateGenericTriggerOcoOrder(Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
+        public static Order CreateGenericTriggerOcoOrder(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit, double stopPrice, bool tradeShares, double maxRisk, double dailyPnl, bool disableFirstTarget, Settings settings)
         {
             //maxRisk = TDAOrderHelper.CheckMaxRisk(maxRisk, dailyPnl, settings);
 
@@ -158,7 +157,7 @@ namespace EZTM.Forms.UI
             return triggerOrder;
         }
 
-        public async Task GenericTriggerOco(Common.Model.StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
+        public async Task GenericTriggerOco(StockQuote stockQuote, string orderType, string symbol, string instruction, double triggerLimit)
         {
 
             try
@@ -547,7 +546,7 @@ namespace EZTM.Forms.UI
 
         #endregion
         #region Handle Streamer Events
-        private void HandleStockQuote(Common.Model.StockQuote stockQuote)
+        private void HandleStockQuote(StockQuote stockQuote)
         {
             if (!stockQuote.symbol.Equals(txtSymbol.Text, StringComparison.InvariantCultureIgnoreCase)) return;
             stockQuote = _broker.SetStockQuote(stockQuote);
@@ -632,9 +631,9 @@ namespace EZTM.Forms.UI
         private async Task<Securitiesaccount> GetSecuritiesaccountAsync()
         {
             var securitiesaccount = new Securitiesaccount();
-            if (typeof(TdHelper) == _broker.GetType())
+            if (typeof(SchwabHelper) == _broker.GetType())
             {
-                securitiesaccount = await _broker.GetAccount(_broker.AccountId);
+                securitiesaccount = await _broker.GetAccountByAccountId(_broker.AccountId);
             }
             else
             {
