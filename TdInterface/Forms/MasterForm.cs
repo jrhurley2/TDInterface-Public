@@ -12,6 +12,7 @@ using EZTM.Forms.UI.TradeStation;
 using MessageBox = System.Windows.MessageBox;
 using EZTM.Common.Schwab;
 using Microsoft.Web.WebView2.Core;
+using System.Threading;
 
 namespace EZTM.Forms.UI
 {
@@ -99,6 +100,8 @@ namespace EZTM.Forms.UI
                 _streamer = new SchwabStreamer(_broker);
                 ((SchwabStreamer) _streamer).ConnectSocket();
                 ((SchwabStreamer)_streamer).Login();
+                Thread.Sleep(2000);
+                ((SchwabStreamer)_streamer).SubscribeAcctActivity();
 
 
             }

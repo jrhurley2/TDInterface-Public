@@ -36,26 +36,26 @@ namespace EZTM.Forms.UI
         public string MainFormName { get; private set; }
         //public Securitiesaccount Securitiesaccount { get => securitiesaccount; set => securitiesaccount = value; }
 
-        private readonly object securitiesAccountLock = new object();
-        private Securitiesaccount securitiesAccount;
+        //private readonly object securitiesAccountLock = new object();
+        //private Securitiesaccount securitiesAccount;
 
-        public Securitiesaccount Securitiesaccount
-        {
-            get
-            {
-                lock (securitiesAccountLock)
-                {
-                    return securitiesAccount;
-                }
-            }
-            set
-            {
-                lock (securitiesAccountLock)
-                {
-                    securitiesAccount = value;
-                }
-            }
-        }
+        //public Securitiesaccount Securitiesaccount
+        //{
+        //    get
+        //    {
+        //        lock (securitiesAccountLock)
+        //        {
+        //            return securitiesAccount;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        lock (securitiesAccountLock)
+        //        {
+        //            securitiesAccount = value;
+        //        }
+        //    }
+        //}
 
         public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
@@ -171,7 +171,8 @@ namespace EZTM.Forms.UI
                 if (isTda)
                 {
                     if (isTda && _streamer.WebsocketClient.NativeClient.State != System.Net.WebSockets.WebSocketState.Open) throw new Exception($"Socket not open, restart application {_streamer.WebsocketClient.NativeClient.State.ToString()}");
-                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, Securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
+                    //triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, _broker.Securitiesaccount.DailyPnL, chkDisableFirstTarget.Checked, Program.Settings);
+                    triggerOrder = CreateGenericTriggerOcoOrder(stockQuote, orderType, symbol, instruction, triggerLimit, stopPrice, tradeShares, maxRisk, 0.0, chkDisableFirstTarget.Checked, Program.Settings);
                     orderKey = await _broker.PlaceOrder(_broker.AccountId, triggerOrder);
                 }
                 else if (isTradeStation)
@@ -400,9 +401,9 @@ namespace EZTM.Forms.UI
                 limitPrice = stockQuote.bidPrice;
             }
 
-            Order stopOrder = Brokerage.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
+            Order stopOrder = Brokerage.GetStopOrder(_broker.Securitiesaccount.FlatOrders, txtSymbol.Text);
 
-            var parent = Brokerage.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -437,9 +438,9 @@ namespace EZTM.Forms.UI
         {
             string exitInstruction = GetExitInstruction(_activePosition);
 
-            Order stopOrder = Brokerage.GetStopOrder(Securitiesaccount.FlatOrders, txtSymbol.Text);
+            Order stopOrder = Brokerage.GetStopOrder(_broker.Securitiesaccount.FlatOrders, txtSymbol.Text);
             // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
-            var parent = Brokerage.GetParentOrder(Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.orderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -533,14 +534,14 @@ namespace EZTM.Forms.UI
 
         private async Task CancelAll()
         {
-            await _broker.CancelAll(_broker.AccountId, txtSymbol.Text);
+            await _broker.CancelAll(txtSymbol.Text);
         }
         #endregion
 
         #region Handle Brokerage Events
         private async Task HandleSecuritiesAccountUpdated(Securitiesaccount s)
         {
-            Securitiesaccount = s;
+            //Securitiesaccount = s;
             SetPosition();
         }
 
@@ -649,7 +650,7 @@ namespace EZTM.Forms.UI
         {
             try
             {
-                Securitiesaccount = await GetSecuritiesaccountAsync();
+                await GetSecuritiesaccountAsync();
 
                 var symbol = orderEntryRequestMessage.Order.Security.Symbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
@@ -659,10 +660,10 @@ namespace EZTM.Forms.UI
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && Securitiesaccount != null)
+                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && _broker.Securitiesaccount != null)
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
-                        var triggerOrder = Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
+                        var triggerOrder = _broker.Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
                         //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                         //So the Trigger has an OCO that has the limit and stop.  
                         if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
@@ -685,7 +686,7 @@ namespace EZTM.Forms.UI
         {
             try
             {
-                Securitiesaccount = await GetSecuritiesaccountAsync();
+                await GetSecuritiesaccountAsync();
 
                 if (orderFillMessage != null)
                 {
@@ -727,9 +728,9 @@ namespace EZTM.Forms.UI
                                 //should already have the securities account based on Acct_Activity
                                 //Securitiesaccount = await GetSecuritiesaccountAsync();
 
-                                if (Securitiesaccount != null)
+                                if (_broker.Securitiesaccount != null)
                                 {
-                                    var triggerOrder = Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                                    var triggerOrder = _broker.Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
                                     //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                                     //So the Trigger has an OCO that has the limit and stop.
                                     //
@@ -870,12 +871,12 @@ namespace EZTM.Forms.UI
             try
             {
                 //_securitiesaccount = await GetSecuritiesaccountAsync();
-                if (Securitiesaccount != null)
+                if (_broker.Securitiesaccount != null)
                 {
                     try
                     {
-                        SafeUpdateTextBox(txtPnL, Securitiesaccount.DailyPnL.ToString("#.##"));
-                        SafeUpdateTextBox(txtOrderCoount, Securitiesaccount.orderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count().ToString());
+                        SafeUpdateTextBox(txtPnL, _broker.Securitiesaccount.DailyPnL.ToString("#.##"));
+                        SafeUpdateTextBox(txtOrderCoount, _broker.Securitiesaccount.orderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count().ToString());
                     }
                     catch (Exception ex)
                     {
@@ -884,9 +885,9 @@ namespace EZTM.Forms.UI
                         Debug.WriteLine(ex.StackTrace);
                     }
 
-                    if (Securitiesaccount.positions != null)
+                    if (_broker.Securitiesaccount.positions != null)
                     {
-                        position = Securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                        position = _broker.Securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
                     }
                 }
             }

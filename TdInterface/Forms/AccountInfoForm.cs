@@ -24,6 +24,7 @@ namespace EZTM.Forms.UI.Forms
             _accountInfo.UseSchwabEquity = chkSchwabEnableEquity.Checked;
             _accountInfo.SchwabClientId = txtSchwabClientId.Text;
             _accountInfo.SchwabClientSecret = txtSchwabClientSecret.Text;
+            _accountInfo.SchwabAccountNumber = txtSchwabAccountNumber.Text;
 
             _accountInfo.UseTSEquity = chkTsEnableEquity.Checked;
             _accountInfo.TradeStationClientId = txtClientId.Text;
@@ -43,6 +44,7 @@ namespace EZTM.Forms.UI.Forms
             chkSchwabEnableEquity.Checked = _accountInfo.UseSchwabEquity;
             txtSchwabClientId.Text = _accountInfo.SchwabClientId;
             txtSchwabClientSecret.Text = _accountInfo.SchwabClientSecret;
+            txtSchwabAccountNumber.Text = _accountInfo.SchwabAccountNumber;
 
             chkTsEnableEquity.Checked = _accountInfo.UseTSEquity;
             txtClientId.Text = _accountInfo.TradeStationClientId;

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
 using EZTM.Common.Interfaces;
 using EZTM.Common.Model;
+using EZTM.Common.Schwab.Model;
 
 namespace EZTM.Forms.UI
 {

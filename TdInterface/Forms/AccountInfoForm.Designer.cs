@@ -49,6 +49,8 @@
             txtSchwabClientId = new System.Windows.Forms.TextBox();
             label4 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
+            txtSchwabAccountNumber = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -71,7 +73,7 @@
             chkTdaEnableEquity.AutoSize = true;
             chkTdaEnableEquity.Location = new System.Drawing.Point(16, 25);
             chkTdaEnableEquity.Name = "chkTdaEnableEquity";
-            chkTdaEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkTdaEnableEquity.Size = new System.Drawing.Size(138, 23);
             chkTdaEnableEquity.TabIndex = 2;
             chkTdaEnableEquity.Text = "Enable for Equity";
             chkTdaEnableEquity.UseVisualStyleBackColor = true;
@@ -90,7 +92,7 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(15, 51);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(103, 20);
+            label1.Size = new System.Drawing.Size(98, 19);
             label1.TabIndex = 0;
             label1.Text = "Consumer Key";
             // 
@@ -102,7 +104,7 @@
             groupBox2.Controls.Add(txtClientId);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label3);
-            groupBox2.Location = new System.Drawing.Point(26, 337);
+            groupBox2.Location = new System.Drawing.Point(27, 367);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(283, 187);
             groupBox2.TabIndex = 1;
@@ -114,7 +116,7 @@
             chkTsEnableEquity.AutoSize = true;
             chkTsEnableEquity.Location = new System.Drawing.Point(14, 23);
             chkTsEnableEquity.Name = "chkTsEnableEquity";
-            chkTsEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkTsEnableEquity.Size = new System.Drawing.Size(138, 23);
             chkTsEnableEquity.TabIndex = 7;
             chkTsEnableEquity.Text = "Enable for Equity";
             chkTsEnableEquity.UseVisualStyleBackColor = true;
@@ -125,7 +127,7 @@
             chkUseSimAccount.AutoSize = true;
             chkUseSimAccount.Location = new System.Drawing.Point(15, 156);
             chkUseSimAccount.Name = "chkUseSimAccount";
-            chkUseSimAccount.Size = new System.Drawing.Size(142, 24);
+            chkUseSimAccount.Size = new System.Drawing.Size(138, 23);
             chkUseSimAccount.TabIndex = 6;
             chkUseSimAccount.Text = "Use Sim Account";
             chkUseSimAccount.UseVisualStyleBackColor = true;
@@ -151,7 +153,7 @@
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(15, 102);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(92, 20);
+            label2.Size = new System.Drawing.Size(85, 19);
             label2.TabIndex = 2;
             label2.Text = "Client Secret";
             // 
@@ -160,7 +162,7 @@
             label3.AutoSize = true;
             label3.Location = new System.Drawing.Point(14, 49);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(64, 20);
+            label3.Size = new System.Drawing.Size(60, 19);
             label3.TabIndex = 4;
             label3.Text = "Client Id";
             // 
@@ -210,6 +212,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(txtSchwabAccountNumber);
+            groupBox3.Controls.Add(label6);
             groupBox3.Controls.Add(chkSchwabEnableEquity);
             groupBox3.Controls.Add(txtSchwabClientSecret);
             groupBox3.Controls.Add(txtSchwabClientId);
@@ -217,7 +221,7 @@
             groupBox3.Controls.Add(label5);
             groupBox3.Location = new System.Drawing.Point(27, 128);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(283, 187);
+            groupBox3.Size = new System.Drawing.Size(283, 223);
             groupBox3.TabIndex = 8;
             groupBox3.TabStop = false;
             groupBox3.Text = "Schwab";
@@ -227,7 +231,7 @@
             chkSchwabEnableEquity.AutoSize = true;
             chkSchwabEnableEquity.Location = new System.Drawing.Point(14, 23);
             chkSchwabEnableEquity.Name = "chkSchwabEnableEquity";
-            chkSchwabEnableEquity.Size = new System.Drawing.Size(144, 24);
+            chkSchwabEnableEquity.Size = new System.Drawing.Size(138, 23);
             chkSchwabEnableEquity.TabIndex = 7;
             chkSchwabEnableEquity.Text = "Enable for Equity";
             chkSchwabEnableEquity.UseVisualStyleBackColor = true;
@@ -253,7 +257,7 @@
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(15, 102);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(92, 20);
+            label4.Size = new System.Drawing.Size(85, 19);
             label4.TabIndex = 2;
             label4.Text = "Client Secret";
             // 
@@ -262,9 +266,26 @@
             label5.AutoSize = true;
             label5.Location = new System.Drawing.Point(14, 49);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(64, 20);
+            label5.Size = new System.Drawing.Size(60, 19);
             label5.TabIndex = 4;
             label5.Text = "Client Id";
+            // 
+            // txtSchwabAccountNumber
+            // 
+            txtSchwabAccountNumber.Location = new System.Drawing.Point(14, 184);
+            txtSchwabAccountNumber.Name = "txtSchwabAccountNumber";
+            txtSchwabAccountNumber.PasswordChar = '*';
+            txtSchwabAccountNumber.Size = new System.Drawing.Size(257, 26);
+            txtSchwabAccountNumber.TabIndex = 9;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(15, 162);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(113, 19);
+            label6.TabIndex = 8;
+            label6.Text = "Account Number";
             // 
             // AccountInfoForm
             // 
@@ -317,5 +338,7 @@
         private System.Windows.Forms.TextBox txtSchwabClientId;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtSchwabAccountNumber;
+        private System.Windows.Forms.Label label6;
     }
 }
