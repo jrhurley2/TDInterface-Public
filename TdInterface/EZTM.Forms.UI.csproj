@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <AssemblyVersion>3.1.27</AssemblyVersion>
@@ -37,9 +37,6 @@
     <None Update="StockPreferences.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\net7.0-windows\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ETZM.Common.Api\EZTM.Common\EZTM.Common.csproj" />
