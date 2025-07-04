@@ -83,7 +83,7 @@ namespace EZTM.Forms.UI.Forms
                 {
                     foreach (var account in actual)
                     {
-                        txtResults.Text += $"{account.accountNumber}:{account.type}{Environment.NewLine}";
+                        txtResults.Text += $"{account.AccountNumber}:{account.Type}{Environment.NewLine}";
                     }
                 }
 

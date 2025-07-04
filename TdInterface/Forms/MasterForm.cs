@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using EZTM.Forms.UI.Forms;
 using EZTM.Common.Interfaces;
-using EZTM.Common.Tda;
-using EZTM.Forms.UI.TradeStation;
-using MessageBox = System.Windows.MessageBox;
 using EZTM.Common.Schwab;
-using Microsoft.Web.WebView2.Core;
 using System.Threading;
+using System.Windows;
 
 namespace EZTM.Forms.UI
 {
@@ -98,7 +94,7 @@ namespace EZTM.Forms.UI
 
                 //_streamer = await _broker.GetStreamer();
                 _streamer = new SchwabStreamer(_broker);
-                ((SchwabStreamer) _streamer).ConnectSocket();
+                ((SchwabStreamer)_streamer).ConnectSocket();
                 ((SchwabStreamer)_streamer).Login();
                 Thread.Sleep(2000);
                 ((SchwabStreamer)_streamer).SubscribeAcctActivity();
@@ -247,10 +243,11 @@ namespace EZTM.Forms.UI
         {
             if (await Utility.IsAppUpdateAvailable())
             {
-                if (MessageBox.Show("Updated version is available on GitHub.\nWould you like to download it?", "New Version Available", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
-                {
-                    Utility.OpenAppLatestReleaseOnGitHub();
-                };
+                //if (MessageBox.Show("Updated version is available on GitHub.\nWould you like to download it?", "New Version Available", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                //{
+                //    Utility.OpenAppLatestReleaseOnGitHub();
+                //}
+                //;
             }
             else
             {
@@ -270,6 +267,13 @@ namespace EZTM.Forms.UI
             var schwabHelper = _broker as SchwabHelper;
             var testHanessForm = new TestHanessForm(schwabHelper);
             testHanessForm.Show();
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            var optionsForm = new OptionsForm(_broker);
+            optionsForm.Show();
+
         }
     }
 }

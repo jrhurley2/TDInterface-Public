@@ -57,6 +57,7 @@
             btnScreenshots = new System.Windows.Forms.Button();
             btnThetaForm = new System.Windows.Forms.Button();
             btnSchwabTest = new System.Windows.Forms.Button();
+            btnOptions = new System.Windows.Forms.Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -66,7 +67,7 @@
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { optionsToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(301, 28);
+            menuStrip1.Size = new System.Drawing.Size(499, 33);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -74,41 +75,41 @@
             // 
             optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, accountSettingsToolStripMenuItem, stockPreferenceToolStripMenuItem, checkForUpdateToolStripMenuItem, aboutToolStripMenuItem });
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            optionsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             optionsToolStripMenuItem.Text = "Options";
             // 
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // accountSettingsToolStripMenuItem
             // 
             accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             accountSettingsToolStripMenuItem.Text = "Account Settings";
             accountSettingsToolStripMenuItem.Click += accountSettingsToolStripMenuItem_Click;
             // 
             // stockPreferenceToolStripMenuItem
             // 
             stockPreferenceToolStripMenuItem.Name = "stockPreferenceToolStripMenuItem";
-            stockPreferenceToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            stockPreferenceToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             stockPreferenceToolStripMenuItem.Text = "Stock Preference";
             stockPreferenceToolStripMenuItem.Click += stockPreferenceToolStripMenuItem_Click;
             // 
             // checkForUpdateToolStripMenuItem
             // 
             checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             checkForUpdateToolStripMenuItem.Text = "Check For Update";
             checkForUpdateToolStripMenuItem.Click += checkForUpdateToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -177,7 +178,7 @@
             lblSymbol.Location = new System.Drawing.Point(42, 70);
             lblSymbol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblSymbol.Name = "lblSymbol";
-            lblSymbol.Size = new System.Drawing.Size(59, 20);
+            lblSymbol.Size = new System.Drawing.Size(54, 19);
             lblSymbol.TabIndex = 6;
             lblSymbol.Text = "Symbol";
             lblSymbol.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -266,7 +267,7 @@
             lblQuickTrade.AutoSize = true;
             lblQuickTrade.Location = new System.Drawing.Point(15, 102);
             lblQuickTrade.Name = "lblQuickTrade";
-            lblQuickTrade.Size = new System.Drawing.Size(87, 20);
+            lblQuickTrade.Size = new System.Drawing.Size(81, 19);
             lblQuickTrade.TabIndex = 15;
             lblQuickTrade.Text = "Quick Trade";
             // 
@@ -291,7 +292,7 @@
             lblTools.AutoSize = true;
             lblTools.Location = new System.Drawing.Point(13, 236);
             lblTools.Name = "lblTools";
-            lblTools.Size = new System.Drawing.Size(44, 20);
+            lblTools.Size = new System.Drawing.Size(40, 19);
             lblTools.TabIndex = 17;
             lblTools.Text = "Tools";
             // 
@@ -308,7 +309,7 @@
             lblTrade.AutoSize = true;
             lblTrade.Location = new System.Drawing.Point(13, 40);
             lblTrade.Name = "lblTrade";
-            lblTrade.Size = new System.Drawing.Size(46, 20);
+            lblTrade.Size = new System.Drawing.Size(42, 19);
             lblTrade.TabIndex = 19;
             lblTrade.Text = "Trade";
             // 
@@ -343,11 +344,22 @@
             btnSchwabTest.UseVisualStyleBackColor = true;
             btnSchwabTest.Click += btnSchwabTest_Click;
             // 
+            // btnOptions
+            // 
+            btnOptions.Location = new System.Drawing.Point(284, 295);
+            btnOptions.Name = "btnOptions";
+            btnOptions.Size = new System.Drawing.Size(112, 34);
+            btnOptions.TabIndex = 24;
+            btnOptions.Text = "Options";
+            btnOptions.UseVisualStyleBackColor = true;
+            btnOptions.Click += btnOptions_Click;
+            // 
             // MasterForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(301, 332);
+            ClientSize = new System.Drawing.Size(499, 332);
+            Controls.Add(btnOptions);
             Controls.Add(btnSchwabTest);
             Controls.Add(btnThetaForm);
             Controls.Add(btnScreenshots);
@@ -414,5 +426,6 @@
         private System.Windows.Forms.Button btnThetaForm;
         private System.Windows.Forms.ToolStripMenuItem stockPreferenceToolStripMenuItem;
         private System.Windows.Forms.Button btnSchwabTest;
+        private System.Windows.Forms.Button btnOptions;
     }
 }

@@ -10,4 +10,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ETZM.Common.Api\EZTM.Common\EZTM.Common.csproj" />
+  </ItemGroup>
+
 </Project>

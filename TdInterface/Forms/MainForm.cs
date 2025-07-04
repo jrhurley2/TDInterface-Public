@@ -12,7 +12,7 @@ using EZTM.Common.Interfaces;
 using EZTM.Common.Schwab;
 using EZTM.Common.Schwab.Model;
 using Websocket.Client;
-using Websocket.Client.Models;
+//using Websocket.Client.Models;
 using EZTM.Common;
 
 namespace EZTM.Forms.UI
@@ -34,28 +34,6 @@ namespace EZTM.Forms.UI
         private Position _activePosition;
 
         public string MainFormName { get; private set; }
-        //public Securitiesaccount Securitiesaccount { get => securitiesaccount; set => securitiesaccount = value; }
-
-        //private readonly object securitiesAccountLock = new object();
-        //private Securitiesaccount securitiesAccount;
-
-        //public Securitiesaccount Securitiesaccount
-        //{
-        //    get
-        //    {
-        //        lock (securitiesAccountLock)
-        //        {
-        //            return securitiesAccount;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        lock (securitiesAccountLock)
-        //        {
-        //            securitiesAccount = value;
-        //        }
-        //    }
-        //}
 
         public MainForm(IStreamer streamer, string name, IBrokerage helper)
         {
@@ -77,8 +55,8 @@ namespace EZTM.Forms.UI
             _streamer = streamer;
             _streamer.StockQuoteReceived.Subscribe(x => HandleStockQuote(x));
             _streamer.AcctActivity.Subscribe(a => HandleAcctActivity(a));
-            _streamer.OrderRecieved.Subscribe(o => HandleOrderRecieved(o));
-            _streamer.OrderFilled.Subscribe(o => HandleOrderFilled(o));
+            _streamer.OrderCreated.Subscribe(o => HandleOrderCreated(o));
+            _streamer.OrderFillCompleted.Subscribe(o => HandleOrderFilled(o));
             _streamer.HeartBeat.Subscribe(s => HandleHeartBeat(s));
             _streamer.Reconnection.Subscribe(r => HandleReconnection(r));
             _streamer.Disconnection.Subscribe(d => HandleDisconnect(d));
@@ -403,7 +381,7 @@ namespace EZTM.Forms.UI
 
             Order stopOrder = Brokerage.GetStopOrder(_broker.Securitiesaccount.FlatOrders, txtSymbol.Text);
 
-            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.OrderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -439,8 +417,7 @@ namespace EZTM.Forms.UI
             string exitInstruction = GetExitInstruction(_activePosition);
 
             Order stopOrder = Brokerage.GetStopOrder(_broker.Securitiesaccount.FlatOrders, txtSymbol.Text);
-            // TODO: THIS WILL NOT WORK FOR TRADESTATION AS THE ORDERS ARE FLAT.
-            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.orderStrategies, stopOrder);
+            var parent = Brokerage.GetParentOrder(_broker.Securitiesaccount.OrderStrategies, stopOrder);
 
             if (stopOrder != null)
             {
@@ -645,14 +622,13 @@ namespace EZTM.Forms.UI
 
         }
 
-        //TODO: THIS IS NOT LONGER FIRING, Streamer is not sending this.
-        private async void HandleOrderRecieved(OrderEntryRequestMessage orderEntryRequestMessage)
+        private async void HandleOrderCreated(OrderCreatedEvent orderCreated)
         {
             try
             {
-                await GetSecuritiesaccountAsync();
+                var orders = await _broker.GetOrdersByAccount(_broker.AccountId);
 
-                var symbol = orderEntryRequestMessage.Order.Security.Symbol;
+                var symbol = orderCreated.BaseEvent.OrderCreatedEventEquityOrder.Order.Order.AssetOrderEquityOrderLeg.OrderLegs.First().Security.PrimaryMarketSymbol;
                 Debug.WriteLine($"HandleOrderReceived: symbol {symbol}");
                 Debug.WriteLine($"HandleOrderReceived: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
 
@@ -660,10 +636,10 @@ namespace EZTM.Forms.UI
                 {
                     Debug.WriteLine("HandleOrderReceived: Found Initial Order by symbol");
                     //We have an initial order lets find the limit and save it off
-                    if (_initialOrders[symbol].Contains(orderEntryRequestMessage.Order.OrderKey) && _broker.Securitiesaccount != null)
+                    if (_initialOrders[symbol].Contains(ulong.Parse(orderCreated.SchwabOrderID)) && _broker.Securitiesaccount != null)
                     {
                         Debug.WriteLine("HandleOrderReceived: Found Initial Order by OrderKey");
-                        var triggerOrder = _broker.Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderEntryRequestMessage.Order.OrderKey).FirstOrDefault();
+                        var triggerOrder = orders.Where(o => o.orderId == orderCreated.SchwabOrderID).FirstOrDefault();
                         //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
                         //So the Trigger has an OCO that has the limit and stop.  
                         if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
@@ -682,19 +658,20 @@ namespace EZTM.Forms.UI
             }
         }
 
-        private async void HandleOrderFilled(OrderFillMessage orderFillMessage)
+        private async void HandleOrderFilled(AcctActivityEvent orderFillMessage)
         {
             try
             {
-                await GetSecuritiesaccountAsync();
+                var orders = await _broker.GetOrdersByAccount(_broker.AccountId);
+                var filledOrder = orders.Where(o => o.orderId.Equals(orderFillMessage.SchwabOrderID)).FirstOrDefault();
 
-                if (orderFillMessage != null)
+                if (filledOrder != null)
                 {
                     SetPosition();
 
                     Debug.Write($"HandleOrderFill {JsonConvert.SerializeObject(orderFillMessage)}");
 
-                    var symbol = orderFillMessage.Order.Security.Symbol;
+                    var symbol = filledOrder.orderLegCollection.FirstOrDefault().instrument.symbol; 
                     Debug.WriteLine($"HandleOrderFilled: symbol {symbol}");
                     Debug.WriteLine($"HandleOrderFilled: initial orders {JsonConvert.SerializeObject(_initialOrders)}");
 
@@ -704,64 +681,64 @@ namespace EZTM.Forms.UI
                     //check to see if this is the initial Limit order, if it is, set the stop to BE.
                     if (_initialLimitOrder != null)
                     {
-                        Debug.WriteLine($"HandleOrderFilled equals Order Key {orderFillMessage.Order.OrderKey} {JsonConvert.SerializeObject(_initialLimitOrder)}");
-                        if (_initialLimitOrder.orderId.Equals(orderFillMessage.Order.OrderKey))
+                        Debug.WriteLine($"HandleOrderFilled equals Order Key {filledOrder.orderId} {JsonConvert.SerializeObject(_initialLimitOrder)}");
+                        if (_initialLimitOrder.orderId.Equals(filledOrder.orderId))
                         {
                             Debug.WriteLine($"HandleOrderFilled equals Order Key {JsonConvert.SerializeObject(_initialLimitOrder)}");
                             btnBreakEven.PerformClick();
                         }
                     }
 
-                    if (Program.Settings.MoveLimitPriceOnFill)
-                    {
+                    //if (Program.Settings.MoveLimitPriceOnFill)
+                    //{
 
-                        Debug.WriteLine($"Settings.MoveLimitPriceOnFill: {Program.Settings.MoveLimitPriceOnFill}");
-                        //var symbol = orderFillMessage.Order.Security.Symbol;
-                        if (_initialOrders.ContainsKey(symbol.ToUpper()))
-                        {
-                            Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
-                            //Initial Trigger Order filled, adjust limit
-                            if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
-                            {
-                                Debug.WriteLine("Found OrderKey");
+                    //    Debug.WriteLine($"Settings.MoveLimitPriceOnFill: {Program.Settings.MoveLimitPriceOnFill}");
+                    //    //var symbol = orderFillMessage.Order.Security.Symbol;
+                    //    if (_initialOrders.ContainsKey(symbol.ToUpper()))
+                    //    {
+                    //        Debug.WriteLine("_initialOrders.ContainsKey(symbol)");
+                    //        //Initial Trigger Order filled, adjust limit
+                    //        if (_initialOrders[symbol].Contains(orderFillMessage.Order.OrderKey))
+                    //        {
+                    //            Debug.WriteLine("Found OrderKey");
 
-                                //should already have the securities account based on Acct_Activity
-                                //Securitiesaccount = await GetSecuritiesaccountAsync();
+                    //            //should already have the securities account based on Acct_Activity
+                    //            //Securitiesaccount = await GetSecuritiesaccountAsync();
 
-                                if (_broker.Securitiesaccount != null)
-                                {
-                                    var triggerOrder = _broker.Securitiesaccount.orderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
-                                    //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
-                                    //So the Trigger has an OCO that has the limit and stop.
-                                    //
-                                    Order lmitOrder = null;
+                    //            if (_broker.Securitiesaccount != null)
+                    //            {
+                    //                var triggerOrder = _broker.Securitiesaccount.OrderStrategies.Where(o => ulong.Parse(o.orderId) == orderFillMessage.Order.OrderKey).FirstOrDefault();
+                    //                //Get Trigger order by key and from there look at child strats to find the limit,  orders are not flat like I thought.
+                    //                //So the Trigger has an OCO that has the limit and stop.
+                    //                //
+                    //                Order lmitOrder = null;
 
-                                    if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
-                                    {
-                                        lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
-                                    }
+                    //                if (triggerOrder.childOrderStrategies[0].childOrderStrategies != null)
+                    //                {
+                    //                    lmitOrder = triggerOrder.childOrderStrategies[0].childOrderStrategies.Where(o => (o.status == "QUEUED" || o.status == "WORKING" || o.status == "PENDING_ACTIVATION" || o.status == "AWAITING_PARENT_ORDER") && o.orderLegCollection[0].instrument.symbol == txtSymbol.Text.ToUpper() && o.orderType == "LIMIT").FirstOrDefault();
+                    //                }
 
-                                    if (lmitOrder != null)
-                                    {
-                                        Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
-                                        var stop = float.Parse(txtStop.Text);
-                                        var avgPrice = _activePosition.averagePrice;
-                                        var risk = Math.Abs(avgPrice - stop);
+                    //                if (lmitOrder != null)
+                    //                {
+                    //                    Debug.WriteLine($"Found Limit Order {JsonConvert.SerializeObject(lmitOrder)} ");
+                    //                    var stop = float.Parse(txtStop.Text);
+                    //                    var avgPrice = _activePosition.averagePrice;
+                    //                    var risk = Math.Abs(avgPrice - stop);
 
 
-                                        string exitInstruction = GetExitInstruction(_activePosition);
+                    //                    string exitInstruction = GetExitInstruction(_activePosition);
 
-                                        var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
+                    //                    var firstTargetlimtPrice = exitInstruction == "SELL" ? avgPrice + risk : avgPrice - risk;
 
-                                        Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
+                    //                    Debug.WriteLine($"stop: {stop} ; avgPrice: {avgPrice} ; risk: {risk} ; exitInsturction: {exitInstruction} ; firstTargetLimitPrice: {firstTargetlimtPrice}");
 
-                                        var newLimitOrder = Brokerage.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
-                                        await _broker.ReplaceOrder(_broker.AccountId, lmitOrder.orderId, newLimitOrder);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                    var newLimitOrder = Brokerage.CreateLimitOrder(exitInstruction, symbol, Convert.ToInt32(Math.Round(lmitOrder.orderLegCollection[0].quantity)), firstTargetlimtPrice);
+                    //                    await _broker.ReplaceOrder(_broker.AccountId, lmitOrder.orderId, newLimitOrder);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                     // TODO: IF THIS WORKS MOVE IT AND CONSOLIDATE IT WITH THE MOVE PRICE CODE
                     //if (_initialOrders.ContainsKey(symbol.ToUpper()))
@@ -779,7 +756,7 @@ namespace EZTM.Forms.UI
                     //    }
                     //}
 
-                    Debug.WriteLine(orderFillMessage.Order.OrderKey);
+                    Debug.WriteLine(filledOrder.orderId);
                 }
             }
             catch (Exception ex)
@@ -876,7 +853,7 @@ namespace EZTM.Forms.UI
                     try
                     {
                         SafeUpdateTextBox(txtPnL, _broker.Securitiesaccount.DailyPnL.ToString("#.##"));
-                        SafeUpdateTextBox(txtOrderCoount, _broker.Securitiesaccount.orderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count().ToString());
+                        SafeUpdateTextBox(txtOrderCoount, _broker.Securitiesaccount.OrderStrategies.Where(o => o.orderStrategyType.Equals("TRIGGER", StringComparison.InvariantCulture))?.Count().ToString());
                     }
                     catch (Exception ex)
                     {
@@ -885,9 +862,9 @@ namespace EZTM.Forms.UI
                         Debug.WriteLine(ex.StackTrace);
                     }
 
-                    if (_broker.Securitiesaccount.positions != null)
+                    if (_broker.Securitiesaccount.Positions != null)
                     {
-                        position = _broker.Securitiesaccount.positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
+                        position = _broker.Securitiesaccount.Positions.Where(p => p != null && p.instrument.symbol == symbol).FirstOrDefault();
                     }
                 }
             }
